@@ -1,9 +1,10 @@
+---
 name: testing
 about: Who is assigned which work?
 title: <Deliverable/Work Name>
 labels: Work
 assignees: ''
-
+---
 
 ## Issue
 - **Date**: YYYY/MM/DD
