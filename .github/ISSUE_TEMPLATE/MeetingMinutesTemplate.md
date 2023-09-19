@@ -1,3 +1,12 @@
+---
+name: Team Meeting Minutes Template
+about: Team Meetings Minutes/Summary
+title: Team Meeting <Number>
+labels: Team Meeting
+assignees: ''
+
+---
+
 ## Meeting Minute
 - **Date**: YYYY/MM/DD
 - **Time**: TBD
