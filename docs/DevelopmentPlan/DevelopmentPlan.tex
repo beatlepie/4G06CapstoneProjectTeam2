@@ -2,6 +2,7 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{float}
 
 \title{Development Plan\\\progname}
 
@@ -22,20 +23,56 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
+Sept 25 & Everyone & Revision 0\\
 Date2 & Name(s) & Description of changes\\
 ... & ... & ...\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\wss{Put your introductory blurb here.}
+This document outlines the development plan for an XR App for Social Connections on Campus. It includes plans for team meetings and team communication, team member roles and the workflow plan.  Furthermore,  it discusses the technologies and coding standard that the team will be using and the plan for the proof of concept demo. 
 
 \section{Team Meeting Plan}
+\quad The team will have weekly meetings at 3:30 PM every Monday virtually on our Microsoft Teams group. The purpose of these meetings is to align the team around current deliverables, exchange ideas and thoughts, and assign tasks to team members. In addition to weekly meetings,  the team will have ad hoc meetings if necessary. Formal meetings with our supervisor, Dr. Irene Ye Yuan will also be held every Thursday from 3:30 PM - 4:30 PM.  All the meetings listed above will be held by our meeting chair and have meeting minutes created as GitHub issues. Our meeting scribe will be responsible for creating meeting minutes which include the meeting date and time,  agenda, team actions and meeting notes.
+\quad All team members must join weekly team meetings and meetings with our supervisor virtually or in person.  If a member is absent,  they must notify the rest of the team half an hour before the meeting starts.  If a member is absent from a meeting,  he must reach out to other members and read the meeting notes to understand what happened in that meeting.  If most of the team agrees to postpone a meeting,  they are responsible for informing the rest of the team and finding another time that works for everyone.
 
 \section{Team Communication Plan}
+\quad The team will communicate primarily through Microsoft Teams,  emails and GitHub issues. Microsoft Teams group chat will be mainly used for asking and answering questions, scheduling meetings and sharing resources related to the project. Teams meetings will be used for weekly meetings and supervisor meetings. 
+\quad The team will use emails for any formal requests sent to the professor, supervisors and TAs. Any emails sent must have all teammates CC'd on it.
+\quad For code-related issues and task assigning, GitHub issues will be used. The team has set up a Kanban board to track all tasks assigned to everyone. Members are responsible to update these issues and report their progress in weekly meetings.
 
 \section{Team Member Roles}
+\quad Every member will occupy multiple roles in order to build such a big project. As the project consists of mainly three parts of development, our team will have three different kinds of roles focusing on these technical challenges. Members assigned these roles are required to have a deeper understanding of that specific topic and potential technical challenges. Other than development roles, there will be other roles assigned to everyone in order to organize the team. The following table shows all team member roles.
+
+\begin{table}[H]
+	\centering
+	\caption{Specific Member Roles}
+	\vspace{5pt}
+	\begin{tabular}{|p{0.2\textwidth}|p{0.3\textwidth}|p{0.4\textwidth}|}
+		\hline
+		\textbf{Team Member} & \textbf{Role(s)} & \textbf{Responsibilities} \\
+		\hline
+		  Firas Elayan & Server Developer & Work on the server-based aspect of the design\\
+		  \cline{2-3} & GitHub Expert & Review coming PRs and manage feature branches\\
+		\hline
+            Abhiram Neelamraju & Server Developer & Work on the server-based aspect of the design\\
+            \cline{2-3} & Lead Tester & Lead the testing process and generate test reports\\
+		\hline
+		  Zihao Du & User Interaction Developer & Work on the interactions between users and the environment\\
+            \cline{2-3} & Meeting Scribe & Take meeting minutes and book meetings for the team\\
+		\hline
+		  Michael Kim & User Interaction Developer & Work on the interactions between users and the environment\\
+		  \cline{2-3} & Meeting Chair & Organize all meetings and create meeting agendas\\
+        \hline
+            Matthew Miller & User Communication Developers & Work on the interactions between users\\
+		  \cline{2-3} & Issue tracker & Track all GitHub issues, manage the Kanban board and assign tasks\\
+		\hline
+            Waseef Nayeem & User Communication Developers & Work on the interactions between users\\
+		  \cline{2-3} & Game Engine Expert & Deal with bugs in the development process and answer questions of other      members\\
+		\hline
+	\end{tabular}
+\end{table}
+Though everyone has their own roles, they still need to have a basic understanding of all parts and join all team meetings, otherwise it will be quite risky for the project if something happens to one expert.
 
 \section{Workflow Plan}
 
