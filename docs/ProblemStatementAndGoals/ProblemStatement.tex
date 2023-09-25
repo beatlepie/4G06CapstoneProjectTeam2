@@ -39,9 +39,42 @@ Date2 & Name(s) & Description of changes\\
 \subsection{Problem}
 
 \subsection{Inputs and Outputs}
+\begin{itemize}
+    \item Inputs
+    \begin{itemize}
+        \item Geographic data
 
-\wss{Characterize the problem in terms of ``high level'' inputs and outputs.  
-Use abstraction so that you can avoid details.}
+        \quad Limiting the scope to the main campus of McMaster for this project. This may be increased for further support in the future.
+
+        \item Visual data
+        \item User actions 
+
+        \quad All the user interactions users can do in this app, including interactions with the building and peers.
+
+        \item User settings/preference
+
+        \quad Values that will change the output to the user's likings. Will be used to personalize the application for better social interactions.
+        
+        \item Event schedule data 
+
+        \quad The schedules of events/lectures happening on campus.
+
+    \end{itemize}
+    \item Outputs
+    \begin{itemize}
+        \item Navigation data
+        
+        \quad Locations of campus buildings and rooms.
+        
+        \item Friend user locations
+
+        \quad Locations of online friends.
+        
+        \item Lecture hall/Events availability and schedule
+        \item Messages from other users
+    \end{itemize}
+\end{itemize}
+
 
 \subsection{Stakeholders}
 
@@ -50,6 +83,40 @@ Use abstraction so that you can avoid details.}
 \wss{Hardware and software}
 
 \section{Goals}
+\begin{itemize}
+\item[2.1] \textbf{Accurate Data Collection}
+
+The product must collect location and directional data to accurately ascertain the position of the user in the building and campus. The error of data must be less than 5\%. This will allow the user to interact with the system and other users of the product to enhance social interactions. 
+
+\item[2.2] \textbf{Ease of Use}
+
+The product must be user friendly and convenient to use, as many university applications are not used or underused due to the complexity and difficult operation. The end user must be able to easily download and learn the application without external guidance. At least 90\% of users should feel comfortable about the product when conducting the user survey.
+
+\item[2.3] \textbf{Availability}
+
+The product must be able to support its users unless there is a planned maintenance or external failures. This is important as the product is using real-time data and significant delays or down-times will impact the accuracy and usability of the product.
+
+\item[2.4] \textbf{Reliable Data Communication}
+
+The product must have good and secure data communication to support the real-time nature of the product. This is important as the product is using real-time data and significant delays will impact the accuracy and usability of the product. The product must be able to provide the desired output within 5 seconds with good university WiFi connection.
+
+\item[2.5] \textbf{Protection of Personal Information}
+
+The product must keep all personal data provided by users secure in the database. Personal data will be collected securely and only used for product functions. The application must support the removal of user data upon request. This is important because users will complete a consent form that acknowledges their privacy.
+
+\item[2.6] \textbf{User Communication}
+
+The product must be able to support user-to-user communication. It should provide a friend system for users to add new friends, send messages and emojis to friends and share current location and status (in lecture/event or free) with their friends. This is important because the main purpose of the project is to allow users to connect with peers effectively.
+
+\item[2.7] \textbf{Interactable Campus Buildings}
+
+The product must be able to provide interactions between users and campus buildings. It must show the availability of the lecture halls and information about ongoing events in a building since one of the purposes of the project is to help users utilize campus resources effectively.
+
+\item[2.8] \textbf{Immersive User Experience}
+
+The product should provide an immersive user experience to the users with some XR technologies. At least 90\% of the users should find the product much more attractive and immersive than other university applications when conducting the user survey. An immersive user experience is one of the unique selling points of our product.
+
+\end{itemize}
 
 \section{Stretch Goals}
 
