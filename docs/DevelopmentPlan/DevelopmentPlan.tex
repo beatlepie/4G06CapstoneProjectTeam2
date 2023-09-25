@@ -39,10 +39,45 @@ Date2 & Name(s) & Description of changes\\
 
 \section{Workflow Plan}
 
+The following steps will be used for workflow:
+\begin{enumerate}
+	\item Pull new changes from the main branch
+	\item Create a new branch from the main branch to develop on
+    \begin{itemize}
+        \item \textbf{NOTE:} Never develop on the main branch
+        \item \textbf{Branch naming convention:} Branch Name should start with the following descriptive keywords: \textbf{chores/docs/feat/fix}, followed by brief descriptions linked with \textbf{-}
+        \item \textbf{Branch naming example:} \textit{chores-update-readme}
+    \end{itemize}
+	\item Develop new code, as well as tests for that code if applicable
+	\item Commit new code with descriptive messages
+        \begin{itemize}
+        \item \textbf{Commit message convention:} Commit message should start with the following descriptive keywords: \textbf{chores/docs/feat/fix}, followed related issue number, wrapped with \textbf{():}. After that, write a brief description of the commit
+        \item \textbf{Commit Message example:} \textit{chores(\#2): update readme}
+        \end{itemize}
+	\item Push those changes to the branch you created
+	\item Merge the branch you created into the main branch via a pull/merge request
+    \begin{itemize}
+        \item \textbf{NOTE:} Make sure all the tests pass before merging \\
+    \end{itemize}
+\end{enumerate}
+
+The following tags will be used:
 \begin{itemize}
-	\item How will you be using git, including branches, pull request, etc.?
-	\item How will you be managing issues, including template issues, issue
-	classificaiton, etc.?
+    \item \textbf{rev0:} Use for revision 0 of the project
+    \item \textbf{rev1:} Use for revision 1 of the project \\
+\end{itemize}
+
+The following labels will be used for issue tracking:
+\begin{itemize}
+    \item \textbf{documentation:} Use when documentation needs to be updated
+    \item \textbf{meeting:} Use when meeting minutes need to be added
+    \item \textbf{question:} Use when more information is needed
+    \item \textbf{enhancement:} Use when a new feature or request needs to be added
+    \item \textbf{bug:} Use when there is a bug in the code that needs to be fixed
+    \item \textbf{invalid:} Use when there is something that needs improvement
+    \item \textbf{help wanted:} Use when help is wanted on a piece of code
+    \item \textbf{duplicate:} Use when there is another identical issue or pull request
+    \item \textbf{other:} Use when the issue does not match any of the other labels
 \end{itemize}
 
 \section{Proof of Concept Demonstration Plan}
