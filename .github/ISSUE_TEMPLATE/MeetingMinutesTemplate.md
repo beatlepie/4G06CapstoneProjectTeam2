@@ -18,6 +18,7 @@ assignees: ''
 	- [ ] Zihao Du
 	- [ ] Matthew Miller
 	- [ ] Michael Kim
+	- [ ] Waseef Nayeem
 
 ## Agenda
 - Agenda1
