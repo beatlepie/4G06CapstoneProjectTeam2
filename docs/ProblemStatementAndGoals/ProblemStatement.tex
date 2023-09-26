@@ -22,35 +22,138 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+Sept 25 & Everyone & Revision 0\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \section{Problem Statement}
 
-\wss{You should check your problem statement with the
-\href{https://github.com/smiths/capTemplate/blob/main/docs/Checklists/ProbState-Checklist.pdf}
-{problem statement checklist}.}
-\wss{You can change the section headings, as long as you include the required information.}
+In this section we outline the problem we have identified and propose our solution. We then characterize the problem as a high level collection of inputs and outputs. Following that we outline the primary stakeholders and then conclude with some points about the anticipated user environment.
 
 \subsection{Problem}
 
-\subsection{Inputs and Outputs}
+\quad University students often face challenges in maximizing their campus experiences and effectively connecting with peers and resources in an increasingly digital age. While existing social media platforms offer connectivity, they lack the immersive and location-specific features necessary to foster meaningful interactions within the university community. One of the main purposes of this project is to allow users to interact with each other on campus, as well as find and join events around the main campus of McMaster University. In addition, this project will allow users to navigate campus through an immersive user experience and find information on the availability of different rooms inside the buildings.
 
-\wss{Characterize the problem in terms of ``high level'' inputs and outputs.  
-Use abstraction so that you can avoid details.}
+\subsection{Inputs and Outputs}
+\begin{itemize}
+    \item Inputs
+    \begin{itemize}
+        \item Geographic data
+
+        \quad The scope will be limited to the main campus of McMaster for this project. This may be changed for further support in the future.
+
+        \item Visual data
+
+        \quad Used for AR to complete various tasks of the application.
+        
+        \item User actions 
+
+        \quad All the user interactions users can do in this app, including interactions with the building and peers.
+
+        \item User settings/preference
+
+        \quad Values that will change the output to the user's likings. Will be used to personalize the application for better social interactions.
+        
+        \item Event schedule data 
+
+        \quad The schedules of events/lectures happening on campus.
+
+    \end{itemize}
+    \item Outputs
+    \begin{itemize}
+        \item Navigation data
+        
+        \quad Locations of campus buildings and rooms.
+        
+        \item Friend user locations
+
+        \quad Locations of online friends.
+        
+        \item Lecture hall/Events availability and schedule
+
+        \quad Shows whether the room is occupied by an official event or lecture.
+        
+        \item Messages from other users
+
+        \quad Allows better coordination and social interactions with other users.
+    \end{itemize}
+\end{itemize}
+
 
 \subsection{Stakeholders}
 
+\quad The following stakeholders will be able to locate the lecture halls and navigate the campus better. Find peers with ease and enhance the university experience.
+
+\begin{itemize}
+    \item Current McMaster students
+    \item Incoming McMaster students    
+    \item Youth touring campus
+\end{itemize}
+    \quad The following stakeholders can expect more students to find their clubs and events, increasing the visibility and activity. Access better data on student interest and interactions. 
+\begin{itemize}
+    \item McMaster club owners
+    \item McMaster Admin
+    \item McMaster Faculty
+    \item Project Supervisor (Dr. Irene Ye Yuan)
+\end{itemize}
+
 \subsection{Environment}
 
-\wss{Hardware and software}
+This section discusses the enviroment we expect the product to be used in. The environment represents any factors external to the product that could affect its operation.
+
+\subsubsection{Hardware}
+\begin{itemize}
+    \item The application should utilize sensors that are needed to collect geographic and visual data
+    \item The application should support all devices supported by the platform that have the necessary sensors
+\end{itemize}
+
+\subsubsection{Software}
+\begin{itemize}
+    \item The application should be supported on Android and iOS mobile devices that are able to connect to the Internet
+    \item The application should be compatible with all required libraries and plugins
+\end{itemize}
 
 \section{Goals}
 
+In this section we outline the goals or "selling points" of our product. Each goal specified in this section should be met by the final product. Goals have associated measures in order to verify that they were met.
+
+\begin{itemize}
+    \item[2.1] \textbf{Accurate Data Collection} The product must collect location and directional data to accurately ascertain the position of the user in the building and campus. The error of data must be less than 5\%. This will allow the user to interact with the system and other users of the product to enhance social interactions. 
+
+    \item[2.2] \textbf{Ease of Use} The product must be user friendly and convenient to use, as many university applications are not used or underused due to the complexity and difficult operation. The end user must be able to easily download and learn the application without external guidance. At least 90\% of users should feel comfortable about the product when conducting the user survey.
+
+    \item[2.3] \textbf{Availability} The product must be able to support its users unless there is a planned maintenance or external failures. This is important as the product is using real-time data and significant delays or down-times will impact the accuracy and usability of the product.
+
+    \item[2.4] \textbf{Reliable Data Communication} The product must have good and secure data communication to support the real-time nature of the product. This is important as the product is using real-time data and significant delays will impact the accuracy and usability of the product. The product must be able to provide the desired output within 5 seconds with good university WiFi connection.
+
+    \item[2.5] \textbf{Protection of Personal Information} The product must keep all personal data provided by users secure in the database. Personal data will be collected securely and only used for product functions. The application must support the removal of user data upon request. This is important because users will complete a consent form that acknowledges their privacy.
+
+    \item[2.6] \textbf{User Communication} The product must be able to support user-to-user communication. It should provide a friend system for users to add new friends, send messages and emojis to friends and share current location and status (in lecture/event or free) with their friends. This is important because the main purpose of the project is to allow users to connect with peers effectively.
+
+    \item[2.7] \textbf{Interactable Campus Buildings} The product must be able to provide interactions between users and campus buildings. It must show the availability of the lecture halls and information about ongoing events in a building since one of the purposes of the project is to help users utilize campus resources effectively.
+
+    \item[2.8] \textbf{Immersive User Experience} The product should provide an immersive user experience to the users with some XR technologies. At least 90\% of the users should find the product much more attractive and immersive than other university applications when conducting the user survey. An immersive user experience is one of the unique selling points of our product.
+\end{itemize}
+
 \section{Stretch Goals}
+
+In this section we outline goals that lie beyond the defined scope of the project. They are defined as targets for future versions or extra features if time permits.
+
+\begin{itemize}
+    \item[3.1] \textbf{Synchronous User Communication} This product could allow users to send synchronous text, video, and audio messages to each other. This additional feature can largely increase app engagement.
+
+    \item[3.2] \textbf{Larger Server Capacity} This product could have the ability to support at least 50 users online at the same time. At first, the potential users of this product will mostly be students from this course, but a larger server capacity should be taken into consideration since this product aims to help all McMaster students.
+
+    \item[3.3] \textbf{More Maps} This product could include McMaster's off-campus buildings including the Centre for Continuing Education and David Braley Health Sciences Centre in downtown Hamilton, and the Ron Joyce Centre in Burlington, ON. It could also include other post-secondary institutions. This would bring more users to the product.
+
+    \item[3.4] \textbf{Accessibility} The product could include features that make it easy to use for people with disabilities. These features would ensure that anyone is able to use the product with no difficulties.
+    
+    \item[3.5] \textbf{Personalization} The product could make use of algorithms to provide recommendations for campus events and activities to users based on their interests and information. This would help get students more involved in life on campus.
+
+    \item[3.6] \textbf{Advanced navigation} The product could use a shortest route algorithm to get users to their destinations in the least amount of time/least distance traveled. It could also provide navgiation to rooms within buildings.
+
+    \item[3.7] \textbf{Off-campus VR tours} The product could include a feature that'll allow people to get a simplified virtual tour of the campus through virtual reality, regardless of their positions. This would allow prospective students that live a distance from the university to get an idea of how campus is.
+\end{itemize}
 
 \end{document}
