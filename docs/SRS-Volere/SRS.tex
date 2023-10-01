@@ -9,6 +9,9 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{longtable}
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
       colorlinks=true,      % false: boxed links; true: colored links
@@ -108,28 +111,349 @@ involved in the Project}
 
 \section{The Scope of the Work}
 \subsection{The Current Situation}
-\lips
+Currently, students do not have effective ways to connect with peers of same interest and resources available on campus.  One of the most accessible tools for students to utilize campus resources is Oscarplus. However it is for McMaster students and Alumni only,  and does not support interactions between users -- users cannot see if their friends and classmates are joining the events nor send/read comments from others. \\
+As for room availability information,  there is no official management system for visitors and students.  Students always occupy empty rooms their found to meet with friends and classmates.  Due to poor management and messy process,  it is usually very difficult to find an appropriate place for team discussion and club events.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Current_Situation.png}
+\end{center}
+\caption{Context Diagram}
+\end{figure}
+
 \subsection{The Context of the Work}
-\lips
+
+The context diagram depicted below illustrates the interactions of the system with adjacent external systems and services.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.7]{Context_Diagram.png}
+\end{center}
+\caption{Current Event Registration Situation}
+\end{figure}
+
 \subsection{Work Partitioning}
-\lips
+
+\begin{table}[H]
+  \caption{Business Event List} \label{TblEventList}
+  \begin{tabular}{p{0.33\textwidth} | p{0.33\textwidth} | p{0.33\textwidth}}
+  \toprule
+  \textbf{Event Name} & \textbf{Input/Output} & \textbf{Summary}\\
+  \midrule
+  Provide lecture schedule & IN: Lecture schedule & Give schedule of lectures when there is an update and after every semester\\
+  \midrule
+  Provide event schedule & IN: Event schedule & Give schedule of campus events periodically and when there is an update\\
+  \midrule
+  Record user data & OUT: User data & Record user related data, including user settings, user friends and registered events\\
+  \midrule
+  Record lecture data & OUT: Event data & Record lecture data, including lecture name,  time, duration and location\\
+  \midrule
+    Record event data & OUT: Event data & Record event data, including event name,  time,  duration and location\\
+  \midrule
+  Display event schedule & IN: event data, OUT: event data filtered by location & Display events that are going to be held in in a given building\\
+  \midrule
+  Display lecture schedule & IN: lecture data, OUT: lecture data filtered by location & Display lectures that are going to be held in in a given building\\
+  \bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Specifying a Business Use Case (BUC)}
-\lips
+
+The following is an activity diagram for the Display event schedule process. The trigger of this business user case will be user interaction, and input will be campus event data from database. What will be displayed is a schedule of events held inside a specific building with detailed event information.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{BUC_Activity_Diagram.png}
+\end{center}
+\caption{Activity diagram for Display Event Schedule Process}
+\end{figure}
 
 \section{Business Data Model and Data Dictionary}
 \subsection{Business Data Model}
-\lips
+
+The following UML class diagram shows all types of business data that will be used in this project.\\
+All the classes represent corresponding business data, all these entries and their attributes will be defined and explained in the data dictionary.
+class are defined in the data dictionary.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Business_Data_Model.png}
+\end{center}
+\caption{UML class model}
+\end{figure}
+
 \subsection{Data Dictionary}
-\lips
+This section will include definition of all classes in UML class model and their attributes. Some self-explanatory attributes like name will be ignored.
+\begin{longtable}
+ {p{0.3\textwidth} | p{0.4\textwidth} | p{0.3\textwidth}}\caption{Data Dictionary} \label{TblDataDict}\\
+  \toprule
+  \textbf{Name} & \textbf{Content} & \textbf{Type}\\
+  \midrule
+  Lecture & McMaster course data & Class\\
+  \midrule
+  Lecture.Instructor & Course instructor & Attribute\\
+  \midrule
+  Lecture.Time & Course schedule & *HH/MM/SS
+24 hour clock*\\
+  \midrule
+  Lecture.Classroom & Course location & Room\\
+  \midrule
+  Event & McMaster on-campus event data & Class\\
+  \midrule
+  Event.Category & Held by which department & Attribute\\
+  \midrule
+  Event.Time & Event time & *HH/MM/SS
+24 hour clock*\\
+  \midrule
+  Lecture.Location & Event location & Room\\
+  \midrule
+  User & User account data, friends data, location,  event \& lecture attendance & Class\\
+  \midrule
+  User.Location & Geographic location & Attribute\\
+  \midrule
+  User.Status & Online or not & Boolean, Attribute\\
+  \midrule
+  User.EventsJoined & List of event & Event, Attribute\\
+  \midrule
+  User.LecturesTaken & List of lecture & Lecture, Attribute\\
+  \midrule
+  User.Friends & List of friends & User , Attribute\\
+  \midrule
+  Building & McMaster main campus building & Class\\
+  \midrule
+  Building.Abbreviation & Abbreviation of building name & Attribute\\
+  \midrule
+  Building.Location & Geographic location & Attribute\\
+  \midrule
+  Room & Room inside a building & Class\\
+  \midrule
+  Room.Capacity & Room capacity & Number, Attribute\\
+  \bottomrule
+\end{longtable}
 
 \section{The Scope of the Product}
 \subsection{Product Boundary}
-\lips
-\subsection{Product Use Case Table}
-\lips
-\subsection{Individual Product Use Cases (PUC's)}
-\lips
 
+The use case diagram depicted below identifies the boundaries between the users and the product.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Use_Case_Diagram.png}
+\end{center}
+\caption{Use Case Diagram}
+\end{figure}
+
+\subsection{Product Use Case Table}
+
+\begin{longtable}
+ {p{0.1\textwidth} | p{0.4\textwidth} | p{0.2\textwidth} | p{0.3\textwidth}}\caption{Product Use Case} \label{TblPUC}\\
+  \toprule
+  \textbf{PUC No} & \textbf{PUC Name} & \textbf{Actor/s} & \textbf{Input \& Output}\\
+  \midrule
+  1 & Create Account & User & Username \& Password (in)\\
+  \midrule
+  2 & Update Password & User & Username \& New Password (in)\\
+  \midrule
+  3 & Update User Status & User & New Status (in)\\
+  \midrule
+  4 & Login & User & Username \& Password (in), Login Response (out)\\
+   \midrule
+  5 & Add New Friend & User & Friend Username (in), Friend Request (out)\\
+  \midrule
+  6 & Delete Friend & User & Friend Username (in), Confirmation Message (out)\\
+  \midrule
+  7 & Message Friend & User & Message Content (in), Message Sent Notification (out)\\
+  \midrule
+  8 & View Event Details & User & User Interaction (in), Event Information (out)\\
+  \midrule
+  9 & Interest/Disinterest Event & User & User Interaction \& Event Name (in)\\
+  \midrule
+  10 & Add/Remove attended lecture & User & User Interaction \& Lecture Name (in)\\
+  \midrule
+  11 & Retrieve Event Schedule & System & New Schedule (out)\\
+  \midrule
+  12 & Retrieve Lecture Schedule & System & New Schedule (out)\\
+  \midrule
+  13 & Load Building Information & System & Location \& Sensor data (in),  Building Name (out)\\
+  \bottomrule
+\end{longtable}
+
+\subsection{Individual Product Use Cases (PUC's)}
+\textbf{Use case \#1:} Create Account\\
+\textbf{Precondition:} None\\
+\textbf{Trigger:} The user clicks on create account button\\
+\textbf{Outcome}
+\begin{enumerate}
+    \item User provides the required information
+    \item System verifies all required information has been provided
+    \item System securely registers user information
+    \item Player is redirected back to the Home page
+\end{enumerate}
+\textbf{Postcondition:} The user has successfully created an account and account information is stored and secured in a database.
+
+
+\noindent\\
+\textbf{Use case \#2:} Update Password\\
+\textbf{Precondition:} The user has already created an account\\
+\textbf{Trigger:} The user clicks on change password button\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User navigates to change password page
+    \item User provides old password
+    \item User provides new password
+    \item System verifies old password is correct and new password is valid
+    \item System updates password of current user in the database
+    \item User is redirected back to the Home page
+\end{enumerate}
+\textbf{Postcondition:} The user has successfully changed the password.
+
+
+\noindent\\
+\textbf{Use case \#3:} Update User Status\\
+\textbf{Precondition:} The user has already created an account\\
+\textbf{Trigger:} The user clicks on change status button\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User navigates to change status page
+    \item User updates status to a new status
+    \item System updates user status and redirects back to the Home page
+\end{enumerate}
+\textbf{Postcondition:} The user status has been changed successfully.
+
+
+\noindent\\
+\textbf{Use case \#4:} Login\\
+\textbf{Precondition:} The user has already created an account\\
+\textbf{Trigger:} The user clicks on login button on the home page\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User navigates to login page
+    \item System verifies all required information has been provided and matches the database record
+    \item User is redirected to the home page as alogged-in user
+\end{enumerate}
+\textbf{Postcondition:} The user has successfully logged in to the created account with all settings and connections loaded from the database.
+
+
+\noindent\\
+\textbf{Use case \#5:} Add New Friend\\
+\textbf{Precondition:} The user has already logged in\\
+\textbf{Trigger:} The user searches for another user and sends a friend request\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User searches for another user
+    \item User sends a friend request
+    \item System sends the request and user information to the destined user
+    \item Destined user accepts/rejects the request
+    \item User receives a notification
+\end{enumerate}
+\textbf{Postcondition:} The user gets a new connection in their friends list.\\
+\textbf{Postcondition 2:} The user is rejected and gets a notification about that.
+
+
+\noindent\\
+\textbf{Use case \#6:} Delete Friend\\
+\textbf{Precondition:} The user has already logged in and has at lease one friend\\
+\textbf{Trigger:} The user clicks delete button on friend page\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User searches for a friend
+    \item User deletes the friend
+    \item System sends a confirmation prompt
+    \item User continues to delete
+    \item User receives a notification
+\end{enumerate}
+\textbf{Postcondition:} The friend is deleted from user's friends list.\\
+
+
+\noindent\\
+\textbf{Use case \#7:} Message Friend\\
+\textbf{Precondition:} The user has already logged in and has at lease one friend\\
+\textbf{Trigger:} The user texts a friend on friend page\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User searches for a friend
+    \item User start to text the friend
+    \item System sends message to the destined friend
+\end{enumerate}
+\textbf{Postcondition:} The friend receives a message from the user.\\
+
+
+\noindent\\
+\textbf{Use case \#8:} View Event Details\\
+\textbf{Precondition:} The user has already logged in and necessary sensors are working properly\\
+\textbf{Trigger:} The user clicks on an event\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User moves the device to target a building on campus
+    \item User finds a list of events
+    \item User clicks on one of the event
+    \item System displays more information about the event
+\end{enumerate}
+\textbf{Postcondition:} The content, time and location of the event are displayed.\\
+
+
+\noindent\\
+\textbf{Use case \#9:} Interest/Disinterest Event\\
+\textbf{Precondition:} The user has already logged in and had a target building\\
+\textbf{Trigger:} The user clicks on interest/disinterest button\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User browses the event list of the target
+	\item User navigates to an event detail page with a specific name
+	\item User clicks on the corresponding button
+    \item System sends the request to the database
+    \item System displays the new state of the event
+\end{enumerate}
+\textbf{Postcondition:} The user event list in the database is updated and the UI changes correspondingly.\\
+
+
+\noindent\\
+\textbf{Use case \#10:} Add/Remove Attended lecture\\
+\textbf{Precondition:} The user has already logged in and had a target building\\
+\textbf{Trigger:} The user clicks on add/remove button\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User browses the lecture list of the target
+	\item User navigates to a lecture detail page with a specific course code
+	\item User clicks on the corresponding button
+    \item System sends the request to the database
+    \item System displays the new state of the lecture
+\end{enumerate}
+\textbf{Postcondition:} The user lecture list in the database is updated and the UI changes correspondingly.\\
+
+
+\noindent\\
+\textbf{Use case \#11:} Retrieve Event Schedule\\
+\textbf{Precondition:} None\\
+\textbf{Trigger:} A request to update schedule is sent or trigger by the system timer\\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item System sends a request to the on-campus schedule interface
+    \item System gets the up-to-date schedule
+    \item System stores the new schedule to the database
+\end{enumerate}
+\textbf{Postcondition:} The new schedule is stored in the database and will be utilized later.\\
+
+
+\noindent\\
+\textbf{Use case \#12:} Retrieve Lecture Schedule\\
+\textbf{Precondition:} None\\
+\textbf{Trigger:} A request to update schedule is sent or trigger by the system timer\\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item System sends a request to lecture schedule interface
+    \item System gets the up-to-date schedule
+    \item System stores the new schedule to the database
+\end{enumerate}
+\textbf{Postcondition:} The new schedule is stored in the database and will be utilized later.\\
+
+
+\noindent\\
+\textbf{Use case \#13:} Load Building Information\\
+\textbf{Precondition:} None\\
+\textbf{Trigger:} Location Share is allowed and sensors are working properly\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item System gets geographic location and sensor data from the device
+    \item System finds the most likely building on campus
+    \item System displays building information
+\end{enumerate}
+\textbf{Postcondition:} The system provides information of the building the user locates now.\\
 \section{Functional Requirements}
 \subsection{Functional Requirements}
 \lips
@@ -223,11 +547,26 @@ involved in the Project}
 
 \section{New Problems}
 \subsection{Effects on the Current Environment}
-\lips
+
+This application will help students improve certain processes they use to follow and these changes will impact the users. However, the application will not take place of any existing official tools.\\
+\noindent\\
+\textbf{Expand Networking}\\
+Students will be able to expand networking even more when registering events and attending lectures through this application.
+\noindent\\
+\textbf{Event Registration}\\
+Students will be able to get more information about the events they want to join from peers and alumni, which will allow them find events and clubs of their interest more effectively.
+\noindent\\
+\textbf{Available Room Management}\\
+Student can facilitate this application to get information about available empty rooms while youth visiting the campus can find lectures they'd like to attend on the other hand. 
+
 \subsection{Effects on the Installed Systems}
-\lips
+
+The application will be completely stand alone and will not be interfacing with any existing systems.  As described in the previous section, this application should not affect or take place of any existing system.
+
 \subsection{Potential User Problems}
-\lips
+
+Any potential adverse reactions related to using the device in which application is being launched on (mobile device or tablet) would extend to the use of this application.  Any adverse reactions of Virtual Reality and Augment Reality, like nausea, dizziness and disorientation would be introduced to the use of the application as well.
+
 \subsection{Limitations in the Anticipated Implementation Environment That May
 Inhibit the New Product}
 \lips
