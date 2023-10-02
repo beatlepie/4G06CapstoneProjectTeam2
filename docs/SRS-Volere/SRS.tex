@@ -336,7 +336,7 @@ The use case diagram depicted below identifies the boundaries between the users 
     \item User provides the required information
     \item System verifies all required information has been provided
     \item System securely registers user information
-    \item Player is redirected back to the Home page
+    \item User is redirected back to the Home page
 \end{enumerate}
 \textbf{Postcondition:} The user has successfully created an account and account information is stored and secured in a database.
 
@@ -582,15 +582,34 @@ The use case diagram depicted below identifies the boundaries between the users 
 
 \section{Security Requirements}
 \subsection{Access Requirements}
-\lips
+
+There will be three levels of access. 
+
+The first will be before login and account creation, where anyone can access. They must not have access to anything beyond the login, account creation, and account recovery pages.
+
+The second will be after login that verifies their identity, where the user has provided information matching the McMaster student or faculty member with McMaster email account. Only the user can access this page.
+
+The third level will the the administrator account, used for adding, deleting, or editing official events. This account can be accessed by login that verifies that they are the maintainer, this will be used by the maintainers to check the functionality of the product  and pull logs that are not accessible to users.
+
 \subsection{Integrity Requirements}
 \lips
 \subsection{Privacy Requirements}
-\lips
+
+All data collected must be encrypted on disk in the server by standard encryption algorithm.
+All data collected must be encrypted on transit by industry standard encryption algorithm.
+
+The product will require users to agree on the terms prior to account creation and additional data submission.
+The product must erase all data if the user requests, or when account is deleted.
+Additionally, accounts that are inactive for a certain period of time will have their account deleted after notice to prevent unnecessary data being held.
+
 \subsection{Audit Requirements}
-\lips
+
+N/A (This currently does not apply)
+
 \subsection{Immunity Requirements}
-\lips
+
+The product must only use open source libraries with many users and continuous security updates. 
+The product must undergo  
 
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
