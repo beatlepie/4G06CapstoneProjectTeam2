@@ -44,11 +44,13 @@
 
 \section*{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\textbf{Date}} & {\textbf{Version}} & {\textbf{Notes}}\\
+\begin{tabularx}{\textwidth}{p{3cm}p{3cm}X}
+\toprule {\textbf{Date}} & {\textbf{Developer(s)}} & {\textbf{Change}}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+Oct 2 & Zihao Du & Add Section 6, 7, 8 Revision 0\\
+Oct 2 & Matthew Miller & Add Section 1, 5, 13, 16 Revision 0\\
+Oct 2 & Michael Kim & Add Section 15 Revision 0\\
+Oct 2 & Waseef Nayeem & Add Section 3, 19 Revision 0\\
 \bottomrule
 \end{tabularx}
 
@@ -170,7 +172,28 @@ N/A
 \section{Naming Conventions and Terminology}
 \subsection{Glossary of All Terms, Including Acronyms, Used by Stakeholders
 involved in the Project}
-\lips
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.3\linewidth} | p{0.7\linewidth}| }
+    \hline
+    \textbf{Term} & \textbf{Definition}\\
+    \hline
+    Campus Connections & Campus Connections is the name of the company the capstone project team runs and the name of the application\\
+    \hline
+    Extended reality (XR) & AR technology combines the physical world with a "digital twin world" able to interact with it\\
+    \hline
+    OSCARplus & OSCARplus is is an appointment, registration and job posting system for McMaster students and alumni\\
+    \hline
+    Unified Model Language (UML) diagram & UML diagram is a graphical notation used to construct and visualize object oriented system\\
+    \hline
+    Personal Identification Information (PII) & Personal data that could potentially identify a specific individual \\
+    \hline
+    Unity & Unity is a cross-platform game engine developed by Unity Technologies\\
+    \hline
+    \end{tabular}
+    \caption{Naming Conventions and Terminology}
+    \label{TblNaming}
+\end{table}
 
 \section{Relevant Facts And Assumptions}
 \subsection{Relevant Facts}
@@ -190,7 +213,7 @@ involved in the Project}
 
 \section{The Scope of the Work}
 \subsection{The Current Situation}
-Currently, students do not have effective ways to connect with peers of same interest and resources available on campus.  One of the most accessible tools for students to utilize campus resources is Oscarplus. However it is for McMaster students and Alumni only,  and does not support interactions between users -- users cannot see if their friends and classmates are joining the events nor send/read comments from others. \\
+Currently, students do not have effective ways to connect with peers of same interest and resources available on campus.  One of the most accessible tools for students to utilize campus resources is OSCARplus. However it is for McMaster students and Alumni only,  and does not support interactions between users -- users cannot see if their friends and classmates are joining the events nor send/read comments from others. \\
 As for room availability information,  there is no official management system for visitors and students.  Students always occupy empty rooms their found to meet with friends and classmates.  Due to poor management and messy process,  it is usually very difficult to find an appropriate place for team discussion and club events.
 \begin{figure}[H]
 \begin{center}
@@ -212,7 +235,6 @@ The context diagram depicted below illustrates the interactions of the system wi
 \subsection{Work Partitioning}
 
 \begin{table}[H]
-  \caption{Business Event List} \label{TblEventList}
   \begin{tabular}{p{0.33\textwidth} | p{0.33\textwidth} | p{0.33\textwidth}}
   \toprule
   \textbf{Event Name} & \textbf{Input/Output} & \textbf{Summary}\\
@@ -232,6 +254,8 @@ The context diagram depicted below illustrates the interactions of the system wi
   Display lecture schedule & IN: lecture data, OUT: lecture data filtered by location & Display lectures that are going to be held in in a given building\\
   \bottomrule
 \end{tabular}
+ \caption{Business Event List} 
+ \label{TblEventList}
 \end{table}
 
 \subsection{Specifying a Business Use Case (BUC)}
@@ -260,7 +284,7 @@ class are defined in the data dictionary.
 \subsection{Data Dictionary}
 This section will include definition of all classes in UML class model and their attributes. Some self-explanatory attributes like name will be ignored.
 \begin{longtable}
- {p{0.3\textwidth} | p{0.4\textwidth} | p{0.3\textwidth}}\caption{Data Dictionary} \label{TblDataDict}\\
+ {p{0.3\textwidth} | p{0.4\textwidth} | p{0.3\textwidth}}
   \toprule
   \textbf{Name} & \textbf{Content} & \textbf{Type}\\
   \midrule
@@ -304,6 +328,7 @@ This section will include definition of all classes in UML class model and their
   \midrule
   Room.Capacity & Room capacity & Number, Attribute\\
   \bottomrule
+  \caption{Data Dictionary} \label{TblDataDict}\\
 \end{longtable}
 
 \section{The Scope of the Product}
@@ -320,7 +345,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Product Use Case Table}
 
 \begin{longtable}
- {p{0.1\textwidth} | p{0.4\textwidth} | p{0.2\textwidth} | p{0.3\textwidth}}\caption{Product Use Case} \label{TblPUC}\\
+ {p{0.1\textwidth} | p{0.4\textwidth} | p{0.2\textwidth} | p{0.3\textwidth}}
   \toprule
   \textbf{PUC No} & \textbf{PUC Name} & \textbf{Actor/s} & \textbf{Input \& Output}\\
   \midrule
@@ -330,7 +355,7 @@ The use case diagram depicted below identifies the boundaries between the users 
   \midrule
   3 & Update User Status & User & New Status (in)\\
   \midrule
-  4 & Login & User & Username \& Password (in), Login Response (out)\\
+  4 & Login & User & Username \& Password (in),  Response message (out)\\
    \midrule
   5 & Add New Friend & User & Friend Username (in), Friend Request (out)\\
   \midrule
@@ -338,7 +363,7 @@ The use case diagram depicted below identifies the boundaries between the users 
   \midrule
   7 & Message Friend & User & Message Content (in), Message Sent Notification (out)\\
   \midrule
-  8 & View Event Details & User & User Interaction (in), Event Information (out)\\
+  8 & View Event Details & User & User Interaction (in), Event details (out)\\
   \midrule
   9 & Interest/Disinterest Event & User & User Interaction \& Event Name (in)\\
   \midrule
@@ -350,6 +375,7 @@ The use case diagram depicted below identifies the boundaries between the users 
   \midrule
   13 & Load Building Information & System & Location \& Sensor data (in),  Building Name (out)\\
   \bottomrule
+  \caption{Product Use Case} \label{TblPUC}\\
 \end{longtable}
 
 \subsection{Individual Product Use Cases (PUC's)}
@@ -524,8 +550,8 @@ The use case diagram depicted below identifies the boundaries between the users 
 
 \noindent\\
 \textbf{Use case \#13:} Load Building Information\\
-\textbf{Precondition:} None\\
-\textbf{Trigger:} Location Share is allowed and sensors are working properly\\
+\textbf{Precondition:} Location share is allowed and sensors are set properly\\
+\textbf{Trigger:} A request for event/lecture schedule is sent by the user\\
 \textbf{Outcome}
 \begin{enumerate}
 	\item System gets geographic location and sensor data from the device
@@ -677,20 +703,20 @@ N/A
 \section{New Problems}
 \subsection{Effects on the Current Environment}
 
-This application will help students improve certain processes they use to follow and these changes will impact the users. However, the application will not take place of any existing official tools.\\
+This application will not take place of any existing official tools. It intends to improve certain social networking processes students are following and provide a platform for users to connect with each other better. The following are some changes that will impact users.\\
 \noindent\\
 \textbf{Expand Networking}\\
-Students will be able to expand networking even more when registering events and attending lectures through this application.
+Students will be able to expand networking when attending events lectures on this social media platform. Users may lose connection with peers when there is a failure in the system. 
 \noindent\\
 \textbf{Event Registration}\\
-Students will be able to get more information about the events they want to join from peers and alumni, which will allow them find events and clubs of their interest more effectively.
+Students and alumni will be able to login with their McMaster email and write comments about on campus events, which means there will be a risk of personal identification information (PII) leakage if the data is not stored securely.
 \noindent\\
 \textbf{Available Room Management}\\
-Student can facilitate this application to get information about available empty rooms while youth visiting the campus can find lectures they'd like to attend on the other hand. 
+This application can be utilized to get information about lecture time and location which should not be displayed publicly. Therefore insecure data storage may lead to data breaches.
 
 \subsection{Effects on the Installed Systems}
 
-The application will be completely stand alone and will not be interfacing with any existing systems.  As described in the previous section, this application should not affect or take place of any existing system.
+The application will be completely stand alone and will not be interfacing with any existing systems.  As described in the previous section, this application should not affect or replace any existing systems.
 
 \subsection{Potential User Problems}
 
@@ -698,13 +724,50 @@ Any potential adverse reactions related to using the device in which application
 
 \subsection{Limitations in the Anticipated Implementation Environment That May
 Inhibit the New Product}
-\lips
+
+\begin{itemize}
+\item The database free plan is not able to cope with our projected user growth pattern.
+\item Low quality internet connection will lead to latency between user inputs and in-game reactions or even failures of loading in-game assets.
+\item The accuracy of input data totally depends on device sensor. Low accuracy data may cause bad user experience.
+\end{itemize}
+
 \subsection{Follow-Up Problems}
-\lips
+
+Any failures or downtime on Unity game engine and its third-party libraries may affect the availability of this application. In-game schedules may fail to load when the event and lecture schedule interfaces are down or the two external systems are under maintenance. There will also be a risk of violating privacy laws in the future since the application is collection personal information and there may be new laws prohibit this kind of information collection.
 
 \section{Tasks}
 \subsection{Project Planning}
-\lips
+
+The project schedule will follow the deadline for the deliverables outlined in the SFWRENG
+4G06 course outline.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.2\linewidth} | p{0.5\linewidth}| p{0.3\linewidth} |}
+    \hline
+    \textbf{Phase} & \textbf{Task} & \textbf{Deadline}\\
+    \hline
+    Revision 0 & Hazard Analysis & Oct 20, 2023 \\
+     \cline{2-3} & Verification and Validation Plan & Nov 3, 2023 \\
+     \cline{2-3} & Proof of Concept Demo & Nov 13-24, 2023\\
+     \cline{2-3} & Design Document & Jan 17, 2024\\
+     \cline{2-3} & Demonstration & Feb 5-16, 2024\\
+     \cline{2-3} & Verification and Validation Report & Mar 6, 2024\\
+     \hline
+     Revision 1 & Final Demonstration & Mar 18-29, 2024\\
+     \cline{2-3} & EXPO Demonstration & April 2024\\
+     \cline{2-3} & Final Documentation & Apr 4, 2024\\
+     
+     
+     
+     
+     
+    \hline
+    \end{tabular}
+    \caption{Project Plan}
+    \label{TblProjectTasks}
+\end{table}
+
 \subsection{Planning of the Development Phases}
 \lips
 
