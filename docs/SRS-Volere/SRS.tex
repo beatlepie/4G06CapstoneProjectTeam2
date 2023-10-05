@@ -660,7 +660,11 @@ The second will be after login that verifies their identity, where the user has 
 The third level will the the administrator account, used for adding, deleting, or editing official events. This account can be accessed by login that verifies that they are the maintainer, this will be used by the maintainers to check the functionality of the product  and pull logs that are not accessible to users.
 
 \subsection{Integrity Requirements}
-\lips
+
+The product will prevent introduction of duplicate data, to guarantee that all user identities are unique.
+
+In the future, the database and server can protect itself from excessive use with a load balancer and additional servers being added.
+
 \subsection{Privacy Requirements}
 
 All data collected must be encrypted on disk in the server by standard encryption algorithm.
@@ -672,12 +676,15 @@ Additionally, accounts that are inactive for a certain period of time will have 
 
 \subsection{Audit Requirements}
 
-N/A (This currently does not apply)
+N/A (This currently does not apply, once the product is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)
 
 \subsection{Immunity Requirements}
 
 The product must only use open source libraries with many users and continuous security updates. 
-The product must undergo  
+As open source libraries are used by millions of people, vulnerabilities are found and patched much earlier.
+
+The product must undergo vulnerability checks before a build is pushed to the users.
+This will prevent vulnerabilities from inadequate codes from being introduced to user devices.
 
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
