@@ -12,6 +12,7 @@
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{longtable}
+\usepackage{enumerate}
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
       colorlinks=true,      % false: boxed links; true: colored links
@@ -51,6 +52,8 @@ Oct 2 & Zihao Du & Add Section 6, 7, 8 Revision 0\\
 Oct 2 & Matthew Miller & Add Section 1, 5, 13, 16 Revision 0\\
 Oct 2 & Michael Kim & Add Section 15 Revision 0\\
 Oct 2 & Waseef Nayeem & Add Section 3, 19 Revision 0\\
+Oct 4 & All & Add Functional Requirements\\
+Oct 6 & All & Finish Revision 0\\
 \bottomrule
 \end{tabularx}
 
@@ -186,9 +189,11 @@ involved in the Project}
     \hline
     Unified Model Language (UML) diagram & UML diagram is a graphical notation used to construct and visualize object oriented system\\
     \hline
-    Personal Identification Information (PII) & Personal data that could potentially identify a specific individual \\
+    Personal Identification Information (PII) & Personal data that could potentially identify a specific individual\\
     \hline
     Unity & Unity is a cross-platform game engine developed by Unity Technologies\\
+    \hline
+    Amazon Web Services (AWS) & Amazon Web Services is a cloud computing provider\\
     \hline
     \end{tabular}
     \caption{Naming Conventions and Terminology}
@@ -561,7 +566,69 @@ The use case diagram depicted below identifies the boundaries between the users 
 \textbf{Postcondition:} The system provides information of the building the user locates now.\\
 \section{Functional Requirements}
 \subsection{Functional Requirements}
-\lips
+\begin{enumerate}
+    \item The system shall allow users to create accounts.\\
+        \textbf{Rationale:} Users must be associated with accounts to identify themselves and expand their social networking.\\
+        \textbf{Fit Criterion:} Users must be able to create an account with a unique username and a password.\\
+    \item The system shall allow users to change their password.\\
+        \textbf{Rationale:} This will allow users to improve the security of their account and recover the account if they forget their password.\\
+        \textbf{Fit Criterion:} Users may change password in the settings menu after proving their identity. The user must be notified afterwards.\\
+    \item The system shall allow users to add friends.\\
+        \textbf{Rationale:} One of the main purposes of this application is to make students connect with peers easily. For this to happen, they should be able to make friends on this social media platform.\\
+        \textbf{Fit Criterion:} Users can search for other users through username and send a friend request, added friends can be removed from the friend list.\\
+    \item The system shall allow users to delete friends.\\
+        \textbf{Rationale:} When users add users as friends by accident or they no longer connect with each other, they should be able to remove them from the friend list.\\
+        \textbf{Fit Criterion:} Users can remove any friends from their friend list.\\
+    \item The system shall allow users to send text messages to other users.\\
+        \textbf{Rationale:} This will make the app more interactive and encourage and enhance socialization between users.\\
+        \textbf{Fit Criterion:} Users must be able send messages and to view received messages.\\
+    \item The system shall allow users to share their location with others.\\
+        \textbf{Rationale:} For the purpose of expanding social networking, users shall be able to share their current location with friends to meet in person.\\
+        \textbf{Fit Criterion:} Users should be able to share their real-time location with friends as long as they agree on the corresponding terms.\\
+    \item The system shall allow users to view events on the McMaster University campus.\\
+        \textbf{Rationale:} Currently there is no way for students of McMaster University to keep up with all the different types of events that are hosted by different clubs and departments. This is one of the main purposes of this application to allow users to discover the time and place for as many events as possible in an intuitive manner\\
+        \textbf{Fit Criterion:} Users will be able to see current / upcoming events at campus buildings that they are looking at / positioned near as well as a cumulative list of nearing events.\\
+    \item The system shall allow users to pin events they are interested in.\\
+        \textbf{Rationale:} It will be much easier for users to find events they are interested in and willing to join again. So that they do not have to browse the event list again and again. While their friends can see what events they are likely to join.\\
+        \textbf{Fit Criterion:} Users should be able to pin an event from the event list, this event will be displayed on the user page and accessible to all their friends.\\
+    \item The system shall allow users to unpin events.\\
+        \textbf{Rationale:} In case users are no longer interested in the event or they pinned the event by mistake.\\
+        \textbf{Fit Criterion:} Users shall be able to unpin an event they pinned before.\\
+    \item The system shall allow users to view lecture schedule information.\\
+        \textbf{Rationale:} This will allow users to verify their availability for events without needing to leave the app.\\
+        \textbf{Fit Criterion:} Users must be able view lecture times and locations. \\
+    \item The system shall allow users to pin lectures they are attending.\\
+        \textbf{Rationale:} Sharing schedules with friends can increase friendship. If two friends are taking the same course, they can join lectures, discuss assignments and prepare for midterms together. So it is important for the system to have the functionality to display lectures a user is taking.\\
+        \textbf{Fit Criterion:} Users should be able to pin a lecture from the list as attended lecture, this lecture will be displayed on the user page and accessible to all their friends.\\
+    \item The system shall allow users to unpin lectures.\\
+        \textbf{Rationale:} In case users are no longer taking the lecture or they added the lecture by mistake.\\
+        \textbf{Fit Criterion:} Users shall be able to unpin a lecture they pinned before.\\
+    \item The system shall have administrator accounts that have special modification access.\\
+        \textbf{Rationale:} Administrator accounts should be utilized for the purpose of providing accurate and up-to-date event and lecture information.\\
+        \textbf{Fit Criterion:} The system shall be able to mark specific users as administrators and give them access to edit, add and remove all in-app assets.\\
+    \item The system shall allow users with an administrator account to add, edit, and remove events.\\
+        \textbf{Rationale:} The event information must be up to date and accurate. The administrator account will maintain all events so that there is a singular source of information. Additionally, this reduces the chances of errors being introduced to the system.\\
+        \textbf{Fit Criterion:} A new event can be created only by a user who is logged in as an administrator. The information for those events can be changed only by administrators. Events can be deleted only by administrators.\\
+    \item The system shall allow users with an administrator account to add, edit, and remove lectures from the schedule.\\
+        \textbf{Rationale:} The lecture information must be up to date and accurate as well. Administrators are needed to manage the schedule.\\
+        \textbf{Fit Criterion:} A lecture on the schedule can be created, deleted, or updated by a user who logged in as an administrator.
+    \item Each event shall be associated with a club/department, location and time.\\
+        \textbf{Rationale:} In order for the application to schedule events for the users to see and interact with, all specific details about the event should be provided to the system\\
+        \textbf{Fit Criterion:} When a department/club requests for an event to be posted on the application, they have to provide details about the building and room number it will be held in, along with the date and time the event will take place at.\\
+    \item Each lecture shall be associated with an instructor, location and time.\\
+        \textbf{Rationale:} In order to find empty rooms and help users who want to attend specific lectures, all details about the lectures should be provided to the system.\\
+        \textbf{Fit Criterion:} When a lecture is added or modified, all the details mentioned above must be set as mandatory fields.\\
+    \item The system shall allow users to create a virtual avatar.\\
+        \textbf{Rationale:} A customizable avatar makes user accounts more personal and improves the immersiveness of the app. \\
+        \textbf{Fit Criterion:} When the user creates an account, they will be prompted to design an avatar with some basic level of customization provided in the application. This avatar will be used to virtually identify the user.\\
+    \item The system shall allow users to modify a virtual avatar.\\
+        \textbf{Rationale:} The user might feel the need to update the appearance of their avatar to better represent themself. \\
+        \textbf{Fit Criterion:} The avatar created in the user's registration process can be modified at any time through the settings menu.\\
+    \item The system shall recognize buildings on campus.\\
+        \textbf{Rationale:} When navigating the campus, users should be able to see their avatar on the map and recognize the buildings through their camera with some XR technologies.\\
+        \textbf{Fit Criterion:} User must see their avatars moving correspondingly on the map when they travel on campus, and when they observe a specific building through their camera, the application should recognize it and display details about this building.\\
+\end{enumerate}
+
 
 \section{Look and Feel Requirements}
 \subsection{Appearance Requirements}
@@ -848,7 +915,13 @@ The project schedule will follow the deadline for the deliverables outlined in t
 \end{table}
 
 \subsection{Planning of the Development Phases}
-\lips
+The development of the project will be divided into two phases
+\begin{itemize}
+    \item Revision 0, initial development
+    \item Revision 1, refinement of the project and documents
+\end{itemize}
+Revision 0 starts now and ends with the Verification and Validation Report. In this phase, the team will work on some design-related documents and specify the scope of the project, what skills the team will be using, and how the interaction of different components be. Then the team will start implementation as proof of concept and demonstrate their product to stakeholders. After that, the team will write a V\&V report based on the demonstration and stakeholder feedback.\\
+Revision 1 will focus on the refinement of the application and documents. In the previous phase, the team finished a bunch of drafted documents, and in this phase, the team should put all effort into incorporating feedback into these documents and the application itself. There will not be any major new features added in Revision 1.
 
 \section{Migration to the New Product}
 \subsection{Requirements for Migration to the New Product}
@@ -875,7 +948,18 @@ As this product handles real time data, there is no need to migrate outdated dat
 N/A
 
 \section{Ideas for Solution}
-\lips
+Implementation ideas for solutions
+\begin{itemize}
+\item AR feature
+	\begin{itemize}
+	\item Vuforia supports some AR functionalities and works as a library of Unity
+	\item gather.town might be a good design approach to follow after from the campus navigation and interaction perspective
+	\end{itemize}
+\item Server
+	\begin{itemize}
+	\item AWS might be a purchasable and reliable option for the back-end
+	\end{itemize}
+\end{itemize}
 
 \newpage{}
 \section*{Appendix --- Reflection}
@@ -891,10 +975,39 @@ graduate attribute of Lifelong Learning.  Please answer the following questions:
   computer science knowledge.  Skills may be related to technology, or writing,
   or presentation, or team management, etc.  You should look to identify at
   least one item for each team member.
+  
+  
+\quad The team members will need to collectively acquire some technical and non-technical skills and knowledge in order to succeed in this capstone project. The following is a list of skills that are critical to the project and course deliverables.
+  \begin{enumerate}[1]
+      \item Presentation skills for demonstrations and capstone EXPO
+      \item Documentation skills
+      \item Team management skills including time management and work distribution
+      \item Skills of Unity game development
+      \item Skills of Unity AR development
+      \item Integrating external backend systems into a Unity project
+      \item Skills of git
+      \item Front-end development skills
+      \item Back-end development skills including server deployment and database
+      \item Organizational skills to lead meetings and discussions on unclear topics in the project
+  \end{enumerate}
+  
   \item For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
   mastering the skill?  Of the identified approaches, which will each team
   member pursue, and why did they make this choice?
+  
+  
+\quad For non-technical skills, team members can develop those skills by practicing and attending courses/workshops. Members can leverage LinkedIn Learning and McMaster workshops to develop management and organizational skills. For documentation and presentation skills, team members can also join related events hosted by the university or refer to past documents and presentations.\\
+  There are even more resources available for developing technical skills. Online learning platforms like Udemy will be used for the team to learn new technology-specific domain knowledge and skills. Other online resources like YouTube tutorials and official documentation can help the team master those technical skills as well.\\
+  Listed below under each team member’s name is a list of skills that the team member will focus on and why they decide to work on them.\\
+    \begin{itemize}
+      \item \textbf{Zihao Du}
+      \begin{itemize}
+          \item Skills: 1, 2, 3, 4, 8
+      \end{itemize}
+      Soft skills are quite important for a team and an engineer. And that's why I'd like to focus on soft skills like presentation skills and documentation skills. It will be not only critical to succeed in this capstone project but also beneficial to software engineering careers. Communication plays a very important role in software engineer's daily work and I will take this opportunity to further improve my skills.\\
+      I'll also focus on Unity game development and front-end development because that attracts me the most and what I have the most experience in and I'd like to strengthen my skills and learn more about game development during this project.
+  \end{itemize}
 \end{enumerate}
 
 \end{document}
