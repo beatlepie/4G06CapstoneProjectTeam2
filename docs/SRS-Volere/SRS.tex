@@ -656,19 +656,56 @@ The use case diagram depicted below identifies the boundaries between the users 
 
 \section{Performance Requirements}
 \subsection{Speed and Latency Requirements}
-\lips
+
+\begin{itemize}
+\item The time from a successful image recognition to popup responses appearing on the user screen will be less than 3 seconds.
+\item The time taken to receive a message sent by a user to the recipient will be under 2 seconds
+\item The application will update the user’s shared location with their friends within 10 seconds of a location change
+\end{itemize}
+
 \subsection{Safety-Critical Requirements}
-\lips
+
+\begin{itemize}
+\item The application will not collect or share any user’s location or personal data without getting permission from the user.
+\item User data such as messages and location information will be securely encrypted to protect user’s privacy
+\item The application will comply with all relevant privacy laws and guidelines.
+\end{itemize}
+
 \subsection{Precision or Accuracy Requirements}
-\lips
+
+\begin{itemize}
+\item The product will identify the building being scanned correctly with an accuracy of at least 80%
+\item The application will accurately determine the user’s location on campus within a 25m radius and display it based on their permissions.
+\end{itemize}
+
 \subsection{Robustness or Fault-Tolerance Requirements}
-\lips
+
+\begin{itemize}
+\item The user will be informed in case of network connectivity issues and the application will not crash.
+\item The messaging functionality will still work as planned if there is are issues collecting location information for users.
+\end{itemize}
+
 \subsection{Capacity Requirements}
-\lips
+
+\begin{itemize}
+\item The finalized application will be designed to accommodate a minimum of 5,000 simultaneous users during peak hours.
+\item The database will store event information for all campus buildings for at least 3 months
+\end{itemize}
+
 \subsection{Scalability or Extensibility Requirements}
-\lips
+
+\begin{itemize}
+\item This product will be capable of processing about 20 people concurrently in the release build with a plan of expanding it to support all students on campus or about 40,000 people by the final version
+\item This product will be capable of storing account and personal information of about 100 users in the release build with a plan of expanding it to support up to 40,000 users by the final version.
+\item The application architecture will allow for the addition of new campus buildings and clubs without considerable drawbacks in performance
+\end{itemize}
+
 \subsection{Longevity Requirements}
-\lips
+
+\begin{itemize}
+\item This product will be expected to operate without major malfunctions in release build for a minimum of 1 year while undergoing further development.
+\item The finalized product will remain compatible with the promised operating systems and devices for a minimum of 3 years.
+\end{itemize}
 
 \section{Operational and Environmental Requirements}
 \subsection{Expected Physical Environment}
@@ -922,12 +959,50 @@ These data will be requested via API or a new web based or internal input system
 As this product handles real time data, there is no need to migrate outdated data to the product.
 
 \section{Costs}
-\lips
+
+In the initial release build of our application, we will be keeping costs at an absolute minimum. We will be utilizing free technologies such as Vuforia for image recognition features and MongoDB as our database solution, our development expenses will remain at \$0. Additionally, we plan on using GitHub's free hosting service for the deployment of our application, further eliminating any hosting-related expenses. We plan to scale our infrastructure with time where we may explore more premium options, such as AWS S3 bucket and MongoDB Atlas, to ensure the continued seamless operation and performance of our application while serving all McMaster students.
+
 \section{User Documentation and Training}
 \subsection{User Documentation Requirements}
-\lips
+
+\begin{itemize}
+
+\item Digital User Manual:
+
+The purpose of the document will be to outline the main functions the product serves such as navigation and event discovery and how the user can make use of them. This will also highlight some common possible errors / mistakes that can occur and how the user should interact with the system to avoid them in the first place or handle them in a sensible manner if they occur.
+
+ 
+
+\item Event Posting Guideline:
+
+The purpose of this document will be to streamline and outline the process for clubs and departments to post events in the proper manner
+
+\item Privacy Policy:
+
+This document will display the data handling and user privacy rights clearly.
+
+ 
+
+\item Terms of Service:
+
+This document will outline terms of service and all user responsibilities.
+
+\end{itemize}
+Motivation:
+
+User documentation will be created by the developers and will improve the on-app experience of the users.
+
+
 \subsection{Training Requirements}
-\lips
+
+\begin{itemize}
+\item Admin training: 
+
+Training provided to authorized club and department representatives on additional features associated with admin accounts such event posting / management and handling user issues.
+\end{itemize}
+Motivation: 
+
+To provide a better experience for administrators and avoid overwhelming them with the additional features presented to them. The training plan and the physical training will be carried out by different developers.
 
 \section{Waiting Room}
 \begin{itemize}
@@ -1012,6 +1087,12 @@ graduate attribute of Lifelong Learning.  Please answer the following questions:
             \item Skills: 2, 4, 5, 6, 10
         \end{itemize}
         I have chosen to focus on a combination of skills that I am experienced in as well ones that are more difficult or new to me. Game development is one of my passions and main hobbies and I always want to learn new techniques to improve my skills. This is why I want to focus on the Unity game and AR development tasks. Since most of my experience is with 2D games, 3D will pose some challenges that I am excited to tackle. I am also interested in learning how to integrate external systems and services into game engines such as Unity as I believe the experience will benefit my future projects. My work on prior projects has taught me the importance of proper documentation. I could improve my documentations skills by practicing technical writing or documentation prior projects. I could also learn new documentation tools and techniques such as using GitHub's wiki features or making a ReadTheDocs page. Lastly, I would like to improve my organization and participation in team settings. To accomplish this I could prepare a personal agenda of items ahead of time or log a to-do list of action items.
+        
+      \item \textbf{Abhiram Neelamraju}
+        \begin{itemize}
+            \item Skills: 3, 4, 5, 6
+        \end{itemize}
+        The skills I plan on acquiring and focusing on have been chosen based on where I feel like I want to improve the most and where I feel like I can contribute the most. I want to be a good team member and possess good team management skills so that I can do well in the future as well in team oriented- environments. I can do so by taking an active role in group discussions and doing my fair share of work on time. I’m also extremely interested in learning about the Unity engine as a whole (4,5,6). Starting from learning basic skills related to Unity game development and Unity AR development. These skills can be acquired through looking through the detailed and comprehensive documentation available online and well as free video tutorials on websites such as YouTube. The specific skills for Integrating external backend systems into a Unity project is more specific and will be learned more through reading documentation, but there are still video tutorials that teach these skills which I will be following. I also plan on exploring paid options for digital courses on websites such as coursera and Udemy.
 
 \end{itemize}
 \end{enumerate}
