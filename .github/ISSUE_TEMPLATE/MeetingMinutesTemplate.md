@@ -2,7 +2,7 @@
 name: Team Meeting Minutes Template
 about: Team Meetings Minutes/Summary
 title: Team Meeting <Number>
-labels: Team Meeting
+labels: meeting
 assignees: ''
 
 ---
