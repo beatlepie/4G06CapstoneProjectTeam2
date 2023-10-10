@@ -1,12 +1,8 @@
 ---
 name: Peer Review Template
 about: Team Meetings Minutes/Summary
-title: Team Meeting <Number>
+title: 
 labels: Review-SRS-Team11
 assignees: ''
 
 ---
-
-- ...
-
-## Meeting Notes
