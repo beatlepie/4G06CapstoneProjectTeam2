@@ -98,17 +98,17 @@ The system will be divided into the following components:
     \hline
     \multicolumn{1}{|>{\centering\hspace{0pt}}m{0.075\linewidth}|}{Design Function} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.102\linewidth}|}{Failure Modes} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.106\linewidth}|}{Causes of Failure} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.156\linewidth}|}{Effects of Failure} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.169\linewidth}|}{Detection} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.242\linewidth}|}{Recommended Action} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.033\linewidth}|}{SR} & \multicolumn{1}{>{\centering\arraybackslash\hspace{0pt}}m{0.044\linewidth}|}{Ref. No.} \endfirsthead 
     \hline
-    AR Object Recognition & App is unable to detect object & Poor lighting conditions\par{}Camera angle & User is unable to view information from the AR element & Keep track of prior incomplete scan attempts & Implement a failsafe mechanism that shows the scannable information if enough previous attempts have failed & IR1 & H1 \\ 
+    AR Object Recognition & App is unable to detect object & Poor lighting conditions\par{}Camera angle & User is unable to view information from the AR element & Keep track of prior incomplete scan attempts & Implement a failsafe mechanism that shows the scannable information if enough previous attempts have failed & RFT2 AVR1 & H1 \\ 
     \hline
-    Backend Server & Server is inaccessible & No internet connection\par{}Hosting service is down\par{}Invalid access key & Users are unable to make changes to their profile\par{}Users cannot receive updated information from the server & Keep track of the connection to the server using periodic heartbeats or similar methods & Display an error message stating that the connection the the server has been lost &  & H2 \\ 
+    Backend Server & Server is inaccessible & No internet connection\par{}Hosting service is down\par{}Invalid access key & Users are unable to make changes to their profile\par{}Users cannot receive updated information from the server & Keep track of the connection to the server using periodic heartbeats or similar methods & Display an error message stating that the connection the the server has been lost & RFT1 & H2 \\ 
     \hline
-    User Profile View & Sensitive user data is publicly visible & Invalid visibility permissions\par{}Access control software malfunction & Confidential user information could be exposed and used for malicious purposes & Software failsafes and checks that verify the integrity of the permission structure & Prevent other users from accessing unauthorized information by creating a robust permissions system &  & H3 \\ 
+    User Profile View & Sensitive user data is publicly visible & Invalid visibility permissions\par{}Access control software malfunction & Confidential user information could be exposed and used for malicious purposes & Software failsafes and checks that verify the integrity of the permission structure & Prevent other users from accessing unauthorized information by creating a robust permissions system & SR & H3 \\ 
     \hline
-    App Performance & App performance is poor & Large amounts of assets to be rendered\par{}Slow internet connection\par{}App is running on an old phone & User experiences lag or slowdown\par{}App feels unresponsive & Track of frame times or other performance metrics & Only show up to a maximum number of avatars or lower the level of detail &  & H4 \\ 
+    App Performance & App performance is poor & Large amounts of assets to be rendered\par{}Slow internet connection\par{}App is running on an old phone & User experiences lag or slowdown\par{}App feels unresponsive & Track of frame times or other performance metrics & Only show up to a maximum number of avatars or lower the level of detail & SLR & H4 \\ 
     \hline
-    User Safety & App is used where and when it is not intended & User is distracted by the app & User could get into an accident & N/A & Display a warning message when opening the app that tells the user to be aware of their surroundings at all times while using the app &  & H5 \\ 
+    User Safety & App is used where and when it is not intended & User is distracted by the app & User could get into an accident & N/A & Display a warning message when opening the app that tells the user to be aware of their surroundings at all times while using the app & RFT2 & H5 \\ 
     \hline
-    AR Module & Device is not compatible with AR features & Device is missing required hardware or software & User cannot use the AR features & Check if device supports the required feature set using API functions. & Display a warning message if the user's device is not compatible &  & H6 \\
+    AR Module & Device is not compatible with AR features & Device is missing required hardware or software & User cannot use the AR features & Check if device supports the required feature set using API functions. & Display a warning message if the user's device is not compatible & RFT3 & H6 \\
     \hline
         Account Creation & Duplicate ID Creation &
             1.~ Account login failure
@@ -116,13 +116,13 @@ The system will be divided into the following components:
             3.~ Incorrect user added as friend & 
             1.~ Duplicate ID was used during account creation 
             2.~ Duplicate ID was used during account update &
-            Compare ID with existing ID in database & Checks whether the ID is duplicate or not when entered and when saving & PR1 & H7 \\
+            Compare ID with existing ID in database & Checks whether the ID is duplicate or not when entered and when saving & IR & H7 \\
         \hline
         F7: Share location with friends & Location shown unintentionally &
             1.~ Location known without application being focused
             2.~ Incorrect location display on other users & 
             1.~ User did not turn off their GPS and application &
-            Application only sends location information for too long & If user has not interacted with the application for a prolonged period, check for activity, and turn off all processes if no response is received & SR1 & H8 \\
+            Application only sends location information for too long & If user has not interacted with the application for a prolonged period, check for activity, and turn off all processes if no response is received & PR SR1 & H8 \\
         \hline
         Unauthorized user activity & 1.~ Incorrect login attempts 2.~ Account activity in unknown devices 3.~ Unknown administrator activity & 
             1.~ Account locked for user until further checks 
@@ -134,12 +134,12 @@ The system will be divided into the following components:
             2.~ Suspicious activity in the logs & 
             1.~ Too many incorrect passwords will result in account lock. The lock can be undone from email. The account ID and password can be changed with rules preventing predictable passwords such as cannot use same password.
             2.~ Recommend all users to use multi-factor authentication and have logs of their previous activity available to them.
-            3. Notify users of the security measures of the application and procedures of using them &  & H9 \\
+            3. Notify users of the security measures of the application and procedures of using them & AR & H9 \\
          \hline
         Maintenance and updates of features & Update cannot be finished in time or major error is found & 
             1.~ Users could experience unexpected down times 2.~ Features could be delayed & 
             1.~ Update was not properly tested 
-             & Maintenance expected time exceeds allocated time & Rollback to previous update and do the update sequencially in smaller patches at low usage times &  & H10 \\    
+             & Maintenance expected time exceeds allocated time & Rollback to previous update and do the update sequencially in smaller patches at low usage times & MR & H10 \\    
 \hline
     \end{longtable}
 \end{landscape}
@@ -196,22 +196,22 @@ This will reduce the chances of novel attacks from affecting the product.
         \item \textbf{Rationale:} This requirement prevents the application from unnecessarily communicating with the server and taking up resources. This will improve the privacy and data protection of the application. This also reduces the battery usage of the product.
         \item \textbf{Fit Criterion:} The product will not execute any code that involves the transmission of information outside of the product.
     \end{itemize}
-    \item[IR1.] \textbf{There must be a failsafe for the product to function if main method takes too long or fails.}
+    \item[AVR1.] \textbf{There must be a failsafe for the product to function if main method takes too long or fails.}
     \begin{itemize}
         \item \textbf{Rationale:} This will allow the product to function to some degree even during high traffic or bad internet connection situations.
         \item \textbf{Fit Criterion:} The product must be able to provide rudimentary navigation functionality using its offline functions.
     \end{itemize}
-    \item The product shall display an error message when there is no internet connection.
+    \item[RFT1.] The product shall display an error message when there is no internet connection.
     \begin{itemize}
         \item \textbf{Rationale:} When there is no internet connection, the user should be made aware.
         \item \textbf{Fit Criterion:} An error message stating that there is no internet connection is displayed when the product fails to connect to the internet.
     \end{itemize}
-    \item The product shall display a message upon startup warning the user to be aware of their surroundings.
+    \item[RFT2.] The product shall display a message upon startup warning the user to be aware of their surroundings.
     \begin{itemize}
         \item \textbf{Rationale:} Ensures the safety of the user.
         \item \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon startup.
     \end{itemize}
-    \item The product shall display a warning message if the user's device is not compatible with the AR features.
+    \item[RFT3.] The product shall display a warning message if the user's device is not compatible with the AR features.
     \begin{itemize}
         \item \textbf{Rationale:} Tells the user that the AR features of the app cannot be used with their device.
         \item \textbf{Fit Criterion:} A warning message is displayed if the user's device is incompatible with AR.
