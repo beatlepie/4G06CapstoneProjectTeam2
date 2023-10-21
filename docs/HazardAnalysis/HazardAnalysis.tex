@@ -100,7 +100,7 @@ The system will be divided into the following components:
     \hline
     \multicolumn{1}{|>{\centering\hspace{0pt}}m{0.075\linewidth}|}{Design Function} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.102\linewidth}|}{Failure Modes} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.106\linewidth}|}{Causes of Failure} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.156\linewidth}|}{Effects of Failure} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.169\linewidth}|}{Detection} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.242\linewidth}|}{Recommended Action} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.033\linewidth}|}{SR} & \multicolumn{1}{>{\centering\arraybackslash\hspace{0pt}}m{0.044\linewidth}|}{Ref. No.} \endfirsthead 
     \hline
-    F21: AR Object Recognition & App is unable to detect object & Poor lighting conditions\par{}Camera angle & User is unable to view information from the AR element & Keep track of prior incomplete scan attempts & Implement a failsafe mechanism that shows the scannable information if enough previous attempts have failed &  &  \\ 
+    FR21: AR Object Recognition & App is unable to detect object & Poor lighting conditions\par{}Camera angle & User is unable to view information from the AR element & Keep track of prior incomplete scan attempts & Implement a failsafe mechanism that shows the scannable information if enough previous attempts have failed &  &  \\ 
     \hline
     14.1 Backend Server & Server is inaccessible & No internet connection\par{}Hosting service is down\par{}Invalid access key & Users are unable to make changes to their profile\par{}Users cannot receive updated information from the server & Keep track of the connection to the server using periodic heartbeats or similar methods & Display an error message stating that the connection the the server has been lost &  &  \\ 
     \hline
@@ -120,24 +120,69 @@ The system will be divided into the following components:
 \wss{Newly discovered requirements.  These should also be added to the SRS.  (A
 rationale design process how and why to fake it.)}
 
-\subsection{Safety Requirements}
+\subsection{Access Requirements}
+
+There will be three levels of access. 
+
+The first will be before login and account creation, where anyone can access. They must not have access to anything beyond the login, account creation, and account recovery pages.
+
+The second will be after login that verifies their identity, where the user has provided information matching the McMaster student or faculty member with McMaster email account. Only the user can access this page.
+
+The third level will the the administrator account, used for adding, deleting, or editing official events. This account can be accessed by login that verifies that they are the maintainer, this will be used by the maintainers to check the functionality of the product  and pull logs that are not accessible to users.
+
+\subsection{Integrity Requirements}
+
+The product will prevent introduction of duplicate data, to guarantee that all user identities are unique.
+
+In the future, the database and server can protect itself from excessive use with a load balancer and additional servers being added.
+
+\subsection{Privacy Requirements}
+
+All data collected must be encrypted on disk in the server by standard encryption algorithm.
+All data collected must be encrypted on transit by industry standard encryption algorithm.
+
+The product will require users to agree on the terms prior to account creation and additional data submission.
+The product must erase all data if the user requests, or when account is deleted.
+Additionally, accounts that are inactive for a certain period of time will have their account deleted after notice to prevent unnecessary data being held.
+
+\subsection{Audit Requirements}
+
+N/A (This currently does not apply, once the product is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)
+
+\subsection{Immunity Requirements}
+
+The product must only use open source libraries with many users and continuous security updates. 
+As open source libraries are used by millions of people, vulnerabilities are found and patched much earlier.
+
+The product must undergo vulnerability checks before a build is pushed to the users.
+This will prevent vulnerabilities from inadequate codes from being introduced to user devices.
+
+Security updates must be done as soon as possible when they are announced for used packages.
+This will reduce the chances of novel attacks from affecting the product.
+
+
 \begin{itemize}
     \item The product shall not transmit information while not in use.
     \begin{itemize}
         \item \textbf{Rationale:} This requirement limits the battery usage of the product.
         \item \textbf{Fit Criterion:} The product will not execute any code that involves the transmission of information outside of the product.
     \end{itemize}
+    \item The product shall display an error message when there is no internet connection.
+    \begin{itemize}
+        \item \textbf{Rationale:} When there is no internet connection, the user should be made aware.
+        \item \textbf{Fit Criterion:} An error message stating that there is no internet connection is displayed when the product fails to connect to the internet.
+    \end{itemize}
+    \item The product shall display a message upon startup warning the user to be aware of their surroundings.
+    \begin{itemize}
+        \item \textbf{Rationale:} Ensures the safety of the user.
+        \item \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon startup.
+    \end{itemize}
+    \item The product shall display a warning message if the user's device is not compatible with the AR features.
+    \begin{itemize}
+        \item \textbf{Rationale:} Tells the user that the AR features of the app cannot be used with their device.
+        \item \textbf{Fit Criterion:} A warning message is displayed if the user's device is incompatible with AR.
+    \end{itemize}
 \end{itemize}
-
-\subsection{Access Requirements}
-
-\subsection{Integrity Requirements}
-
-\subsection{Privacy Requirements}
-
-\subsection{Audit Requirements}
-
-\subsection{Immunity Requirements}
 
 \section{Roadmap}
 
@@ -147,10 +192,14 @@ Which requirements will be implemented in the future?}
 Safety Requirements to be implemented for capstone:
 \begin{itemize}
     \item The product shall not transmit information while not in use.
+    \item The product shall display an error message when there is no internet connection.
+    \item The product shall display a message upon startup warning the user to be aware of their surroundings.
+    \item The product shall display a warning message if the user's device is not compatible with the AR features.
 \end{itemize}
 
 Safety Requirements to be implemented after capstone:
 \begin{itemize}
-    \item
+    \item None
 \end{itemize}
+
 \end{document}
