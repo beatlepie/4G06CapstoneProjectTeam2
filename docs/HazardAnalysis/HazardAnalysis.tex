@@ -112,6 +112,38 @@ The system will be divided into the following components:
     \hline
     AR Module & Device is not compatible with AR features & Device is missing required hardware or software & User cannot use the AR features & Check if device supports the required feature set using API functions. & Display a warning message if the user's device is not compatible &  &  \\
     \hline
+        F1: Account Creation & Duplicate ID Creation &
+            1.~ Account login failure
+            2.~ Function returns incorrect results
+            3.~ Incorrect user added as friend & 
+            1.~ Duplicate ID was used during account creation 
+            2.~ Duplicate ID was used during account update &
+            Compare ID with existing ID in database & Checks whether the ID is duplicate or not when entered and when saving &  & \\
+        \hline
+         &  &  &  &  &  &  & \\
+        F7: Share location with friends & Location shown unintentionally &
+            1.~ Location known without application being focused
+            2.~ Incorrect location display on other users & 
+            1.~ User did not turn off their GPS and application &
+            Application only sends location information for too long & If user has not interacted with the application for a prolonged period, check for activity, and turn off all processes if no response is received & &  \\
+        \hline
+        15.1 Unauthorized user activity & 1.~ Incorrect login attempts 2.~ Account activity in unknown devices 3.~ Unknown administrator activity & 
+            1.~ Account locked for user until further checks 
+            2.~ Compromise of user and friend data & 
+            1.~ Predictable passwords allowed, improper password change rules 
+            2.~ Security measures such as second factor authentication not used
+            3.~ Account lock features were not used & 
+            1.~ Accounted used from previously unknown account
+            2.~ Suspicious activity in the logs & 
+            1.~ Too many incorrect passwords will result in account lock. The lock can be undone from email. The account ID and password can be changed with rules preventing predictable passwords such as cannot use same password.
+            2.~ Recommend all users to use multi-factor authentication and have logs of their previous activity available to them.
+            3. Notify users of the security measures of the application and procedures of using them &  & \\
+         \hline
+        14.1 Maintenance and updates of features & Update cannot be finished in time or major error is found & 
+            1.~ Users could experience unexpected down times 2.~ Features could be delayed & 
+            1.~ Update was not properly tested 
+             & Maintenance expected time exceeds allocated time & Rollback to previous update and do the update sequencially in smaller patches at low usage times &  & \\    
+\hline
     \end{longtable}
 \end{landscape}
 
