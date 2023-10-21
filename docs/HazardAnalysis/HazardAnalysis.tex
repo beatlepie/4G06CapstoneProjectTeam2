@@ -148,48 +148,89 @@ The system will be divided into the following components:
 
 The following requirements includes previous non-functional requirements in the Software Requirements Specification document that are referred in the previous section and new requirements added to handle potential hazards. The new requirements are listed in \textbf{bold}.
 
-\subsection{Safety Requirements}
-
 \subsection{Access Requirements}
+
+There will be three levels of access. 
+
+The first will be before login and account creation, where anyone can access. They must not have access to anything beyond the login, account creation, and account recovery pages.
+
+The second will be after login that verifies their identity, where the user has provided information matching the McMaster student or faculty member with McMaster email account. Only the user can access this page.
+
+The third level will the the administrator account, used for adding, deleting, or editing official events. This account can be accessed by login that verifies that they are the maintainer, this will be used by the maintainers to check the functionality of the product  and pull logs that are not accessible to users.
 
 \subsection{Integrity Requirements}
 
+The product will prevent introduction of duplicate data, to guarantee that all user identities are unique.
+
+In the future, the database and server can protect itself from excessive use with a load balancer and additional servers being added.
+
+\subsection{Privacy Requirements}
+
+All data collected must be encrypted on disk in the server by standard encryption algorithm.
+All data collected must be encrypted on transit by industry standard encryption algorithm.
+
+The product will require users to agree on the terms prior to account creation and additional data submission.
+The product must erase all data if the user requests, or when account is deleted.
+Additionally, accounts that are inactive for a certain period of time will have their account deleted after notice to prevent unnecessary data being held.
+
+\subsection{Audit Requirements}
+
+N/A (This currently does not apply, once the product is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)
+
+\subsection{Immunity Requirements}
+
+The product must only use open source libraries with many users and continuous security updates. 
+As open source libraries are used by millions of people, vulnerabilities are found and patched much earlier.
+
+The product must undergo vulnerability checks before a build is pushed to the users.
+This will prevent vulnerabilities from inadequate codes from being introduced to user devices.
+
+Security updates must be done as soon as possible when they are announced for used packages.
+This will reduce the chances of novel attacks from affecting the product.
+
+\subsection{New Requirements}
+
 \begin{itemize}
+        \item[PR1.] \textbf{The product shall not transmit information while not in use.}
+    \begin{itemize}
+        \item \textbf{Rationale:} This requirement prevents the application from unnecessarily communicating with the server and taking up resources. This will improve the privacy and data protection of the application. This also reduces the battery usage of the product.
+        \item \textbf{Fit Criterion:} The product will not execute any code that involves the transmission of information outside of the product.
+    \end{itemize}
     \item[IR1.] \textbf{There must be a failsafe for the product to function if main method takes too long or fails.}
     \begin{itemize}
         \item \textbf{Rationale:} This will allow the product to function to some degree even during high traffic or bad internet connection situations.
         \item \textbf{Fit Criterion:} The product must be able to provide rudimentary navigation functionality using its offline functions.
     \end{itemize}
-\end{itemize}
-
-\subsection{Privacy Requirements}
-
-\begin{itemize}
-    \item[PR1.] \textbf{The product shall not transmit information while not in use.}
+    \item The product shall display an error message when there is no internet connection.
     \begin{itemize}
-        \item \textbf{Rationale:} This requirement prevents the application from unnecessarily communicating with the server and taking up resources. This will improve the privacy and data protection of the application. This also reduces the battery usage of the product.
-        \item \textbf{Fit Criterion:} The product will not execute any code that involves the transmission of information outside of the product.
+        \item \textbf{Rationale:} When there is no internet connection, the user should be made aware.
+        \item \textbf{Fit Criterion:} An error message stating that there is no internet connection is displayed when the product fails to connect to the internet.
+    \end{itemize}
+    \item The product shall display a message upon startup warning the user to be aware of their surroundings.
+    \begin{itemize}
+        \item \textbf{Rationale:} Ensures the safety of the user.
+        \item \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon startup.
+    \end{itemize}
+    \item The product shall display a warning message if the user's device is not compatible with the AR features.
+    \begin{itemize}
+        \item \textbf{Rationale:} Tells the user that the AR features of the app cannot be used with their device.
+        \item \textbf{Fit Criterion:} A warning message is displayed if the user's device is incompatible with AR.
     \end{itemize}
 \end{itemize}
 
-\subsection{Audit Requirements}
-
-\subsection{Immunity Requirements}
-
-N/A
-
 \section{Roadmap}
-
-\wss{Which safety requirements will be implemented as part of the capstone timeline?
-Which requirements will be implemented in the future?}
 
 Safety Requirements to be implemented for capstone:
 \begin{itemize}
     \item The product shall not transmit information while not in use.
+    \item The product shall display an error message when there is no internet connection.
+    \item The product shall display a message upon startup warning the user to be aware of their surroundings.
+    \item The product shall display a warning message if the user's device is not compatible with the AR features.
 \end{itemize}
 
 Safety Requirements to be implemented after capstone:
 \begin{itemize}
-    \item
+    \item None
 \end{itemize}
+
 \end{document}
