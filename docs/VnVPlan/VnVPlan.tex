@@ -30,7 +30,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
+Oct 29 & 1.0 & Add Functional Requirements Tests\\
 Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
@@ -209,57 +209,508 @@ as a Rev 0 demo for the supervisor.}
 	
 \subsection{Tests for Functional Requirements}
 
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
+The following are system tests for functional requirements defined in the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document. In order to cover all the functional requirements, these subsections match exactly the subsections in the SRS document, which cover all the different components of this application. These tests will ensure all requirements are fulfilled and the application works as we expected. Most of the following tests will be run manually while some of them will be automated.
 
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
+\subsubsection{Pre-Game Settings}
 
-\subsubsection{Area of Testing1}
-
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
-		
-\paragraph{Title for Test}
+This section includes all test cases related to what users can do before they start to use the application. This will include the requirement for the consent form and user privacy protection (FR-1-1). In order to plan the game, the user must agree to the terms and conditions in the consent form.
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{\textbf{FRT-PG1}}
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+\textbf{Name:} Agree To Consent Form
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+\textbf{Control:} Manual
 					
-How test will be performed: 
-					
-\item{test-id2\\}
+\textbf{Initial State:} The user is not logged in to the application, and all features in the application are not accessible to the user. A consent form appears asking for access to the device and permission to collect user data
 
-Control: Manual versus Automatic
+\textbf{Input:} The user agrees to all the terms and conditions and clicks 'Agree'
 					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+\textbf{Output:} The user is redirected to the login screen
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+\textbf{Test Case Derivation:} It is a must to request users' consent before collecting their information or using any hardware component
+					
+\textbf{How test will be performed:} The tester will first clear the app cache and data. Then the tester will run the application, accept the consent form and verify login screen shows up
 
-How test will be performed: 
+\textbf{Related Requirement(s):} FR-1-1
+					
+\item{\textbf{FRT-PG2}}
+
+\textbf{Name:} Disagree To Consent Form
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} The user is not logged in to the application, and all features in the application are not accessible to the user. A consent form appears asking for access to the device and permission to collect user data
+					
+\textbf{Input:} The user rejects the terms and conditions and clicks 'Disagree'
+					
+\textbf{Output:} The user is not redirected to the login screen
+
+\textbf{Test Case Derivation:} It is a must to request users' consent before collecting their information or using any hardware component
+
+\textbf{How test will be performed:} The tester will first clear the app cache and data. Then the tester will run the application, reject the consent form and verify login screen does not show up
+
+\textbf{Related Requirement(s):} FR-1-1
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{User Account}
 
-...
+This section includes all test cases related to user accounts. This will include the requirements for account creation (FR-2-1), login (FR-2-3) and deletion (FR-2-2), along with user avatar settings (FR-2-6, FR-2-7). User accounts and virtual avatars are necessary for all users who want to use this application.
+
+\begin{enumerate}
+
+\item{\textbf{FRT-UA1}}
+
+\textbf{Name:} Successful Account Creation
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} The user does not have an account and is not logged in to the application
+
+\textbf{Input:} All information needed to create an account
+					
+\textbf{Output:} An Account with corresponding information is created in the database with the account initialized to INITIAL\_USER\_STATE
+
+\textbf{Test Case Derivation:}  User account operations are the foundation of the application. All functionalities work only with an existing account. Also, it is essential to ensure the account information reflects the input information when creating accounts
+					
+\textbf{How test will be performed:} The tester will create an account with all information and verify that the account can be logged into
+
+\textbf{Related Requirement(s):} FR-2-1
+
+\item{\textbf{FRT-UA2}}
+
+\textbf{Name:} Unsuccessful Account Creation
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} The user does not have an account and is not logged in to the application
+
+\textbf{Input:} All information needed to create an account, including an existing username
+					
+\textbf{Output:} Account creation fails with an error message telling the user the username already exists
+
+\textbf{Test Case Derivation:} Username is the identifier of a user account, which should be unique
+					
+\textbf{How test will be performed:} The tester will create an account with an existing username and verify that the creation fails
+
+\textbf{Related Requirement(s):} FR-2-1
+
+\item{\textbf{FRT-UA3}}
+
+\textbf{Name:} Successful Account Login
+
+\textbf{Control:} Automated
+					
+\textbf{Initial State:} The user has an account and is not logged in to the application
+
+\textbf{Input:} Username and valid password
+					
+\textbf{Output:} User successfully logs into the application
+
+\textbf{Test Case Derivation:} User account operations are the foundation of the application. All functionalities work only with an existing account. Also, it is essential to verify that users can log in with only the correct password 
+					
+\textbf{How test will be performed:} The tester will create an automated test that inputs a valid password and verifies that the login is completed
+
+\textbf{Related Requirement(s):} FR-2-3
+
+\item{\textbf{FRT-UA4}}
+
+\textbf{Name:} Unsuccessful Account Login
+
+\textbf{Control:} Automated
+					
+\textbf{Initial State:} The user has an account and is not logged in to the application
+
+\textbf{Input:} Username and wrong password
+					
+\textbf{Output:} Login fails with an error message telling the user the password is wrong
+
+\textbf{Test Case Derivation:} User account operations are the foundation of the application. All functionalities work only with an existing account. Also, it is essential to verify that users can log in with only the correct password
+					
+\textbf{How test will be performed:} The tester will create an automated test that inputs an invalid password and verifies that a corresponding error is returned
+
+\textbf{Related Requirement(s):} FR-2-3
+
+\item{\textbf{FRT-UA5}}
+
+\textbf{Name:} Account Deletion
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} The user has an account and is logged into the application
+
+\textbf{Input:} Corresponding user request
+					
+\textbf{Output:} Data pertaining to the given username is deleted
+
+\textbf{Test Case Derivation:} User account operations are the foundation of the application. When users want to quit, they should be able to delete all related information in the application by deleting their account
+					
+\textbf{How test will be performed:} The tester will delete the test account and verify the account does not exist anymore in-game
+
+\textbf{Related Requirement(s):} FR-2-2
+
+\item{\textbf{FRT-UA6}}
+
+\textbf{Name:} Reset Account Password
+
+\textbf{Control:} Automated
+					
+\textbf{Initial State:} The user has an account
+
+\textbf{Input:} New password and answers to security questions for password recovery
+					
+\textbf{Output:} Password is successfully reset
+
+\textbf{Test Case Derivation:} In case the user misplaces or forgets the password, they can still get their account back
+					
+\textbf{How test will be performed:} The tester will first reset the password. Then the tester will try to log in with the new password and verify the new password works properly
+
+\textbf{Related Requirement(s):} FR-2-4
+
+\item{\textbf{FRT-UA7}}
+
+\textbf{Name:} Human Verification Test
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} The user does not have an account and is not logged into the application
+
+\textbf{Input:} All information needed to create an account
+					
+\textbf{Output:} The tester passes the test and creates an account successfully
+
+\textbf{Test Case Derivation:} To prevent malicious automated systems from creating bot accounts
+					
+\textbf{How test will be performed:} The tester will verify the CAPTCHA test appears and functions well when creating an account
+
+\textbf{Related Requirement(s):} FR-2-5
+
+\item{\textbf{FRT-UA8}}
+
+\textbf{Name:} Avatar Creation and Modification
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} The user has an account with INITIAL\_AVATAR
+
+\textbf{Input:} Avatar and corresponding user request
+					
+\textbf{Output:} User creates an avatar and changes it
+
+\textbf{Test Case Derivation:} To help users enjoy social networking when using this application, users shall be able to personalize their account, therefore it is necessary to verify they can create an avatar and change it whenever they want
+					
+\textbf{How test will be performed:} The tester will create an avatar from the initial one and modify it. Then the tester will verify the changes are visible for all friends from another test account
+
+\textbf{Related Requirement(s):} FR-2-6, FR-2-7
+\end{enumerate}
+
+\subsubsection{Social Networking System}
+
+This section includes all test cases related to the social networking system. This will include the requirements for adding (FR-3-1), deleting (FR-3-2), messaging friends of the user (FR-3-3, FR-3-4) and sharing location (FR-3-5). Expanding student social network is the most significant motivation of this application and it is necessary to verify all associated requirements are fully fulfilled.
+
+\begin{enumerate}
+\item{\textbf{FRT-SN1}}
+
+\textbf{Name:} Successful Friend Request
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} The user is logged in
+
+\textbf{Input:} A valid username and corresponding user request
+					
+\textbf{Output:} A Request is sent to the given user
+
+\textbf{Test Case Derivation:} Users should be able to make friends on this social media platform by searching for names and sending requests
+					
+\textbf{How test will be performed:} The tester will first send a friend request to a test account. Then the tester will verify that test account receives a friend request
+
+\textbf{Related Requirement(s):} FR-3-1
+
+\item{\textbf{FRT-SN2}}
+
+\textbf{Name:} Friend Request Acceptance
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A friend request was sent
+
+\textbf{Input:} User accepts the request
+					
+\textbf{Output:} Two users are added to each other's friend lists
+
+\textbf{Test Case Derivation:} Users should be able to expand networking by accepting friend requests
+					
+\textbf{How test will be performed:} The tester will first accept the request. Then the tester will verify that the two accounts become friends of each other
+
+\textbf{Related Requirement(s):} FR-3-1
+
+\item{\textbf{FRT-SN3}}
+
+\textbf{Name:} Friend Request Rejection
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A friend request was sent
+
+\textbf{Input:} User rejects the request
+					
+\textbf{Output:} The request is declined and no friend is added to the list
+
+\textbf{Test Case Derivation:} Users should be able to decline friend requests from strangers
+					
+\textbf{How test will be performed:} The tester will first reject the request. Then the tester will verify that no friendship relation is generated between the two accounts
+
+\textbf{Related Requirement(s):} FR-3-1
+
+\item{\textbf{FRT-SN4}}
+
+\textbf{Name:} Friend Deletion
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A friend exists in the friend list
+
+\textbf{Input:} User deletes the chosen friend
+					
+\textbf{Output:} The corresponding friend is deleted from the list
+
+\textbf{Test Case Derivation:} Users should be able to remove friends from their list to make space for new friends
+					
+\textbf{How test will be performed:} The tester will delete a test friend account and verify the friend is removed from the list
+
+\textbf{Related Requirement(s):} FR-3-2
+
+\item{\textbf{FRT-SN5}}
+
+\textbf{Name:} Friend Messaging
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A friend exists in the friend list
+
+\textbf{Input:} Audio/text message to send
+					
+\textbf{Output:} The corresponding message is sent to the friend
+
+\textbf{Test Case Derivation:} Chatting with friends is the core functionality of expanding social networks. Friends should be able to send and receive messages from each other
+					
+\textbf{How test will be performed:} The tester will send an audio and text message to another test friend account. Then the tester will verify the other account received the correct message
+
+\textbf{Related Requirement(s):} FR-3-3, FR-3-4
+
+\item{\textbf{FRT-SN6}}
+
+\textbf{Name:} Friend Location Sharing
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A friend exists in the friend list
+
+\textbf{Input:} User Location
+					
+\textbf{Output:} User location is visible to the corresponding friend
+
+\textbf{Test Case Derivation:} Users shall be able to share their current location with friends to meet in person. It is essential to verify the location is accurate and up-to-date
+					
+\textbf{How test will be performed:} The tester will share the location with a friend, and then verify the location is visible and accurate (accuracy of 10 meters) from the other test account
+
+\textbf{Related Requirement(s):} FR-3-5
+\end{enumerate}
+
+\subsubsection{AR Campus}
+
+This section includes all test cases related to campus navigation with AR technology. This will include the requirements for building recognition (FR-4-1) and demonstration building information (FR-4-2, FR-4-3). Augmented reality provides an immersive user experience and it is the unique selling point of the application.
+
+\begin{enumerate}
+\item{\textbf{FRT-AR1}}
+
+\textbf{Name:} Successful Building Recognition
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User looks at a building on campus
+
+\textbf{Input:} Clear Camera view
+					
+\textbf{Output:} The building is recognized and its name is given
+
+\textbf{Test Case Derivation:} Building recognition is the essential functionality for AR technology applied in this application. The building should be recognizable from a certain angle when users look at their camera
+					
+\textbf{How test will be performed:} The tester will walk around a building on campus and look into the camera, verifying the building is recognized and a list of events/lectures is displayed on the screen
+
+\textbf{Related Requirement(s):} FR-4-1, FR-4-2, FR-4-3
+
+\item{\textbf{FRT-AR2}}
+
+\textbf{Name:} Unsuccessful Building Recognition
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User looks at a building off-campus
+
+\textbf{Input:} Camera view
+					
+\textbf{Output:} The building is not recognized correctly
+
+\textbf{Test Case Derivation:} Building recognition is the essential functionality for AR technology applied in this application. The building should be recognizable from a certain angle when users look at their camera
+					
+\textbf{How test will be performed:} The tester will walk around a building that is not on campus and look into the camera, verifying the building is not recognized or the system recognizing it as a school building
+
+\textbf{Related Requirement(s):} FR-4-1, FR-4-2, FR-4-3
+\end{enumerate}
+
+\subsubsection{Lectures and Events}
+
+This section includes all test cases related to events and lectures happening on campus. This will include the requirements for events and lectures themselves, users interacting with these properties, and the power of administration accounts (All FR-5 requirements in the SRS document). The test cases ensure that the lectures and events information is accurate and helpful for all users.
+
+\begin{enumerate}
+\item{\textbf{FRT-LE1}}
+
+\textbf{Name:} Interest/Disinterest Event
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} An event exists in a specific building
+
+\textbf{Input:} Corresponding user request
+					
+\textbf{Output:} The event with all necessary information is added/removed from the user's event list
+
+\textbf{Test Case Derivation:} The user should be able to interact with events available on campus and share their activities with friends. Therefore, they should be able to switch between 'interest' and 'disinterest' states for all events 
+					
+\textbf{How test will be performed:} The tester will pin and unpin the event and verify the event shows up and disappears from the user's interested event list. Then the tester will verify the event has all associated information including club/department, location and time
+
+\textbf{Related Requirement(s):} FR-5-1, FR-5-2, FR-5-7
+
+\item{\textbf{FRT-LE2}}
+
+\textbf{Name:} Pin/unpin Lectures
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A lecture with all necessary information exists in a specific building
+
+\textbf{Input:} Corresponding user request
+					
+\textbf{Output:} The lecture is added/removed from the user's lecture list
+
+\textbf{Test Case Derivation:} The user should be able to interact with lectures shown in the app and share their schedule with friends. Therefore, they should be able to switch between 'pinned' and 'unpinned' states for all lectures 
+					
+\textbf{How test will be performed:} The tester will pin and unpin the lecture and verify the lecture shows up and disappears from the user's pinned lecture list. Then the tester will verify the event has all associated information including instructor, location and time
+
+\textbf{Related Requirement(s):} FR-5-3, FR-5-4, FR-5-8
+
+\item{\textbf{FRT-LE3}}
+
+\textbf{Name:} Administrator Add Events
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an admin
+
+\textbf{Input:} Sample event with all necessary information
+					
+\textbf{Output:} The event is posted on the building and is available for all users to pin
+
+\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to create new events for all users
+					
+\textbf{How test will be performed:} The tester will log in as an administrator and add the sample event. Then the tester will verify the event shown in the corresponding building is available for all users
+
+\textbf{Related Requirement(s):} FR-5-5
+
+\item{\textbf{FRT-LE4}}
+
+\textbf{Name:} Administrator Change Events
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an admin
+
+\textbf{Input:} New event information and corresponding user request
+					
+\textbf{Output:} The posted event information is updated
+
+\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to update event information to get users noticed
+					
+\textbf{How test will be performed:} The tester will log in as an administrator and update the sample event. Then the tester will verify the event shown in the corresponding building is updated for all users
+
+\textbf{Related Requirement(s):} FR-5-5
+
+\item{\textbf{FRT-LE5}}
+
+\textbf{Name:} Administrator Delete Events
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an admin
+
+\textbf{Input:} Existing event and corresponding user request
+					
+\textbf{Output:} The event is deleted
+
+\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to clean out-of-date event
+					
+\textbf{How test will be performed:} The tester will log in as an administrator and delete the sample event. Then the tester will verify the event shown in the corresponding building is deleted for all users 
+
+\textbf{Related Requirement(s):} FR-5-5
+
+\item{\textbf{FRT-LE6}}
+
+\textbf{Name:} Administrator Add Lectures
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an admin
+
+\textbf{Input:} Sample lecture with all necessary information
+					
+\textbf{Output:} The lecture is posted on the building and is available for all users to pin
+
+\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to create new lectures for all users when new semesters come
+					
+\textbf{How test will be performed:} The tester will log in as an administrator and add the sample lecture. Then the tester will verify the lecture shown in the corresponding building is available for all users 
+
+\textbf{Related Requirement(s):} FR-5-6
+
+\item{\textbf{FRT-LE7}}
+
+\textbf{Name:} Administrator Change Lecture
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an admin
+
+\textbf{Input:} New lecture information and corresponding user request
+					
+\textbf{Output:} The posted lecture information is updated
+
+\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to update lecture information to get users noticed
+					
+\textbf{How test will be performed:} The tester will log in as an administrator and update the sample lecture. Then the tester will verify the lecture shown in the corresponding building is updated for all users
+
+\textbf{Related Requirement(s):} FR-5-6
+
+\item{\textbf{FRT-LE8}}
+
+\textbf{Name:} Administrator Delete Lectures
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an admin
+
+\textbf{Input:} Existing lecture and corresponding user request
+					
+\textbf{Output:} The lecture is deleted
+
+\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to clean out-of-date lectures after each semester
+					
+\textbf{How test will be performed:} The tester will log in as an administrator and delete the sample lecture. Then the tester will verify the lecture shown in the corresponding building is deleted for all users
+
+\textbf{Related Requirement(s):} FR-5-6
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
@@ -454,6 +905,19 @@ This is where you can place additional information.
 
 The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.
+
+\begin{table}[h]
+\caption{\bf Symbolic Parameter Table}
+\begin{tabular}{|p{0.2\linewidth} | p{0.4\linewidth}| p{0.4\linewidth} |}
+\hline
+\multicolumn{1}{|l}{\bfseries Symbolic Parameter} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Value}\\
+\hline
+INITIAL\_USER\_STATE & The default user state with all default user information & All entries empty except username and password \\
+\hline
+INITIAL\_AVATAR & The default virtual avatar & An unisex virtual avatar with default settings \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{Usability Survey Questions?}
 
