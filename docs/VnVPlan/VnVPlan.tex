@@ -209,7 +209,7 @@ as a Rev 0 demo for the supervisor.}
 	
 \subsection{Tests for Functional Requirements}
 
-The following are system tests for functional requirements defined in the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document. In order to cover all the functional requirements, these subsections match exactly the subsections in the SRS document, which cover all the different components of this application. These tests will ensure all requirements are fulfilled and the application works as we expected. Most of the following tests will be run manually while some of them will be automated.
+The following section includes system tests for functional requirements defined in the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document. In order to cover all the functional requirements, these subsections match exactly the subsections in the SRS document, which cover all the different components of this application. These tests will ensure all requirements are fulfilled and the application works as we expected. Most of the following tests will be run manually while some of them will be automated.
 
 \subsubsection{Pre-Game Settings}
 
@@ -714,22 +714,27 @@ This section includes all test cases related to events and lectures happening on
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy}
+The following section includes tests for non-functional requirements defined in the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document. Areas of testing follow the subsections of requirements in the previous document, which mainly include Look and Feel, Usability and Humanity, Performance and Security.\\ Usability requirements will be tested by asking users to do a survey, whose content can be found in section \ref{sec:survey}. Most of the tests here are dynamic and will be done manually or automatically, but there are some tests that need non-dynamic testing like peer code review or code walkthrough.
 
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
-
-\wss{Static tests, review, inspections, and walkthroughs, will not follow the
-format for the tests given below.}
-
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
+\subsubsection{Look and Feel}
 
 \begin{enumerate}
+\item{\textbf{FRT-LF1}}
+
+\textbf{Name:} Survey for feedback on application layout
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User has an account
+
+\textbf{Input/Condition:} User is logged into the homepage and pokes around the application
+					
+\textbf{Output/Result:} Get feedback and verify layout is user-friendly. This test is a pass if average individual score is over MIN\_SCORE in the "User-friendly Layout", “Intuitive icons” and "Immediate Visual Response when Clicking" categories of the User Experience Survey
+					
+\textbf{How test will be performed:} A survey will be given to at least
+SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements of the interface. All of the survey takers are selected randomly from McMaster University
+
+\textbf{Related Requirement(s):} LF-A1, LF-A2
 
 \item{test-id1\\}
 
@@ -908,7 +913,7 @@ Their values are defined in this section for easy maintenance.
 
 \begin{table}[h]
 \caption{\bf Symbolic Parameter Table}
-\begin{tabular}{|p{0.2\linewidth} | p{0.4\linewidth}| p{0.4\linewidth} |}
+\begin{tabular}{|p{0.4\linewidth} | p{0.3\linewidth}| p{0.3\linewidth} |}
 \hline
 \multicolumn{1}{|l}{\bfseries Symbolic Parameter} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Value}\\
 \hline
@@ -916,10 +921,15 @@ INITIAL\_USER\_STATE & The default user state with all default user information 
 \hline
 INITIAL\_AVATAR & The default virtual avatar & An unisex virtual avatar with default settings \\
 \hline
+MIN\_SCORE & The passing grade for a category in the survey & 7/10\\
+\hline
+SURVEY\_SAMPLE\_SIZE & Size of the user experience survey & 50\\
+\hline
 \end{tabular}
 \end{table}
 
 \subsection{Usability Survey Questions?}
+\label{sec:survey}
 
 \wss{This is a section that would be appropriate for some projects.}
 
