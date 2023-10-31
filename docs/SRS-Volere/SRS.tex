@@ -239,6 +239,10 @@ involved in the Project}
     \hline
     CAPTCHA & CAPTCHA is a type of challenge–response test used in computing to determine whether the user is human\\
     \hline
+    Charles Proxy & A cross-platform HTTP debugging proxy server application for networking monitoring\\
+    \hline
+    Global Positioning System (GPS) & An utility that provides users with positioning, navigation, and timing services\\
+    \hline
     \end{tabular}
     \caption{Naming Conventions and Terminology}
     \label{TblNaming}
@@ -247,7 +251,7 @@ involved in the Project}
 \section{Relevant Facts And Assumptions}
 \subsection{Relevant Facts}
 \begin{itemize}
-  \item Due to McMaster University regulations, we cannot collect information on course schedules.[1]
+  \item Due to McMaster University regulations, we cannot collect information on course schedules \cite{FIPPA}.
 \end{itemize}
 
 \subsection{Business Rules}
@@ -639,6 +643,9 @@ The use case diagram depicted below identifies the boundaries between the users 
     \textbf{FR-2-7:} The system shall allow users to modify a virtual avatar.\\
     \textbf{Rationale:} The user might feel the need to update the appearance of their avatar to better represent themself. \\
     \textbf{Fit Criterion:} The avatar created in the user's registration process can be modified at any time through the settings menu.\\\\
+    \textbf{FR-2-8:} The system shall allow users to verify their school email.\\
+    \textbf{Rationale:} Users shall be identified as McMaster student to have full access to all the resources. Therefore identifying McMaster email is necessary. \\
+    \textbf{Fit Criterion:} The user shall be able to add McMaster email to their profile and verifying the email after receiving an email from the system.\\\\ 
 
 \subsubsection{Social Networking System}
     \textbf{FR-3-1:} The system shall allow users to add friends.\\
@@ -697,104 +704,97 @@ The use case diagram depicted below identifies the boundaries between the users 
 \section{Look and Feel Requirements}
 \subsection{Appearance Requirements}
   \textbf{LF-A1:} The product shall have a user-friendly layout, with icons being intuitive and screen components not being congested.\\
-  \textbf{Fit criterion:} Users are able to run different features through icons without needing assistance or a tutorial during user testing. No components overlap on any screen.\\\\
+  \textbf{Fit criterion:} MOST\_USERS should feel comfortable to run different features through icons without needing assistance or a tutorial during user testing, and if a user experience survey is taken among them, the application layout will get at lease MIN\_SCORE. No components overlap on any screen.\\\\
   \textbf{LF-A2:} The product shall provide visual feedback to the users when they're using different features and switching pages.\\
-  \textbf{Fit criterion:} The chosen method of visual feedback for each component must appear 100\% of the time when the triggering options are selected.\\\\
-  \textbf{LF-A3:} The product shall adapt to different mobile screen sizes.\\
-  \textbf{Fit criterion:} Visual elements do not exceed the borders of the screen of any device.\\
+  \textbf{Fit criterion:} The chosen method of visual feedback for each component must respond in RESPONSE\_TIME when the triggering options are selected.\\\\
+  \textbf{LF-A3:} The product shall adapt to most of the popular mobile screen sizes.\\
+  \textbf{Fit criterion:} Visual elements must not exceed the borders of the screen for all screens in SCREEN\_VIEWPORTS list.\\
 \subsection{Style Requirements}
   \textbf{LF-S1:} The colors and themes shall be consistent across different pages.\\
   \textbf{Fit criterion:} Consistency checks show the same color scheme being used on all pages.\\\\
   \textbf{LF-S2:} The color scheme used shall be appealing and not cause eye strain.\\
-  \textbf{Fit criterion:} At least 90\% of users agree with the statement that the screen doesn’t cause strain during a survey.\\
+  \textbf{Fit criterion:} MOST\_USERS agree with the statement that the screen does not cause strain during a user experience survey.\\
 
 \section{Usability and Humanity Requirements}
 \subsection{Ease of Use Requirements}
-  \textbf{UH-EOU1:} The product shall have a UI that is clear and easy to navigate.\\
-  \textbf{Fit criterion:} Users in the testing stage are able to find their way to specific pages and access different features without needing to try again more than 3 times.\\
+  \textbf{UH-EOU1:} The product shall have a user interface that is clear and easy to navigate.\\
+  \textbf{Fit criterion:} MOST\_USERS in the testing stage shall be able to find their way to specific pages and access all different core features including messaging friend, lecture and event management and building scanning without needing to try again more than 3 times.\\
 \subsection{Personalization and Internationalization Requirements}
   \textbf{UH-PI1:} The product shall provide information about ongoing lectures and events personalized to each user.\\
-  \textbf{Fit criterion:} The name, time, location, and course are displayed on a page for those lectures.\\\\
+  \textbf{Fit criterion:} The name, time and location of all pinned events and lectures shall be displayed on a user's personal page.\\\\
   \textbf{UH-PI2:} The product shall allow users to customize their profiles and avatars.\\
-  \textbf{Fit criterion:} Customized profile information for a user are stored under their account.\\
+  \textbf{Fit criterion:} USER\_PROFILE and avatar shall be stored under their account and modifiable all the time.\\
 \subsection{Learning Requirements}
   \textbf{UH-L1:} The product shall include a short tutorial on its features on the first launch, and be available upon request from the user.\\
-  \textbf{Fit criterion:} The tutorial appears and runs to completion when the product is launched on a new device and/or under a new account. It appears and runs to completion again when its requested.\\\\
-  \textbf{UH-L2:} The product shall be designed so that it is easy for users to remember how to use its features after learning them once.\\
-  \textbf{Fit criterion:}During testing, users are able to perform processes and access features without any help after an initial tutorial.\\
+  \textbf{Fit criterion:} A tutorial shall appear and run to completion when the application is launched on a new device and/or under a new account. It shall appear and run to completion again when it is requested.\\\\
+  \textbf{UH-L2:} Users shall have a better understanding of all features after watching the tutorial once.\\
+  \textbf{Fit criterion:} MOST\_USERS shall give a positive feedback on the tutorial when taking a user experience survey.\\
 \subsection{Understandability and Politeness Requirements}
-  \textbf{UH-UP1:} The product shall have a simple and intuitive design that is easy for users to understand.\\
-  \textbf{Fit criterion:} Users in the testing stage are able to find their way to specific pages and access different features without needing to try again more than 3 times.\\\\
-  \textbf{UH-UP2:} The product shall abstain from using technical and software-specific language.\\
-  \textbf{Fit criterion:} No instance of technical and software-specific language are found upon a review of all text displayed by the product.\\
+  \textbf{UH-UP1:} The product shall abstain from using technical and software-specific language.\\
+  \textbf{Fit criterion:} MOST\_USERS shall hardly find technical and software-specific language among all text displayed by the application.\\
 \subsection{Accessibility Requirements}
   \textbf{UH-A1:} The colors used by the different components of the product shall contrast enough for items on the screen to be more easily visible.\\
-  \textbf{Fit criterion:} The color contrast is at least 4.5:1 per the Web Content Accessibility Guidelines’ AA standards for accessibility.[2]\\
+  \textbf{Fit criterion:} The color contrast is at least 4.5:1 per the Web Content Accessibility Guidelines’ AA standards for accessibility\cite{WCAG}.\\
 
 \section{Performance Requirements}
 \subsection{Speed and Latency Requirements}
   \textbf{P-SL1:} Popup resoponses following successful image recognitions must appear not long after on the user’s screen.\\
-  \textbf{Fit criterion:} The time from recognition to the appearance of the response is at most 3 seconds.\\\\
+  \textbf{Fit criterion:} The time from recognition to the appearance of the response is at most RECOGENITION\_TIME.\\\\
   \textbf{P-SL2:} A user must receive a message sent to them by another user quickly after being sent.\\
-  \textbf{Fit criterion:} The message must be received by the recipient at most 2 seconds after it was sent by the sender.\\\\
+  \textbf{Fit criterion:} The message must be received by the recipient at most MESSAGE\_TIME after it was sent by the sender.\\\\
   \textbf{P-SL3:} The application will update the user’s shared location with their friends shortly after the location change.\\
-  \textbf{Fit criterion:} A user’s updated location must appear on their friends’ ends within 10 seconds of the location change.\\
+  \textbf{Fit criterion:} A user’s updated location must appear on their friends’ ends within LOCATION\_UPDATE\_TIME of the location change.\\
 \subsection{Safety-Critical Requirements}
   \textbf{P-SC1:} The application will not collect or share any user’s location or personal data without getting permission from the user.\\
   \textbf{Fit criterion:} User’s personal information does not appear in the database if the user did not grant permissions.\\\\
   \textbf{P-SC2:} User data such as messages and location information will be securely encrypted to protect user’s privacy.\\
-  \textbf{Fit criterion:} Contents of data packets being transmitted are nonsense when inspected with network monitoring tools.\\\\
+  \textbf{Fit criterion:} Contents of data packets being transmitted are nonsense when inspected with MONITORING\_TOOL.\\\\
   \textbf{P-SC3:} The application will comply with all relevant privacy laws and guidelines.\\
-  \textbf{Fit criterion:} The usage of a user’s personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws.[3][4]\\
+  \textbf{Fit criterion:} The usage of a user’s personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws \cite{Legislative Services} \cite{CFLC}.\\
   \textbf{P-SC4:} The product shall not transmit information while not in use.\\
   \textbf{Fit Criterion:} The product will not execute any code that involves the transmission of information outside of the product.\\
 \subsection{Precision or Accuracy Requirements}
   \textbf{P-PA1:} The product shall accurately identify buildings scanned by the user.\\
-  \textbf{Fit criterion:} The product identifies a building with an accuracy of at least 80\%.\\\\
+  \textbf{Fit criterion:} The application shall identify a building on campus with an success rate of at least 80\%.\\\\
   \textbf{P-PA2:} The shall accurately determine the user’s location on campus and display it based on their permissions.\\
-  \textbf{Fit criterion:} The user’s location on the product is within a 25m radius of the user’s true location.\\
+  \textbf{Fit criterion:} The user’s location on the product is within a GPS\_ACCURACY radius of the user’s true location.\\
 \subsection{Robustness or Fault-Tolerance Requirements}
   \textbf{P-RF1:} The user will be informed in case of network connectivity issues and the application will not crash.\\
-  \textbf{Fit criterion:} A notification in the product appears when the network strength is below -75dBm and/or the server is experiencing issues.\\\\
+  \textbf{Fit criterion:} A notification in the application appears when the network strength is below -75dBm and/or the server connection is poor.\\\\
   \textbf{P-RF2:} The messaging functionality will still work as planned if there is are issues collecting location information for users.\\
   \textbf{Fit criterion:} All messages sent by users are received by the recipients at the speed specified by P-SL2 when location features are disabled.\\\\
-  \textbf{P-RF3:} The product shall display an error message when there is no internet connection.\\
-  \textbf{Fit Criterion:} An error message stating that there is no internet connection is displayed when the product fails to connect to the internet.\\\\
-  \textbf{P-RF4:} The product shall display a message upon startup warning the user to be aware of their surroundings.\\
+  \textbf{P-RF3:} The application shall display an error message when there is no internet connection.\\
+  \textbf{Fit Criterion:} An error message stating that there is no internet connection is displayed when the application fails to connect to the internet.\\\\
+  \textbf{P-RF4:} The application shall display a message upon startup warning the user to be aware of their surroundings.\\
    \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon startup.\\\\
-  \textbf{P-RF5:} The product shall display a warning message if the user's device is not compatible with the AR features.\\
+  \textbf{P-RF5:} The application shall display a warning message if the user's device is not compatible with the AR features.\\
   \textbf{Fit Criterion:} A warning message is displayed if the user's device is incompatible with AR.\\\\
   \textbf{P-RF6:} There must be a failsafe for the product to function if server or internet connection takes too long or fails.\\
   \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities using its offline components.\\
 \subsection{Capacity Requirements}
   \textbf{P-C1:} The product shall accomodate massive amounts of people using the product simultaneously.\\
-  \textbf{Fit criterion:} The product accomodates a minimum of 5,000 simultaneous users during peak hours.\\\\
+  \textbf{Fit criterion:} The product accomodates a minimum of MAX\_CAPACITY simultaneous users during peak hours.\\\\
   \textbf{P-C2:} The database will store event information for all campus buildings for a long time after the addition of the events.\\
   \textbf{Fit criterion:} Information for an event added to the database is still present at least 3 months after its addition.\\
 \subsection{Scalability or Extensibility Requirements}
-  \textbf{P-SE1:} This product will be capable of processing about 20 people concurrently in the release build with a plan of expanding it to support all students on campus or about 40,000 people by the final version.\\\\
-  \textbf{P-SE2:} This product will be capable of storing account and personal information of about 100 users in the release build with a plan of expanding it to support up to 40,000 users by the final version.\\\\
+  \textbf{P-SE1:} This product will be capable of processing about at most MAX\_CAPACITY people concurrently in the release build with a plan of expanding it to support all students on campus (about 40,000 people) by the final version.\\\\
+  \textbf{P-SE2:} This product will be capable of storing account and personal information of about MAX\_USER\_STORED users in the release build with a plan of expanding it to support all students on campus (about 40,000 people) by the final version.\\\\
   \textbf{P-SE3:} The application architecture will allow for the addition of new campus buildings and clubs without considerable drawbacks in performance.\\\\
 \subsection{Longevity Requirements}
-  \textbf{P-L1:} This product will be expected to operate without major malfunctions in release build for a minimum of 1 year while undergoing further development.\\\\
-  \textbf{p-l2:} The finalized product will remain compatible with the promised operating systems and devices for a minimum of 3 years.\\
+  \textbf{P-L1:} This application will be expected to operate without major malfunctions in release build for a minimum of 1 year while undergoing further development.\\\\
+  \textbf{P-L2:} The finalized product will remain compatible with the promised operating systems and devices for a minimum of 3 years.\\
 
 \section{Operational and Environmental Requirements}
 \subsection{Expected Physical Environment}
-  \textbf{OE-EPE1:} The product will be installed on the user's smartphone (iPhone or Android).\\\\
-  \textbf{OE-EPE2:} The product will be used around the main campus of McMaster University.\\
+  \textbf{OE-EPE1:} The product will be installed on the user's smartphone (Android).\\\\
 \subsection{Wider Environment Requirements}
   \textbf{N/A}\\
 \subsection{Requirements for Interfacing with Adjacent Systems}
-  \textbf{OE-IAS1:} The product shall interface with the latest four major releases of iOS.\\\\
-  \textbf{OE-IAS2:} The product shall interface with the latest four major releases of Android OS.\\\\
-  \textbf{OE-IAS3:} The product shall interface with ARKit for AR capabilities on Apple devices.\\\\
-  \textbf{OE-IAS4:} The product shall interface with ARCore for AR capabilities on Android devices.\\
+  \textbf{OE-IAS1:} The product shall interface with all release of Android which is still under maintain (Android 11 and above).\\\\
+  \textbf{OE-IAS2:} The product shall interface with ARCore for AR capabilities on Android devices.\\
 \subsection{Productization Requirements}
-  \textbf{OE-P1:} The product shall be downloadable through the App Store for Apple devices.\\
-  \textbf{Fit criterion:} The product can be downloaded onto an Apple device through the App Store.\\\\
-  \textbf{OE-P2:} The product shall be downloadable through the Google Play Store for Android devices.\\
-  \textbf{Fit criterion:} The product can be downloaded onto an Android device through the Google Play Store.\\
+  \textbf{OE-P1:} The product shall be downloadable for Android devices.\\
+  \textbf{Fit criterion:} The product can be downloaded onto an Android device either from the Google Play Store or by downloading APK file directly.\\
 \subsection{Release Requirements}
   \textbf{N/A}\\
 
@@ -810,7 +810,7 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{MS-S2:} A user manual will be complied and stored in the GitHub, this manual will be updated with Frequently Asked Questions and other entries as additional features are introduced.\\
   %The application will direct users to this manual in the menu.
 \subsection{Adaptability Requirements}
-  \textbf{MS-A1:} The product shall be accessible on Android 11 and above for Android devices, iOS 15 and above for iPhone devices, and Windows 10 and above for PCs, as these operating systems are still supported and receive security updates.\\
+  \textbf{MS-A1:} The product shall be accessible on Android 11 and above for Android devices, as these operating systems are still supported and receive security updates.\\
   %This product may be ported to other universities in Ontario, Canada, or other countries.
   %Although the product is designed to work for university, this can be porte to other large events and buildings to help users navigate and coordinate better.
 
@@ -1046,13 +1046,51 @@ Implementation ideas for solutions
 
 \newpage{}
 
-\section{References}
-\begin{enumerate}
-  \item Freedom of Information and Protection of Privacy Act (FIPPA), McMaster University; University Secretariat, \url{https://secretariat.mcmaster.ca/privacy/notice-of-collection-use-and-disclosure/}
-  \item Web Content Accessibility Guidelines (WCAG) 2, Web Accessibility Initiative, \url{www.w3.org/WAI/WCAG21/quickref/#contrast-minimum}. Accessed 13 Oct. 2023. 
-  \item Legislative Services. “Personal Information Protection and Electronic Documents Act.” Personal Information Protection and Electronic Documents Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/acts/p-8.6/}. 
-  \item “Consolidated Federal Laws of Canada, Privacy Act.” Privacy Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/ACTS/P-21/page-1.html#h-397177}. 
-\end{enumerate}
+\section{Appendix}
+\subsection{Symbolic Parameters}
+The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
+Their values are defined in this section for easy maintenance.
+
+\begin{table}[H]
+\caption{\bf Symbolic Parameter Table}
+\begin{tabular}{|p{0.4\linewidth} | p{0.3\linewidth}| p{0.3\linewidth} |}
+\hline
+\multicolumn{1}{|l}{\bfseries Symbolic Parameter} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Value}\\
+\hline
+MOST\_USER & Majority of the users & 80\% users \\
+\hline
+MIN\_SCORE & The passing grade for a category in the survey & 7/10\\
+\hline
+RESPONSE\_TIME & Max time the system takes for visual response & 1 second\\
+\hline
+SCREEN\_VIEWPORTS & List of all popular mobile screen sizes & 360X740, 390X844, 820X1180\\
+\hline
+USER\_PROFILE & All information about the user & username, password, gender, age, email, area of study\\
+\hline
+RECOGNITION\_TIME & Max time the system takes for image recognition & 3 second\\
+\hline
+MESSAGE\_TIME & Max time the system takes to send user message & 2 second\\
+\hline
+LOCATION\_UPDATE\_TIME & Max time the system takes for location update & 10 second\\
+\hline
+MONITORING\_TOOL & Tool to use when monitoring network & Charles Proxy\\
+\hline
+GPS\_ACCURACY & Accuracy of location sharing & 25 meter\\
+\hline
+MAX\_CAPACITY & max number of simultaneous users & 200\\
+\hline
+MAX\_USER\_STORED & max number of user account stored & 500\\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{References}
+\begin{thebibliography}{9}
+  \bibitem{FIPPA} Freedom of Information and Protection of Privacy Act (FIPPA), McMaster University; University Secretariat, \url{https://secretariat.mcmaster.ca/privacy/notice-of-collection-use-and-disclosure/}
+  \bibitem{WCAG} Web Content Accessibility Guidelines (WCAG) 2, Web Accessibility Initiative, \url{www.w3.org/WAI/WCAG21/quickref/#contrast-minimum}. Accessed 13 Oct. 2023. 
+  \bibitem{Legislative Services} Legislative Services.``Personal Information Protection and Electronic Documents Act.'' Personal Information Protection and Electronic Documents Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/acts/p-8.6/}. 
+  \bibitem{CFLC} ``Consolidated Federal Laws of Canada, Privacy Act.'' Privacy Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/ACTS/P-21/page-1.html#h-397177}. 
+\end{thebibliography}
 
 \newpage{}
 \section*{Appendix --- Reflection}

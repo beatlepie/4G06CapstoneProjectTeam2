@@ -257,7 +257,7 @@ This section includes all test cases related to what users can do before they st
 
 \subsubsection{User Account}
 
-This section includes all test cases related to user accounts. This will include the requirements for account creation (FR-2-1), login (FR-2-3) and deletion (FR-2-2), along with user avatar settings (FR-2-6, FR-2-7). User accounts and virtual avatars are necessary for all users who want to use this application.
+This section includes all test cases related to user accounts. This will include the requirements for account creation (FR-2-1), login (FR-2-3), deletion (FR-2-2) and email verification(FR-2-8), along with user avatar settings (FR-2-6, FR-2-7). User accounts and virtual avatars are necessary for all users who want to use this application.
 
 \begin{enumerate}
 
@@ -404,6 +404,24 @@ This section includes all test cases related to user accounts. This will include
 \textbf{How test will be performed:} The tester will create an avatar from the initial one and modify it. Then the tester will verify the changes are visible for all friends from another test account
 
 \textbf{Related Requirement(s):} FR-2-6, FR-2-7
+
+\item{\textbf{FRT-UA9}}
+
+\textbf{Name:} Email verification
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} The user adds McMaster email to user profile
+
+\textbf{Input:} User verifying after receving the verification email
+					
+\textbf{Output:} User email is verified and all access is granted for the account
+
+\textbf{Test Case Derivation:} The user has to be identified as a McMaster student to have enough access to all functionalities (Event and Lecture information). So it is essential to test the email verification functionality
+					
+\textbf{How test will be performed:} The tester will add a test McMaster email to the test account and verify the email can be verified and all functionalities work for the account after email verification
+
+\textbf{Related Requirement(s):} FR-2-8
 \end{enumerate}
 
 \subsubsection{Social Networking System}
@@ -515,7 +533,7 @@ This section includes all test cases related to the social networking system. Th
 
 \textbf{Test Case Derivation:} Users shall be able to share their current location with friends to meet in person. It is essential to verify the location is accurate and up-to-date
 					
-\textbf{How test will be performed:} The tester will share the location with a friend, and then verify the location is visible and accurate (accuracy of 10 meters) from the other test account
+\textbf{How test will be performed:} The tester will share the location with a friend, and then verify the location is visible and accurate (accuracy of GPS\_ACCURACY) from the other test account
 
 \textbf{Related Requirement(s):} FR-3-5
 \end{enumerate}
@@ -924,6 +942,8 @@ INITIAL\_AVATAR & The default virtual avatar & An unisex virtual avatar with def
 MIN\_SCORE & The passing grade for a category in the survey & 7/10\\
 \hline
 SURVEY\_SAMPLE\_SIZE & Size of the user experience survey & 50\\
+\hline
+GPS\_ACCURACY & Accuracy of location sharing & 25 meter\\
 \hline
 \end{tabular}
 \end{table}
