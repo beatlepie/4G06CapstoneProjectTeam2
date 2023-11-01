@@ -765,12 +765,18 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 					
 \textbf{Input/Condition:} User has the application open on their phone
 					
-\textbf{Output/Result:} The test passes if, for all different pages, the colour scheme is the same and\
-all visual elements on the screen are within the borders of the screen for all screens in the SCREEN\_VIEWPORTS list
-					
+\textbf{Output/Result:} The test passes if, for all different pages:
+\begin{itemize}
+  \item The colour scheme is the same
+  \item All visual elements on the screen are within the borders of the screen for all screens in the SCREEN\_VIEWPORTS list
+\end{itemize}
+
 \textbf{How test will be performed:} The application will be opened on all screens in the SCREEN\_VIEWPORTS list.\
-The testers will visually inspect each page and each screen to make sure that all visual elements on the screen are within its borders\
-and the colour scheme on each page is the same
+The testers will visually inspect each page and each screen to make sure that:
+\begin{itemize}
+  \item All visual elements on the screen are within its borders
+  \item The colour scheme on each page is the same
+\end{itemize}
 
 \textbf{Related Requirement(s):} LF-A3, LF-S1
 
@@ -781,14 +787,54 @@ and the colour scheme on each page is the same
 \begin{enumerate}
 \item{\textbf{NFRT-UH1}}
 
+\textbf{Name:} Survey for feedback on application layout
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User has an account
+
+\textbf{Input/Condition:} User is logged into the homepage and pokes around the application
+					
+\textbf{Output/Result:} Get feedback and verify layout is user-friendly. This test is a pass if average individual score is over MIN\_SCORE in the "Easy to Navigate",\
+“Helpful Tutorial” and "No Technical or Software-Specific Language" categories of the User Experience Survey
+					
+\textbf{How test will be performed:} A survey will be given to at least
+SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements of the interface. All of the survey takers are selected randomly from McMaster University
+
+\textbf{Related Requirement(s):} UH-EOU1, UH-L2, UH-UP1
+
+\item{\textbf{NFRT-UH1}}
+
+\textbf{Name:} Visual inspection of interface
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User has the application downloaded on their phone
+					
+\textbf{Input/Condition:} User has the application open on their phone
+					
+\textbf{Output/Result:} The test passes if:
+\begin{itemize}
+  \item The name, time, and location of all pinned events and lectures are displayed on a user's personal page
+  \item The user is able to update their USER\_PROFILE and avatar
+  \item A tutorial explaining the features of the application appears on first launch, and is available upon request from the user
+\end{itemize}
+
+\textbf{How test will be performed:} The application will be opened on all screens in the SCREEN\_VIEWPORTS list.\
+The testers will visually inspect the application to check that the above conditions are satisfied.
+
+\textbf{Related Requirement(s):} UH-PI1, UH-PI2, UH-L1
+
+\item{\textbf{test-id}}
+
 \textbf{Name:}
 
-\textbf{Type:} Functional, Dynamic, Manual, Static etc.
-          
+\textbf{Type:} Non-functional, Static, Dynamic, Manual, Automatic, etc.
+					
 \textbf{Initial State:}
 
 \textbf{Input/Condition:}
-
+					
 \textbf{Output/Result:}
 
 \textbf{How test will be performed:}
@@ -961,6 +1007,8 @@ SURVEY\_SAMPLE\_SIZE & Size of the user experience survey & 50\\
 GPS\_ACCURACY & Accuracy of location sharing & 25 meter\\
 \hline
 SCREEN\_VIEWPORTS & List of all popular mobile screen sizes & 360X740, 390X844, 820X1180\\
+\hline
+USER\_PROFILE & All information about the user & username, password, gender, age, email, area of study\\
 \hline
 \end{tabular}
 \end{table}
