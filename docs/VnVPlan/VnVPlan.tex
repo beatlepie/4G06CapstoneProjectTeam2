@@ -737,7 +737,7 @@ The following section includes tests for non-functional requirements defined in 
 \subsubsection{Look and Feel}
 
 \begin{enumerate}
-\item{\textbf{FRT-LF1}}
+\item{\textbf{NFRT-LF1}}
 
 \textbf{Name:} Survey for feedback on application layout
 
@@ -747,40 +747,55 @@ The following section includes tests for non-functional requirements defined in 
 
 \textbf{Input/Condition:} User is logged into the homepage and pokes around the application
 					
-\textbf{Output/Result:} Get feedback and verify layout is user-friendly. This test is a pass if average individual score is over MIN\_SCORE in the "User-friendly Layout", “Intuitive icons” and "Immediate Visual Response when Clicking" categories of the User Experience Survey
+\textbf{Output/Result:} Get feedback and verify layout is user-friendly. This test is a pass if average individual score is over MIN\_SCORE in the "User-friendly Layout",\
+“Intuitive icons”, "Immediate Visual Response when Clicking" and "Appealing Colour Scheme" categories of the User Experience Survey
 					
 \textbf{How test will be performed:} A survey will be given to at least
 SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements of the interface. All of the survey takers are selected randomly from McMaster University
 
-\textbf{Related Requirement(s):} LF-A1, LF-A2
+\textbf{Related Requirement(s):} LF-A1, LF-A2, LF-S2
 
-\item{test-id1\\}
+\item{\textbf{NFRT-LF2}}
 
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+\textbf{Name:} Visual inspection of interface
 
-Type: Functional, Dynamic, Manual, Static etc.
+\textbf{Type:} Non-functional, Dynamic, Manual
 					
-Initial State: 
+\textbf{Initial State:} User has the application downloaded on their phone
 					
-Input: 
+\textbf{Input/Condition:} User has the application open on their phone
 					
-Output: 
+\textbf{Output/Result:} The test passes if, for all different pages, the colour scheme is the same and\
+all visual elements on the screen are within the borders of the screen for all screens in the SCREEN\_VIEWPORTS list
 					
-How test will be performed: 
+\textbf{How test will be performed:} The application will be opened on all screens in the SCREEN\_VIEWPORTS list.\
+The testers will visually inspect each page and each screen to make sure that all visual elements on the screen are within its borders\
+and the colour scheme on each page is the same
+
+\textbf{Related Requirement(s):} LF-A3, LF-S1
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Usability and Humanity}
+
+\begin{enumerate}
+\item{\textbf{NFRT-UH1}}
+
+\textbf{Name:}
+
+\textbf{Type:} Functional, Dynamic, Manual, Static etc.
+          
+\textbf{Initial State:}
+
+\textbf{Input/Condition:}
+
+\textbf{Output/Result:}
+
+\textbf{How test will be performed:}
+
+\textbf{Related Requirement(s):}
+
+\end{enumerate}
 
 ...
 
@@ -944,6 +959,8 @@ MIN\_SCORE & The passing grade for a category in the survey & 7/10\\
 SURVEY\_SAMPLE\_SIZE & Size of the user experience survey & 50\\
 \hline
 GPS\_ACCURACY & Accuracy of location sharing & 25 meter\\
+\hline
+SCREEN\_VIEWPORTS & List of all popular mobile screen sizes & 360X740, 390X844, 820X1180\\
 \hline
 \end{tabular}
 \end{table}
