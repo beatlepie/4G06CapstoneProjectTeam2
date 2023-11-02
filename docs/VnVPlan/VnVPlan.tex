@@ -11,6 +11,7 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage{longtable}
 
 \input{../Comments}
 \input{../Common}
@@ -31,34 +32,16 @@
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 Oct 29 & 1.0 & Add Functional Requirements Tests\\
-Date 2 & 1.1 & Notes\\
+Oct 31 & 1.0 & Add Non-Functional Requirement Tests\\
+Nov 1 & 1.0 & Add Unit Tests\\
 \bottomrule
 \end{tabularx}
-
-~\\
-\wss{The intention of the VnV plan is to increase confidence in the software.
-However, this does not mean listing every verification and validation technique
-that has ever been devised.  The VnV plan should also be a \textbf{feasible}
-plan. Execution of the plan should be possible with the time and team available.
-If the full plan cannot be completed during the time available, it can either be
-modified to ``fake it'', or a better solution is to add a section describing
-what work has been completed and what work is still planned for the future.}
-
-\wss{The VnV plan is typically started after the requirements stage, but before
-the design stage.  This means that the sections related to unit testing cannot
-initially be completed.  The sections will be filled in after the design stage
-is complete.  the final version of the VnV plan should have all sections filled
-in.}
 
 \newpage
 
 \tableofcontents
 
 \listoftables
-\wss{Remove this section if it isn't needed}
-
-\listoffigures
-\wss{Remove this section if it isn't needed}
 
 \newpage
 
@@ -69,14 +52,21 @@ in.}
   \toprule		
   \textbf{symbol} & \textbf{description}\\
   \midrule 
-  T & Test\\
+  AR & Augmented Reality\\
+  \midrule
+  SRS & Software Requirement Specification\\
+  \midrule
+  CAPTCHA & Human Verification Test\\
+  \midrule
+  MIS & Module Interface Specification\\
+  \midrule
+  Vuforia & AR software development kit\\
+  \midrule
+  UTF & Unity Test Framework\\
+  \midrule
+  GPS & Global Positioning System\\
   \bottomrule
 \end{tabular}\\
-
-\wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
-  \citep{SRS} tables, if appropriate}
-
-\wss{Remove this section if it isn't needed}
 
 \newpage
 
@@ -731,6 +721,7 @@ This section includes all test cases related to events and lectures happening on
 \end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
+\label{sec:nonfunctional}
 
 The following section includes tests for non-functional requirements defined in the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document. Areas of testing follow the subsections of requirements in the previous document, which mainly include Look and Feel, Usability and Humanity, Performance and Security.\\ Usability requirements will be tested by asking users to do a survey, whose content can be found in section \ref{sec:survey}. Most of the tests here are dynamic and will be done manually or automatically, but there are some tests that need non-dynamic testing like peer code review or code walkthrough.
 
@@ -748,7 +739,7 @@ The following section includes tests for non-functional requirements defined in 
 \textbf{Input/Condition:} User is logged into the homepage and pokes around the application
 					
 \textbf{Output/Result:} Get feedback and verify layout is user-friendly. This test is a pass if average individual score is over MIN\_SCORE in the "User-friendly Layout",\
-“Intuitive icons”, "Immediate Visual Response when Clicking" and "Appealing Colour Scheme" categories of the User Experience Survey
+``Intuitive icons'', ``Immediate Visual Response when Clicking'' and ``Appealing Colour Scheme'' categories of the User Experience Survey
 					
 \textbf{How test will be performed:} A survey will be given to at least
 SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements of the interface. All of the survey takers are selected randomly from McMaster University
@@ -795,8 +786,8 @@ The testers will visually inspect each page and each screen to make sure that:
 
 \textbf{Input/Condition:} User is logged into the homepage and pokes around the application
 					
-\textbf{Output/Result:} Get feedback and verify layout is user-friendly. This test is a pass if average individual score is over MIN\_SCORE in the "Easy to Navigate",\
-“Helpful Tutorial” and "No Technical or Software-Specific Language" categories of the User Experience Survey
+\textbf{Output/Result:} Get feedback and verify layout is user-friendly. This test is a pass if average individual score is over MIN\_SCORE in the ``Easy to Navigate'',\
+``Helpful Tutorial'' and ``No Technical or Software-Specific Language'' categories of the User Experience Survey
 					
 \textbf{How test will be performed:} A survey will be given to at least
 SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements of the interface. All of the survey takers are selected randomly from McMaster University
@@ -874,128 +865,275 @@ calculates the contrast, and checks if that contrast is at least 4.5:1
 
 \section{Unit Test Description}
 
-\wss{This section should not be filled in until after the MIS (detailed design
-  document) has been completed.}
-
-\wss{Reference your MIS (detailed design document) and explain your overall
-philosophy for test case selection.}  
-
-\wss{To save space and time, it may be an option to provide less detail in this section.  
-For the unit tests you can potentially layout your testing strategy here.  That is, you 
-can explain how tests will be selected for each module.  For instance, your test building 
-approach could be test cases for each access program, including one test for normal behaviour 
-and as many tests as needed for edge cases.  Rather than create the details of the input 
-and output here, you could point to the unit testing code.  For this to work, you code 
-needs to be well-documented, with meaningful names for all of the tests.}
+This section includes all unit tests for functional and non-functional requirements. Though most of the requirements will be tested manually, unit testing will still be utilized for some basic functionalities of all components. Since the team has not completed a detailed design document, this section cannot refer to all modules in \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}. Instead it will refer to a list of core modules to be implemented:
+\begin{itemize}
+	\item \textbf{M1} User
+	\item \textbf{M2} Friend
+	\item \textbf{M3} Building
+	\item \textbf{M4} Event
+	\item \textbf{M5} Lecture
+\end{itemize}
+It is the first draft of the implementation design, and a more detailed version of unit test will be added once the MIS is completed.
 
 \subsection{Unit Testing Scope}
 
-\wss{What modules are outside of the scope.  If there are modules that are
-  developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software, but
-  have a lower priority for verification than others.  If this is the case,
-  explain your rationale for the ranking of module importance.}
+All modules defined above are within the testing scope.  The scope of unit testing was limited to the components that could be automatically tested. The AR module is out of the scope since it is largely composed of a third-parity library, Vuforia. It is a sophisticated AR software development kit, so we assumed that Vuforia’s logic is correct and therefore shall not be tested.
 
 \subsection{Tests for Functional Requirements}
 
-\wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing based
-  technique.  That can also be documented in this section.}
+The following sections details unit tests for functional requirements. It is an essential aspect of testing as it verifies whether the modules are behaving
+correctly given the requirements in the SRS.
 
-\subsubsection{Module 1}
+\subsubsection{User Module}
 
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
+This section will contain all unit tests for module ``User''. The tests are chosen based on common user flows and cover the most important methods of this module.
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{FRT-M1-1}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+\textbf{Name:} Password Setting
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\item{test-id2\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+\textbf{Initial State:} There is an old password for an account
 					
-Initial State: 
+\textbf{Input:} New password
 					
-Input: 
+\textbf{Output:} The old password is replaced by the new one
+
+\textbf{Test Case Derivation:} Verify the password reset functionality works well
+
+\textbf{How test will be performed:} Create a test case in UTF that sets a new password for a user and verify the password has been changed
+
+\item{FRT-M1-2}
+
+\textbf{Name:} Search For Valid Username
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-Output: \wss{The expected result for the given inputs}
+\textbf{Initial State:} There are some valid users during the test
+					
+\textbf{Input:} One of the valid usernames
+					
+\textbf{Output:} The user is found from the list by its username
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+\textbf{Test Case Derivation:} Verify that user can search for a user by username
 
-How test will be performed: 
+\textbf{How test will be performed:} Create a test case in UTF that searches for a existing username and verify the corresponding user is found
 
-\item{...\\}
-    
+\item{FRT-M1-3}
+
+\textbf{Name:} Search For Invalid Username
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} There are some valid users during the test
+					
+\textbf{Input:} Invalid usernames
+					
+\textbf{Output:} No user is found
+
+\textbf{Test Case Derivation:} Verify that user can search for a user by username
+
+\textbf{How test will be performed:} Create a test case in UTF that searches for a non-existing username and verify no user is found
+
+\item{FRT-M1-4}
+
+\textbf{Name:} Get Location
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} User agrees to share location
+					
+\textbf{Input:} User request
+					
+\textbf{Output:} Geographic position of the device with accuracy of GPS\_ACCURACY
+
+\textbf{Test Case Derivation:} Verify that user can share their location accurately
+
+\textbf{How test will be performed:} Create a test case in UTF that searches for a non-existing username and verify no user is found
 \end{enumerate}
 
-\subsubsection{Module 2}
+\subsubsection{Friend Module}
 
-...
+This section will contain all unit tests for module ``Friend''. The tests are chosen based on common user flows and cover the most important methods of this module.
+
+\begin{enumerate}
+\item{FRT-M2-1}
+
+\textbf{Name:} Send new message
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} There are two accounts being friends
+					
+\textbf{Input:} A message sent friend to the friend
+					
+\textbf{Output:} The Message is added to chat history
+
+\textbf{Test Case Derivation:} Verify that messages can be sent and stored between friends
+
+\textbf{How test will be performed:} Create a test case in UTF that messages a friend and verify the message is added to chat history
+
+\item{FRT-M2-2}
+
+\textbf{Name:} Receive new message
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} There are two accounts being friends
+					
+\textbf{Input:} A message sent from the friend
+					
+\textbf{Output:} The Message is added to chat history
+
+\textbf{Test Case Derivation:} Verify that messages can be sent and stored between friends
+
+\textbf{How test will be performed:} Create a test case in UTF that receives a message from a friend and verify the message is added to chat history
+\end{enumerate}
+
+\subsubsection{Building Module}
+
+This section will contain all unit tests for module ``Building''. The tests are chosen based on common user flows and cover the most important methods of this module.
+
+\begin{enumerate}
+\item{FRT-M3-1}
+
+\textbf{Name:} List Events
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} There are some events for this target building
+					
+\textbf{Input:} User request
+					
+\textbf{Output:} All events in the building are listed
+
+\textbf{Test Case Derivation:} Verify that all events of the building are shown with nothing missing
+
+\textbf{How test will be performed:} Create a test case in UTF where a user shares the location, verify the location information retrieved matches the expected GPS coordinates
+
+\item{FRT-M3-2}
+
+\textbf{Name:} List Lectures
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} There are some lectures for this target building
+					
+\textbf{Input:} User request
+					
+\textbf{Output:} All lectures in the building are listed
+
+\textbf{Test Case Derivation:} Verify that all lectures of the building are shown with nothing missing
+
+\textbf{How test will be performed:} Create a test case in UTF that has a building with a list of lectures, verify all lectures are displayed once lecture information is requested
+\end{enumerate}
+
+\subsubsection{Event Module}
+
+This section will contain all unit tests for module ``Event''. The tests are chosen based on common user flows and cover the most important methods of this module.
+
+\begin{enumerate}
+\item{FRT-M4-1}
+
+\textbf{Name:} Successful New Event Creation
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} User is logged in as admin
+					
+\textbf{Input:} Event information including location, time and club/department
+					
+\textbf{Output:} Event is successfully added to the system
+
+\textbf{Test Case Derivation:} Verify that new event can be added by an administrator only if all information is provided
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new event with all information provided, verify the event is added to the event list
+
+\item{FRT-M4-2}
+
+\textbf{Name:} Unsuccessful New Event Creation
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} User is logged in as admin
+					
+\textbf{Input:} Event information with one of the following missing: location, time or club/department
+					
+\textbf{Output:} Event cannot be added to the system, an error pops up saying information missing
+
+\textbf{Test Case Derivation:} Verify that new event can be added by an administrator only if all information is provided
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new event with some necessary information missing, verify the event fails to be added to the event list
+\end{enumerate}
+
+\subsubsection{Lecture Module}
+
+This section will contain all unit tests for module ``Lecture''. The tests are chosen based on common user flows and cover the most important methods of this module.
+
+\begin{enumerate}
+\item{FRT-M5-1}
+
+\textbf{Name:} Successful New Lecture Creation
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} User is logged in as admin
+					
+\textbf{Input:} Lecture information including location, time and instructor
+					
+\textbf{Output:} Lecture is successfully added to the system
+
+\textbf{Test Case Derivation:} Verify that new lecture can be added by an administrator only if all information is provided
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new lecture with all information provided, verify the lecture is added to the lecture list
+
+\item{FRT-M5-2}
+
+\textbf{Name:} Unsuccessful New Lecture Creation
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} User is logged in as admin
+					
+\textbf{Input:} Lecture information with one of the following missing: location, time or instructor
+					
+\textbf{Output:} Lecture cannot be added to the system, an error pops up saying information missing
+
+\textbf{Test Case Derivation:} Verify that new lecture can be added by an administrator only if all information is provided
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new lecture with some necessary information missing, verify the lecture fails to be added to the lecture list
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
-
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
-
-\subsubsection{Module ?}
-		
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Module ?}
-
-...
+This application does not have non-functional requirements to be tested with unit testing. All non-functional requirements will be verified through system tests in section \ref{sec:nonfunctional}. Some of the access and robustness requirements will be tested along with other functional requirement in the section above.
 
 \subsection{Traceability Between Test Cases and Modules}
 
-\wss{Provide evidence that all of the modules have been considered.}
+\begin{longtable}{|l|ccccc|}
+	\caption{Traceability Between Test Cases and Modules}                                                                                             \\
+	\hline
+	\textbf{Test IDs}  & \multicolumn{5}{c|}{\textbf{Module IDs}}                                                                                     \\
+	\hline
+	~                  & \textbf{M1}                              & \textbf{M2} & \textbf{M3} & \textbf{M4} & \textbf{M5} \\
+	\hline
+	\textbf{FRT-M1-1}  & X                                        & ~           & ~           & ~           & ~ \\
+	\textbf{FRT-M1-2}  & X                                        & ~           & ~           & ~           & ~ \\
+	\textbf{FRT-M1-3}  & X                                        & ~           & ~           & ~           & ~\\
+	\textbf{FRT-M1-4}  & X                                        & ~           & ~           & ~           & ~\\
+	\textbf{FRT-M2-1}  & ~                                        & X           & ~           & ~           & ~ \\
+	\textbf{FRT-M2-2}  & ~                                        & X           & ~           & ~           & ~\\
+	\textbf{FRT-M3-1}  & ~                                        & ~           & X           & ~           & ~\\
+	\textbf{FRT-M3-2}  & ~                                        & ~           & X           & ~           & ~\\
+	\textbf{FRT-M4-1}  & ~                                        & ~           & ~           & X           & ~\\
+	\textbf{FRT-M4-2} & ~                                        & ~           & ~           & X           & ~\\
+	\textbf{FRT-M5-1}  & ~                                        & ~           & ~           & ~           & X\\
+	\textbf{FRT-M5-2}  & ~                                        & ~           & ~           & ~           &X\\
+	\hline
+\end{longtable}
 				
 \bibliographystyle{plainnat}
 
