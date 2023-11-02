@@ -838,6 +838,77 @@ calculates the contrast, and checks if that contrast is at least 4.5:1
 \subsubsection{Performance}
 
 \begin{enumerate}
+\item{\textbf{NFRT-P1}}
+
+\textbf{Name:} Visual inspection of interface for messages
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User has the application downloaded on their phone
+					
+\textbf{Input/Condition:} User has the application open on their phone
+					
+\textbf{Output/Result:} The test passes if:
+\begin{itemize}
+  \item An error message stating that there is no internet connection is displayed when the application fails to connect to the internet.
+  \item A message telling the user to be aware of their surroundings is displayed upon startup.
+  \item When using a device that is incompatible with AR, a warning message is displayed relaying that information to the user.
+  \item When the device is not connected to the internet, the product is able to provide rudimentary functionalities using its offline components.
+\end{itemize}
+
+\textbf{How test will be performed:} The testers will open the application on one device and visually inspect the application to check that the above conditions are satisfied.
+
+\textbf{Related Requirement(s):} P-RF3, P-RF4, P-RF5, P-RF6
+
+\item{\textbf{NFRT-P2}}
+
+\textbf{Name:} Unit Testing
+
+\textbf{Type:} Non-functional, Static, Automatic
+					
+\textbf{Initial State:} The code for all the related requirements exists
+
+\textbf{Input/Condition:} The unit tests for all related requirements exist. These unit tests check that the code satisfies the fit crieria for their associated requirement(s).
+
+\textbf{Output/Result:} The unit test for all related requirements pass
+
+\textbf{How test will be performed:} Unit tests will be written to test for the above
+
+\textbf{Related Requirement(s):} P-SL1, P-SL2, P-SL3, P-SC1, P-SC2, P-SC3, P-SC4, P-PA1, P-PA2, P-RF1, P-RF2, P-C1, P-C2, P-SE2
+
+\end{enumerate}
+
+\subsubsection{Operational and Environmental}
+
+\begin{enumerate}
+\item{\textbf{NFRT-OE1}}
+
+\textbf{Name:} Visual inspection of device
+
+\textbf{Type:} Non-functional, Manual
+
+\textbf{Initial State:} User has a phone that uses Android 11 or above
+
+\textbf{Input/Condition:} User's phone is turned on and unlocked
+
+\textbf{Output/Result:} The test passes if:
+\begin{itemize}
+  \item The product can be downloaded onto the phone from the Google Play Store, or by downloading the APK file directly
+\end{itemize}
+
+\textbf{How test will be performed:} The testers will check the Google Play Store for the product, or find an APK file for the product.\
+The testers will then download and install the product onto the phone from the Google Play Store or the APK file.
+
+\textbf{Related Requirement(s):} OE-P1
+
+\end{enumerate}
+
+\subsubsection{Maintainability and Support}
+\textbf{N/A}
+
+\subsubsection{Security}
+
+\begin{enumerate}
 \item{\textbf{test-id}}
 
 \textbf{Name:}
