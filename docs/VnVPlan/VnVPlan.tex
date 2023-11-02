@@ -921,7 +921,7 @@ calculates the contrast, and checks if that contrast is at least 4.5:1
 
 \textbf{Output/Result:} The unit test for all related requirements pass
 
-\textbf{How test will be performed:} Unit tests will be written to test for the above
+\textbf{How test will be performed:} Unit tests will be written to test for all related requirements
 
 \textbf{Related Requirement(s):} P-SL1, P-SL2, P-SL3, P-SC1, P-SC2, P-SC3, P-SC4, P-PA1, P-PA2, P-RF1, P-RF2, P-C1, P-C2, P-SE2
 
@@ -953,30 +953,83 @@ The testers will then download and install the product onto the phone from the G
 \end{enumerate}
 
 \subsubsection{Maintainability and Support}
-\textbf{N/A}
+
+\quad \textbf{N/A}
 
 \subsubsection{Security}
 
 \begin{enumerate}
-\item{\textbf{test-id}}
+\item{\textbf{NFRT-S1}}
 
-\textbf{Name:}
+\textbf{Name:} Access Test
   
-\textbf{Type:} Non-functional, Static, Dynamic, Manual, Automatic, etc.
+\textbf{Type:} Non-functional, Dynamic, Manual
             
-\textbf{Initial State:}
+\textbf{Initial State:} The product is downloaded onto a supported device
   
-\textbf{Input/Condition:}
+\textbf{Input/Condition:} The product is launched
             
-\textbf{Output/Result:}
+\textbf{Output/Result:} At each level of access, the product constrains the possible actions to what is specified in requirement S-A1.
   
 \textbf{How test will be performed:}
-  
-\textbf{Related Requirement(s):}
-  
+\begin{enumerate}
+  \item The tester will download the product to a supported device and launch the product.
+  \item The product will begin at the first level of access, which should only allow the user to view the login, account creation, and account recovery pages.
+  \item The tester will log in or create an account to move to the second level of access (McMaster student/faculty member).
+  \item The tester will test that actions only possible at the third level of access (adding/deleting/editing events, pull logs not accessible to users) are not possible to do at this level.
+  \item The tester will log out of the account and log in as an administrator, moving to the third level of access.
+  \item The tester will test that actions only possible at this level of access (adding/deleting/editing events, pull logs not accessible to users) are possible to do.
 \end{enumerate}
 
-...
+\textbf{Related Requirement(s):} S-A1
+
+\item{\textbf{NFRT-S2}}
+
+\textbf{Name:} Unit Testing
+
+\textbf{Type:} Non-functional, Static, Automatic
+					
+\textbf{Initial State:} The code for all the related requirements exists
+
+\textbf{Input/Condition:} The unit tests for all related requirements exist. These unit tests check that the code satisfies the fit crieria for their associated requirement(s).
+
+\textbf{Output/Result:} The following tests pass:
+\begin{itemize}
+  \item The product prevents users from creating a user account using student/faculty-exclusive information tied to an already existing account
+  \item All data collected must be encrypted both on disk in the server and on transit by an industry standard encryption algorithm
+  \item The product erases all data for a specific user if that user requests to do so
+  \item Accounts that are inactive for a certain period of time are deleted to prevent unnecessary data from being held
+\end{itemize}
+
+\textbf{How test will be performed:} Unit tests will be written to test for the above
+
+\textbf{Related Requirement(s):} S-IG1, S-P1, S-P2, S-P4, S-P5
+
+\item{\textbf{NFRT-S3}}
+
+\textbf{Name:} Visual inspection of device
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+
+\textbf{Initial State:} User has the product downloaded and launched on their device
+
+\textbf{Input/Condition:} The user chooses to create an account
+
+\textbf{Output/Result:} The product asks the user whether or not they agree with the privacy terms
+
+\textbf{How test will be performed:} The testers will launch the product and begin to create a new account
+
+\textbf{Related Requirement(s):} S-P3
+
+\end{enumerate}
+
+\subsubsection{Cultural}
+
+\quad \textbf{N/A}
+
+\subsubsection{Compliance}
+
+\quad \textbf{N/A}
 
 \subsection{Traceability Between Test Cases and Requirements}
 
