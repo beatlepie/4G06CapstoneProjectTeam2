@@ -899,6 +899,7 @@ calculates the contrast, and checks if that contrast is at least 4.5:1
 					
 \textbf{Output/Result:} The test passes if:
 \begin{itemize}
+  \item A notification in the application appears when the network strength is below ~75dBm and/or the server connection is poor
   \item An error message stating that there is no internet connection is displayed when the application fails to connect to the internet.
   \item A message telling the user to be aware of their surroundings is displayed upon startup.
   \item When using a device that is incompatible with AR, a warning message is displayed relaying that information to the user.
@@ -907,23 +908,86 @@ calculates the contrast, and checks if that contrast is at least 4.5:1
 
 \textbf{How test will be performed:} The testers will open the application on one device and visually inspect the application to check that the above conditions are satisfied.
 
-\textbf{Related Requirement(s):} P-RF3, P-RF4, P-RF5, P-RF6
+\textbf{Related Requirement(s):} P-RF1, P-RF3, P-RF4, P-RF5, P-RF6
 
 \item{\textbf{NFRT-P2}}
 
-\textbf{Name:} Unit Testing
+\textbf{Name:} Speed and Latency Tests
 
-\textbf{Type:} Non-functional, Static, Automatic
+\textbf{Type:} Non-functional, Dynamic, Automatic
+					
+\textbf{Initial State:} The product is launched on two separate devices
+
+\textbf{Input/Condition:} The product is logged in to one account on one device, and another account on the other. Both accounts are friends
+
+\textbf{Output/Result:}
+\begin{itemize}
+  \item The popup response following successful image recognitions appears within RECOGNITION\_TIME
+  \item A user receives a message within MESSAGE\_TIME after being sent by another user
+  \item A user's updated location must appear on their friends' device within LOCATION\_UPDATE\_TIME of the location change
+  \item A user receives a message within MESSAGE\_TIME after being sent by another user when there are issues collecting location information
+\end{itemize}
+
+\textbf{How test will be performed:} The code has a built-in timer to verify the timing of the above
+
+\textbf{Related Requirement(s):} P-SL1, P-SL2, P-SL3, P-RF2
+
+\item{\textbf{NFRT-P3}}
+
+\textbf{Name:} Code Inspection
+
+\textbf{Type:} Non-functional, Static, Manual
 					
 \textbf{Initial State:} The code for all the related requirements exists
 
-\textbf{Input/Condition:} The unit tests for all related requirements exist. These unit tests check that the code satisfies the fit crieria for their associated requirement(s).
+\textbf{Input/Condition:} The testers have the code open
 
-\textbf{Output/Result:} The unit test for all related requirements pass
+\textbf{Output/Result:}
+\begin{itemize}
+  \item User's personal information does not appear in the database if the user did not grant permission
+  \item The usage of a user's persona information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario's data protection laws
+  \item The product does not execute any code that involves the transmission of information outside of the product
+  \item Information for an event added to the database is still present at least 3 months after its addition
+  \item The product architecture allows for the addition of new buildings without considerable drawbacks in performance
+  \item The product is able to operate without major malfunctions in release build for at least 1 year
+  \item The finalized product will remain compatible with the promised operating systems and devices for at least 3 years
+\end{itemize}
 
-\textbf{How test will be performed:} Unit tests will be written to test for all related requirements
+\textbf{How test will be performed:} The code will be inspected by developers and supervisors to check for the above
 
-\textbf{Related Requirement(s):} P-SL1, P-SL2, P-SL3, P-SC1, P-SC2, P-SC3, P-SC4, P-PA1, P-PA2, P-RF1, P-RF2, P-C1, P-C2, P-SE2
+\textbf{Related Requirement(s):} P-SC1, P-SC3, P-SC4, P-C2, P-SE3, P-L1, P-L2
+
+\item{\textbf{NFRT-P4}}
+
+\textbf{Name:} Building Identification
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} The user has the product launched on their device
+
+\textbf{Input/Condition:} The product is scanning a building on campus
+
+\textbf{Output/Result:} The product identifies a building with a success rate of at least 80 percent
+
+\textbf{How test will be performed:} Testers will scan buildings with the product multiple times and calculate the percentage of successful scans
+
+\textbf{Related Requirement(s):} P-PA1
+
+\item{\textbf{NFRT-P5}}
+
+\textbf{Name:} Load Testing for Server Capacity
+
+\textbf{Type:} Non-functional, Dynamic, Automatic
+					
+\textbf{Initial State:} The server and database are online and ready to connect to
+
+\textbf{Input/Condition:} There are MAX\_CAPACITY users simultaneously accessing the server. There is information for MAX\_USER\_LOAD users stored in the database.
+
+\textbf{Output/Result:} The server is able to handle all the users connecting to the server at once. The database can handle all the data that it contains
+
+\textbf{How test will be performed:} Testers use a J-meter for the test
+
+\textbf{Related Requirement(s):} P-C1, P-SE1, P-SE2
 
 \end{enumerate}
 
