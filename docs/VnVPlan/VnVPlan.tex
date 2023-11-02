@@ -78,40 +78,89 @@ This document ... \wss{provide an introductory blurb and roadmap of the
 \section{General Information}
 
 \subsection{Summary}
+  
+The software being tested is a social media application which also uses Augmented Reality features to allow McMaster University students to connect with each other. The software has many different functions to be able to accomplish its goals. These are some of the important functions:
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
+ \begin{itemize}
+     \item  Allowing the users to create and manage their account.
+
+     \item  Allowing the users to add, manage and message friends.
+
+     \item  Allowing the users with administrator access to add and manage events.
+
+     \item  Allowing the users to view ongoing events and pin and unpin them based on interest.
+
+     \item  Identifying major campus buildings through the user's location and camera view, and using the information to display relevant lectures, events and their timings.
+
+ \end{itemize}
+
+ 
 
 \subsection{Objectives}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
+In order to develop the software to meet its goals and create a complete product, there are many qualities that are important for our project such as:
 
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
-worthwhile to justify why the objectives are left out.}
+\begin{itemize}
 
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
-has already been verified by its implementation team.}
+    \item  Correctness of the software in achieving its designated functions
+
+    \item An easily navigable User Interface adaptable to different screen sizes
+
+    \item Sufficient speed and reliability of the building recognition features
+
+    \item Sufficient speed and reliability in sending and receiving messages
+
+    \item Adequate accuracy in tracking the user's location
+
+    \item Appropriate abidance of security requirements regarding critical information such as location and personal data.
+
+    \item Infrastructure to support a passable scale of total concurrent users and total user data storage
+
+    \end{itemize}
+
+
+
+While we would want to satisfy as many positive qualities as possible, due to limited resources , there will be some objectives that we will be leaving out since they are out of scope such as :
+
+\begin{itemize}
+    \item  Project longevity requirements:
+
+    This is because the longevity requirements were written with the assumption that the product will be supported even after the duration of the course for years to come which is something that is not possible to verify or guarantee and is out of the scope.
+
+    \item  Testing learning requirements:
+
+    We will be producing material to make it easier to understand and use our product but to test every piece of supporting documentation and tutorial content would require long testing sessions with volunteers which can be out of the scope. Instead, since we will be testing our user interface, we could use the feedback obtained there to improve our learning specific content as well.
+    
+\end{itemize}
+
+
+
+We will be prioritizing reliability in our listed qualities over performance since we want our software to be correct and consistent over fast and unreliable. While we still want to maximize performance where possible, it is difficult to predict exactly how well we will meet our performance criteria since we will be limited by many factors out of our control such as external libraries.
+
+We will also be assuming that any external libraries we depend on (such as Vuforia) will have already been verified by the implementation team due to our lack of control over them. 
+
 
 \subsection{Relevant Documentation}
 
-\wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (design documents, like MG, MIS, etc).  You
-  can include these even before they are written, since by the time the project
-  is done, they will be written.}
 
-\citet{SRS}
 
-\wss{Don't just list the other documents.  You should explain why they are relevant and 
-how they relate to your VnV efforts.}
+
+
+Many of the other documents associated with our project are relevant to the Verification and Validation plan such as:
+
+\begin{itemize}
+    \item Software Requirement Specification (SRS):
+          
+          The SRS has a lot of components relevant to the VnV plan. The functional requirements are important in identifying the primary functions of the the project while the non functional requirements are critical in identifying the main qualities and objectives of the product. It also contains constraint and assumption information which can help identify out-of-scope objectives.
+
+          \citet{SRS}
+    \item Hazard Analysis (HA):
+    
+        The HA document contains the Failure Mode and Effect Analysis (FMEA) which is incredibly useful in understanding the possible failures and their consequences. This can help us assign priorities to different failures that can be translated into priorities for different qualities identified earlier in the document. It also contains more detailed safety and security requirements that we can use to verify our project.
+
+        \citet{HA}
+\end{itemize}
+
 
 \section{Plan}
 
