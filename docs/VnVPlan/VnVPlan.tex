@@ -1283,6 +1283,23 @@ This section will contain all unit tests for module ``Building''. The tests are 
 \textbf{Test Case Derivation:} Verify that all lectures of the building are shown with nothing missing
 
 \textbf{How test will be performed:} Create a test case in UTF that has a building with a list of lectures, verify all lectures are displayed once lecture information is requested
+
+\item{FRT-M3-3}
+
+\textbf{Name:} Check User Location in Bounds
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+
+\textbf{Initial State:} Building has a bounding box outlined by GPS coordinates
+
+\textbf{Input:} User location
+					
+\textbf{Output:} True if the user location is within the bounding box, False otherwise
+
+\textbf{Test Case Derivation:} Verify that the GPS building detection algorithm is correct
+
+\textbf{How test will be performed:} Create a test case in UTF that has a building object with a bounding box and a user object with a dummy location, verify that the algorithm identifies cases where the user is within the bounding box
+
 \end{enumerate}
 
 \subsubsection{Event Module}
@@ -1376,16 +1393,17 @@ This application does not have non-functional requirements to be tested with uni
 	\hline
 	\textbf{FRT-M1-1}  & X                                        & ~           & ~           & ~           & ~ \\
 	\textbf{FRT-M1-2}  & X                                        & ~           & ~           & ~           & ~ \\
-	\textbf{FRT-M1-3}  & X                                        & ~           & ~           & ~           & ~\\
-	\textbf{FRT-M1-4}  & X                                        & ~           & ~           & ~           & ~\\
+	\textbf{FRT-M1-3}  & X                                        & ~           & ~           & ~           & ~ \\
+	\textbf{FRT-M1-4}  & X                                        & ~           & ~           & ~           & ~ \\
 	\textbf{FRT-M2-1}  & ~                                        & X           & ~           & ~           & ~ \\
-	\textbf{FRT-M2-2}  & ~                                        & X           & ~           & ~           & ~\\
-	\textbf{FRT-M3-1}  & ~                                        & ~           & X           & ~           & ~\\
-	\textbf{FRT-M3-2}  & ~                                        & ~           & X           & ~           & ~\\
-	\textbf{FRT-M4-1}  & ~                                        & ~           & ~           & X           & ~\\
-	\textbf{FRT-M4-2} & ~                                        & ~           & ~           & X           & ~\\
-	\textbf{FRT-M5-1}  & ~                                        & ~           & ~           & ~           & X\\
-	\textbf{FRT-M5-2}  & ~                                        & ~           & ~           & ~           &X\\
+	\textbf{FRT-M2-2}  & ~                                        & X           & ~           & ~           & ~ \\
+	\textbf{FRT-M3-1}  & ~                                        & ~           & X           & ~           & ~ \\
+	\textbf{FRT-M3-2}  & ~                                        & ~           & X           & ~           & ~ \\
+	\textbf{FRT-M3-3}  & ~                                        & ~           & X           & ~           & ~ \\
+  \textbf{FRT-M4-1}  & ~                                        & ~           & ~           & X           & ~ \\
+	\textbf{FRT-M4-2}  & ~                                        & ~           & ~           & X           & ~ \\
+	\textbf{FRT-M5-1}  & ~                                        & ~           & ~           & ~           & X \\
+	\textbf{FRT-M5-2}  & ~                                        & ~           & ~           & ~           & X \\
 	\hline
 \end{longtable}
 				
