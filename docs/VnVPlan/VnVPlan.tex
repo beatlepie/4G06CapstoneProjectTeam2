@@ -2,6 +2,7 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{float}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -12,6 +13,7 @@
 }
 \usepackage[round]{natbib}
 \usepackage{longtable}
+\usepackage{pdflscape}
 
 \input{../Comments}
 \input{../Common}
@@ -34,6 +36,7 @@
 Oct 29 & 1.0 & Add Functional Requirements Tests\\
 Oct 31 & 1.0 & Add Non-Functional Requirement Tests\\
 Nov 1 & 1.0 & Add Unit Tests\\
+Nov 3 & 1.0 & Add Tables And More Tests\\
 \bottomrule
 \end{tabularx}
 
@@ -52,6 +55,8 @@ Nov 1 & 1.0 & Add Unit Tests\\
   \toprule		
   \textbf{symbol} & \textbf{description}\\
   \midrule 
+  VnV & Verification and Validation\\
+  \midrule
   AR & Augmented Reality\\
   \midrule
   SRS & Software Requirement Specification\\
@@ -65,6 +70,8 @@ Nov 1 & 1.0 & Add Unit Tests\\
   UTF & Unity Test Framework\\
   \midrule
   GPS & Global Positioning System\\
+  \midrule
+  Apache JMeter & A load testing tool for performance analysis\\
   \bottomrule
 \end{tabular}\\
 
@@ -72,8 +79,9 @@ Nov 1 & 1.0 & Add Unit Tests\\
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
+This document describes the verification and validation plan for CampusConnection.  Within this document, there will be plans to verify the SRS document, the design plan, the VnV plan, the implementation plan, and the software validation plan.  Furthermore, this document will list specific system tests that cover all functional and non-function requirements we mentioned in the SRS, along with a traceability table between test cases and requirements to bind all requirements with tests. 
+
+This document also includes unit tests, but since the design documentation like MIS is not ready yet, we will only cover the most important modules and its corresponding methods test. The team will iterate on the VnV plan and have a more detailed version with test code when the modules are specified in the design document.
 
 \section{General Information}
 
@@ -86,7 +94,7 @@ The software being tested is a social media application which also uses Augmente
 
      \item  Allowing the users to add, manage and message friends.
 
-     \item  Allowing the users with administrator access to add and manage events.
+     \item  Allowing the users with administrator access to add and manage events and lectures.
 
      \item  Allowing the users to view ongoing events and pin and unpin them based on interest.
 
@@ -149,16 +157,21 @@ We will also be assuming that any external libraries we depend on (such as Vufor
 Many of the other documents associated with our project are relevant to the Verification and Validation plan such as:
 
 \begin{itemize}
+	\item Development Plan:
+
+	The Development Plan contains the roles and responsibilities of each member, which outlines the tester of each components. It also includes the tools and technologies that will be used to facilitate testing
+
+	\href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/docs-VnV-plan/docs/DevelopmentPlan/DevelopmentPlan.pdf}{Development Plan}
     \item Software Requirement Specification (SRS):
           
           The SRS has a lot of components relevant to the VnV plan. The functional requirements are important in identifying the primary functions of the the project while the non functional requirements are critical in identifying the main qualities and objectives of the product. It also contains constraint and assumption information which can help identify out-of-scope objectives.
 
-          \citet{SRS}
+          \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/docs-VnV-plan/docs/SRS-Volere/SRS.pdf}{Software Requirement Specification (SRS)}
     \item Hazard Analysis (HA):
     
         The HA document contains the Failure Mode and Effect Analysis (FMEA) which is incredibly useful in understanding the possible failures and their consequences. This can help us assign priorities to different failures that can be translated into priorities for different qualities identified earlier in the document. It also contains more detailed safety and security requirements that we can use to verify our project.
 
-        \citet{HA}
+        \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/docs-VnV-plan/docs/HazardAnalysis/HazardAnalysis.pdf}{Hazard Analysis}
 \end{itemize}
 
 
@@ -245,6 +258,7 @@ as a Rev 0 demo for the supervisor.}
 \wss{This section might reference back to the SRS verification section.}
 
 \section{System Test Description}
+\label{sec:system}
 	
 \subsection{Tests for Functional Requirements}
 
@@ -787,7 +801,7 @@ The following section includes tests for non-functional requirements defined in 
 
 \textbf{Input/Condition:} User is logged into the homepage and pokes around the application
 					
-\textbf{Output/Result:} Get feedback and verify layout is user-friendly. This test is a pass if average individual score is over MIN\_SCORE in the "User-friendly Layout",\
+\textbf{Output/Result:} Get feedback and verify layout is user-friendly. The average individual score is over MIN\_SCORE in the "User-friendly Layout",\
 ``Intuitive icons'', ``Immediate Visual Response when Clicking'' and ``Appealing Colour Scheme'' categories of the User Experience Survey
 					
 \textbf{How test will be performed:} A survey will be given to at least
@@ -797,7 +811,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \item{\textbf{NFRT-LF2}}
 
-\textbf{Name:} Visual inspection of interface
+\textbf{Name:} Visual Inspection with different screen sizes
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
@@ -805,21 +819,28 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 					
 \textbf{Input/Condition:} User has the application open on their phone
 					
-\textbf{Output/Result:} The test passes if, for all different pages:
-\begin{itemize}
-  \item The colour scheme is the same
-  \item All visual elements on the screen are within the borders of the screen for all screens in the SCREEN\_VIEWPORTS list
-\end{itemize}
+\textbf{Output/Result:} For all different pages all visual elements on the screen are within the borders of the screen for all screens in the SCREEN\_VIEWPORTS list
 
 \textbf{How test will be performed:} The application will be opened on all screens in the SCREEN\_VIEWPORTS list.\
-The testers will visually inspect each page and each screen to make sure that:
-\begin{itemize}
-  \item All visual elements on the screen are within its borders
-  \item The colour scheme on each page is the same
-\end{itemize}
+The testers will visually inspect each page and each screen to make sure that all visual elements on the screen are within its borders
 
-\textbf{Related Requirement(s):} LF-A3, LF-S1
+\textbf{Related Requirement(s):} LF-A3
 
+\item{\textbf{NFRT-LF3}}
+
+\textbf{Name:} Visual inspection of color scheme
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User has the application downloaded on their phone
+					
+\textbf{Input/Condition:} User has the application open on their phone
+					
+\textbf{Output/Result:} For all different pages the colour scheme is the same
+
+\textbf{How test will be performed:} The testers will visually inspect each page to make sure that the colour scheme on each page is the same
+
+\textbf{Related Requirement(s):} LF-S1
 \end{enumerate}
 
 \subsubsection{Usability and Humanity}
@@ -835,7 +856,7 @@ The testers will visually inspect each page and each screen to make sure that:
 
 \textbf{Input/Condition:} User is logged into the homepage and pokes around the application
 					
-\textbf{Output/Result:} Get feedback and verify layout is user-friendly. This test is a pass if average individual score is over MIN\_SCORE in the ``Easy to Navigate'',\
+\textbf{Output/Result:} Get feedback and verify layout is user-friendly. The average individual score is over MIN\_SCORE in the ``Easy to Navigate'',\
 ``Helpful Tutorial'' and ``No Technical or Software-Specific Language'' categories of the User Experience Survey
 					
 \textbf{How test will be performed:} A survey will be given to at least
@@ -853,7 +874,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 					
 \textbf{Input/Condition:} User has the application open on their phone
 					
-\textbf{Output/Result:} The test passes if:
+\textbf{Output/Result:}
 \begin{itemize}
   \item The name, time, and location of all pinned events and lectures are displayed on a user's personal page
   \item The user is able to update their USER\_PROFILE and avatar
@@ -873,30 +894,11 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 					
 \textbf{Input/Condition:} User has the application open on their phone
 					
-\textbf{Output/Result:} The test passes if a tutorial explaining the features of the application appears on first launch, and is available upon request from the user
+\textbf{Output/Result:} A tutorial explaining the features of the application appears on first launch, and is available upon request from the user
 
-\textbf{How test will be performed:} The testers will open the application on one device and visually inspect the application to check that the above condition is satisfied.
+\textbf{How test will be performed:} The testers will open the application on one device and visually inspect the application to check that the tutorial appears on first launch and is available upon request
 
 \textbf{Related Requirement(s):} UH-L1
-
-\item{\textbf{NFRT-UH3}}
-
-\textbf{Name:} Unit Test for Colour Contrast
-
-\textbf{Type:} Non-functional, Static, Automatic
-					
-\textbf{Initial State:} There exists a method that calculates the luminance of colours on the screen\
-and calculates the contrast between the brightest and darkest colours.
-
-\textbf{Input/Condition:} All colours on each page are given as input
-
-\textbf{Output/Result:} The colour contrast for each page is calculated to be at least 4.5:1
-
-\textbf{How test will be performed:} There will be a unit test that takes all the colours on each page as an input,\
-calculates the contrast, and checks if that contrast is at least 4.5:1
-
-\textbf{Related Requirement(s):} UH-A1
-
 \end{enumerate}
 
 \subsubsection{Performance}
@@ -904,75 +906,251 @@ calculates the contrast, and checks if that contrast is at least 4.5:1
 \begin{enumerate}
 \item{\textbf{NFRT-P1}}
 
-\textbf{Name:} Visual inspection of interface for messages
+\textbf{Name:} Weak network strength Notification
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
 \textbf{Initial State:} User has the application downloaded on their phone
 					
-\textbf{Input/Condition:} User has the application open on their phone
+\textbf{Input/Condition:} User enters a zone with week internet connection
 					
-\textbf{Output/Result:} The test passes if:
-\begin{itemize}
-  \item A notification in the application appears when the network strength is below ~75dBm and/or the server connection is poor
-  \item An error message stating that there is no internet connection is displayed when the application fails to connect to the internet.
-  \item A message telling the user to be aware of their surroundings is displayed upon startup.
-  \item When using a device that is incompatible with AR, a warning message is displayed relaying that information to the user.
-  \item When the device is not connected to the internet, the product is able to provide rudimentary functionalities using its offline components.
-\end{itemize}
+\textbf{Output/Result:} A notification in the application appears saying the network strength weak or the server connection is poor
 
-\textbf{How test will be performed:} The testers will open the application on one device and visually inspect the application to check that the above conditions are satisfied.
+\textbf{How test will be performed:} The testers will open the application on one device and visually inspect the application sending a message when the network strength is weak
 
-\textbf{Related Requirement(s):} P-RF1, P-RF3, P-RF4, P-RF5, P-RF6
+\textbf{Related Requirement(s):} P-RF1
 
 \item{\textbf{NFRT-P2}}
 
-\textbf{Name:} Speed and Latency Tests
+\textbf{Name:} Error Message when internet connection is lost
 
-\textbf{Type:} Non-functional, Dynamic, Automatic
+\textbf{Type:} Non-functional, Dynamic, Manual
 					
-\textbf{Initial State:} The product is launched on two separate devices
+\textbf{Initial State:} User has the application downloaded on their phone
+					
+\textbf{Input/Condition:} User loses internet connection
+					
+\textbf{Output/Result:} An error message stating that there is no internet connection is displayed
 
-\textbf{Input/Condition:} The product is logged in to one account on one device, and another account on the other. Both accounts are friends
+\textbf{How test will be performed:} The testers will open the application on one device and visually inspect the application to check the error message appears when the application fails to connect to the internet
 
-\textbf{Output/Result:}
-\begin{itemize}
-  \item The popup response following successful image recognitions appears within RECOGNITION\_TIME
-  \item A user receives a message within MESSAGE\_TIME after being sent by another user
-  \item A user's updated location must appear on their friends' device within LOCATION\_UPDATE\_TIME of the location change
-  \item A user receives a message within MESSAGE\_TIME after being sent by another user when there are issues collecting location information
-\end{itemize}
-
-\textbf{How test will be performed:} The code has a built-in timer to verify the timing of the above
-
-\textbf{Related Requirement(s):} P-SL1, P-SL2, P-SL3, P-RF2
+\textbf{Related Requirement(s):} P-RF3
 
 \item{\textbf{NFRT-P3}}
 
-\textbf{Name:} Code Inspection
+\textbf{Name:} AR incompatibility Warning
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User has the application downloaded on their phone which is not compatible with AR features
+					
+\textbf{Input/Condition:} User uses the AR feature
+					
+\textbf{Output/Result:} A warning message is displayed telling the user AR is not available
+
+\textbf{How test will be performed:} The testers will open the application on a device not compatible with AR functions and visually inspect the error message appears when AR feature is used
+
+\textbf{Related Requirement(s):} P-RF5
+
+\item{\textbf{NFRT-P4}}
+
+\textbf{Name:} Message when starting AR 
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User has the application downloaded on their phone
+					
+\textbf{Input/Condition:} User uses the AR feature
+					
+\textbf{Output/Result:} A message telling the user to be aware of their surroundings is displayed upon startup.
+
+\textbf{How test will be performed:} The testers will open the AR feature on one device and visually inspect the application to check that the message is shown
+
+\textbf{Related Requirement(s):} P-RF4
+
+\item{\textbf{NFRT-P5}}
+
+\textbf{Name:} Rudimentary functions when internet connection is lost
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User has no internet connection
+					
+\textbf{Input/Condition:} User opens the application
+					
+\textbf{Output/Result:} The application still works with limited functionalities (personal profile and events view)
+
+\textbf{How test will be performed:} The testers will open the application with offline mode and check the personal profile and pinned events/lectures are still available
+
+\textbf{Related Requirement(s):} P-RF6
+
+\item{\textbf{NFRT-P6}}
+
+\textbf{Name:} Builing Recognition Response Time
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} The product is installed
+
+\textbf{Input/Condition:} The user opens the AR feature and points the camera to a building on campus
+
+\textbf{Output/Result:} The popup response following successful image recognitions appears within RECOGNITION\_TIME
+
+\textbf{How test will be performed:} The tester will start a timer when the recognition process starts and end the timer when the recognition is successful. Then the tester can verify if the time is within RECOGNITION\_TIME
+
+\textbf{Related Requirement(s):} P-SL1
+
+\item{\textbf{NFRT-P7}}
+
+\textbf{Name:} Message Sent Response Time
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} Two test accounts are friends of each other
+
+\textbf{Input/Condition:} A message is sent from one account to the other
+
+\textbf{Output/Result:} The user receives a message within MESSAGE\_TIME after being sent by another user
+
+\textbf{How test will be performed:} The tester will start a timer when the message is sent and end the timer when the message is received. Then the tester can verify if the time is within MESSAGE\_TIME
+
+\textbf{Related Requirement(s):} P-SL2
+
+\item{\textbf{NFRT-P8}}
+
+\textbf{Name:} Location Sharing Update Time
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} Two test accounts are friends of each other, one account starts location sharing
+
+\textbf{Input/Condition:} The device sharing its location moves in a period of time
+
+\textbf{Output/Result:} The user's updated location must appear on their friends' device within LOCATION\_UPDATE\_TIME of the location change
+
+\textbf{How test will be performed:} The tester will start a timer when the device moves and end the timer when the location change is shown on the other device. Then the tester can verify if the time is within LOCATION\_UPDATE\_TIME
+
+\textbf{Related Requirement(s):} P-SL3
+
+\item{\textbf{NFRT-P9}}
+
+\textbf{Name:} Messaging When Location Sharing Is Not Working
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} Two test accounts are friends of each other, one of them cannot share location
+
+\textbf{Input/Condition:} The one device that cannot share location messages the other one
+
+\textbf{Output/Result:} The message is sent successfully
+
+\textbf{How test will be performed:} The tester will turn off the location permission and send a message. Then the tester will verify the message is sent without a problem
+
+\textbf{Related Requirement(s):} P-RF2
+
+\item{\textbf{NFRT-P10}}
+
+\textbf{Name:} Code Walkthrough For User Personal Data
 
 \textbf{Type:} Non-functional, Static, Manual
-					
-\textbf{Initial State:} The code for all the related requirements exists
 
-\textbf{Input/Condition:} The testers have the code open
+\textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:}
+\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
 \begin{itemize}
   \item User's personal information does not appear in the database if the user did not grant permission
+\end{itemize}
+
+\textbf{How test will be performed:} A code walkthough will be held by the developers to show that database storing is only possible when the user grants permission
+
+\textbf{Related Requirement(s):} P-SC1
+
+\item{\textbf{NFRT-P11}}
+
+\textbf{Name:} Code Inspection For Legitimate Use Of Personal Data
+
+\textbf{Type:} Non-functional, Static, Manual
+
+\textbf{Input/Condition:} Source code
+
+\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\begin{itemize}
   \item The usage of a user's persona information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario's data protection laws
+\end{itemize}
+
+\textbf{How test will be performed:} A code inspection will be held with supervisor's attendance to show the usage of personal data is legitimate
+
+\textbf{Related Requirement(s):} P-SC3
+
+\item{\textbf{NFRT-P12}}
+
+\textbf{Name:} Code Walkthrough For Data Transmission
+
+\textbf{Type:} Non-functional, Static, Manual
+
+\textbf{Input/Condition:} Source code
+
+\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\begin{itemize}
   \item The product does not execute any code that involves the transmission of information outside of the product
+\end{itemize}
+
+\textbf{How test will be performed:}  A code walkthough will be held by the developers to show that the application does not transmit data while not in use
+
+\textbf{Related Requirement(s):} P-SC4
+
+\item{\textbf{NFRT-P13}}
+
+\textbf{Name:} Code Walkthrough For Database
+
+\textbf{Type:} Non-functional, Static, Manual
+
+\textbf{Input/Condition:} Source code
+
+\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\begin{itemize}
   \item Information for an event added to the database is still present at least 3 months after its addition
-  \item The product architecture allows for the addition of new buildings without considerable drawbacks in performance
+\end{itemize}
+
+\textbf{How test will be performed:} A code walkthough will be held by the developers to show that the database is reliable and the tables will be kept for at least 3 months
+
+\textbf{Related Requirement(s):} P-C2
+
+\item{\textbf{NFRT-P14}}
+
+\textbf{Name:} Code Peer Evaluation For Longevity
+
+\textbf{Type:} Non-functional, Static, Manual
+
+\textbf{Input/Condition:} Source code
+
+\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\begin{itemize} 
   \item The product is able to operate without major malfunctions in release build for at least 1 year
   \item The finalized product will remain compatible with the promised operating systems and devices for at least 3 years
 \end{itemize}
 
-\textbf{How test will be performed:} The code will be inspected by developers and supervisors to check for the above
+\textbf{How test will be performed:} The testers will hold a peer evaluation session for the other developers to inspect the source code and make sure it can operate and remain compatible with promised operating systems for a long time
 
-\textbf{Related Requirement(s):} P-SC1, P-SC3, P-SC4, P-C2, P-SE3, P-L1, P-L2
+\textbf{Related Requirement(s):} P-L1, P-L2
 
-\item{\textbf{NFRT-P4}}
+\item{\textbf{NFRT-P15}}
+
+\textbf{Name:} New Building Addition
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+
+\textbf{initial State:} The tester has developer permission
+
+\textbf{Input/Condition:} All information about the new building (location, name, image, etc.)
+
+\textbf{Output/Result:} A new building is added without huge drawbacks in performance
+
+\textbf{How test will be performed:} The tester will add a dummy new building and test if the all the time requirements mentioned in the Speed and Latency Requirements (P-SL1, P-SL2, P-SL3) are still fulfilled.
+
+\textbf{Related Requirement(s):} P-SE3
+
+\item{\textbf{NFRT-P16}}
 
 \textbf{Name:} Building Identification
 
@@ -988,22 +1166,37 @@ calculates the contrast, and checks if that contrast is at least 4.5:1
 
 \textbf{Related Requirement(s):} P-PA1
 
-\item{\textbf{NFRT-P5}}
+\item{\textbf{NFRT-P17}}
 
 \textbf{Name:} Load Testing for Server Capacity
 
 \textbf{Type:} Non-functional, Dynamic, Automatic
 					
-\textbf{Initial State:} The server and database are online and ready to connect to
+\textbf{Initial State:} The server is online and ready to connect to
 
-\textbf{Input/Condition:} There are MAX\_CAPACITY users simultaneously accessing the server. There is information for MAX\_USER\_LOAD users stored in the database.
+\textbf{Input/Condition:} Load testing tool simulates there are MAX\_CAPACITY users simultaneously accessing the server
 
-\textbf{Output/Result:} The server is able to handle all the users connecting to the server at once. The database can handle all the data that it contains
+\textbf{Output/Result:} The server is able to handle all the users connecting to the server at once
 
-\textbf{How test will be performed:} Testers use a J-meter for the test
+\textbf{How test will be performed:} Testers use Apache JMeter for the load test simulation
 
-\textbf{Related Requirement(s):} P-C1, P-SE1, P-SE2
+\textbf{Related Requirement(s):} P-C1, P-SE1
 
+\item{\textbf{NFRT-P18}}
+
+\textbf{Name:} Load Testing for Database Capacity
+
+\textbf{Type:} Non-functional, Dynamic, Automatic
+					
+\textbf{Initial State:} The database is online and ready to connect to
+
+\textbf{Input/Condition:} Load testing tool simulates there is information for MAX\_USER\_LOAD users stored in the database
+
+\textbf{Output/Result:} The database can handle all the data that it contains
+
+\textbf{How test will be performed:} Testers use Apache JMeter for the load test simulation
+
+\textbf{Related Requirement(s):} P-SE2
 \end{enumerate}
 
 \subsubsection{Operational and Environmental}
@@ -1019,21 +1212,81 @@ calculates the contrast, and checks if that contrast is at least 4.5:1
 
 \textbf{Input/Condition:} User's phone is turned on and unlocked
 
-\textbf{Output/Result:} The test passes if:
-\begin{itemize}
-  \item The product can be downloaded onto the phone from the Google Play Store, or by downloading the APK file directly
-\end{itemize}
+\textbf{Output/Result:} The product can be downloaded onto the phone from the Google Play Store, or by downloading the APK file directly
 
 \textbf{How test will be performed:} The testers will check the Google Play Store for the product, or find an APK file for the product.\
 The testers will then download and install the product onto the phone from the Google Play Store or the APK file.
 
 \textbf{Related Requirement(s):} OE-P1
 
+\item{\textbf{NFRT-OE2}}
+
+\textbf{Name:} Physical Environment and Adjacent Systems 
+
+\textbf{Type:} Non-functional, Manual
+
+\textbf{Initial State:} NA
+
+\textbf{Input/Condition:} NA
+
+\textbf{Output/Result:} The application is proved to be able to installed on a phone and interface with Android 11 and above and ARCore
+
+\textbf{How test will be performed:} These are fundamental tests for the application. Testing for these requirements are completed within the functional requirements tests above
+
+\textbf{Related Requirement(s):} OE-EPE1, OE-IAS1, OE-IAS2
 \end{enumerate}
 
 \subsubsection{Maintainability and Support}
 
-\quad \textbf{N/A}
+\begin{enumerate}
+\item{\textbf{NFRT-MS1}}
+
+\textbf{Name:} Survey For Maintenance Time
+
+\textbf{Type:} Non-functional, Static, Manual
+					
+\textbf{Initial State:} NA
+
+\textbf{Input/Condition:} Ask at least 50 users when they are less likely to use the application and collect the feedback
+
+\textbf{Output/Result:} Periods of reduced usage is shown to arrange updates
+
+\textbf{How test will be performed:} Testers ask at least 50 users when is a reduced usage period for them, and schedule coming updates during these periods
+
+\textbf{Related Requirement(s):} MS-M1
+
+\item{\textbf{NFRT-MS2}}
+
+\textbf{Name:} Peer Evaluation for Feature Request
+
+\textbf{Type:} Non-functional, Static, Manual
+					
+\textbf{Initial State:} A public Git repo for this application
+
+\textbf{Input/Condition:} An issue is created
+
+\textbf{Output/Result:} All functionalities of this repo work normally
+
+\textbf{How test will be performed:} Testers will ask for a peer evaluation on this application repo, and the other developers will verify there is a user manual and issues can be used for feature request or bug report
+
+\textbf{Related Requirement(s):} MS-S1, MS-S2
+
+\item{\textbf{NFRT-MS3}}
+
+\textbf{Name:} Android Version Test
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} The application is installed on devices with Android 11 and above version
+
+\textbf{Input/Condition:} The application is opened
+
+\textbf{Output/Result:} The application works normally
+
+\textbf{How test will be performed:} Testers will install the application on different Android version (11 and above) and verify the application can run properly
+
+\textbf{Related Requirement(s):} MS-A1
+\end{enumerate}
 
 \subsubsection{Security}
 
@@ -1061,28 +1314,6 @@ The testers will then download and install the product onto the phone from the G
 \end{enumerate}
 
 \textbf{Related Requirement(s):} S-A1
-
-\item{\textbf{NFRT-S2}}
-
-\textbf{Name:} Unit Testing
-
-\textbf{Type:} Non-functional, Static, Automatic
-					
-\textbf{Initial State:} The code for all the related requirements exists
-
-\textbf{Input/Condition:} The unit tests for all related requirements exist. These unit tests check that the code satisfies the fit crieria for their associated requirement(s).
-
-\textbf{Output/Result:} The following tests pass:
-\begin{itemize}
-  \item The product prevents users from creating a user account using student/faculty-exclusive information tied to an already existing account
-  \item All data collected must be encrypted both on disk in the server and on transit by an industry standard encryption algorithm
-  \item Accounts that are inactive for a certain period of time are deleted to prevent unnecessary data from being held
-\end{itemize}
-
-\textbf{How test will be performed:} Unit tests will be written to test for the above
-
-\textbf{Related Requirement(s):} S-IG1, S-P1, S-P2, S-P3
-
 \end{enumerate}
 
 \subsubsection{Cultural}
@@ -1115,12 +1346,129 @@ randomly from McMaster University
 
 \quad \textbf{N/A}
 
+\newpage
+\begin{landscape}
 \subsection{Traceability Between Test Cases and Requirements}
+	\footnotesize
+	\begin{longtable}{|l|cccccccccccccccc|}
+	\caption{Traceability Between Functional Test Cases and Functional Requirements, FR-1 to FR-3}                                                                                                                                                                                                                           \\
+		\hline
+		\textbf{Test IDs}   & \multicolumn{14}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                                 \\
+		\hline
+		~                   & \textbf{FR1-1}  & \textbf{FR2-1} & \textbf{FR2-2} & \textbf{FR2-3} & \textbf{FR2-4} & \textbf{FR2-5} & \textbf{FR2-6} & \textbf{FR2-7} & \textbf{FR2-8} & \textbf{FR3-1} & \textbf{FR3-2} & \textbf{FR3-3} & \textbf{FR3-4} & \textbf{FR3-5} \\
+		\hline
+		\textbf{FRT-PG1} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-PG2} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA1} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA2} & ~                                                         & X             & ~ & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA3} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA4} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA5} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA6} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA7} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA8} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & X             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA9} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-SN1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             &X             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-SN2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-SN3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-SN4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             \\
+		\textbf{FRT-SN5} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & X             & ~             \\
+		\textbf{FRT-SN6} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             \\
+		\hline
+	\end{longtable}
 
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
+	\newpage
+
+	\begin{longtable}{|l|ccccccccccc|}
+		\caption{Traceability Between Functional Test Cases and Functional Requirements, FR-4 to FR-5}                                                                                                                                                                                                  \\
+		\hline
+		\textbf{Test IDs}   & \multicolumn{11}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                                 \\
+		\hline
+		~                   & \textbf{FR4-1}  & \textbf{FR4-2} & \textbf{FR-4-3} & \textbf{FR5-1} & \textbf{FR5-2} & \textbf{FR5-3} & \textbf{FR5-4} & \textbf{FR5-5} & \textbf{FR5-6} & \textbf{FR5-7} & \textbf{FR5-8} \\
+		\hline
+		\textbf{FRT-AR1} & X                                                         & X             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{FRT-AR2} & X                                                         & X             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{FRT-LE1} & ~                                                         & ~             & ~             & X             & X             & ~             & ~             & ~             & ~             & X             & ~\\
+		\textbf{FRT-LE2} & ~                                                         & ~             & ~             & ~             & ~             & X             & X             & ~             & ~             & ~             & X\\
+		\textbf{FRT-LE3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~\\
+		\textbf{FRT-LE4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~\\
+		\textbf{FRT-LE5} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~\\
+		\textbf{FRT-LE6} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~\\
+		\textbf{FRT-LE7} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~\\
+		\textbf{FRT-LE8} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~\\
+		\hline
+	\end{longtable}
+
+	\newpage
+	
+		\begin{longtable}{|l|cccccccccccc|}
+	\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, LF-A1 to UH-A1}                                                                                                                                                                                                                           \\
+		\hline
+		\textbf{Test IDs}   & \multicolumn{12}{c|}{\textbf{Nonfunctional Requirement IDs}}                                                                                                                                                                                                                 \\
+		\hline
+		~                   & \textbf{LF-A1}  & \textbf{LF-A2} & \textbf{LF-A3} & \textbf{LF-S1} & \textbf{LF-S2} & \textbf{UH-EOU1} & \textbf{UH-PI1} & \textbf{UH-PI2} & \textbf{UH-L1} & \textbf{UH-L2} & \textbf{UH-UP1} & \textbf{UH-A1} \\
+		\hline
+		\textbf{NFRT-LF1} & X                                                         & X             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
+		\textbf{NFRT-LF2} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
+		\textbf{NFRT-LF3} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
+		\textbf{NFRT-UH1} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & X             & X             & ~ \\
+		\textbf{NFRT-UH2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & X             & ~             & ~             & ~             & ~ \\
+		\textbf{NFRT-UH3} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ \\
+		\hline
+	\end{longtable}
+
+	\newpage
+	
+		\begin{longtable}{|l|ccccccccccccc|}
+	\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, P-SL1 to P-RF4}                                                                                                                                                                                                                           \\
+		\hline
+		\textbf{Test IDs}   & \multicolumn{13}{c|}{\textbf{Nonfunctional Requirement IDs}}                                                                                                                                                                                                                 \\
+		\hline
+		~                   & \textbf{P-SL1}  & \textbf{P-SL2} & \textbf{P-SL3} & \textbf{P-SC1} & \textbf{P-SC2} & \textbf{P-SC3} & \textbf{P-SC4} & \textbf{P-PA1} & \textbf{P-PA2} & \textbf{P-RF1} & \textbf{P-RF2} & \textbf{P-RF3} & \textbf{P-RF4} \\
+		\hline
+		\textbf{NFRT-P1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~\\
+		\textbf{NFRT-P2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ \\
+		\textbf{NFRT-P3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X & ~ & ~\\
+		\textbf{NFRT-P5} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
+		\textbf{NFRT-P6} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
+		\textbf{NFRT-P7} & ~                                                         & X             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P8} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P9} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ \\
+		\textbf{NFRT-P10} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
+		\textbf{NFRT-P11} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P12} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & X             & X & ~ & ~\\
+		\textbf{NFRT-P13} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P14} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P15} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P16} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P17} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P18} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\hline
+	\end{longtable}
+
+	\newpage
+	
+			\begin{longtable}{|l|ccccccccccc|}
+	\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, MS-M1 to CUL-C2}                                                                                                                                                                                                                           \\
+		\hline
+		\textbf{Test IDs}   & \multicolumn{11}{c|}{\textbf{Nonfunctional Requirement IDs}}                                                                                                                                                                                                                 \\
+		\hline
+		~                   & \textbf{MS-M1}  & \textbf{MS-S1} & \textbf{MS-S2} & \textbf{MS-A1} & \textbf{S-A1} & \textbf{S-IG1} & \textbf{S-P1} & \textbf{S-P2} & \textbf{S-P3} & \textbf{CUL-C1} & \textbf{CUL-C2}\\
+		\hline
+		\textbf{NFRT-MS1} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
+		\textbf{NFRT-MS2} & ~                                                         & X             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-MS3} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-S1} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ \\
+		\textbf{NFRT-CUL1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & X\\
+		\hline
+	\end{longtable}
+
+	\newpage
+\end{landscape}
 
 \section{Unit Test Description}
+\label{sec:unit}
 
 This section includes all unit tests for functional and non-functional requirements. Though most of the requirements will be tested manually, unit testing will still be utilized for some basic functionalities of all components. Since the team has not completed a detailed design document, this section cannot refer to all modules in \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}. Instead it will refer to a list of core modules to be implemented:
 \begin{itemize}
@@ -1129,12 +1477,13 @@ This section includes all unit tests for functional and non-functional requireme
 	\item \textbf{M3} Building
 	\item \textbf{M4} Event
 	\item \textbf{M5} Lecture
+	\item \textbf{M6} Database
 \end{itemize}
 It is the first draft of the implementation design, and a more detailed version of unit test will be added once the MIS is completed.
 
 \subsection{Unit Testing Scope}
 
-All modules defined above are within the testing scope.  The scope of unit testing was limited to the components that could be automatically tested. The AR module is out of the scope since it is largely composed of a third-parity library, Vuforia. It is a sophisticated AR software development kit, so we assumed that Vuforia’s logic is correct and therefore shall not be tested.
+All modules defined above are within the testing scope.  The scope of unit testing was limited to the components that could be automatically tested. The AR module is out of the scope since it is largely composed of a third-parity library, Vuforia. It is a sophisticated AR software development kit, so we assumed that Vuforia’s logic is correct and therefore shall not be tested. Also, the database module is out of the scope of functional requirement tests because it is largely composed of third-party database. But there are some non-functional requirements that can be tested
 
 \subsection{Tests for Functional Requirements}
 
@@ -1383,36 +1732,102 @@ This section will contain all unit tests for module ``Lecture''. The tests are c
 
 \subsection{Tests for Nonfunctional Requirements}
 
-This application does not have non-functional requirements to be tested with unit testing. All non-functional requirements will be verified through system tests in section \ref{sec:nonfunctional}. Some of the access and robustness requirements will be tested along with other functional requirement in the section above.
+This application does not many non-functional requirements to be tested with unit testing.  Most of non-functional requirements will be verified through system tests in section \ref{sec:nonfunctional}. The following section includes all non-functional requirements that are skipped in system test (like P-PA2, S-IG1, etc.).
+
+\subsubsection{Database Module}
+
+This section will contain all unit tests for module ``Database''.  No functional requirements will be tested here since it is a third party component and all the methods can be trusted. 
+
+\begin{enumerate}
+\item{FRT-M6-1}
+
+\textbf{Name:} Unique keys
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} Some user exists in the module
+					
+\textbf{Input:} A new user to be added with same username
+					
+\textbf{Output:} An error appears saying the username already exists
+
+\textbf{Test Case Derivation:} Verify that the system prevents creating account with sample username
+
+\textbf{How test will be performed:} Create a test case in UTF that adds a new user to the database and verify the request is rejected
+\end{enumerate}
+
+\subsubsection{Database Module}
+
+This section will contain a unit tests for module ``User''.  This test will verify the style test about color contrast. Since the module is mostly composed of a third party library, it is unnecessary to test all methods in functional requirement section.
+
+\begin{enumerate}
+\item{FRT-M1-5}
+
+\textbf{Name:} Color Contrast
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} User is logged in
+					
+\textbf{Input:} The user change the page color
+					
+\textbf{Output:} The colour contrast for each page is  calculated to be at least 4.5:1
+
+\textbf{Test Case Derivation:} Verify that the page components are contrast enough for items on the screen to be more easily visible
+
+\textbf{How test will be performed:} Create a test case in UTF that takes all the possible color combinations on each page as an input and calculates the contrast, and checks if that contrast is at least 4.5:1
+\end{enumerate}
 
 \subsection{Traceability Between Test Cases and Modules}
 
-\begin{longtable}{|l|ccccc|}
+\begin{longtable}{|l|cccccc|}
 	\caption{Traceability Between Test Cases and Modules}                                                                                             \\
 	\hline
-	\textbf{Test IDs}  & \multicolumn{5}{c|}{\textbf{Module IDs}}                                                                                     \\
+	\textbf{Test IDs}  & \multicolumn{6}{c|}{\textbf{Module IDs}}                                                                                     \\
 	\hline
-	~                  & \textbf{M1}                              & \textbf{M2} & \textbf{M3} & \textbf{M4} & \textbf{M5} \\
+	~                  & \textbf{M1}                              & \textbf{M2} & \textbf{M3} & \textbf{M4} & \textbf{M5} & \textbf{M6} \\
 	\hline
-	\textbf{FRT-M1-1}  & X                                        & ~           & ~           & ~           & ~ \\
-	\textbf{FRT-M1-2}  & X                                        & ~           & ~           & ~           & ~ \\
-	\textbf{FRT-M1-3}  & X                                        & ~           & ~           & ~           & ~ \\
-	\textbf{FRT-M1-4}  & X                                        & ~           & ~           & ~           & ~ \\
-	\textbf{FRT-M2-1}  & ~                                        & X           & ~           & ~           & ~ \\
-	\textbf{FRT-M2-2}  & ~                                        & X           & ~           & ~           & ~ \\
-	\textbf{FRT-M3-1}  & ~                                        & ~           & X           & ~           & ~ \\
-	\textbf{FRT-M3-2}  & ~                                        & ~           & X           & ~           & ~ \\
-	\textbf{FRT-M3-3}  & ~                                        & ~           & X           & ~           & ~ \\
-  \textbf{FRT-M4-1}  & ~                                        & ~           & ~           & X           & ~ \\
-	\textbf{FRT-M4-2}  & ~                                        & ~           & ~           & X           & ~ \\
-	\textbf{FRT-M5-1}  & ~                                        & ~           & ~           & ~           & X \\
-	\textbf{FRT-M5-2}  & ~                                        & ~           & ~           & ~           & X \\
+	\textbf{FRT-M1-1}  & X                                        & ~           & ~           & ~           & ~ & ~ \\
+	\textbf{FRT-M1-2}  & X                                        & ~           & ~           & ~           & ~ & ~ \\
+	\textbf{FRT-M1-3}  & X                                        & ~           & ~           & ~           & ~  & ~\\
+	\textbf{FRT-M1-4}  & X                                        & ~           & ~           & ~           & ~  & ~ \\
+	\textbf{FRT-M1-5}  & X                                        & ~           & ~           & ~           & ~  & ~ \\
+	\textbf{FRT-M2-1}  & ~                                        & X           & ~           & ~           & ~  & ~ \\
+	\textbf{FRT-M2-2}  & ~                                        & X           & ~           & ~           & ~   & ~\\
+	\textbf{FRT-M3-1}  & ~                                        & ~           & X           & ~           & ~   & ~\\
+	\textbf{FRT-M3-2}  & ~                                        & ~           & X           & ~           & ~  & ~ \\
+	\textbf{FRT-M3-3}  & ~                                        & ~           & X           & ~           & ~  & ~ \\
+  \textbf{FRT-M4-1}  & ~                                        & ~           & ~           & X           & ~   & ~\\
+	\textbf{FRT-M4-2}  & ~                                        & ~           & ~           & X           & ~   & ~\\
+	\textbf{FRT-M5-1}  & ~                                        & ~           & ~           & ~           & X  & ~ \\
+	\textbf{FRT-M5-2}  & ~                                        & ~           & ~           & ~           & X  & ~ \\
+	\textbf{FRT-M6-1}  & ~                                        & ~           & ~           & ~           & ~  & X \\
 	\hline
 \end{longtable}
-				
-\bibliographystyle{plainnat}
 
-\bibliography{../../refs/References}
+\section{Nondynamic Test Plan}
+
+This section summaries all the nondynamic test the team will conduct in section \ref{sec:system} system testing and section \ref{sec:unit} unit testing. Most of the tests will be in the form of code review,  document review or code walkthroughs.
+\begin{table}[H]
+\caption{Nondynamic Test Plan}
+\begin{tabular}{|p{0.3\linewidth} | p{0.5\linewidth}| p{0.2\linewidth} |}
+\hline
+\multicolumn{1}{|l}{\bfseries Test Method} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Related Requirement(s)}\\
+\hline
+Code Inspection for user info & It will be held when the implementation is done with the attendance of the supervisor. It will convince people that the data collection is totally legitimate & P-SC3 \\
+\hline
+Database Walkthrough & A code walkthrough focusing on database connection and its storage. It will be held when the implementation is done and convince people that the database is reliable will not store information without user's permission & P-SC1, P-C2 \\
+\hline
+Data Transmission Walkthrough & A code walkthrough focusing on data transmitting. It will be held when the implementation is done and convince people that the application transmit no data while no in use & P-SC4 \\
+\hline
+Longevity Peer Evaluation & A peer evaluation session to convince people that the produce can operate for a long time. It will be held when the implementation is done by another developers' team. Though it does not 100\% fulfill the requirements, it builds some confidence & P-L1, P-L2\\
+\hline
+Document Review & The peer evaluation happens after the deadline of all important documents. During the document review, the other team points out problems and improve document quality & All\\
+\hline
+Weekly Code Review & The developer will have weekly code review with the team for better code quality and formatting & All\\
+\hline
+\end{tabular}
+\end{table}
 
 \newpage
 
