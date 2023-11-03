@@ -1011,7 +1011,7 @@ calculates the contrast, and checks if that contrast is at least 4.5:1
 \begin{enumerate}
 \item{\textbf{NFRT-OE1}}
 
-\textbf{Name:} Visual inspection of device
+\textbf{Name:} Visual inspection for application download
 
 \textbf{Type:} Non-functional, Manual
 
@@ -1076,29 +1076,12 @@ The testers will then download and install the product onto the phone from the G
 \begin{itemize}
   \item The product prevents users from creating a user account using student/faculty-exclusive information tied to an already existing account
   \item All data collected must be encrypted both on disk in the server and on transit by an industry standard encryption algorithm
-  \item The product erases all data for a specific user if that user requests to do so
   \item Accounts that are inactive for a certain period of time are deleted to prevent unnecessary data from being held
 \end{itemize}
 
 \textbf{How test will be performed:} Unit tests will be written to test for the above
 
-\textbf{Related Requirement(s):} S-IG1, S-P1, S-P2, S-P4, S-P5
-
-\item{\textbf{NFRT-S3}}
-
-\textbf{Name:} Visual inspection of device
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-
-\textbf{Initial State:} User has the product downloaded and launched on their device
-
-\textbf{Input/Condition:} The user chooses to create an account
-
-\textbf{Output/Result:} The product asks the user whether or not they agree with the privacy terms
-
-\textbf{How test will be performed:} The testers will launch the product and begin to create a new account
-
-\textbf{Related Requirement(s):} S-P3
+\textbf{Related Requirement(s):} S-IG1, S-P1, S-P2, S-P3
 
 \end{enumerate}
 
@@ -1107,17 +1090,22 @@ The testers will then download and install the product onto the phone from the G
 \begin{enumerate}
 \item{\textbf{NFRT-CUL1}}
 
-\textbf{Name:} Visual inspection of device
+\textbf{Name:} Survey for feedback on cultural requirements
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 
-\textbf{Initial State:} User has the product downloaded on their device
+\textbf{Initial State:} User has an account
 
-\textbf{Input/Condition:} The user launches the app
+\textbf{Input/Condition:} User is logged into the homepage and pokes around the application
 
-\textbf{Output/Result:} The product does not display any language or symbols deemed offensive by any marginalized, reigious, or ethnic groups
+\textbf{Output/Result:} Get feedback and verify layout is not culturally offensive. This\
+test is a pass if average individual score is over MIN SCORE in the\
+"Cultural Friendliness" categories of the User Experience Survey
 
-\textbf{How test will be performed:} The testers will launch the product and visit each page to check for offensive langauge or symbols
+\textbf{How test will be performed:} A survey will be given to at least\
+SURVEY SAMPLE SIZE users where they will give feedback to different\
+elements of the interface. All of the survey takers are selected\
+randomly from McMaster University
 
 \textbf{Related Requirement(s):} CUL-C1, CUL-C2
 
