@@ -170,85 +170,107 @@ Many of the other documents associated with our project are relevant to the Veri
 
 \section{Plan}
 
-\wss{Introduce this section.   You can provide a roadmap of the sections to
-  come.}
 
 \subsection{Verification and Validation Team}
 
-\wss{Your teammates.  Maybe your supervisor.
-  You should do more than list names.  You should say what each person's role is
-  for the project's verification.  A table is a good way to summarize this information.}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+  \hline
+  \textbf{Team Member} & \textbf{Role in Verification and Validation} \\
+  \hline
+  Abhiram Neelamraju & \textbf{Lead tester}, Leads the testing process and generate test reports \\
+  \hline
+  Michael Kim & \textbf{User Experience Tester}, Tests the user interface of the software to assess how intuitive the AR aspects are. \\
+  \hline
+  Firas Elayan & \textbf{Validation analyst}, Analyses test results against standards and project goals to ensure alignment. \\
+  \hline
+  Zihao Du & \textbf{Performance tester}, Runs tests and analyses to evaluate the performance of the software system. \\
+  \hline
+  Matthew Miller & \textbf{Feedback coordinator}, Manages the feedback gathered through reviews conducted by different parties as well as during testing to ensure the feedback is taken into account during development. \\
+  \hline
+  Waseef Nayeem & \textbf{Issue resolver}, Deal with bugs and issues that arise during the development and validation of the software. \\
+  \hline
+  \end{tabular}
+\end{table}    
 
 \subsection{SRS Verification Plan}
 
-\wss{List any approaches you intend to use for SRS verification.  This may include
-  ad hoc feedback from reviewers, like your classmates, or you may plan for 
-  something more rigorous/systematic.}
+We will be following a few approaches to verify our SRS document, establishing a strong base for the development of our project.
 
-\wss{Maybe create an SRS checklist?}
+\begin{itemize}
+  \item Ad-hoc review by classmates:
+
+      We will be conducting unstructured reviews of our SRS document with our classmates. A couple of different teams of students will go through the document to give us feedback and improvement suggestions around its contents and formatting.
+  
+  \item Ad-hoc review by our supervisor:
+
+      Our supervisor, Dr. Yuan will perform a review of our SRS document by reading through it and giving us feedback on it. Dr. Yuan's expertise would provide us with valuable insight, allowing us to improve the quality and correctness of the SRS. Given her experience as well, it would ensure we're properly following set standards.
+
+    \item SRS walkthrough by team:
+
+      A walkthrough of the document will be performed together by the members of our team. We will all go through each section and analyse it, where we'l lbe able to suggest changes and improvements. Different team members worked on different parts of the document, so this walkthrough will allow for new perspectives on each section.
+
+\end{itemize}
 
 \subsection{Design Verification Plan}
 
-\wss{Plans for design verification}
+\begin{itemize}
+  \item Creating mock-ups and prototypes:
 
-\wss{The review will include reviews by your classmates}
+      In order to carry out good and efficient evaluations of our design, we will create design mock-ups and prototypes. These will be lo-fi at first and increase in fidelity as the software development progresses. The prototypes will help improve the reviews and feedback of the design by providing a visual (possibly physical) representation of our design, helping reviewers judge the features and quality of the design.
+  
+  \item Requirements checklist:
 
-\wss{Create a checklists?}
+      A checklist of our requirements from the SRS document will be made to be used as part of the verification of our design. The checklist will be used during team reviews in order to ensure our design meets the project requirements.
+  
+  \item Supervisor review:
+
+      As with the SRS document, our designs will receive an ad hoc review by our supervisor, Dr. Yuan. She will ensure our designs meet software standards and adhere to relevant principles.   
+
+  \item Classmates review:
+
+      We will conduct reviews with our classmates to get their input on our designs. This is very valuable for us as our classmates fall under one of our stakeholders, the customers.
+
+\end{itemize}
 
 \subsection{Verification and Validation Plan Verification Plan}
 
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
+\begin{itemize}
+  \item Team review:
 
-\wss{The review will include reviews by your classmates}
+      Our team members will review the VnV plan together to ensure the plan is complete and correct in how/what it verifies and validates. The review will allow us to make sure the VnV plan is line with the goals set for our project.
+  
+  \item Supervisor review:
 
-\wss{Create a checklists?}
+      As with the SRS document and our designs, our supervisor, Dr. Yuan, will conduct a review of our VnV plan. Her experience and knowledge of software engineering will allow her to find any shortcomings in our plans and to provide very valuable feedback.
+
+  \item Classmates review:
+
+      Our classmates will conduct their own review of our VnV plan. As they resemble our stakeholders and each have their own experience and skills, their feedback can prove to be very beneficial and can provide a range of perspectives on the effectiveness our plan.
+
+  \item Mutation testing:
+
+      In order to determine how effective our outlined tests in the VnV plan are at ensuring the correctness of our product, we will employ mutation testings. Mutations will be introduced to the parts of our source code that is covered by the test cases outlined here. These mutations would be very small but should cause the tests to fail. This would allow us to determine how effective our tests are at finding faults and flaws in our product's code.
+
+\end{itemize}
 
 \subsection{Implementation Verification Plan}
 
-\wss{You should at least point to the tests listed in this document and the unit
-  testing plan.}
-
-\wss{In this section you would also give any details of any plans for static
-  verification of the implementation.  Potential techniques include code
-  walkthroughs, code inspection, static analyzers, etc.}
+      Our implementation verification plan involves making use of the system and unit tests we've outlined in the VnV plan to ensure the correctness and quality of our implementation of our product.\\\\
+      We've outlined system tests and unit tests for our requirements. The system tests apply to the application as a whole, placing a focus on verifying the correctness of the application and how well it satisfies the requirements we've outlined in our SRS document. Our unit tests focus on specific modules within our application, aiming at assessing the accuracy of each module, both individually and when working together. All our tests are based on our functional and non-functional requirements to ensure our application adheres to our goals for the project.\\\\
+      In addition to the tests outlined in this document, we will also employ some static technqiues to verify our implementation. We will be making use of verification tools that are able to identify errors and issues in our source code. We will also be conducting code reviews, where we'll be examining our code (without executing it) to find any problems in relation with our code's adherence to our design and requirements.
 
 \subsection{Automated Testing and Verification Tools}
 
-\wss{What tools are you using for automated testing.  Likely a unit testing
-  framework and maybe a profiling tool, like ValGrind.  Other possible tools
-  include a static analyzer, make, continuous integration tools, test coverage
-  tools, etc.  Explain your plans for summarizing code coverage metrics.
-  Linters are another important class of tools.  For the programming language
-  you select, you should look at the available linters.  There may also be tools
-  that verify that coding standards have been respected, like flake9 for
-  Python.}
-
-\wss{If you have already done this in the development plan, you can point to
-that document.}
-
-\wss{The details of this section will likely evolve as you get closer to the
-  implementation.}
+      We intend to make use of several different tools that will help us in the testing and verification of our product. We have outlined some of these tools in our development plan.\\\\
+      Since we are coding our product using C\#, we will be making use of JetBrains Rider's in-built linter for C\#. Linters are incredibly useful tools that we can use to detect any programming errors and bugs in our source code, as well as any issues with the style. Using this linter would help avoid these problems growing as we build the project, ensuring its correctness.\\\\
+      As we are using Unity as our engine to develop our application, our testing framework will be the Unity Test Framework.
 
 \subsection{Software Validation Plan}
 
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
-
-\wss{You might want to use review sessions with the stakeholder to check that
-the requirements document captures the right requirements.  Maybe task based
-inspection?}
-
-\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
-be used as an opportunity to validate the requirements.  You should plan on 
-demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
-The feedback from your supervisor will be very useful for improving your project.}
-
-\wss{For teams without an external supervisor, user testing can serve the same purpose 
-as a Rev 0 demo for the supervisor.}
-
-\wss{This section might reference back to the SRS verification section.}
+      We will be conductions formal reviews with some of our stakeholders as well as our supervisor, Dr. Yuan. These reviews will ensure that our application meets the requirements as well as the goals of our stakeholders. Dr. Yuan will make sure the product we've build meets different standards.\\\\
+      Moreover, we'll use task-based inspection, involving testing different aspects of our app through real-world scenarios. This will aid us in evaluating the functionality of our software. In addition, we will also have students - who represent our stakeholders - test out features of our software, which will allow us to observe our software's performance in the real world. The feedback we get from user testing would be very helpful in ensuring the alignment of our software with the user goals and requirements.    
 
 \section{System Test Description}
 \label{sec:system}
@@ -1979,6 +2001,15 @@ graduate attribute of Lifelong Learning.  Please answer the following questions:
 	
 	Unity Test Runner/ Unity Test Framework is something we can learn through 2 main ways - the official documentation on Unity's website and through youtube tutorials covering the topic in an educative manner.
 
-\end\{itemize\}	
+\end{itemize}
+
+\begin{itemize}
+
+  \item Knowledge of AR Standards - Firas Elayan \\
+
+  It is essential that the team acquires knowledge of existing AR standards, as it will be needed to effectively verify and validate our application. These standards tell us about the quality that our product must have. They can also act as guidelines for creating a user interface that works well and is appealing to users. Knowledge of these standards and applying them to the verification and validation of our software will ensure it follows the best practices and performs at its highest level.\\\\
+  I want to learn these standards due to their important. I am personally only familiar with standards set for traditional software, and, while they also apply to AR products, they're not complete for them. Learning AR standards will allow me to ensure the quality of our software is the best it could be.
+
+\end{itemize}
 
 \end{document}
