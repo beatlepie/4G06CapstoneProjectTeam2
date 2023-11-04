@@ -106,12 +106,10 @@ The software being tested is a social media application which also uses Augmente
 
 \subsection{Objectives}
 
+\subsubsection{Important Qualities}
 In order to develop the software to meet its goals and create a complete product, there are many qualities that are important for our project such as:
 
 \begin{itemize}
-
-    \item  Correctness of the software in achieving its designated functions
-
     \item An easily navigable User Interface adaptable to different screen sizes
 
     \item Sufficient speed and reliability of the building recognition features
@@ -123,36 +121,31 @@ In order to develop the software to meet its goals and create a complete product
     \item Appropriate abidance of security requirements regarding critical information such as location and personal data.
 
     \item Infrastructure to support a passable scale of total concurrent users and total user data storage
-
     \end{itemize}
 
 
-
+\subsubsection{Out of Scope Objectives}
 While we would want to satisfy as many positive qualities as possible, due to limited resources , there will be some objectives that we will be leaving out since they are out of scope such as :
 
 \begin{itemize}
     \item  Project longevity requirements:
 
-    This is because the longevity requirements were written with the assumption that the product will be supported even after the duration of the course for years to come which is something that is not possible to verify or guarantee and is out of the scope.
+    This is because the longevity requirements were written with the assumption that the product will be supported even after the duration of the course for years to come which is something that is not possible to verify or guarantee and is out of the scope. Instead, we could have a code inspection with other developers and the supervisor about these requirements to gain some confidence.
 
     \item  Testing learning requirements:
 
-    We will be producing material to make it easier to understand and use our product but to test every piece of supporting documentation and tutorial content would require long testing sessions with volunteers which can be out of the scope. Instead, since we will be testing our user interface, we could use the feedback obtained there to improve our learning specific content as well.
+    We will be producing material to make it easier to understand and use our product but to test every piece of supporting documentation and tutorial content would require long testing sessions with volunteers which can be out of the scope. Instead, we could use the feedback obtained from the survey to improve our learning specific content.
     
 \end{itemize}
 
 
-
+\subsubsection{Priority of Objectives}
 We will be prioritizing reliability in our listed qualities over performance since we want our software to be correct and consistent over fast and unreliable. While we still want to maximize performance where possible, it is difficult to predict exactly how well we will meet our performance criteria since we will be limited by many factors out of our control such as external libraries.
 
 We will also be assuming that any external libraries we depend on (such as Vuforia) will have already been verified by the implementation team due to our lack of control over them. 
 
 
 \subsection{Relevant Documentation}
-
-
-
-
 
 Many of the other documents associated with our project are relevant to the Verification and Validation plan such as:
 
@@ -1865,7 +1858,7 @@ USER\_PROFILE & All information about the user & username, password, gender, age
 
 \subsection{Usability Survey Questions}
 \label{sec:survey}
-
+\textbf{Please rate each of the following questions on a rating scale of 1-10 where 10 represents the most positive experience, and 0 illustrates the most negative experience.}
 \begin{enumerate}
 	\item \textbf{User-friendly Layout:} Do you think that the layout of this product is user-friendly?
 	\item \textbf{Intuitive icons:} Do you feel comfortable running different features without needing assistance or a tutorial?
@@ -1886,8 +1879,6 @@ graduate attribute of Lifelong Learning.  Please answer the following questions:
 
 \newpage{}
 \section*{Appendix --- Reflection}
-
-\wss{This section is not required for CAS 741}
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.  Please answer the following questions:
@@ -1918,6 +1909,12 @@ graduate attribute of Lifelong Learning.  Please answer the following questions:
 	the procedure, as well as putting that knowledge into practice. I chose these\
 	approaches because I find that I learn best by applying knowledge in real-world\
 	settings.
+	
+	\item Stress Testing, Apache JMeter - Zihao Du
+	
+	One of the skill the team needs to acquire for testing purpose is stress testing since the application has a max capacity of users and the team need to check if the server is robust enough to fulfil the requirement. One approach to master this skill is to read their official user manual and tutorial -- as an Apache project, it has a detailed tutorial on the website for beginners. Another approach to acquire the knowledge is to watch some crach course videos about how to use JMeter for stress test like \href{https://www.youtube.com/watch?v=mXGcBvWYl-U}{this}. 
+	
+	I decide to learn this skill by reading the user manual on their website. It is not because JMeter has a detailed tutorial with step by step screenshot which is very easy to understand, but the official documents can give me a better understanding of the tool itself in general since we need it for both server and database load testing.
 
 \end{itemize}
 
