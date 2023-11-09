@@ -1,5 +1,6 @@
 {
-  "dependencies": {
+    "dependencies": {
+    "com.ptc.vuforia.engine": "file:com.ptc.vuforia.engine-10.18.4.tgz",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.feature.ar": "1.0.1",
     "com.unity.feature.development": "1.0.2",
@@ -7,6 +8,7 @@
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.8.2",
     "com.unity.visualscripting": "1.8.0",
+    "com.unity.xr.arcore": "5.1.0",
     "com.unity.xr.management": "4.4.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",

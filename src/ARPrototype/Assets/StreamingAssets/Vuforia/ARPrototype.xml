@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="doorway_3" size="16.000000 12.000000" />
+    <ImageTarget name="doorway_2" size="8.000000 6.000000" />
+    <ImageTarget name="jhe_sign" size="1.000000 0.426325" />
+    <ImageTarget name="doorway" size="4.000000 3.000000" />
+  </Tracking>
+</QCARConfig>
