@@ -277,3 +277,15 @@ TSWLatexianTemp*
 
 # DS_Store file from Mac computers
 .DS_Store
+
+# LocationPrototype ignored files/folders
+src/LocationPrototype/.vs/
+src/LocationPrototype/.vsconfig
+src/LocationPrototype/Assembly-CSharp-Editor.csproj
+src/LocationPrototype/Assembly-CSharp.csproj
+src/LocationPrototype/Assets/Scenes/Location-basedGame.unity
+src/LocationPrototype/Assets/Scenes/Location-basedGame.unity.meta
+src/LocationPrototype/Library/
+src/LocationPrototype/LocationPrototype.sln
+src/LocationPrototype/UpgradeLog.htm
+src/LocationPrototype/obj/
