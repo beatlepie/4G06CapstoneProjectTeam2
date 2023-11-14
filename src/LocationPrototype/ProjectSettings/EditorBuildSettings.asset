@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
-  m_configObjects: {}
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Mapbox/Examples/0_PrefabScenes/Location-basedGame.unity
+    guid: 42f6aa7ce7a604f16ade319663f46ceb
+  m_configObjects:
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000,
+      guid: 70d5cdc7ae7e4934d8091cbf1edc9df7, type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 0a77827b6e81d0249bcc484e8b7a5895,
+      type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000,
+      guid: adfb350377d73a247b6433c2ca8b6c33, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: 66b7e56a1d021c142a215b17514e2593, type: 2}
+  m_UseUCBPForAssetBundles: 0
