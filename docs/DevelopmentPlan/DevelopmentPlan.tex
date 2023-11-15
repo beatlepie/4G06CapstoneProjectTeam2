@@ -23,7 +23,8 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Sept 25 & Everyone & Revision 0\\
+Sept 25 & All & Revision 0\\
+Nov 13 & Zihao Du & Update POC demo plan\\
 Date2 & Name(s) & Description of changes\\
 ... & ... & ...\\
 \bottomrule
@@ -119,7 +120,14 @@ The following labels will be used for issue tracking:
 
 \section{Proof of Concept Demonstration Plan}
 
-Our proof of concept will be a mobile app running on Android OS. We are aiming for the user to be able to make an account and test out the main navigational, informational and social aspects of our application. The user will be able to create a new account as well as sign-in and sign-out. They will then be able to use the app to come in proximity (using location information) to a specific building of our choosing (For ex. JHE) and see a display about some sample events taking place at the location. The user will also be able to add other users as friends. One main risk in our project is our ability to successfully implement Augmented Reality when looking at buildings around campus etc. to increase the engagement of the user. Since it is not clear how feasible of a goal this is, we want to be able to produce the same functional result using just the location information of the user. We will do so as mentioned earlier and this proof of concept will allow us to move forward knowing we can depend on the location model if we are not able to seamlessly integrate AR into our app.
+Our proof of concept will be mobile apps and Unity Emulator running on Android OS and consists of three demonstration standing for different functionalities of the application: AR feature, friends system and location tracking. 
+\begin{itemize}
+	\item \textbf{Friends System} We are aiming for the user to be able to make an account and test out the main navigational, informational and social aspects of our application. This will be integrated in the future, the panel is present but the product is not linked into a single application yet. Currently, the account is automatically generated on start-up. They will be able to add other users as friends and delete existing friends. 
+	\item \textbf{AR Feature} Users will then be able to use the application to come in proximity to a specific building of our choosing (For ex. JHE) and recognize the surroundings. They will see a display about some sample AR objects taking place at the location. These object should be able to recognize user actions like touching. Augmented Reality should be available on both indoor or outdoor areas as far as the they are added to the database.
+	\item \textbf{Location Tracking} We are also expecting the user can get the real-time location information and display that along with a campus map. This will be essential for core functionalities like location sharing and building recognition(a back up plan when AR recognition does not work).
+\end{itemize}
+One main risk in our project is our ability to successfully implement Augmented Reality when looking at buildings around campus etc. to increase the engagement of the user. Since it is not clear how feasible of a goal this is, we want to be able to produce the same functional result using just the location information of the user. We will do so as mentioned earlier and this proof of concept will allow us to move forward knowing we can depend on the location model if we are not able to seamlessly integrate AR into our app.\\
+Another risk is the user communication system in Unity. Though there exists a friend service in Unity, it is not clear how it can fulfil all our requirements. This proof of concept will show us if that is a feasible solution or we need to move on with our own server and database.
 
 \section{Technology}
 
