@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Location-basedGame.unity
     guid: d4d08a25b658d84409d17176d18788d5
   m_configObjects:
