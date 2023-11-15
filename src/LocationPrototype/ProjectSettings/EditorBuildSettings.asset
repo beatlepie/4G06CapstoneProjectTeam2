@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Mapbox/Examples/0_PrefabScenes/Location-basedGame.unity
-    guid: 42f6aa7ce7a604f16ade319663f46ceb
+    path: Assets/Scenes/Location-basedGame.unity
+    guid: d4d08a25b658d84409d17176d18788d5
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000,
       guid: 70d5cdc7ae7e4934d8091cbf1edc9df7, type: 2}
