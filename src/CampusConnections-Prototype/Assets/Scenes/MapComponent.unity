@@ -2428,7 +2428,7 @@ MonoBehaviour:
   - 43.26087837923984, -79.92038506162754
   - 43.258913066451925, -79.92093848386503
   _spawnScale: 100
-  _markerPrefab: {fileID: 1196953851599986, guid: 5bcb8afe019d04efc83e86f56b198ce0, type: 3}
+  _markerPrefab: {fileID: 1196953851599986, guid: ce4cf1a57c7a0064da82f68766b897af, type: 3}
 --- !u!4 &1969434042
 Transform:
   m_ObjectHideFlags: 0
