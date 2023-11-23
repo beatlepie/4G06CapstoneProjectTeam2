@@ -37,6 +37,7 @@ Oct 29 & 1.0 & Add Functional Requirements Tests\\
 Oct 31 & 1.0 & Add Non-Functional Requirement Tests\\
 Nov 1 & 1.0 & Add Unit Tests\\
 Nov 3 & 1.0 & Add Tables And More Tests\\
+Nov 22 & 1.0 & Revision 0: Resolve issues\\
 \bottomrule
 \end{tabularx}
 
@@ -1233,22 +1234,6 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 The testers will then download and install the product onto the phone from the Google Play Store or the APK file.
 
 \textbf{Related Requirement(s):} OE-P1
-
-\item{\textbf{NFRT-OE2}}
-
-\textbf{Name:} Physical Environment and Adjacent Systems 
-
-\textbf{Type:} Non-functional, Manual
-
-\textbf{Initial State:} NA
-
-\textbf{Input/Condition:} NA
-
-\textbf{Output/Result:} The application is proved to be able to installed on a phone and interface with Android 11 and above and ARCore
-
-\textbf{How test will be performed:} These are fundamental tests for the application. Testing for these requirements are completed within the functional requirements tests above
-
-\textbf{Related Requirement(s):} OE-EPE1, OE-IAS1, OE-IAS2
 \end{enumerate}
 
 \subsubsection{Maintainability and Support}
@@ -1300,7 +1285,7 @@ The testers will then download and install the product onto the phone from the G
 
 \textbf{How test will be performed:} Testers will install the application on different Android version (11 and above) and verify the application can run properly
 
-\textbf{Related Requirement(s):} MS-A1
+\textbf{Related Requirement(s):} OE-EPE1, OE-IAS1, MS-A1
 \end{enumerate}
 
 \subsubsection{Security}
@@ -1444,24 +1429,45 @@ randomly from McMaster University
 		\textbf{NFRT-P1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~\\
 		\textbf{NFRT-P2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ \\
 		\textbf{NFRT-P3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X & ~ & ~\\
+		\textbf{NFRT-P4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & X\\
 		\textbf{NFRT-P5} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
 		\textbf{NFRT-P6} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-P7} & ~                                                         & X             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P7} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
 		\textbf{NFRT-P8} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
 		\textbf{NFRT-P9} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ \\
 		\textbf{NFRT-P10} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
 		\textbf{NFRT-P11} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P12} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & X             & X & ~ & ~\\
-		\textbf{NFRT-P13} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
-		\textbf{NFRT-P14} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
-		\textbf{NFRT-P15} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P12} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P13} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P14} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P15} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
 		\textbf{NFRT-P16} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-P17} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P17} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
 		\textbf{NFRT-P18} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
 		\hline
 	\end{longtable}
 
+	\newpage
+	
+			\begin{longtable}{|l|cccccccccccc|}
+	\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, P-RF5 to OE-P1}                                                                                                                                                                                                                           \\
+		\hline
+		\textbf{Test IDs}   & \multicolumn{12}{c|}{\textbf{Nonfunctional Requirement IDs}}                                                                                                                                                                                                                 \\
+		\hline
+		~                   & \textbf{P-RF5}  & \textbf{P-RF6} & \textbf{P-C1} & \textbf{P-C2} & \textbf{P-SE1} & \textbf{P-SE2} & \textbf{P-SE3} & \textbf{P-L1} & \textbf{P-L2} & \textbf{OE-EPE1} & \textbf{OE-IAS1} & \textbf{OE-P1} \\
+		\hline
+		\textbf{NFRT-P3} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P5} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P13} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P14} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & X             & ~ & ~ & ~\\
+		\textbf{NFRT-P15} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P17} & ~                                                         & ~             & X             & ~             & X             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P18} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-OE1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & X\\
+		\textbf{NFRT-MS3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X & X & ~\\
+		\hline
+	\end{longtable}
+	
 	\newpage
 	
 			\begin{longtable}{|l|ccccccccccc|}
