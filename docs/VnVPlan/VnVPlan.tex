@@ -338,7 +338,7 @@ This section includes all test cases related to user accounts. This will include
 					
 \textbf{Initial State:} The user does not have an account and is not logged in to the application
 
-\textbf{Input:} All information needed to create an account
+\textbf{Input:} All information needed to create an account (username and password)
 					
 \textbf{Output:} An Account with corresponding information is created in the database with the account initialized to INITIAL\_USER\_STATE
 
@@ -356,7 +356,7 @@ This section includes all test cases related to user accounts. This will include
 					
 \textbf{Initial State:} The user does not have an account and is not logged in to the application
 
-\textbf{Input:} All information needed to create an account, including an existing username
+\textbf{Input:} All information needed to create an account with an existing username
 					
 \textbf{Output:} Account creation fails with an error message telling the user the username already exists
 
@@ -410,7 +410,7 @@ This section includes all test cases related to user accounts. This will include
 					
 \textbf{Initial State:} The user has an account and is logged into the application
 
-\textbf{Input:} Corresponding user request
+\textbf{Input:} User clicks on the delete account button
 					
 \textbf{Output:} Data pertaining to the given username is deleted
 
@@ -446,7 +446,7 @@ This section includes all test cases related to user accounts. This will include
 					
 \textbf{Initial State:} The user does not have an account and is not logged into the application
 
-\textbf{Input:} All information needed to create an account
+\textbf{Input:} All information needed to create an account (username and password)
 					
 \textbf{Output:} The tester passes the test and creates an account successfully
 
@@ -464,7 +464,7 @@ This section includes all test cases related to user accounts. This will include
 					
 \textbf{Initial State:} The user has an account with INITIAL\_AVATAR
 
-\textbf{Input:} Avatar and corresponding user request
+\textbf{Input:} Avatar and user clicks on modifying avatar button
 					
 \textbf{Output:} User creates an avatar and changes it
 
@@ -662,7 +662,7 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} An event exists in a specific building
 
-\textbf{Input:} Corresponding user request
+\textbf{Input:} User clicks on the corresponding button of the event
 					
 \textbf{Output:} The event with all necessary information is added/removed from the user's event list
 
@@ -680,7 +680,7 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} A lecture with all necessary information exists in a specific building
 
-\textbf{Input:} Corresponding user request
+\textbf{Input:} User clicks on the corresponding button of the lecture
 					
 \textbf{Output:} The lecture is added/removed from the user's lecture list
 
@@ -698,7 +698,7 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} User is logged in as an admin
 
-\textbf{Input:} Sample event with all necessary information
+\textbf{Input:} Sample event with name, department, time and location
 					
 \textbf{Output:} The event is posted on the building and is available for all users to pin
 
@@ -716,9 +716,9 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} User is logged in as an admin
 
-\textbf{Input:} New event information and corresponding user request
+\textbf{Input:} New event information and the admin clicks on modify event button
 					
-\textbf{Output:} The posted event information is updated
+\textbf{Output:} The posted event information is changed to the new one
 
 \textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to update event information to get users noticed
 					
@@ -734,9 +734,9 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} User is logged in as an admin
 
-\textbf{Input:} Existing event and corresponding user request
+\textbf{Input:} Existing event and the admin clicks on delete event button
 					
-\textbf{Output:} The event is deleted
+\textbf{Output:} The event is deleted and no user can see it from their end any more
 
 \textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to clean out-of-date event
 					
@@ -752,7 +752,7 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} User is logged in as an admin
 
-\textbf{Input:} Sample lecture with all necessary information
+\textbf{Input:} Sample lecture with name, instructor, time and location
 					
 \textbf{Output:} The lecture is posted on the building and is available for all users to pin
 
@@ -770,9 +770,9 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} User is logged in as an admin
 
-\textbf{Input:} New lecture information and corresponding user request
+\textbf{Input:} New lecture information and the admin clicks on modify lecture button
 					
-\textbf{Output:} The posted lecture information is updated
+\textbf{Output:} The posted lecture information is changed to the new one
 
 \textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to update lecture information to get users noticed
 					
@@ -788,9 +788,9 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} User is logged in as an admin
 
-\textbf{Input:} Existing lecture and corresponding user request
+\textbf{Input:} Existing lecture and and the admin clicks on delete lecture button
 					
-\textbf{Output:} The lecture is deleted
+\textbf{Output:} The lecture is deleted and no user can see it from their end any more
 
 \textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to clean out-of-date lectures after each semester
 					
@@ -1283,7 +1283,7 @@ The testers will then download and install the product onto the phone from the G
 
 \textbf{Output/Result:} The application works normally
 
-\textbf{How test will be performed:} Testers will install the application on different Android version (11 and above) and verify the application can run properly
+\textbf{How test will be performed:} Testers will install the application on different Android version (11 and above) and verify the application can start without errors, and the core features (Map, friend chatting and AR camera) have the same performance with different Android versions.
 
 \textbf{Related Requirement(s):} OE-EPE1, OE-IAS1, MS-A1
 \end{enumerate}
@@ -1898,12 +1898,6 @@ USER\_PROFILE & All information about the user & username, password, gender, age
 	\item \textbf{Common periods of usage:} At what times of the day/week do you find yourself using the product?
 	\item \textbf{Cultural Friendliness:} Do you agree that the product does not display any offensive language/symbols?
 \end{enumerate}
-
-\newpage{}
-\section*{Appendix --- Reflection}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.  Please answer the following questions:
 
 \newpage{}
 \section*{Appendix --- Reflection}
