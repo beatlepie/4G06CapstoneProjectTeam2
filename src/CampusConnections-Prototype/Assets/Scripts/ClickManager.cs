@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Mapbox.Unity.Location;
+using Mapbox.Unity.Map;
 using Mapbox.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,6 +10,7 @@ public class ClickManager : MonoBehaviour
 {
     [SerializeField] private GameObject targetActions;
     [SerializeField] private GameObject notInRangePanel;
+    [SerializeField] private AbstractMap _map;
     
     private AbstractLocationProvider _locationProvider = null;
     private Location userLocation;
@@ -80,5 +82,10 @@ public class ClickManager : MonoBehaviour
             targetActions.SetActive(false);
             isPanelActive = false;
         }
+    }
+
+    public void onCenterButtonClick()
+    {
+        _map.UpdateMap(new Vector2d(userLocation.LatitudeLongitude.x, userLocation.LatitudeLongitude.y), _map.AbsoluteZoom);
     }
 }

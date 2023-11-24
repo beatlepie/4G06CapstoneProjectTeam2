@@ -37,6 +37,7 @@ public class SpawnOnMap : MonoBehaviour
 			instance.transform.localScale = new Vector3(_spawnScale, _spawnScale, _spawnScale);
 			var data = instance.GetComponent<TargetBuilding>();
 			data.buildingCoords = _locations[i];
+			data.buildingName = BuildingLocation.Name[locationString];
 			
 			_spawnedObjects.Add(instance);
 			_buildingData.Add(data);
