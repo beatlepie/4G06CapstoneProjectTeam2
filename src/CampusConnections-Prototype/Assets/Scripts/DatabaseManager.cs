@@ -17,6 +17,13 @@ public class DatabaseManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Firebase.AppOptions options = new Firebase.AppOptions();
+        options.ApiKey = "AIzaSyADnG2YOg9G7q9pddYlTthUj9G16G8dlOE";
+        options.AppId = "1:89992135088:android:0f8c9a92bf587c521e5675";
+        options.ProjectId = "campusconnections";
+        options.DatabaseUrl = new System.Uri("https://campusconnections-default-rtdb.firebaseio.com");
+        options.StorageBucket = "campusconnections.appspot.com";
+        FirebaseApp.Create(options);
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         GetLectureData();
     }
