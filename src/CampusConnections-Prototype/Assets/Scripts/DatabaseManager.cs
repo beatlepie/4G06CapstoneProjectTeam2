@@ -17,6 +17,7 @@ public class DatabaseManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UnityEngine.Debug.Log("db manager script running");
         Firebase.AppOptions options = new Firebase.AppOptions();
         options.ApiKey = "AIzaSyADnG2YOg9G7q9pddYlTthUj9G16G8dlOE";
         options.AppId = "1:89992135088:android:0f8c9a92bf587c521e5675";
