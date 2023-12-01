@@ -43,14 +43,6 @@ public class DatabaseManager : MonoBehaviour
     {
         var lecInfo = new List<string>();
 
-        /*
-        var lecCode = "";
-        var lecInstruc = "";
-        var lecLoc = "";
-        var lecName = "";
-        var lecTime = "";
-        */
-
         var lectureData = databaseReference.Child("lectures").OrderByChild("instructor").LimitToFirst(2).GetValueAsync();
         yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
         if(lectureData != null)
@@ -63,12 +55,10 @@ public class DatabaseManager : MonoBehaviour
                 {
                     result += i.Value + " ";
                     lecInfo.Add(i.Value.ToString());
-                    UnityEngine.Debug.Log(lecInfo);
+                    //UnityEngine.Debug.Log(lecInfo);
                 }
                 result += "\n";
-                // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
-                // CreateLectureEntryTransform(entry^)
-                // empty lecInfo for the next entry
+
             }
             onCallBack.Invoke(result);
         }
