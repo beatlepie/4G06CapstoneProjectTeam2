@@ -15,6 +15,9 @@ public class DatabaseManager : MonoBehaviour
     [SerializeField] TMP_InputField lecName;
     [SerializeField] TMP_InputField lecInstructor;
     // Start is called before the first frame update
+
+    
+
     void Start()
     {
         UnityEngine.Debug.Log("db manager script running");
@@ -38,6 +41,16 @@ public class DatabaseManager : MonoBehaviour
 
     IEnumerator GetLectures(Action<string> onCallBack)
     {
+        var lecInfo = new List<string>();
+
+        /*
+        var lecCode = "";
+        var lecInstruc = "";
+        var lecLoc = "";
+        var lecName = "";
+        var lecTime = "";
+        */
+
         var lectureData = databaseReference.Child("lectures").OrderByChild("instructor").LimitToFirst(2).GetValueAsync();
         yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
         if(lectureData != null)
@@ -49,8 +62,12 @@ public class DatabaseManager : MonoBehaviour
                 foreach (var i in x.Children)
                 {
                     result += i.Value + " ";
+                    lecInfo.Add(i.Value.ToString());
+                    UnityEngine.Debug.Log(lecInfo);
                 }
                 result += "\n";
+                // call addLectureEntry (lecInfo[0],lecInfo[1]...)
+                //empty lecInfo for the next entry
             }
             onCallBack.Invoke(result);
         }
