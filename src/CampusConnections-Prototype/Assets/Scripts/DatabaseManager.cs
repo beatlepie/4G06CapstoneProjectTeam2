@@ -66,8 +66,9 @@ public class DatabaseManager : MonoBehaviour
                     UnityEngine.Debug.Log(lecInfo);
                 }
                 result += "\n";
-                // call addLectureEntry (lecInfo[0],lecInfo[1]...)
-                //empty lecInfo for the next entry
+                // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
+                // CreateLectureEntryTransform(entry^)
+                // empty lecInfo for the next entry
             }
             onCallBack.Invoke(result);
         }

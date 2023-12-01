@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LectureManager : MonoBehaviour
 {
@@ -40,11 +41,11 @@ public class LectureManager : MonoBehaviour
 
         int ind = transformList.Count + 1; //count for each entry if we want to print number later
 
-        entryTransform.Find("nameText").GetComponent<Text>().text = lectureEntry.name;
-        entryTransform.Find("codeText").GetComponent<Text>().text = lectureEntry.code;
-        entryTransform.Find("instrucText").GetComponent<Text>().text = lectureEntry.instructor;
-        entryTransform.Find("locText").GetComponent<Text>().text = lectureEntry.location;
-        entryTransform.Find("timeText").GetComponent<Text>().text = lectureEntry.time;
+        entryTransform.Find("nameText").GetComponent<TMP_Text>().text = lectureEntry.name;
+        entryTransform.Find("codeText").GetComponent<TMP_Text>().text = lectureEntry.code;
+        entryTransform.Find("instrucText").GetComponent<TMP_Text>().text = lectureEntry.instructor;
+        entryTransform.Find("locText").GetComponent<TMP_Text>().text = lectureEntry.location;
+        entryTransform.Find("timeText").GetComponent<TMP_Text>().text = lectureEntry.time;
 
         transformList.Add(entryTransform);
     }
