@@ -23,7 +23,7 @@ public class DatabaseManager : MonoBehaviour
     void Start()
     {
 
-        addMSG.alpha = 0f;
+        addMSG.CrossFadeAlpha(0f,0f,false);
 
         UnityEngine.Debug.Log("db manager script running");
         Firebase.AppOptions options = new Firebase.AppOptions();
@@ -39,23 +39,22 @@ public class DatabaseManager : MonoBehaviour
 
 
     public void WriteNewLec()
-    {
+    {    
         //UnityEngine.Debug.Log(ServerValue.Timestamp);
         Lecture lec = new Lecture(lecCode.text, lecName.text, lecInstructor.text, "Tue, Wed, Fri 12:30-13:20", "ITB AB102");
         string lecJson = JsonUtility.ToJson(lec);
 
-        //var newLectureRef = databaseReference.Child("lectures").Push();
-        //lecJson = lecJson+
         databaseReference.Child("lectures").Push().SetRawJsonValueAsync(lecJson);
 
-        addMSG.alpha = 1f;
-        //addMSG.text = "Lecture succesfully added!";
-        addMSG.CrossFadeAlpha(0,2, false);
-        //addMSG.enabled = false;
-        //addMSG.text = "Lecture succesfully added!";
-        //Thread.Sleep(2000);
-        //addMSG.text = "";
+   
+        addMSG.CrossFadeAlpha(1f, 0f, false);
+        addMSG.CrossFadeAlpha(0f, 2f, false);
 
+    }
+
+    public void resetAlpha()
+    {
+        addMSG.CrossFadeAlpha(1, 2f, false);
     }
 
     IEnumerator GetLectures(Action<string> onCallBack)

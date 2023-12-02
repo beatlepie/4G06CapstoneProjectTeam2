@@ -2444,8 +2444,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8, y: -297}
-  m_SizeDelta: {x: 254.6161, y: 58.9805}
+  m_AnchoredPosition: {x: 8, y: -312}
+  m_SizeDelta: {x: 466.317, y: 65.1167}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &795479215
 MonoBehaviour:
@@ -2454,7 +2454,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795479213}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -2625,7 +2625,43 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 829789246}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1229541694}
+        m_TargetAssemblyTypeName: LectureManager, Assembly-CSharp
+        m_MethodName: clearing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1229541694}
+        m_TargetAssemblyTypeName: LectureManager, Assembly-CSharp
+        m_MethodName: nextPage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1229541694}
+        m_TargetAssemblyTypeName: LectureManager, Assembly-CSharp
+        m_MethodName: GetLectureData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &829789246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3726,6 +3762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lecList: {fileID: 0}
   pgNum: {fileID: 1665623887}
+  maxPages: 0
 --- !u!1 &1260730687
 GameObject:
   m_ObjectHideFlags: 0
@@ -5451,7 +5488,43 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1721343026}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1229541694}
+        m_TargetAssemblyTypeName: LectureManager, Assembly-CSharp
+        m_MethodName: clearing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1229541694}
+        m_TargetAssemblyTypeName: LectureManager, Assembly-CSharp
+        m_MethodName: prevPage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1229541694}
+        m_TargetAssemblyTypeName: LectureManager, Assembly-CSharp
+        m_MethodName: GetLectureData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1721343026
 MonoBehaviour:
   m_ObjectHideFlags: 0

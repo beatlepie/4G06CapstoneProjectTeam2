@@ -7,6 +7,7 @@ using Firebase;
 using Firebase.Database;
 using TMPro;
 
+
 public class LectureManager : MonoBehaviour
 {   
     private Transform entryContainer;
@@ -18,6 +19,8 @@ public class LectureManager : MonoBehaviour
     public TMP_Text lecList;
 
     public TMP_Text pgNum;
+
+    public int maxPages;
 
     private void Awake()
     {
@@ -85,11 +88,11 @@ public class LectureManager : MonoBehaviour
 
 
 
-
-        var lectureData = databaseReference.Child("lectures").OrderByKey().StartAt("-").LimitToFirst(6).GetValueAsync();
+        var lectureData = databaseReference.Child("lectures").OrderByKey().StartAt("-").LimitToFirst(60).GetValueAsync();
         yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
         if (lectureData != null)
         {
+            
             string result = "";
             DataSnapshot snapshot = lectureData.Result;
             foreach (var x in snapshot.Children)
@@ -120,10 +123,20 @@ public class LectureManager : MonoBehaviour
 
             }
 
-            foreach (LectureEntry lectureEntry in lectureEntryList)
+
+            maxPages = (int)(lectureEntryList.Count / 6);
+            //UnityEngine.Debug.Log(maxPages);
+
+            for (int i = (Int32.Parse(pgNum.text)*6); i < Math.Min((Int32.Parse(pgNum.text)+1)*6, lectureEntryList.Count); i++)
             {
-                CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
+                if (lectureEntryList[i] != null)
+                {
+                    //UnityEngine.Debug.Log(i);
+                    LectureEntry lectureEntry = lectureEntryList[i];
+                    CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
+                }
             }
+
 
             onCallBack.Invoke(result);
         }
@@ -135,6 +148,28 @@ public class LectureManager : MonoBehaviour
         {
             //lecList.text = data;
         }));
+    }
+
+    public void nextPage()
+    {
+        if (Int32.Parse(pgNum.text) >= maxPages)
+        {
+            return;
+        }
+        //clearing();
+        pgNum.text = (Int32.Parse(pgNum.text) + 1).ToString();
+        //GetLectureData();
+    }
+
+    public void prevPage()
+    {
+        if (Int32.Parse(pgNum.text) < 1)
+        {
+            return;
+        }
+        //clearing();
+        pgNum.text = (Int32.Parse(pgNum.text) - 1).ToString();
+        //GetLectureData();
     }
 
     private class LectureEntry
