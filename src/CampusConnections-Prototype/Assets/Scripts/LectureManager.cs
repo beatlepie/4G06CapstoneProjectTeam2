@@ -17,6 +17,8 @@ public class LectureManager : MonoBehaviour
     private DatabaseReference databaseReference;
     public TMP_Text lecList;
 
+    public TMP_Text pgNum;
+
     private void Awake()
     {
         UnityEngine.Debug.Log("lecture manager script running");
@@ -30,29 +32,19 @@ public class LectureManager : MonoBehaviour
         FirebaseApp.Create(options);
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
 
-        GetLectureData();
+
 
         //after db stuff
-        
+
+        pgNum.text = "0";
         entryContainer = transform.Find("lectureEntryContainer");
         entryTemplate = entryContainer.Find("lectureEntryTemplate");
-
         entryTemplate.gameObject.SetActive(false);
-
-        /*
-        lectureEntryList = new List<LectureEntry>() {
-            new LectureEntry{ code = "1x03", instructor = "Dr.A", location = "ITB", name = "rounding 1", time = "3:30 - 4:30"},
-            new LectureEntry{ code = "2x03", instructor = "Dr.B", location = "ITB", name = "rounding 2", time = "3:30 - 4:30"},
-            new LectureEntry{ code = "3x03", instructor = "Dr.C", location = "ITB", name = "rounding 3", time = "3:30 - 4:30"},
-        };
-        */
-
         lectureEntryTransformList = new List<Transform>();
-        /*
-        foreach (LectureEntry lectureEntry in lectureEntryList){
-            CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
-        }
-        */
+
+
+        GetLectureData();
+
     }
 
     private void CreateLectureEntryTransform(LectureEntry lectureEntry, Transform container, List<Transform> transformList){
@@ -62,7 +54,7 @@ public class LectureManager : MonoBehaviour
         entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
         entryTransform.gameObject.SetActive(true);
 
-        int ind = transformList.Count + 1; //count for each entry if we want to print number later
+        int ind = transformList.Count + 1; //count for each entry starting at 1
 
         entryTransform.Find("nameText").GetComponent<TMP_Text>().text = lectureEntry.name;
         entryTransform.Find("codeText").GetComponent<TMP_Text>().text = lectureEntry.code;
@@ -70,38 +62,31 @@ public class LectureManager : MonoBehaviour
         entryTransform.Find("locText").GetComponent<TMP_Text>().text = lectureEntry.location;
         entryTransform.Find("timeText").GetComponent<TMP_Text>().text = lectureEntry.time;
 
+        entryTransform.Find("entryBG").gameObject.SetActive(ind % 2 == 1);  //alternate bg
+
         transformList.Add(entryTransform);
     }
 
     public void clearing()
-    {
-        //entryContainer = null;
-        //entryTemplate = null;
-        
-      
-        
+    {           
         foreach (Transform entryTransform in lectureEntryTransformList)
         {
             Destroy(entryTransform.gameObject);
         }
 
-        lectureEntryTransformList.Clear();
+        lectureEntryTransformList.Clear();  //even after destroying size isnt 0 so we have to clear
 
     }
 
     IEnumerator GetLectures(Action<string> onCallBack)
     {
         var lecInfo = new List<string>();
+        lectureEntryList = new List<LectureEntry>();
 
-        /*
-        var lecCode = "";
-        var lecInstruc = "";
-        var lecLoc = "";
-        var lecName = "";
-        var lecTime = "";
-        */
 
-        var lectureData = databaseReference.Child("lectures").OrderByChild("instructor").LimitToFirst(6).GetValueAsync();
+
+
+        var lectureData = databaseReference.Child("lectures").OrderByKey().StartAt("-").LimitToFirst(6).GetValueAsync();
         yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
         if (lectureData != null)
         {
@@ -124,15 +109,22 @@ public class LectureManager : MonoBehaviour
                 newEntry.name = lecInfo[3];
                 newEntry.time = lecInfo[4];
 
-              
+                //UnityEngine.Debug.Log(newEntry.code);
+                
+                lectureEntryList.Add(newEntry);
                 //empty lecInfo for next iteration
                 lecInfo.Clear();
 
-                // CreateLectureEntryTransform(entry object^)
-                CreateLectureEntryTransform(newEntry, entryContainer, lectureEntryTransformList);
+                //CreateLectureEntryTransform(newEntry, entryContainer, lectureEntryTransformList);
 
 
             }
+
+            foreach (LectureEntry lectureEntry in lectureEntryList)
+            {
+                CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
+            }
+
             onCallBack.Invoke(result);
         }
     }

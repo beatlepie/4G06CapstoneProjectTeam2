@@ -6,11 +6,13 @@ using UnityEngine;
 using Firebase;
 using Firebase.Database;
 using TMPro;
+using System.Threading;
 
 public class DatabaseManager : MonoBehaviour
 {
     private DatabaseReference databaseReference;
     public TMP_Text lecList;
+    public TMP_Text addMSG;
     [SerializeField] TMP_InputField lecCode;
     [SerializeField] TMP_InputField lecName;
     [SerializeField] TMP_InputField lecInstructor;
@@ -20,6 +22,9 @@ public class DatabaseManager : MonoBehaviour
 
     void Start()
     {
+
+        addMSG.alpha = 0f;
+
         UnityEngine.Debug.Log("db manager script running");
         Firebase.AppOptions options = new Firebase.AppOptions();
         options.ApiKey = "AIzaSyADnG2YOg9G7q9pddYlTthUj9G16G8dlOE";
@@ -32,11 +37,25 @@ public class DatabaseManager : MonoBehaviour
         GetLectureData();
     }
 
+
     public void WriteNewLec()
     {
+        //UnityEngine.Debug.Log(ServerValue.Timestamp);
         Lecture lec = new Lecture(lecCode.text, lecName.text, lecInstructor.text, "Tue, Wed, Fri 12:30-13:20", "ITB AB102");
         string lecJson = JsonUtility.ToJson(lec);
-        databaseReference.Child("lectures").Child(lec.code).SetRawJsonValueAsync(lecJson);
+
+        //var newLectureRef = databaseReference.Child("lectures").Push();
+        //lecJson = lecJson+
+        databaseReference.Child("lectures").Push().SetRawJsonValueAsync(lecJson);
+
+        addMSG.alpha = 1f;
+        //addMSG.text = "Lecture succesfully added!";
+        addMSG.CrossFadeAlpha(0,2, false);
+        //addMSG.enabled = false;
+        //addMSG.text = "Lecture succesfully added!";
+        //Thread.Sleep(2000);
+        //addMSG.text = "";
+
     }
 
     IEnumerator GetLectures(Action<string> onCallBack)
