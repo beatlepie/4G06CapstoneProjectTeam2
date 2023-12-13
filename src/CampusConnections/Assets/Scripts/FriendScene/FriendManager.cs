@@ -101,4 +101,54 @@ public class FriendManager : MonoBehaviour
     {
         Debug.Log("Enter Chat");
     }
+
+    public void EditHelpMsg()
+    {
+        StartCoroutine(CheckUserByEmail((string msg) =>
+        {
+            GameObject.Find("Help_Message").GetComponent<TMP_Text>().text = msg;
+        }));
+    }
+
+    IEnumerator CheckUserByEmail(Action<string> onCallBack)
+    {
+        string email = GameObject.Find("Email").GetComponent<TMP_InputField>().text;
+        if(currentUser.Email == email) {
+            // Cannot use user email
+            onCallBack.Invoke("<color=#f44336>You cannot add yourself as friend");
+            yield break;
+        }
+        int indexOfDot = email.LastIndexOf('.');
+        string emailWithoutDot = indexOfDot == -1 ? email : email.Substring(0, indexOfDot) + "_" + email.Substring(indexOfDot + 1);
+        var userData = databaseReference.Child("users/" + emailWithoutDot).GetValueAsync();
+        var invitationData = databaseReference.Child("users/" + emailWithoutDot + "/invitations").GetValueAsync();
+        yield return new WaitUntil(predicate: () => invitationData.IsCompleted && userData.IsCompleted);
+        if(invitationData != null && userData != null)
+        {
+            DataSnapshot invitationSnapshot = invitationData.Result;
+            string helpMsg = "";
+            if(!userData.Result.Exists)
+            {
+                // Invalid email
+                helpMsg = "<color=#f44336>Invalid email, user does not exist";
+            }
+            else
+            {
+                foreach (var x in invitationSnapshot.Children)
+                {
+                    // Duplicated request
+                    if (currentUser.Email == x.Value.ToString())
+                    {
+                        helpMsg = "<color=#ff9800>Friend request has been sent, please wait";
+                        onCallBack.Invoke(helpMsg);
+                        yield break;
+                    }
+                }
+                helpMsg = "<color=#4caf50>Success! Request is sent";
+                int index = (int)invitationSnapshot.ChildrenCount + 1;
+                databaseReference.Child("users/" + emailWithoutDot + "/invitations/" + index).SetValueAsync(currentUser.Email);
+                onCallBack.Invoke(helpMsg);
+            }
+        }
+    }
 }
