@@ -191,8 +191,7 @@ public class AuthManager : MonoBehaviour
                         //Now return to login screen
                         UIManager.instance.LoginScreen();
                         User user = new User(User.Email, User.DisplayName);
-                        int indexOfDot = user.email.LastIndexOf('.');
-                        string emailWithoutDot = indexOfDot == -1 ? user.email : user.email.Substring(0, indexOfDot) + "_" + user.email.Substring(indexOfDot + 1);
+                        string emailWithoutDot = Utilities.removeDot(User.Email);
                         databaseReference.Child("users").Child(emailWithoutDot).SetRawJsonValueAsync(JsonUtility.ToJson(user));
                         warningRegisterText.text = "";
                     }
