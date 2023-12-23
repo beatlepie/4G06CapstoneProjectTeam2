@@ -1,7 +1,7 @@
 ---
-name: Team Meeting Minutes Template
-about: Team Meetings Minutes/Summary
-title: YYYY-MM-DD Meeting Minutes
+name: Supervisor Meeting Minutes Template
+about: Supervisor Meetings Minutes/Summary
+title: YYYY-MM-DD Meeting Minutes (weekly meeting with supervisor)
 labels: meeting
 assignees: ''
 
@@ -10,8 +10,8 @@ assignees: ''
 ## Meeting Minute
 - **Date**: YYYY/MM/DD
 - **Time**: TBD
--  **Location**: TBD
--  **Chairperson**: Zihao Du
+-  **Location**: ABB C529
+-  **Chairperson**: Dr. Yuan
 - **Attendees**: 
 	- [ ] Firas Elayan
 	- [ ] Abhiram Neelamraju
