@@ -190,7 +190,8 @@ public class AuthManager : MonoBehaviour
                         //Username is now set
                         //Now return to login screen
                         UIManager.instance.LoginScreen();
-                        User user = new User(User.Email, User.DisplayName);
+                        User user = new User(User.Email);
+                        user.nickName = User.DisplayName;
                         string emailWithoutDot = Utilities.removeDot(User.Email);
                         databaseReference.Child("users").Child(emailWithoutDot).SetRawJsonValueAsync(JsonUtility.ToJson(user));
                         warningRegisterText.text = "";

@@ -15,7 +15,7 @@ public class FriendManager : MonoBehaviour
     public DatabaseReference databaseReference;
 
     [Header("Chat")]
-    public List<string> friends;
+    public List<User> friends;
     [SerializeField] Transform friendEntryContainer;
     [SerializeField] Transform friendEntryTemplate;
     private List<Transform> friendEntryTransformList;
@@ -58,19 +58,26 @@ public class FriendManager : MonoBehaviour
         }
     }
 
-    IEnumerator GetFriends(Action<List<string>> onCallBack)
+    IEnumerator GetFriends(Action<List<User>> onCallBack)
     {
         string emailWithoutDot = Utilities.removeDot(currentUser.Email);                
         var userData = databaseReference.Child("users/" + emailWithoutDot + "/friends").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if(userData != null)
         {
-            List<string> friends = new List<string>();
+            List<User> friends = new List<User>();
             DataSnapshot snapshot = userData.Result;
             foreach (var x in snapshot.Children)
             {
                 string email = Utilities.addDot(x.Key.ToString());
-                friends.Add(email);
+                var friendData = databaseReference.Child("users/" + x.Key.ToString()).GetValueAsync();
+                yield return new WaitUntil(predicate: () => friendData.IsCompleted);
+                DataSnapshot friendSnapshot = friendData.Result;
+                if(friendData != null)
+                {
+                    User friend = Utilities.FormalizeDBUserData(friendSnapshot);
+                    friends.Add(friend);
+                }
             }
             onCallBack.Invoke(friends);
         }
@@ -78,7 +85,6 @@ public class FriendManager : MonoBehaviour
 
     IEnumerator GetInvitations(Action<List<string>> onCallBack)
     {
-        
         string emailWithoutDot = Utilities.removeDot(currentUser.Email);                
         var userData = databaseReference.Child("users/" + emailWithoutDot + "/invitations").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
@@ -97,17 +103,17 @@ public class FriendManager : MonoBehaviour
 
     private void createChatList()
     {
-        StartCoroutine(GetFriends((List<string> data) =>
+        StartCoroutine(GetFriends((List<User> data) =>
         {
             friends = data;
-            foreach (string friendEmail in friends)
+            foreach (User friend in friends)
             {
                 Transform entryTransform = Instantiate(friendEntryTemplate, friendEntryContainer);
                 RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
                 entryRectTransform.anchoredPosition = new Vector2(0, -300 * friendEntryTransformList.Count);
                 entryTransform.gameObject.SetActive(true);
-                entryTransform.Find("Email").GetComponent<TMP_Text>().text = friendEmail;
-                entryTransform.Find("Name").GetComponent<TMP_Text>().text = "Alice";
+                entryTransform.Find("Email").GetComponent<TMP_Text>().text = friend.email;
+                entryTransform.Find("Name").GetComponent<TMP_Text>().text = friend.nickName;
                 friendEntryTransformList.Add(entryTransform);  
             } 
             if(300 * friends.Count > 1460){
