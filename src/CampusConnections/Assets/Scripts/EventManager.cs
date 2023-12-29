@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 using Firebase;
 using Firebase.Database;
 using TMPro;
@@ -11,6 +12,9 @@ public class EventManager : MonoBehaviour
 {
     private DatabaseReference databaseReference;
     public TMP_Text eventList;
+    public GameObject scrollView;
+    public RectTransform eventsTextRectTransform;
+    private Vector2 originalPosition;
     [SerializeField] TMP_InputField eventName;
     [SerializeField] TMP_InputField eventDate;
     [SerializeField] TMP_InputField eventLocation;
@@ -18,7 +22,20 @@ public class EventManager : MonoBehaviour
     void Start()
     {
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+        originalPosition = eventsTextRectTransform.anchoredPosition;
         GetEventData();
+    }
+
+    void Update()
+    {
+        if (scrollView.activeSelf)
+        {
+            eventsTextRectTransform.anchoredPosition = new Vector2(originalPosition.x, originalPosition.y + 300);
+        }
+        else
+        {
+            eventsTextRectTransform.anchoredPosition = originalPosition;
+        }
     }
 
     public void WriteNewEvent()
@@ -29,30 +46,52 @@ public class EventManager : MonoBehaviour
     }
 
     IEnumerator GetEvents(Action<string> onCallBack)
+{
+    var eventData = databaseReference.Child("events").OrderByChild("date").GetValueAsync();
+    yield return new WaitUntil(predicate: () => eventData.IsCompleted);
+    if(eventData != null)
     {
-        var eventData = databaseReference.Child("events").OrderByChild("date").GetValueAsync();
-        yield return new WaitUntil(predicate: () => eventData.IsCompleted);
-        if(eventData != null)
+        string result = "";
+        DataSnapshot snapshot = eventData.Result;
+        foreach (var x in snapshot.Children)
         {
-            string result = "";
-            DataSnapshot snapshot = eventData.Result;
-            foreach (var x in snapshot.Children)
-            {
-                foreach (var i in x.Children)
-                {
-                    result += i.Value + " ";
-                }
-                result += "\n";
-            }
-            onCallBack.Invoke(result);
-        }
-    }
+            string date = "";
+            string location = "";
+            string name = "";
+            string organizer = "";
 
+            foreach (var i in x.Children)
+            {
+                switch (i.Key)
+                {
+                    case "date":
+                        date = "Date: " + i.Value.ToString();
+                        break;
+                    case "location":
+                        location = "Location: " + i.Value.ToString();
+                        break;
+                    case "name":
+                        name = "Name: " + i.Value.ToString();
+                        break;
+                    case "organizer":
+                        organizer = "Organizer: " + i.Value.ToString();
+                        break;
+                }
+            }
+
+            result += $"{name}\n{date}\n{location}\n{organizer}\n\n";
+        }
+        onCallBack.Invoke(result);
+    }
+}
+
+    public ScrollRect scrollRect;
     public void GetEventData()
     {
         StartCoroutine(GetEvents((string data) =>
         {
             eventList.text = data;
+            scrollRect.normalizedPosition = new Vector2(0, 1);
         }));
     }
 
