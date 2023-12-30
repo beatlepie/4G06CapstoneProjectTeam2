@@ -24,6 +24,7 @@ public class EventManager : MonoBehaviour
     {
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         originalPosition = eventsTextRectTransform.anchoredPosition;
+        databaseReference.Child("events").ChildAdded += HandleChildAdded;
         GetEventData();
     }
 
@@ -39,21 +40,35 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public void WriteNewEvent()
+    void HandleChildAdded(object sender, ChildChangedEventArgs args)
+{
+    if (args.DatabaseError != null)
     {
-        DateTime parsedDate;
-        if (!DateTime.TryParseExact(eventDate.text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out parsedDate))
-        {
-            errorMessage.text = "Invalid date format. Please use DD/MM/YYYY.";
-            return;
-        }
-        
-        Event newEvent = new Event(eventName.text, eventDate.text, eventLocation.text, eventOrganizer.text);
-        string eventJson = JsonUtility.ToJson(newEvent);
-        databaseReference.Child("events").Child(newEvent.name).SetRawJsonValueAsync(eventJson);
-
-        errorMessage.text = "Event Added!";
+        Debug.LogError(args.DatabaseError.Message);
+        return;
     }
+    StartCoroutine(GetEvents((result) => {
+        eventList.text = result;
+    }));
+}
+
+    public void WriteNewEvent()
+{
+    DateTime parsedDate;
+    if (!DateTime.TryParseExact(eventDate.text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out parsedDate))
+    {
+        errorMessage.text = "Invalid date format. Please use DD/MM/YYYY.";
+        return;
+    }
+    
+    string formattedDate = parsedDate.ToString("yyyy/MM/dd");
+    Event newEvent = new Event(eventName.text, formattedDate, eventLocation.text, eventOrganizer.text);
+    string eventJson = JsonUtility.ToJson(newEvent);
+    databaseReference.Child("events").Child(newEvent.name).SetRawJsonValueAsync(eventJson);
+
+    errorMessage.text = "Event Added!";
+    errorMessage.color = Color.green;
+}
 
     IEnumerator GetEvents(Action<string> onCallBack)
 {
@@ -75,7 +90,11 @@ public class EventManager : MonoBehaviour
                 switch (i.Key)
                 {
                     case "date":
-                        date = "Date: " + i.Value.ToString();
+                        DateTime parsedDate;
+                        if (DateTime.TryParseExact(i.Value.ToString(), "yyyy/MM/dd", null, System.Globalization.DateTimeStyles.None, out parsedDate))
+                        {
+                            date = "Date: " + parsedDate.ToString("dd/MM/yyyy");
+                        }
                         break;
                     case "location":
                         location = "Location: " + i.Value.ToString();
@@ -109,4 +128,9 @@ public class EventManager : MonoBehaviour
     {
         SceneManager.LoadScene("LoginScene");
     }
+
+    void OnDestroy()
+{
+    databaseReference.Child("events").ChildAdded -= HandleChildAdded;
+}
 }
