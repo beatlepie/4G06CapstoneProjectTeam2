@@ -14,6 +14,7 @@ public class EventManager : MonoBehaviour
     public TMP_Text eventList;
     public GameObject scrollView;
     public RectTransform eventsTextRectTransform;
+    public UnityEngine.UI.Text errorMessage;
     private Vector2 originalPosition;
     [SerializeField] TMP_InputField eventName;
     [SerializeField] TMP_InputField eventDate;
@@ -40,9 +41,18 @@ public class EventManager : MonoBehaviour
 
     public void WriteNewEvent()
     {
+        DateTime parsedDate;
+        if (!DateTime.TryParseExact(eventDate.text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out parsedDate))
+        {
+            errorMessage.text = "Invalid date format. Please use DD/MM/YYYY.";
+            return;
+        }
+        
         Event newEvent = new Event(eventName.text, eventDate.text, eventLocation.text, eventOrganizer.text);
         string eventJson = JsonUtility.ToJson(newEvent);
         databaseReference.Child("events").Child(newEvent.name).SetRawJsonValueAsync(eventJson);
+
+        errorMessage.text = "Event Added!";
     }
 
     IEnumerator GetEvents(Action<string> onCallBack)
