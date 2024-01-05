@@ -5,6 +5,7 @@ using Firebase;
 using Firebase.Auth;
 using TMPro;
 using System.Threading.Tasks;
+using Firebase.Database;
 
 public class AuthManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class AuthManager : MonoBehaviour
     public DependencyStatus dependencyStatus;
     public FirebaseAuth auth;    
     public FirebaseUser User;
+    public DatabaseReference databaseReference;
 
     //Login variables
     [Header("Login")]
@@ -49,9 +51,10 @@ public class AuthManager : MonoBehaviour
 
     private void InitializeFirebase()
     {
-        Debug.Log("Setting up Firebase Auth");
         //Set the authentication instance object
         auth = FirebaseAuth.DefaultInstance;
+        //Set the firebase reference
+        databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
     }
 
     //Function for the login button
@@ -110,7 +113,7 @@ public class AuthManager : MonoBehaviour
             Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
-            SceneManager.LoadScene("LectureScene");
+            SceneManager.LoadScene("MenuScene");
         }
     }
 
@@ -187,6 +190,10 @@ public class AuthManager : MonoBehaviour
                         //Username is now set
                         //Now return to login screen
                         UIManager.instance.LoginScreen();
+                        User user = new User(User.Email);
+                        user.nickName = User.DisplayName;
+                        string emailWithoutDot = Utilities.removeDot(User.Email);
+                        databaseReference.Child("users").Child(emailWithoutDot).SetRawJsonValueAsync(JsonUtility.ToJson(user));
                         warningRegisterText.text = "";
                     }
                 }
