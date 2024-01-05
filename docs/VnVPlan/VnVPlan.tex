@@ -37,6 +37,7 @@ Oct 29 & 1.0 & Add Functional Requirements Tests\\
 Oct 31 & 1.0 & Add Non-Functional Requirement Tests\\
 Nov 1 & 1.0 & Add Unit Tests\\
 Nov 3 & 1.0 & Add Tables And More Tests\\
+Nov 22 & 1.0 & Revision 0: Resolve issues\\
 \bottomrule
 \end{tabularx}
 
@@ -57,6 +58,10 @@ Nov 3 & 1.0 & Add Tables And More Tests\\
   \midrule 
   VnV & Verification and Validation\\
   \midrule
+  HA & Hazard Analysis\\
+  \midrule
+  UI & User Interface\\
+  \midrule
   AR & Augmented Reality\\
   \midrule
   SRS & Software Requirement Specification\\
@@ -67,7 +72,11 @@ Nov 3 & 1.0 & Add Tables And More Tests\\
   \midrule
   Vuforia & AR software development kit\\
   \midrule
+  FEMA & Failure Mode and Effect Analysis\\
+  \midrule
   UTF & Unity Test Framework\\
+  \midrule
+  APK & Android Package, a file format used by Android\\
   \midrule
   GPS & Global Positioning System\\
   \midrule
@@ -337,7 +346,7 @@ This section includes all test cases related to user accounts. This will include
 					
 \textbf{Initial State:} The user does not have an account and is not logged in to the application
 
-\textbf{Input:} All information needed to create an account
+\textbf{Input:} All information needed to create an account (username and password)
 					
 \textbf{Output:} An Account with corresponding information is created in the database with the account initialized to INITIAL\_USER\_STATE
 
@@ -355,7 +364,7 @@ This section includes all test cases related to user accounts. This will include
 					
 \textbf{Initial State:} The user does not have an account and is not logged in to the application
 
-\textbf{Input:} All information needed to create an account, including an existing username
+\textbf{Input:} All information needed to create an account with an existing username
 					
 \textbf{Output:} Account creation fails with an error message telling the user the username already exists
 
@@ -409,7 +418,7 @@ This section includes all test cases related to user accounts. This will include
 					
 \textbf{Initial State:} The user has an account and is logged into the application
 
-\textbf{Input:} Corresponding user request
+\textbf{Input:} User clicks on the delete account button
 					
 \textbf{Output:} Data pertaining to the given username is deleted
 
@@ -445,7 +454,7 @@ This section includes all test cases related to user accounts. This will include
 					
 \textbf{Initial State:} The user does not have an account and is not logged into the application
 
-\textbf{Input:} All information needed to create an account
+\textbf{Input:} All information needed to create an account (username and password)
 					
 \textbf{Output:} The tester passes the test and creates an account successfully
 
@@ -463,7 +472,7 @@ This section includes all test cases related to user accounts. This will include
 					
 \textbf{Initial State:} The user has an account with INITIAL\_AVATAR
 
-\textbf{Input:} Avatar and corresponding user request
+\textbf{Input:} Avatar and user clicks on modifying avatar button
 					
 \textbf{Output:} User creates an avatar and changes it
 
@@ -661,7 +670,7 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} An event exists in a specific building
 
-\textbf{Input:} Corresponding user request
+\textbf{Input:} User clicks on the corresponding button of the event
 					
 \textbf{Output:} The event with all necessary information is added/removed from the user's event list
 
@@ -679,7 +688,7 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} A lecture with all necessary information exists in a specific building
 
-\textbf{Input:} Corresponding user request
+\textbf{Input:} User clicks on the corresponding button of the lecture
 					
 \textbf{Output:} The lecture is added/removed from the user's lecture list
 
@@ -697,7 +706,7 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} User is logged in as an admin
 
-\textbf{Input:} Sample event with all necessary information
+\textbf{Input:} Sample event with name, department, time and location
 					
 \textbf{Output:} The event is posted on the building and is available for all users to pin
 
@@ -715,9 +724,9 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} User is logged in as an admin
 
-\textbf{Input:} New event information and corresponding user request
+\textbf{Input:} New event information and the admin clicks on modify event button
 					
-\textbf{Output:} The posted event information is updated
+\textbf{Output:} The posted event information is changed to the new one
 
 \textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to update event information to get users noticed
 					
@@ -733,9 +742,9 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} User is logged in as an admin
 
-\textbf{Input:} Existing event and corresponding user request
+\textbf{Input:} Existing event and the admin clicks on delete event button
 					
-\textbf{Output:} The event is deleted
+\textbf{Output:} The event is deleted and no user can see it from their end any more
 
 \textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to clean out-of-date event
 					
@@ -751,7 +760,7 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} User is logged in as an admin
 
-\textbf{Input:} Sample lecture with all necessary information
+\textbf{Input:} Sample lecture with name, instructor, time and location
 					
 \textbf{Output:} The lecture is posted on the building and is available for all users to pin
 
@@ -769,9 +778,9 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} User is logged in as an admin
 
-\textbf{Input:} New lecture information and corresponding user request
+\textbf{Input:} New lecture information and the admin clicks on modify lecture button
 					
-\textbf{Output:} The posted lecture information is updated
+\textbf{Output:} The posted lecture information is changed to the new one
 
 \textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to update lecture information to get users noticed
 					
@@ -787,9 +796,9 @@ This section includes all test cases related to events and lectures happening on
 					
 \textbf{Initial State:} User is logged in as an admin
 
-\textbf{Input:} Existing lecture and corresponding user request
+\textbf{Input:} Existing lecture and and the admin clicks on delete lecture button
 					
-\textbf{Output:} The lecture is deleted
+\textbf{Output:} The lecture is deleted and no user can see it from their end any more
 
 \textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to clean out-of-date lectures after each semester
 					
@@ -801,7 +810,9 @@ This section includes all test cases related to events and lectures happening on
 \subsection{Tests for Nonfunctional Requirements}
 \label{sec:nonfunctional}
 
-The following section includes tests for non-functional requirements defined in the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document. Areas of testing follow the subsections of requirements in the previous document, which mainly include Look and Feel, Usability and Humanity, Performance and Security.\\ Usability requirements will be tested by asking users to do a survey, whose content can be found in section \ref{sec:survey}. Most of the tests here are dynamic and will be done manually or automatically, but there are some tests that need non-dynamic testing like peer code review or code walkthrough.
+The following section includes tests for non-functional requirements defined in the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document. Areas of testing follow the subsections of requirements in the previous document, which mainly include Look and Feel, Usability and Humanity, Performance and Security.\\ 
+This section also includes new requirements for the HA, but when they are added to the SRS, they are given new IDs for consistency, please check the HA for more details. \\
+Usability requirements will be tested by asking users to do a survey, whose content can be found in section \ref{sec:survey}. Most of the tests here are dynamic and will be done manually or automatically, but there are some tests that need non-dynamic testing like peer code review or code walkthrough.
 
 \subsubsection{Look and Feel}
 
@@ -1233,22 +1244,6 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 The testers will then download and install the product onto the phone from the Google Play Store or the APK file.
 
 \textbf{Related Requirement(s):} OE-P1
-
-\item{\textbf{NFRT-OE2}}
-
-\textbf{Name:} Physical Environment and Adjacent Systems 
-
-\textbf{Type:} Non-functional, Manual
-
-\textbf{Initial State:} NA
-
-\textbf{Input/Condition:} NA
-
-\textbf{Output/Result:} The application is proved to be able to installed on a phone and interface with Android 11 and above and ARCore
-
-\textbf{How test will be performed:} These are fundamental tests for the application. Testing for these requirements are completed within the functional requirements tests above
-
-\textbf{Related Requirement(s):} OE-EPE1, OE-IAS1, OE-IAS2
 \end{enumerate}
 
 \subsubsection{Maintainability and Support}
@@ -1298,9 +1293,9 @@ The testers will then download and install the product onto the phone from the G
 
 \textbf{Output/Result:} The application works normally
 
-\textbf{How test will be performed:} Testers will install the application on different Android version (11 and above) and verify the application can run properly
+\textbf{How test will be performed:} Testers will install the application on different Android version (11 and above) and verify the application can start without errors, and the core features (Map, friend chatting and AR camera) have the same performance with different Android versions.
 
-\textbf{Related Requirement(s):} MS-A1
+\textbf{Related Requirement(s):} OE-EPE1, OE-IAS1, MS-A1
 \end{enumerate}
 
 \subsubsection{Security}
@@ -1444,24 +1439,45 @@ randomly from McMaster University
 		\textbf{NFRT-P1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~\\
 		\textbf{NFRT-P2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ \\
 		\textbf{NFRT-P3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X & ~ & ~\\
+		\textbf{NFRT-P4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & X\\
 		\textbf{NFRT-P5} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
 		\textbf{NFRT-P6} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-P7} & ~                                                         & X             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P7} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
 		\textbf{NFRT-P8} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
 		\textbf{NFRT-P9} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ \\
 		\textbf{NFRT-P10} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
 		\textbf{NFRT-P11} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P12} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & X             & X & ~ & ~\\
-		\textbf{NFRT-P13} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
-		\textbf{NFRT-P14} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
-		\textbf{NFRT-P15} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P12} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P13} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P14} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P15} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
 		\textbf{NFRT-P16} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-P17} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P17} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
 		\textbf{NFRT-P18} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
 		\hline
 	\end{longtable}
 
+	\newpage
+	
+			\begin{longtable}{|l|cccccccccccc|}
+	\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, P-RF5 to OE-P1}                                                                                                                                                                                                                           \\
+		\hline
+		\textbf{Test IDs}   & \multicolumn{12}{c|}{\textbf{Nonfunctional Requirement IDs}}                                                                                                                                                                                                                 \\
+		\hline
+		~                   & \textbf{P-RF5}  & \textbf{P-RF6} & \textbf{P-C1} & \textbf{P-C2} & \textbf{P-SE1} & \textbf{P-SE2} & \textbf{P-SE3} & \textbf{P-L1} & \textbf{P-L2} & \textbf{OE-EPE1} & \textbf{OE-IAS1} & \textbf{OE-P1} \\
+		\hline
+		\textbf{NFRT-P3} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P5} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P13} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P14} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & X             & ~ & ~ & ~\\
+		\textbf{NFRT-P15} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P17} & ~                                                         & ~             & X             & ~             & X             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-P18} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ & ~ & ~\\
+		\textbf{NFRT-OE1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & X\\
+		\textbf{NFRT-MS3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X & X & ~\\
+		\hline
+	\end{longtable}
+	
 	\newpage
 	
 			\begin{longtable}{|l|ccccccccccc|}
@@ -1892,12 +1908,6 @@ USER\_PROFILE & All information about the user & username, password, gender, age
 	\item \textbf{Common periods of usage:} At what times of the day/week do you find yourself using the product?
 	\item \textbf{Cultural Friendliness:} Do you agree that the product does not display any offensive language/symbols?
 \end{enumerate}
-
-\newpage{}
-\section*{Appendix --- Reflection}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.  Please answer the following questions:
 
 \newpage{}
 \section*{Appendix --- Reflection}
