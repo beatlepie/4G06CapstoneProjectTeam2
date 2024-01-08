@@ -2,6 +2,7 @@
 
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{float}
 
 \title{Problem Statement and Goals\\\progname}
 
@@ -22,10 +23,26 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Sept 25 & Everyone & Revision 0\\
+Sept 25 & All & Revision 0\\
+Jan 4th & Zihao Du & Revision 1: Update goals and stretch goals\\
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\begin{table}[H]
+\center
+\caption{Symbols, Abbreviations, and Acronyms} \label{Acronyms}
+\begin{tabular}{l l} 
+  \toprule		
+  \textbf{symbol} & \textbf{description}\\
+  \midrule 
+  AR & Augmented Reality\\
+  \midrule
+  XR & Extended reality\\
+  \bottomrule
+\end{tabular}\\
+\end{table}
+\newpage
 
 \section{Problem Statement}
 
@@ -110,13 +127,13 @@ This section discusses the enviroment we expect the product to be used in. The e
 
 \subsubsection{Software}
 \begin{itemize}
-    \item The application should be supported on Android and iOS mobile devices that are able to connect to the Internet
+    \item The application should be supported on Android mobile devices that are able to connect to the Internet
     \item The application should be compatible with all required libraries and plugins
 \end{itemize}
 
 \section{Goals}
 
-In this section we outline the goals or "selling points" of our product. Each goal specified in this section should be met by the final product. Goals have associated measures in order to verify that they were met.
+In this section we outline the goals or ``selling points'' of our product. Each goal specified in this section should be met by the final product. Goals have associated measures in order to verify that they were met.
 
 \begin{itemize}
     \item[2.1] \textbf{Accurate Data Collection} The product must collect location and directional data to accurately ascertain the position of the user in the building and campus. The error of data must be less than 5\%. This will allow the user to interact with the system and other users of the product to enhance social interactions. 
@@ -141,7 +158,7 @@ In this section we outline the goals or "selling points" of our product. Each go
 In this section we outline goals that lie beyond the defined scope of the project. They are defined as targets for future versions or extra features if time permits.
 
 \begin{itemize}
-    \item[3.1] \textbf{Synchronous User Communication} This product could allow users to send synchronous text, video, and audio messages to each other. This additional feature can largely increase app engagement.
+    \item[3.1] \textbf{User Communication Group} This product could allow users to form a group in which they can make new friends and share information. This additional feature can largely increase app engagement.
 
     \item[3.2] \textbf{Larger Server Capacity} This product could have the ability to support at least 50 users online at the same time. At first, the potential users of this product will mostly be students from this course, but a larger server capacity should be taken into consideration since this product aims to help all McMaster students.
 
@@ -155,5 +172,4 @@ In this section we outline goals that lie beyond the defined scope of the projec
 
     \item[3.7] \textbf{Off-campus VR tours} The product could include a feature that'll allow people to get a simplified virtual tour of the campus through virtual reality, regardless of their positions. This would allow prospective students that live a distance from the university to get an idea of how campus is.
 \end{itemize}
-
 \end{document}

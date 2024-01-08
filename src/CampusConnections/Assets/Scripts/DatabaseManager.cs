@@ -58,6 +58,6 @@ public class DatabaseManager : MonoBehaviour
 
     public void ExitDataPage()
     {
-        SceneManager.LoadScene("MapScene");
+        SceneManager.LoadScene("MenuScene");
     }
 }
