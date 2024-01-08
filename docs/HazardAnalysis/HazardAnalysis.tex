@@ -140,7 +140,17 @@ The system will be divided into the following components:
         Maintenance and updates of features & Update cannot be finished in time or major error is found & 
             1.~ Users could experience unexpected down times 2.~ Features could be delayed & 
             1.~ Update was not properly tested 
-             & Maintenance expected time exceeds allocated time & Rollback to previous update and do the update sequencially in smaller patches at low usage times & MR & H10 \\    
+             & Maintenance expected time exceeds allocated time & Rollback to previous update and do the update sequencially in smaller patches at low usage times & MR & H10 \\
+        \hline
+        Application Robustness &
+        Application Crashes &
+        1.~ The product fails to connect to the internet or server
+        2.~ The product takes too long to connect to the internet or server &
+        Application is suddenly closed on user's device &
+        Log application crashes, including where they happened, and what error caused the crash &
+        Implement a failsafe for the application to function if server or internet connection takes too long or fails &
+        RFT6 &
+        H11 \\
 \hline
     \end{longtable}
 \end{landscape}
