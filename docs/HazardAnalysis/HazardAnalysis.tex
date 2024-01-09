@@ -2,6 +2,7 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{adjustbox}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{float}
@@ -67,7 +68,11 @@ Jan 8th & All & Revision 1: Resolve TA feedback and update the FMEA table\\
   \midrule
   SRS & Software Requirement Specification\\
   \midrule
+  SQL & Structured query language\\
+  \midrule
   AR & Augmented Reality\\
+  \midrule
+  UI & User Interface\\
   \bottomrule
 \end{tabular}\\
 
@@ -90,11 +95,10 @@ The system will be divided into the following components:
 		      \item Event/Lecture Management Component
 		      \item User Profile Management Component
 		      \item General application features
-		      \item User Interface
 	      \end{itemize}
 	\item Firebase real-time database which will store all of user, event and lecture data
 	
-\quad General app features include user login system, which will be responsible for user login and account creation, as well as notification and user accessibility management. The other features are responsible for corresponding in-game functionalities, more details can be found in the figure below. The database and user interaction are considered external to the system, the interaction between the system and external systems is described in the previous \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/docs-hazard-analysis/docs/SRS-Volere/SRS.pdf}{document}.
+\quad General app features include a user login system, which will be responsible for user login and account creation, as well as notification and user accessibility management. The other features are responsible for corresponding in-game functionalities, more details can be found in the figure below. The database and user interaction are considered external to the system, the interaction between the system and external systems is described in the previous \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/docs-hazard-analysis/docs/SRS-Volere/SRS.pdf}{document}.
 \end{enumerate}
 \begin{figure}[H]
 \begin{center}
@@ -105,74 +109,63 @@ The system will be divided into the following components:
 \section{Critical Assumptions}
 
 \begin{itemize}
-    \item Assume the administrators of the application (currently the developers) and the provider of lecture/event information (currently McMaster official website) do not intend to misuse or hack into the system (e.g. SQL injection when adding new events).
-    \item Assume the user's device will have all necessary hardware components with sufficient computing/output power such as sensors, processors, etc and the device OS is compatible with the application.
+    \item Assume the administrators of the application (the developers) and the provider of lecture/event information (McMaster official website) do not intend to misuse or hack into the system (e.g. SQL injection when adding new events).
+    \item Assume the user's device will have all necessary hardware components and the device OS is compatible with the application.
     \item Assume data can be transmission and storage is secure under the protection of Firebase database security rules.
     \item Assume the routes to the backend of the system will always be ready to serve requests and not blocked due to unnecessarily locked resources
+    \item Assume the regular maintenance of the server and database takes very short time and does not affect users from using the application
 \end{itemize}
 
 \section{Failure Mode and Effect Analysis}
+\begin{table}[H]
+    \begin{adjustbox}{width=(\textwidth*6/5)}
+    \centering
+    
 
-\begin{landscape}
-    \begin{longtable}{|>{\hspace{0pt}}m{0.075\linewidth}|>{\hspace{0pt}}m{0.102\linewidth}|>{\hspace{0pt}}m{0.106\linewidth}|>{\hspace{0pt}}m{0.156\linewidth}|>{\hspace{0pt}}m{0.169\linewidth}|>{\hspace{0pt}}m{0.242\linewidth}|>{\hspace{0pt}}m{0.033\linewidth}|>{\hspace{0pt}}m{0.044\linewidth}|} 
+    \begin{tabular}{|p{0.20\linewidth} | p{0.20\linewidth} | p{0.20\linewidth}|  p{0.20\linewidth}|  p{0.21\linewidth}|  p{0.30\linewidth}|  p{0.08\linewidth}|p{0.07\linewidth}| }
     \hline
-    \multicolumn{1}{|>{\centering\hspace{0pt}}m{0.075\linewidth}|}{Design Function} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.102\linewidth}|}{Failure Modes} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.106\linewidth}|}{Causes of Failure} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.156\linewidth}|}{Effects of Failure} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.169\linewidth}|}{Detection} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.242\linewidth}|}{Recommended Action} & \multicolumn{1}{>{\centering\hspace{0pt}}m{0.033\linewidth}|}{SR} & \multicolumn{1}{>{\centering\arraybackslash\hspace{0pt}}m{0.044\linewidth}|}{Ref. No.} \endfirsthead 
-    \hline
-    AR Object Recognition & App is unable to detect object & Poor lighting conditions\par{}Camera angle & User is unable to view information from the AR element & Keep track of prior incomplete scan attempts & Implement a failsafe mechanism that shows the scannable information if enough previous attempts have failed & RFT2 AVR1 & H1 \\ 
-    \hline
-    Backend Server & Server is inaccessible & No internet connection\par{}Hosting service is down\par{}Invalid access key & Users are unable to make changes to their profile\par{}Users cannot receive updated information from the server & Keep track of the connection to the server using periodic heartbeats or similar methods & Display an error message stating that the connection the the server has been lost & RFT1 & H2 \\ 
-    \hline
-    User Profile View & Sensitive user data is publicly visible & Invalid visibility permissions\par{}Access control software malfunction & Confidential user information could be exposed and used for malicious purposes & Software failsafes and checks that verify the integrity of the permission structure & Prevent other users from accessing unauthorized information by creating a robust permissions system & SR & H3 \\ 
-    \hline
-    App Performance & App performance is poor & Large amounts of assets to be rendered\par{}Slow internet connection\par{}App is running on an old phone & User experiences lag or slowdown\par{}App feels unresponsive & Track of frame times or other performance metrics & Only show up to a maximum number of avatars or lower the level of detail & SLR & H4 \\ 
-    \hline
-    User Safety & App is used where and when it is not intended & User is distracted by the app & User could get into an accident & N/A & Display a warning message when opening the app that tells the user to be aware of their surroundings at all times while using the app & RFT2 & H5 \\ 
-    \hline
-    AR Module & Device is not compatible with AR features & Device is missing required hardware or software & User cannot use the AR features & Check if device supports the required feature set using API functions. & Display a warning message if the user's device is not compatible & RFT3 & H6 \\
-    \hline
-        Account Creation & Duplicate ID Creation &
-            1.~ Account login failure
-            2.~ Function returns incorrect results
-            3.~ Incorrect user added as friend & 
-            1.~ Duplicate ID was used during account creation 
-            2.~ Duplicate ID was used during account update &
-            Compare ID with existing ID in database & Checks whether the ID is duplicate or not when entered and when saving & IR & H7 \\
-        \hline
-        F7: Share location with friends & Location shown unintentionally &
-            1.~ Location known without application being focused
-            2.~ Incorrect location display on other users & 
-            1.~ User did not turn off their GPS and application &
-            Application only sends location information for too long & If user has not interacted with the application for a prolonged period, check for activity, and turn off all processes if no response is received & PR SR1 & H8 \\
-        \hline
-        Unauthorized user activity & 1.~ Incorrect login attempts 2.~ Account activity in unknown devices 3.~ Unknown administrator activity & 
-            1.~ Account locked for user until further checks 
-            2.~ Compromise of user and friend data & 
-            1.~ Predictable passwords allowed, improper password change rules 
-            2.~ Security measures such as second factor authentication not used
-            3.~ Account lock features were not used & 
-            1.~ Accounted used from previously unknown account
-            2.~ Suspicious activity in the logs & 
-            1.~ Too many incorrect passwords will result in account lock. The lock can be undone from email. The account ID and password can be changed with rules preventing predictable passwords such as cannot use same password.
-            2.~ Recommend all users to use multi-factor authentication and have logs of their previous activity available to them.
-            3. Notify users of the security measures of the application and procedures of using them & AR & H9 \\
+         \textbf{Design Functions} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} &\textbf{Detection}& \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref}\\
          \hline
-        Maintenance and updates of features & Update cannot be finished in time or major error is found & 
-            1.~ Users could experience unexpected down times 2.~ Features could be delayed & 
-            1.~ Update was not properly tested 
-             & Maintenance expected time exceeds allocated time & Rollback to previous update and do the update sequencially in smaller patches at low usage times & MR & H10 \\
-        \hline
-        Application Robustness &
-        Application Crashes &
-        1.~ The product fails to connect to the internet or server
-        2.~ The product takes too long to connect to the internet or server &
-        Application is suddenly closed on user's device &
-        Log application crashes, including where they happened, and what error caused the crash &
-        Implement a failsafe for the application to function if server or internet connection takes too long or fails &
-        RFT6 &
-        H11 \\
-\hline
-    \end{longtable}
-\end{landscape}
+         AR Camera      &     Building recognition fails      &      The corresponding AR objects set on the target cannot be loaded      &      a. Poor lighting conditions (e.g. in the evening)      &      a. Users cannot see any designed AR objects on the screen even if they try from different angles      &      a. Notify the user that they AR camera may have a poor performance in poor lighting condition or bad weather, give them developer's contact information for more questions      &      a. XX      &      H1-1      \\
+         &&&      b. Bad Weather (e.g. foggy)      &      b. Same as H1-1a      &      b. Same as H1-1a      &      b. XX      &      \\
+         \hline
+         Backend Server     &    Server crashes      &      All services related to server (chatting, real time location map) are down      &      a. Server-side Software Error      &      a. Users cannot chat with friends or see other users on the map and error messages are found in the server logs      &      a. Let server attempt to restart once it crashes due to unknown errors      &      a. XX      &      H2-1      \\
+         &      Server fails to respond      &       All related services fail to render new changes      &      a. Server reaches max capacity      &      a. Error messages complaining about server over capacity are found in the log      &      a. Estimate potential user number and get an appropriate plan      &      b. NFR-P-C1      &      H2-2      \\
+         \hline
+        Internet connectivity      &      Internet connection is lost      &       The user is unable to send or receive data from the server     &      a. The user runs out of mobile data      &      a. The device shows there is no internet connection       &      a. Notify the user that they have lost internet connection      &      a. XX      &      H3-1      \\
+        &&&  b. The internet connection is poor/weak    &        b. Same as H3-1a         &  b. Same as H3-1a           &  b. XX           &\\
+          \hline
+          Database           &    SQL injection attack         &           Personal information leakage and database information corruption           &           a. Inputs like user email and nick name are not validated           &           a. Database log shows malicious SQL statements are inserted as input           &     Limit the use of special characters for all vulnerable user input fields     &   a. XX          &      H4-1            \\
+                                   &&&           b. Users bypass checks in the application and access database directly            &            a. Same as H4-1a            &            a. Add protection rules from the database side      &  a. NFR-P-SC2           &\\
+          \hline
+          Map and Location           &    Distracted walking when watching the screen         &           Users may block the traffic or even get injured because of distracted walking           &           The game-play of real time location map (User tends to walk and check the map simultaneously)           &           a. Users walk and use the application map at the same time           &     Show a warning message when using the map that tell the user to be aware of the surroundings     &   a. XX          &      H5-1            \\
+          \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{\bf FMEA Table}
+    \label{tab:FMEA1}
+\end{table}
+
+\begin{table}[H]
+    \begin{adjustbox}{width=(\textwidth*6/5)}
+    \centering
+    
+
+    \begin{tabular}{|p{0.20\linewidth} | p{0.20\linewidth} | p{0.20\linewidth}|  p{0.20\linewidth}|  p{0.21\linewidth}|  p{0.30\linewidth}|  p{0.08\linewidth}|p{0.07\linewidth}| }
+    \hline
+         \textbf{Design Functions} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} &\textbf{Detection}& \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref}\\
+         \hline
+         Map and Location     &     Unintentional location sharing      &      The real time location of user outside campus is shared with other users using the map      &      a. User forgets to disconnect from real-time map session      &      a. User is marked outside of campus on the map     &      a. Check if the user location is on campus. If not, disconnect him from the map session and hide his location from other users      &      a. XX      &      H5-2      \\
+         \hline
+         User Profile     &    User account is hacked      &      Sensitive personal information leakage      &      a. Week password protection rules      &      a. User report      &      a. Add password rest through email functionality      &      a. FR2-4      &      H6-1      \\
+         &&&&&      b. Allow users to contact administrators to suspend target account      &      b. NFR-S-A1      & \\
+         &      Malicious user creates bot accounts      &       Database and authentication system have less capacity for normal users    &      a. Lack of human verification during account creation process      &      a. lots of fake accounts are created at the same time in the authentication system log      &      a. Add human verification in account creation process    &      a. FR2-5      &      H6-2     \\
+          \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{\bf FMEA Table cont}
+    \label{tab:FMEA2}
+\end{table}
 
 \section{Safety and Security Requirements}
 
@@ -182,11 +175,11 @@ The following requirements includes previous non-functional requirements in the 
 
 There will be three levels of access. 
 
-The first will be before login and account creation, where anyone can access. They must not have access to anything beyond the login, account creation, and account recovery pages.
+The first will be before login and account creation, where anyone can access. They must not have access to anything beyond the login, account creation, public events, map without other users' locations and account recovery pages. We call the first level guest, user persona: a grade 12 student on a university tour.
 
-The second will be after login that verifies their identity, where the user has provided information matching the McMaster student or faculty member with McMaster email account. Only the user can access this page.
+The second will be after login that verifies their identity, where the user has provided information matching the McMaster student or faculty member with McMaster email account. We call them user. A User will have full access to all features except writing access to the database, which means a user cannot edit or create new lectures or events. User persona: a software engineer undergrad student.
 
-The third level will the the administrator account, used for adding, deleting, or editing official events. This account can be accessed by login that verifies that they are the maintainer, this will be used by the maintainers to check the functionality of the product  and pull logs that are not accessible to users.
+The third level will the the administrator account, used for adding, deleting, or editing official events, lectures and all users. This account can be accessed by login that verifies that they are the maintainer, this will be used by the maintainers to check the functionality of the product and pull logs that are not accessible to users.  Administrators are responsible to bring up-to-date information to all users and manage all users, including help users get their password back, answer user questions and suspend malicious accounts (e.g. bot accounts).
 
 \subsection{Integrity Requirements}
 
@@ -195,9 +188,6 @@ The product will prevent introduction of duplicate data, to guarantee that all u
 In the future, the database and server can protect itself from excessive use with a load balancer and additional servers being added.
 
 \subsection{Privacy Requirements}
-
-All data collected must be encrypted on disk in the server by standard encryption algorithm.
-All data collected must be encrypted on transit by industry standard encryption algorithm.
 
 The product will require users to agree on the terms prior to account creation and additional data submission.
 The product must erase all data if the user requests, or when account is deleted.
@@ -219,50 +209,67 @@ Security updates must be done as soon as possible when they are announced for us
 This will reduce the chances of novel attacks from affecting the product.
 
 \subsection{New Requirements}
-The new requirements are given new IDs in the revised SRS. Please check the following requirements in SRS for traceability purpose.\\
-\textbf{PR1: P-SC4,\\ AVR1: P-RF6,\\ RTF1: P-RF3,\\ RFT2: P-RF4,\\ RTF3: P-RF5}.\\
+The following requirements in bold are the new requirements added to our SRS document.
 \begin{itemize}
-        \item[PR1.] \textbf{The product shall not transmit information while not in use.}
+	\item[NFR-P-RF4.] \textbf{AR Camera should have a notification available in the UI telling users possible reasons the target is not recognized.}
     \begin{itemize}
-        \item \textbf{Rationale:} This requirement prevents the application from unnecessarily communicating with the server and taking up resources. This will improve the privacy and data protection of the application. This also reduces the battery usage of the product.
-        \item \textbf{Fit Criterion:} The product will not execute any code that involves the transmission of information outside of the product.
+        \item \textbf{Rationale:} The user should get a notification telling them that AR camera may have a bad performance in some cases, and they should be able to report that to the developer if they want the problem to be solved.
+        \item \textbf{Fit Criterion:} The product should show the user a list of possible reasons that the camera does not work and the contact information of maintainers once they have trouble using the AR camera and click the help button.
     \end{itemize}
-    \item[AVR1.] \textbf{There must be a failsafe for the product to function if server or internet connection takes too long or fails.}
+        \item[NFR-P-RF2.] \textbf{The server shall attempt to restart when it crashes.}
+    \begin{itemize}
+        \item \textbf{Rationale:} This requirement enhances robustness of the backend server and prevents it from going down for a long time because of some intermittent minor errors.
+        \item \textbf{Fit Criterion:} The server should try to restart after it crashes due to unknown errors.
+    \end{itemize}
+    \item[NFR-P-RF5.] \textbf{There must be a fail-safe for the product to function if server or internet connection takes too long or fails.}
     \begin{itemize}
         \item \textbf{Rationale:} This will allow the product to function to some degree even during high traffic or bad internet connection situations.
-        \item \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities using its offline components.
+        \item \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities without connecting to the internet or server.
     \end{itemize}
-    \item[RFT1.] \textbf{The product shall display an error message when there is no internet connection.}
+    \item[NFR-P-RF3.] \textbf{The product shall display an error message when there is no internet connection.}
     \begin{itemize}
         \item \textbf{Rationale:} When there is no internet connection, the user should be made aware.
         \item \textbf{Fit Criterion:} An error message stating that there is no internet connection is displayed when the product fails to connect to the internet.
     \end{itemize}
-    \item[RFT2.] \textbf{The product shall display a message upon startup warning the user to be aware of their surroundings.}
+    \item[NFR-P-SC4.] \textbf{The product shall display a message upon map startup warning the user to be aware of their surroundings.}
     \begin{itemize}
-        \item \textbf{Rationale:} Ensures the safety of the user.
-        \item \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon startup.
+        \item \textbf{Rationale:} The game-play of real-time location map may lead to distracted walking, therefore we need to warn the user for their safety.
+        \item \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon map startup.
     \end{itemize}
-    \item[RFT3.] \textbf{The product shall display a warning message if the user's device is not compatible with the AR features.}
+    \item[NFR-P-SC5.] \textbf{The product shall hide user location if the user leaves campus.}
     \begin{itemize}
-        \item \textbf{Rationale:} Tells the user that the AR features of the app cannot be used with their device.
-        \item \textbf{Fit Criterion:} A warning message is displayed if the user's device is incompatible with AR.
+        \item \textbf{Rationale:} Users may stay connected and share their location even they leave the campus. To prevent personal information leakage, we need to hide that information and disconnect the user.
+        \item \textbf{Fit Criterion:} A user's information shall not be shared once he or she leaves campus.
+    \end{itemize}
+    \item[NFR-P-SC6.] \textbf{The product shall prevent user entering special characters in all text input field.}
+    \begin{itemize}
+        \item \textbf{Rationale:} When creating accounts, users can perform SQL injection attack by inputting some SQL statements.
+        \item \textbf{Fit Criterion:} Any text input with special characters will give the user an error
+    \end{itemize}
+    \item[NFR-P-SC7.] \textbf{The product shall validate email format when creating an account.}
+    \begin{itemize}
+        \item \textbf{Rationale:} When creating accounts, users can perform SQL injection attack by inputting some SQL statements.
+        \item \textbf{Fit Criterion:} An input in email field that's not in the format of an email will give the user an error when creating a new account.
     \end{itemize}
 \end{itemize}
 
 \section{Roadmap}
 
-Safety Requirements to be implemented for capstone:
+The hazard analysis has identified lots of safety and security requirements, but due to time constraints,  not all of the requirements can be fulfilled. Our team thinks the following requirements have higher priority and will implement them for the capstone:
 \begin{itemize}
-    \item The product shall not transmit information while not in use.
-    \item The product shall display an error message when there is no internet connection.
-    \item The product shall display a message upon startup warning the user to be aware of their surroundings.
-    \item The product shall display a warning message if the user's device is not compatible with the AR features.
+    \item AR Camera should have a notification available in the UI telling users possible reasons the target is not recognized.
+    \item The server shall attempt to restart when it crashes.
+    \item There must be a fail-safe for the product to function if server or internet connection takes too long or fails.
+    \item The product shall display a message upon map startup warning the user to be aware of their surroundings.
+    \item The product shall hide user location if the user leaves campus.
+    \item The product shall prevent user entering special characters in all text input field.
+    \item The product shall validate email format when creating an account.
 \end{itemize}
 
 \noindent
-Safety Requirements to be implemented after capstone:
+Requirements to be implemented after capstone:
 \begin{itemize}
-    \item None
+    \item The product shall display an error message when there is no internet connection.
 \end{itemize}
 
 \newpage
