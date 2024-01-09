@@ -43,7 +43,7 @@
 \midrule
 Oct 20th & All & Revision 0\\
 Nov 23rd & Zihao Du & Add the new requirement IDs in the new SRS\\
-... & ... & ...\\
+Jan 8th & All & Revision 1: Resolve TA feedback and update the FMEA table\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -56,40 +56,58 @@ Nov 23rd & Zihao Du & Add the new requirement IDs in the new SRS\\
 
 \pagenumbering{arabic}
 
+\section{Symbols, Abbreviations, and Acronyms}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l l} 
+  \toprule		
+  \textbf{symbol} & \textbf{description}\\
+  \midrule 
+  STPA & System-Theoretic Process Analysis\\
+  \midrule
+  SRS & Software Requirement Specification\\
+  \midrule
+  AR & Augmented Reality\\
+  \bottomrule
+\end{tabular}\\
+
 \section{Introduction}
 
-Based on the STPA Handbook, a system hazard is a system state or set of conditions that, together with a particular set of worst-case environmental conditions will lead to a loss. Regarding CampusConnections, our AR-based social networking application, a hazard can be a condition in the game when it fails to perform the intended functions or performs unexpected behaviors when coupled with environmental conditions. This document aims to detect, analyze, assess, and eliminate or migrate potential safety and security hazards that are applicable to this application. 
+Based on the STPA Handbook \cite{STPA}, a system hazard is a system state or set of conditions that, together with a particular set of worst-case environmental conditions will lead to a loss. Regarding CampusConnections, our Unity-based AR social networking application, a hazard can be a condition in the game when it fails to perform the intended functions or performs unexpected behaviors when coupled with environmental conditions. This document aims to detect, analyze, assess, and eliminate or migrate potential safety and security hazards that are applicable to this application. 
 
 \section{Scope and Purpose of Hazard Analysis}
 
-The scope of hazard analysis is to specify all potential system hazards that may arise when using the application and discover safety and security requirements to migrate and eliminate the effects of those hazards. However, it will not include hazards related to the hardware the application is running on. It will be the choice of the user and we cannot account for all mobile devices on the market. Hazard to the user and the society will be out of the scope as well. We will assume users intend to run the application on a normally functioning mobile device properly and efficiently. The purpose of the document is to highlight various hazards associated with the system, effects and causes of corresponding failures along with new requirements for further mitigation steps.
+The scope of hazard analysis is to specify all potential system hazards that may arise when using the application and discover safety and security requirements to migrate and eliminate the effects of those hazards. However, it will not include hazards related to the hardware the application is running on. It will be the choice of the user and we cannot account for all mobile devices on the market. Hazard to the society will be out of the scope as well. We will assume users intend to run the application on a normally functioning mobile device properly and efficiently. The purpose of the document is to highlight various hazards associated with the system, effects and causes of corresponding failures along with new requirements for further mitigation steps.
 
 \section{System Boundaries and Components}
 The system will be divided into the following components:
 \begin{enumerate}
 	\item The application's in-game feature components:
 	      \begin{itemize}
-		      \item Social Media
-		      \item AR \& Location Services
-		      \item Event/Lecture Management
+		      \item Friends Component
+		      \item Map and Location Component
+		      \item AR Camera Component
+		      \item Event/Lecture Management Component
+		      \item User Profile Management Component
 		      \item General application features
 		      \item User Interface
 	      \end{itemize}
-	\item The database being used which will store all of users' data
+	\item Firebase real-time database which will store all of user, event and lecture data
 	
-\quad General app features include user login system, it will be responsible for user login and account creation, as well as notification and user accessibility management. The other three features are just responsible for corresponding in-game functionalities, more details can be found in the figure below. The database and user interaction are considered external to the system, the interaction between the system and external systems is described in the previous \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/docs-hazard-analysis/docs/SRS-Volere/SRS.pdf}{document}.
+\quad General app features include user login system, which will be responsible for user login and account creation, as well as notification and user accessibility management. The other features are responsible for corresponding in-game functionalities, more details can be found in the figure below. The database and user interaction are considered external to the system, the interaction between the system and external systems is described in the previous \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/docs-hazard-analysis/docs/SRS-Volere/SRS.pdf}{document}.
 \end{enumerate}
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.7]{components.png}
+\includegraphics[scale=0.4]{components.png}
 \end{center}
 \caption{System Components}
 \end{figure}
 \section{Critical Assumptions}
 
 \begin{itemize}
-    \item Assume the users of the application do not intend to misuse it
-    \item Assume the user's device will have all necessary hardware components with sufficient computing/output power such as sensors, processors, etc.
+    \item Assume the administrators of the application (currently the developers) and the provider of lecture/event information (currently McMaster official website) do not intend to misuse or hack into the system (e.g. SQL injection when adding new events).
+    \item Assume the user's device will have all necessary hardware components with sufficient computing/output power such as sensors, processors, etc and the device OS is compatible with the application.
+    \item Assume data can be transmission and storage is secure under the protection of Firebase database security rules.
     \item Assume the routes to the backend of the system will always be ready to serve requests and not blocked due to unnecessarily locked resources
 \end{itemize}
 
@@ -246,5 +264,11 @@ Safety Requirements to be implemented after capstone:
 \begin{itemize}
     \item None
 \end{itemize}
+
+\newpage
+
+\begin{thebibliography}{9}
+  \bibitem{STPA} Nancy G. Leveson and John P. Thomas. \emph{STPA Handbook.} March 2018.
+\end{thebibliography}
 
 \end{document}
