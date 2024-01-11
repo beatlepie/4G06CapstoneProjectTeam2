@@ -13,7 +13,10 @@ public class ScrollViewItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        foreach(string item in favorite)
+        {
+
+        }
     }
 
     // Update is called once per frame
