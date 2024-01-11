@@ -175,84 +175,78 @@ The system will be divided into the following components:
 The following requirements includes previous non-functional requirements in the Software Requirements Specification document that are referred in the previous section and new requirements added to handle potential hazards.
 
 \subsection{Access Requirements}
-
-There will be three levels of access. 
-
-The first will be before login and account creation, where anyone can access. They must not have access to anything beyond the login, account creation, public events, map without other users' locations and account recovery pages. We call the first level guest, user persona: a grade 12 student on a university tour.
-
-The second will be after login that verifies their identity, where the user has provided information matching the McMaster student or faculty member with McMaster email account. We call them user. A User will have full access to all features except writing access to the database, which means a user cannot edit or create new lectures or events. User persona: a software engineer undergrad student.
-
-The third level will the the administrator account, used for adding, deleting, or editing official events, lectures and all users. This account can be accessed by login that verifies that they are the maintainer, this will be used by the maintainers to check the functionality of the product and pull logs that are not accessible to users.  Administrators are responsible to bring up-to-date information to all users and manage all users, including help users get their password back, answer user questions and suspend malicious accounts (e.g. bot accounts).
+\textbf{S-A1:} User with first level access is treated as a guest.\\
+\textbf{Rational:} User persona: a grade 12 student on a university tour.\\
+\textbf{Fit Criterion:} Guest must not have access to anything beyond the login, account creation, public events, map without other users' locations and account recovery pages. \\\\
+\textbf{S-A2:} User with second level access is treated as an actual user.\\
+\textbf{Rational:} User persona: a software engineer undergrad student.\\
+\textbf{Fit Criterion:} User will have full access to all features except writing access to the database, which means a user cannot edit or create new lectures or events. \\\\
+\textbf{S-A3:} User with thrid level access is treated as an administrator.\\
+\textbf{Rational:} Full access of the system should be given to administrators who works as a maintainer.\\
+\textbf{Fit Criterion:} Administrator will have all the access users have and the power to add, delete and edit official events, lectures and all users profiles.\\\\
 
 \subsection{Integrity Requirements}
 
-The product will prevent introduction of duplicate data, to guarantee that all user identities are unique.
-
-In the future, the database and server can protect itself from excessive use with a load balancer and additional servers being added.
+\textbf{N/A}
 
 \subsection{Privacy Requirements}
-
-The product will require users to agree on the terms prior to account creation and additional data submission.
-The product must erase all data if the user requests, or when account is deleted.
-Additionally, accounts that are inactive for a certain period of time will have their account deleted after notice to prevent unnecessary data being held.
+\textbf{S-P1:} The application will comply with all relevant privacy laws and guidelines.\\
+\textbf{Rational:} The application will respect the privacy of all the users.\\
+\textbf{Fit Criterion:} The usage of a user’s personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws.\\\\
+\textbf{S-P2:} Accounts that are inactive for a certain period shall be deleted after notice to prevent unnecessary data from being held.\\
+\textbf{Rational:} It prevents personal information from being stored in the database unintentionally for a long time.
+\textbf{Fit Criterion:} Accounts that are not logged in for a semester will be cleaned from the authentication system and database.\\\\
 
 \subsection{Audit Requirements}
 
-N/A (This currently does not apply, once the product is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)
+\textbf{N/A}
 
 \subsection{Immunity Requirements}
 
-The product must only use open source libraries with many users and continuous security updates. 
-As open source libraries are used by millions of people, vulnerabilities are found and patched much earlier.
-
-The product must undergo vulnerability checks before a build is pushed to the users.
-This will prevent vulnerabilities from inadequate codes from being introduced to user devices.
-
-Security updates must be done as soon as possible when they are announced for used packages.
-This will reduce the chances of novel attacks from affecting the product.
+\textbf{N/A}
 
 \subsection{New Requirements}
 The following requirements in bold are the new requirements added to our SRS document.
 \begin{itemize}
-	\item[NFR-P-RF4.] \textbf{AR Camera should have a notification available in the UI telling users possible reasons the target is not recognized.}
-    \begin{itemize}
-        \item \textbf{Rationale:} The user should get a notification telling them that AR camera may have a bad performance in some cases, and they should be able to report that to the developer if they want the problem to be solved.
-        \item \textbf{Fit Criterion:} The product should show the user a list of possible reasons that the camera does not work and the contact information of maintainers once they have trouble using the AR camera and click the help button.
-    \end{itemize}
-        \item[NFR-P-RF2.] \textbf{The server shall attempt to restart when it crashes.}
-    \begin{itemize}
-        \item \textbf{Rationale:} This requirement enhances robustness of the backend server and prevents it from going down for a long time because of some intermittent minor errors.
-        \item \textbf{Fit Criterion:} The server should try to restart after it crashes due to unknown errors.
-    \end{itemize}
-    \item[NFR-P-RF5.] \textbf{There must be a fail-safe for the product to function if server or internet connection takes too long or fails.}
-    \begin{itemize}
-        \item \textbf{Rationale:} This will allow the product to function to some degree even during high traffic or bad internet connection situations.
-        \item \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities without connecting to the internet or server.
-    \end{itemize}
-    \item[NFR-P-RF3.] \textbf{The product shall display an error message when there is no internet connection.}
+	\item[NFR-P-RF1.] \textbf{The product shall display an error message when there is no internet connection.}
     \begin{itemize}
         \item \textbf{Rationale:} When there is no internet connection, the user should be made aware.
         \item \textbf{Fit Criterion:} An error message stating that there is no internet connection is displayed when the product fails to connect to the internet.
     \end{itemize}
-    \item[NFR-P-SC4.] \textbf{The product shall display a message upon map startup warning the user to be aware of their surroundings.}
+	\item[NFR-P-RF2.] \textbf{There must be a fail-safe for the product to function if the server or internet connection takes too long or fails.}
+    \begin{itemize}
+        \item \textbf{Rationale:} This will allow the product to function to some degree even during high traffic or bad internet connection situations.
+        \item \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities without connecting to the internet or server.
+    \end{itemize}
+	\item[NFR-P-RF3.] \textbf{The server shall attempt to restart when it crashes.}
+    \begin{itemize}
+        \item \textbf{Rationale:} This requirement enhances the robustness of the backend server and prevents it from going down for a long time because of some intermittent minor errors.
+        \item \textbf{Fit Criterion:} The server should try to restart after it crashes due to unknown errors.
+    \end{itemize}
+	\item[NFR-P-RF4.] \textbf{AR Camera should have a notification available in the UI telling users possible reasons the target is not recognized.}
+    \begin{itemize}
+        \item \textbf{Rationale:} The user should get a notification telling them that the AR camera may have a bad performance in some cases, and they should be able to report that to the developer if they want the problem to be solved.
+        \item \textbf{Fit Criterion:} The product should show the user a list of possible reasons that the camera does not work and the contact information of maintainers once they have trouble using the AR camera and click the help button.
+    \end{itemize}
+    \item[NFR-P-SC3.] \textbf{The product shall display a message upon map startup warning the user to be aware of their surroundings.}
     \begin{itemize}
         \item \textbf{Rationale:} The game-play of real-time location map may lead to distracted walking, therefore we need to warn the user for their safety.
         \item \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon map startup.
     \end{itemize}
-    \item[NFR-P-SC5.] \textbf{The product shall hide user location if the user leaves campus.}
+    \item[NFR-P-SC4.] \textbf{The product shall hide user's location if the user leaves campus.}
     \begin{itemize}
-        \item \textbf{Rationale:} Users may stay connected and share their location even they leave the campus. To prevent personal information leakage, we need to hide that information and disconnect the user.
+        \item \textbf{Rationale:} Users may stay connected and share their location even when they leave the campus. To prevent personal information leakage, we need to hide that information and disconnect the user.
         \item \textbf{Fit Criterion:} A user's information shall not be shared once he or she leaves campus.
     \end{itemize}
-    \item[NFR-P-SC6.] \textbf{The product shall prevent user entering special characters in all text input field.}
+    \item[NFR-P-SC5.] \textbf{The product shall prevent the user from entering special characters in all text input fields.}
     \begin{itemize}
-        \item \textbf{Rationale:} When creating accounts, users can perform SQL injection attack by inputting some SQL statements.
-        \item \textbf{Fit Criterion:} Any text input with special characters will give the user an error
+        \item \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.
+        \item \textbf{Fit Criterion:} Any text input with special characters will give the user an error.
     \end{itemize}
-    \item[NFR-P-SC7.] \textbf{The product shall validate email format when creating an account.}
+    \item[NFR-P-SC6.] \textbf{The product shall validate the email format when creating an account.}
     \begin{itemize}
-        \item \textbf{Rationale:} When creating accounts, users can perform SQL injection attack by inputting some SQL statements.
-        \item \textbf{Fit Criterion:} An input in email field that's not in the format of an email will give the user an error when creating a new account.
+        \item \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.
+        \item \textbf{Fit Criterion:} An input in the email field that's not in the format of an email will give the user an error when creating a new account.
     \end{itemize}
 \end{itemize}
 

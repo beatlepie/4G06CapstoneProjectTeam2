@@ -56,6 +56,7 @@ Oct 4 & All & Add Functional Requirements\\
 Oct 6 & All & Finish Revision 0\\
 Oct 28 & Zihao Du & Divide functional requirements to subcategories\\
 Oct 29 & Zihao Du & Add new non functional requirements from hazard analysis\\
+Jan 10th & Zihao Du, Matthew Miller & Revision 1: Add new requirements form Hazard Analysis, remove out-of-date requirements\\
 \bottomrule
 \end{tabularx}
 
@@ -615,100 +616,116 @@ The use case diagram depicted below identifies the boundaries between the users 
 \end{enumerate}
 \textbf{Postcondition:} The system provides information of the building the user locates now.\\
 \section{Functional Requirements}
+\section{Functional Requirements}
 \subsection{Functional Requirements}
 \subsubsection{Pre-Game Settings}
-    \textbf{FR-1-1:} The system shall ask all users to sign a consent form for disclosure of personal information.\\
-    \textbf{Rationale:} It is a must to ask for users' permission before taking use of their personal information.\\
+    \textbf{FR-1-1:} The system shall ask all users to sign a consent form disclosure of personal information.\\
+    \textbf{Rationale:} It is a must to ask for users' permission before making use of their personal information.\\
     \textbf{Fit Criterion:} Users must be able to sign or reject a consent form when they first log in.\\\\
     
-\subsubsection{User Account}
-    \textbf{FR-2-1:} The system shall allow users to create accounts with an unique username.\\
+\subsubsection{User Profile}
+    \textbf{FR-2-1:} The system shall allow users to create accounts with an email that does not exist in the database.\\
     \textbf{Rationale:} Users must be associated with accounts to identify themselves and expand their social networking.\\
-    \textbf{Fit Criterion:} Users must be able to create an account with a unique username and a password.\\\\
-    \textbf{FR-2-2:} The system shall allow users to delete their account with all associated data.\\
+    \textbf{Fit Criterion:} Users must be able to create an account with an email that does not exist in the database and a password.\\\\
+    \textbf{FR-2-2:} The system shall allow users to delete their accounts with all associated data.\\
     \textbf{Rationale:} Users shall be able to quit whenever they want with all their data handled properly.\\
-    \textbf{Fit Criterion:} Users must be able to delete their account once they logged into the application.\\\\
-    \textbf{FR-2-3:} The system shall allow users to log in with their username and corresponding password.\\
+    \textbf{Fit Criterion:} Users must be able to delete their account once they log into the application.\\\\
+    \textbf{FR-2-3:} The system shall allow users to log in with their email and the corresponding password.\\
     \textbf{Rationale:} Users must be able to log into their account to expand social networking and enjoy all functionalities.\\
     \textbf{Fit Criterion:} Users must be able to log in once they created an account successfully.\\\\
     \textbf{FR-2-4:} The system shall allow users to change their password.\\
     \textbf{Rationale:} This will allow users to improve the security of their account and recover the account if they forget their password.\\
-    \textbf{Fit Criterion:} Users may change password in the settings menu after proving their identity. The user must be notified afterwards.\\\\
+    \textbf{Fit Criterion:} Users may request a password reset on the login page. The user shall receive an email to reset the password later.\\\\
     \textbf{FR-2-5:} The system must verify new users as human.\\
     \textbf{Rationale:} This system can be vulnerable since anyone can create an account if all the information is provided. So CAPTCHA is needed to prevent bot attacks.\\
-    \textbf{Fit Criterion:} User must pass human verification test when creating a new account.\\\\
-     \textbf{FR-2-6:} The system shall allow users to create a virtual avatar.\\
-    \textbf{Rationale:} A customizable avatar makes user accounts more personal and improves the immersiveness of the app. \\
-    \textbf{Fit Criterion:} When the user creates an account, they will be prompted to design an avatar with some basic level of customization provided in the application. This avatar will be used to virtually identify the user.\\\\
-    \textbf{FR-2-7:} The system shall allow users to modify a virtual avatar.\\
-    \textbf{Rationale:} The user might feel the need to update the appearance of their avatar to better represent themself. \\
-    \textbf{Fit Criterion:} The avatar created in the user's registration process can be modified at any time through the settings menu.\\\\
-    \textbf{FR-2-8:} The system shall allow users to verify their school email.\\
-    \textbf{Rationale:} Users shall be identified as McMaster student to have full access to all the resources. Therefore identifying McMaster email is necessary. \\
-    \textbf{Fit Criterion:} The user shall be able to add McMaster email to their profile and verifying the email after receiving an email from the system.\\\\ 
+    \textbf{Fit Criterion:} New users need to pass a human verification test when creating a new account.\\\\
+     \textbf{FR-2-6:} The system shall allow users to create and change a virtual avatar.\\
+    \textbf{Rationale:} A customizable avatar gives users a much stronger feeling of personalization. \\
+    \textbf{Fit Criterion:} Users shall be able to upload images as their avatar on the user profile page.\\\\
+    \textbf{FR-2-7:} The system shall allow users to verify their school email.\\
+    \textbf{Rationale:} Users shall be identified as McMaster students to have full access to all the resources. Therefore identifying McMaster email is necessary. \\
+    \textbf{Fit Criterion:} The user shall be able to add McMaster email to their profile and verify the email after receiving an email from the system.\\\\
+    \textbf{FR-2-8:} Users shall be able to edit their profile.\\
+    \textbf{Rationale:} Users shall always be able to update their displayed information for better socializing.\\
+    \textbf{Fit Criterion:} Users shall be able to edit their user profile (e.g. nickname program and level) on the user profile page.\\\\
 
-\subsubsection{Social Networking System}
-    \textbf{FR-3-1:} The system shall allow users to add friends.\\
-    \textbf{Rationale:} One of the main purposes of this application is to make students connect with peers easily. For this to happen, they should be able to make friends on this social media platform.\\
+\subsubsection{Friend System}
+    \textbf{FR-3-1:} The system shall allow users to send a friend request.\\
+    \textbf{Rationale:} One of the main purposes of this application is to make students connect with peers easily. For this to happen, they should be able to make new friends on this social media platform.\\
     \textbf{Fit Criterion:} Users can search for other users through username and send a friend request, added friends can be removed from the friend list.\\\\
     \textbf{FR-3-2:} The system shall allow users to delete friends.\\
-    \textbf{Rationale:} When users add users as friends by accident or they no longer connect with each other, they should be able to remove them from the friend list.\\
+    \textbf{Rationale:} When users add users as friends by accident or they no longer connect, they should be able to remove them from the friend list.\\
     \textbf{Fit Criterion:} Users can remove any friends from their friend list.\\\\
     \textbf{FR-3-3:} The system shall allow users to send text messages to other users.\\
     \textbf{Rationale:} This will make the app more interactive and encourage and enhance socialization between users.\\
-    \textbf{Fit Criterion:} Users must be able send messages and to view received messages.\\\\
-    \textbf{FR-3-4:} The system shall allow users to send audio messages to other users.\\
-    \textbf{Rationale:} This also improves interactivity and encourages socialization and can be more efficient at times than texting.\\
-    \textbf{Fit Criterion:} Users must be able record and send audio messages and and listen to received messages.\\\\
+    \textbf{Fit Criterion:} Users must be able to send messages and view received messages.\\\\
+    \textbf{FR-3-4:} The system shall allow users to share events conveniently with friends.\\
+    \textbf{Rationale:} This encourages onsite socialization and allows users to make better use of resources provided by the application.\\
+    \textbf{Fit Criterion:} Users shall be able to share a link that can be redirected to an event in the chat.\\\\
     \textbf{FR-3-5:} The system shall allow users to share their location with others.\\
-    \textbf{Rationale:} For the purpose of expanding social networking, users shall be able to share their current location with friends to meet in person.\\
+    \textbf{Rationale:} To expand social networking and meet friends in person, users shall be able to share their current location on campus with friends.\\
     \textbf{Fit Criterion:} Users should be able to share their real-time location with friends as long as they agree on the corresponding terms.\\\\
-
-\subsubsection{AR Campus}
-    \textbf{FR-4-1:} The system shall allow users to view events on the McMaster University campus.\\
-    \textbf{Rationale:} Currently there is no way for students of McMaster University to keep up with all the different types of events that are hosted by different clubs and departments. This is one of the main purposes of this application to allow users to discover the time and place for as many events as possible in an intuitive manner\\
-    \textbf{Fit Criterion:} Users will be able to see current / upcoming events at campus buildings that they are looking at / positioned near as well as a cumulative list of nearing events.\\\\
-    \textbf{FR-4-2:} The system shall allow users to view lecture schedule information.\\
-    \textbf{Rationale:} This will allow users to verify their availability for events without needing to leave the app.\\
-    \textbf{Fit Criterion:} Users must be able view lecture times and locations. \\\\
-    \textbf{FR-4-3:} The system shall recognize buildings on campus.\\
-    \textbf{Rationale:} When navigating the campus, users should be able to see their avatar on the map and recognize the buildings through their camera with some XR technologies.\\
-    \textbf{Fit Criterion:} User must see their avatars moving correspondingly on the map when they travel on campus, and when they observe a specific building through their camera, the application should recognize it and display details about this building.\\
+    \textbf{FR-3-6:} The system shall allow users to manage friend requests.\\
+    \textbf{Rationale:} Managing friend requests is a significant functionality to make new friends.\\
+    \textbf{Fit Criterion:} Users can either accept or ignore any friend requests.\\\\
 
 \subsubsection{Lectures and Events}
-    \textbf{FR-5-1:} The system shall allow users to pin events they are interested in.\\
+    \textbf{FR-4-1:} The system shall allow users to manage events they are interested in.\\
     \textbf{Rationale:} It will be much easier for users to find events they are interested in and willing to join again. So that they do not have to browse the event list again and again. While their friends can see what events they are likely to join.\\
-    \textbf{Fit Criterion:} Users should be able to pin an event from the event list, this event will be displayed on the user page and accessible to all their friends.\\\\
-    \textbf{FR-5-2:} The system shall allow users to unpin events.\\
-    \textbf{Rationale:} In case users are no longer interested in the event or they pinned the event by mistake.\\
-    \textbf{Fit Criterion:} Users shall be able to unpin an event they pinned before.\\\\
-    \textbf{FR-5-3:} The system shall allow users to pin lectures they are attending.\\
-    \textbf{Rationale:} Sharing schedules with friends can increase friendship. If two friends are taking the same course, they can join lectures, discuss assignments and prepare for midterms together. So it is important for the system to have the functionality to display lectures a user is taking.\\
-    \textbf{Fit Criterion:} Users should be able to pin a lecture from the list as attended lecture, this lecture will be displayed on the user page and accessible to all their friends.\\\\
-    \textbf{FR-5-4:} The system shall allow users to unpin lectures.\\
-    \textbf{Rationale:} In case users are no longer taking the lecture or they added the lecture by mistake.\\
-    \textbf{Fit Criterion:} Users shall be able to unpin a lecture they pinned before.\\\\
-    \textbf{FR-5-5:} The system shall allow users with an administrator account to add, edit, and remove events.\\
-    \textbf{Rationale:} The event information must be up to date and accurate. The administrator account will maintain all events so that there is a singular source of information. Additionally, this reduces the chances of errors being introduced to the system.\\
+    \textbf{Fit Criterion:} Users should be able to pin and unpin an event from the event list, this event will be displayed or removed on the user profile page.\\\\
+    % \textbf{FR-4-2:} The system shall allow users to unpin events.\\
+    % \textbf{Rationale:} In case users are no longer interested in the event or they pinned the event by mistake.\\
+    % \textbf{Fit Criterion:} Users shall be able to unpin an event they pinned before.\\\\
+    \textbf{FR-4-2:} The system shall allow users to manage lectures they are attending.\\
+    \textbf{Rationale:} Sharing schedules with friends can strengthen friendship. Users can join lectures with friends and know their classmates better. So the system needs to have the functionality to display lectures a user is taking.\\
+    \textbf{Fit Criterion:} Users should be able to pin and unpin a lecture from the list as attended lecture, this lecture will be displayed or removed on the user profile page.\\\\
+    % \textbf{FR-4-4:} The system shall allow users to unpin lectures.\\
+    % \textbf{Rationale:} In case users are no longer taking the lecture or they added the lecture by mistake.\\
+    % \textbf{Fit Criterion:} Users shall be able to unpin a lecture they pinned before.\\\\
+    \textbf{FR-4-3:} The system shall allow users with an administrator account to add, edit, and remove events.\\
+    \textbf{Rationale:} The event information must be up-to-date and accurate. The administrator account will maintain all events so that there is a singular source of information. Additionally, this reduces the chances of errors being introduced to the system.\\
     \textbf{Fit Criterion:} A new event can be created only by a user who is logged in as an administrator. The information for those events can be changed only by administrators. Events can be deleted only by administrators.\\\\
-    \textbf{FR-5-6:} The system shall allow users with an administrator account to add, edit, and remove lectures from the schedule.\\
-    \textbf{Rationale:} The lecture information must be up to date and accurate as well. Administrators are needed to manage the schedule.\\
+    \textbf{FR-4-4:} The system shall allow users with an administrator account to add, edit, and remove lectures from the schedule.\\
+    \textbf{Rationale:} The lecture information must be up-to-date and accurate as well. Administrators are needed to manage the schedule.\\
     \textbf{Fit Criterion:} A lecture on the schedule can be created, deleted, or updated by a user who logged in as an administrator.\\\\
-    \textbf{FR-5-7:} Each event shall be associated with a club/department, location and time.\\
-    \textbf{Rationale:} In order for the application to schedule events for the users to see and interact with, all specific details about the event should be provided to the system\\
+    \textbf{FR-4-5:} Each event shall be associated with an organizer (club/department), location, time and duration.\\
+    \textbf{Rationale:} For the application to schedule events for the users to see and interact with, all specific details about the event should be provided to the system\\
     \textbf{Fit Criterion:} When a department/club requests for an event to be posted on the application, they have to provide details about the building and room number it will be held in, along with the date and time the event will take place at.\\\\
-    \textbf{FR-5-8:} Each lecture shall be associated with an instructor, location and time.\\
-    \textbf{Rationale:} In order to find empty rooms and help users who want to attend specific lectures, all details about the lectures should be provided to the system.\\
+    \textbf{FR-4-6:} Each lecture shall be associated with an instructor, location, course code and time.\\
+    \textbf{Rationale:} To find empty rooms and help users who want to attend specific lectures, all details about the lectures should be provided to the system.\\
     \textbf{Fit Criterion:} When a lecture is added or modified, all the details mentioned above must be set as mandatory fields.\\\\
+    \textbf{FR-4-7:} User should be able to filter specific lectures out from the list by course code.\\
+    \textbf{Rationale:} It is necessary to allow users to filter out lectures they are interested in from a long list.\\
+    \textbf{Fit Criterion:} Users shall be able to input some keywords to filter the lecture list.\\\\
+    \textbf{FR-4-8:} User should be able to filter specific events out from the list by the organizer.\\
+    \textbf{Rationale:} It is necessary to allow users to filter out events they are interested in from a long list.\\
+    \textbf{Fit Criterion:} Users shall be able to input some keywords to filter the event list.\\\\
+
+\subsubsection{AR Camera}
+    \textbf{FR-5-1:} The system shall recognize specific buildings on campus.\\
+    \textbf{Rationale:} AR camera will give users an immersive user experience interacting with campus buildings.\\
+    \textbf{Fit Criterion:} The system shall recognize proper camera input as buildings in the database.\\\\
+    \textbf{FR-5-2:} The system shall display corresponding event/lecture information as AR objects when a building is recognized.\\
+    \textbf{Rationale:} AR camera will give users an immersive user experience interacting with campus buildings.\\
+    \textbf{Fit Criterion:} User must see corresponding information about the target (e.g. events and lectures) in the format of AR objects once a target building is recognized.\\\\
+
+\subsubsection{Map and Location}
+    \textbf{FR-6-1:} The system shall allow users to view an events heat map on the McMaster University campus.\\
+    \textbf{Rationale:} Heat map of events that happened in a period (e.g. last week) tells users information about event distribution and allows them to schedule the time better.\\
+    \textbf{Fit Criterion:} Users shall be able to see all event locations depicted in different colors based on the number of events hosted here on the campus map. Red denotes places that host more events.\\\\
+    \textbf{FR-6-2:} The system shall allow users to view a user location heat map on the McMaster University campus.\\
+    \textbf{Rationale:} Heat map of user location tells users where their connections spend most of their time so that they know where they can find people with similar interests.\\
+    \textbf{Fit Criterion:} Users shall be able to visualize user location histories on the campus map. Red denotes places that are most frequently visited.\\\\
+    \textbf{FR-6-3:} The system shall allow users to see their own real-time locations on campus and the locations of friends who are willing to share.\\
+    \textbf{Rationale:} Sharing locations with connections can make it easier for friends to sync up in person on campus, which provides more opportunities for users to network\\
+    \textbf{Fit Criterion:} Users shall be able to see their avatar on the map showing their real-time positions, and also other users' avatars and locations on campus.\\\\
 
 \section{Look and Feel Requirements}
 \subsection{Appearance Requirements}
-  \textbf{LF-A1:} The product shall have a user-friendly layout, with icons being intuitive and screen components not being congested.\\
-  \textbf{Fit criterion:} MOST\_USERS should feel comfortable to run different features through icons without needing assistance or a tutorial during user testing, and if a user experience survey is taken among them, the application layout will get at lease MIN\_SCORE. No components overlap on any screen.\\\\
-  \textbf{LF-A2:} The product shall provide visual feedback to the users when they're using different features and switching pages.\\
-  \textbf{Fit criterion:} The chosen method of visual feedback for each component must respond in RESPONSE\_TIME when the triggering options are selected.\\\\
-  \textbf{LF-A3:} The product shall adapt to most of the popular mobile screen sizes.\\
-  \textbf{Fit criterion:} Visual elements must not exceed the borders of the screen for all screens in SCREEN\_VIEWPORTS list.\\
+  \textbf{LF-A1:} The product shall respond with visual (and auditory, if applicable) feedback once the user interacts with an interactive component.\\
+  \textbf{Fit criterion:} Each component must respond as designed in RESPONSE\_TIME when they are triggered.\\\\
+  \textbf{LF-A2:} The product shall adapt to most of the common mobile screen sizes with screen components not being congested.\\
+  \textbf{Fit criterion:} Visual elements must not exceed the borders of the screen for all screens in SCREEN\_VIEWPORTS list. If a user experience survey is taken among them, the application layout will get at least MIN\_SCORE.\\
 \subsection{Style Requirements}
   \textbf{LF-S1:} The colors and themes shall be consistent across different pages.\\
   \textbf{Fit criterion:} Consistency checks show the same color scheme being used on all pages.\\\\
@@ -720,15 +737,10 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{UH-EOU1:} The product shall have a user interface that is clear and easy to navigate.\\
   \textbf{Fit criterion:} MOST\_USERS in the testing stage shall be able to find their way to specific pages and access all different core features including messaging friend, lecture and event management and building scanning without needing to try again more than 3 times.\\
 \subsection{Personalization and Internationalization Requirements}
-  \textbf{UH-PI1:} The product shall provide information about ongoing lectures and events personalized to each user.\\
-  \textbf{Fit criterion:} The name, time and location of all pinned events and lectures shall be displayed on a user's personal page.\\\\
-  \textbf{UH-PI2:} The product shall allow users to customize their profiles and avatars.\\
-  \textbf{Fit criterion:} USER\_PROFILE and avatar shall be stored under their account and modifiable all the time.\\
+  \textbf{N/A}\\
 \subsection{Learning Requirements}
-  \textbf{UH-L1:} The product shall include a short tutorial on its features on the first launch, and be available upon request from the user.\\
-  \textbf{Fit criterion:} A tutorial shall appear and run to completion when the application is launched on a new device and/or under a new account. It shall appear and run to completion again when it is requested.\\\\
-  \textbf{UH-L2:} Users shall have a better understanding of all features after watching the tutorial once.\\
-  \textbf{Fit criterion:} MOST\_USERS shall give a positive feedback on the tutorial when taking a user experience survey.\\
+  \textbf{UH-L1:} The product shall include a user guide about its features available on GitHub repo.\\
+  \textbf{Fit criterion:} Users shall be able to access user guide in GitHub and MOST\_USERS shall give positive feedback on that document.\\\\
 \subsection{Understandability and Politeness Requirements}
   \textbf{UH-UP1:} The product shall abstain from using technical and software-specific language.\\
   \textbf{Fit criterion:} MOST\_USERS shall hardly find technical and software-specific language among all text displayed by the application.\\
@@ -738,47 +750,48 @@ The use case diagram depicted below identifies the boundaries between the users 
 
 \section{Performance Requirements}
 \subsection{Speed and Latency Requirements}
-  \textbf{P-SL1:} Popup resoponses following successful image recognitions must appear not long after on the user’s screen.\\
-  \textbf{Fit criterion:} The time from recognition to the appearance of the response is at most RECOGENITION\_TIME.\\\\
-  \textbf{P-SL2:} A user must receive a message sent to them by another user quickly after being sent.\\
-  \textbf{Fit criterion:} The message must be received by the recipient at most MESSAGE\_TIME after it was sent by the sender.\\\\
-  \textbf{P-SL3:} The application will update the user’s shared location with their friends shortly after the location change.\\
-  \textbf{Fit criterion:} A user’s updated location must appear on their friends’ ends within LOCATION\_UPDATE\_TIME of the location change.\\
+  \textbf{P-SL1:} The product shall display the correct AR objects shortly after successful AR target recognition.\\
+  \textbf{Fit criterion:} The time from recognition to the appearance of the AR object is at most RECOGNITION\_TIME.\\\\
+  \textbf{P-SL2:} The product shall periodically update the user’s location on the real-time location map.\\
+  \textbf{Fit criterion:} A user’s location must be updated on the map session within LOCATION\_UPDATE\_TIME.\\
 \subsection{Safety-Critical Requirements}
   \textbf{P-SC1:} The application will not collect or share any user’s location or personal data without getting permission from the user.\\
   \textbf{Fit criterion:} User’s personal information does not appear in the database if the user did not grant permissions.\\\\
   \textbf{P-SC2:} User data such as messages and location information will be securely encrypted to protect user’s privacy.\\
   \textbf{Fit criterion:} Contents of data packets being transmitted are nonsense when inspected with MONITORING\_TOOL.\\\\
-  \textbf{P-SC3:} The application will comply with all relevant privacy laws and guidelines.\\
-  \textbf{Fit criterion:} The usage of a user’s personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws \cite{Legislative Services} \cite{CFLC}.\\
-  \textbf{P-SC4:} The product shall not transmit information while not in use.\\
-  \textbf{Fit Criterion:} The product will not execute any code that involves the transmission of information outside of the product.\\
+  \textbf{P-SC3:} The product shall display a message upon map startup warning the user to be aware of their surroundings.\\
+  \textbf{Rationale:} The gameplay of real-time location map may lead to distracted walking, therefore we need to warn the user for their safety.\\
+  \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon map startup.\\\\
+  \textbf{P-SC4:} The product shall hide user's location if the user leaves campus.\\
+  \textbf{Rationale:} Users may stay connected and share their location even when they leave the campus. To prevent personal information leakage, we need to hide that information and disconnect the user.\\
+  \textbf{Fit Criterion:} A user's information shall not be shared once he or she leaves campus.\\\\
+  \textbf{P-SC5:} The product shall prevent the user from entering special characters in all text input fields.\\
+  \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.\\
+  \textbf{Fit Criterion:} Any text input with special characters will give the user an error.\\\\
+  \textbf{P-SC6:} The product shall validate the email format when creating an account.\\
+  \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.\\
+  \textbf{Fit Criterion:} An input in the email field that's not in the format of an email will give the user an error when creating a new account.\\\\
 \subsection{Precision or Accuracy Requirements}
   \textbf{P-PA1:} The product shall accurately identify buildings scanned by the user.\\
-  \textbf{Fit criterion:} The application shall identify a building on campus with an success rate of at least 80\%.\\\\
-  \textbf{P-PA2:} The shall accurately determine the user’s location on campus and display it based on their permissions.\\
-  \textbf{Fit criterion:} The user’s location on the product is within a GPS\_ACCURACY radius of the user’s true location.\\
+  \textbf{Fit criterion:} The application shall identify a building on campus with a success rate of at least 80\%.\\\\
 \subsection{Robustness or Fault-Tolerance Requirements}
-  \textbf{P-RF1:} The user will be informed in case of network connectivity issues and the application will not crash.\\
-  \textbf{Fit criterion:} A notification in the application appears when the network strength is below -75dBm and/or the server connection is poor.\\\\
-  \textbf{P-RF2:} The messaging functionality will still work as planned if there is are issues collecting location information for users.\\
-  \textbf{Fit criterion:} All messages sent by users are received by the recipients at the speed specified by P-SL2 when location features are disabled.\\\\
-  \textbf{P-RF3:} The application shall display an error message when there is no internet connection.\\
-  \textbf{Fit Criterion:} An error message stating that there is no internet connection is displayed when the application fails to connect to the internet.\\\\
-  \textbf{P-RF4:} The application shall display a message upon startup warning the user to be aware of their surroundings.\\
-   \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon startup.\\\\
-  \textbf{P-RF5:} The application shall display a warning message if the user's device is not compatible with the AR features.\\
-  \textbf{Fit Criterion:} A warning message is displayed if the user's device is incompatible with AR.\\\\
-  \textbf{P-RF6:} There must be a failsafe for the product to function if server or internet connection takes too long or fails.\\
-  \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities using its offline components.\\
+  \textbf{P-RF1:} The product shall display an error message when there is no internet connection.\\
+  \textbf{Rational:} When there is no internet connection, the user should be made aware.\\
+  \textbf{Fit criterion:} An error message stating that there is no internet connection is displayed when the product fails to connect to the internet.\\\\
+  \textbf{P-RF2:} There must be a fail-safe for the product to function if the server or internet connection takes too long or fails.\\
+  \textbf{Rational:} This will allow the product to function to some degree even during high traffic or bad internet connection situations.\\
+  \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities without connecting to the internet or server.\\\\
+  \textbf{P-RF3:} The server shall attempt to restart when it crashes.\\
+  \textbf{Rationale:} This requirement enhances the robustness of the backend server and prevents it from going down for a long time because of some intermittent minor errors.\\
+  \textbf{Fit Criterion:} The server should try to restart after it crashes due to unknown errors.\\\\
+  \textbf{P-RF4:} AR Camera should have a notification available in the UI telling users possible reasons the target is not recognized.\\
+  \textbf{Rational:} The user should get a notification telling them that the AR camera may have a bad performance in some cases, and they should be able to report that to the developer if they want the problem to be solved.\\
+  \textbf{Fit Criterion:} The product should show the user a list of possible reasons that the camera does not work and the contact information of maintainers once they have trouble using the AR camera and click the help button.\\\\
 \subsection{Capacity Requirements}
-  \textbf{P-C1:} The product shall accomodate massive amounts of people using the product simultaneously.\\
-  \textbf{Fit criterion:} The product accomodates a minimum of MAX\_CAPACITY simultaneous users during peak hours.\\\\
-  \textbf{P-C2:} The database will store event information for all campus buildings for a long time after the addition of the events.\\
-  \textbf{Fit criterion:} Information for an event added to the database is still present at least 3 months after its addition.\\
+  \textbf{N/A}\\
 \subsection{Scalability or Extensibility Requirements}
-  \textbf{P-SE1:} This product will be capable of processing about at most MAX\_CAPACITY people concurrently in the release build with a plan of expanding it to support all students on campus (about 40,000 people) by the final version.\\\\
-  \textbf{P-SE2:} This product will be capable of storing account and personal information of about MAX\_USER\_STORED users in the release build with a plan of expanding it to support all students on campus (about 40,000 people) by the final version.\\\\
+  \textbf{P-SE1:} This product server will be capable of processing about at most MAX\_CAPACITY people concurrently in the release build with a plan of expanding it to support all students on campus (about 40,000 people) in the future.\\\\
+  \textbf{P-SE2:} This product database will be capable of storing the account and personal information of about MAX\_USER\_STORED users in the release build with a plan of expanding it to support all students on campus (about 40,000 people) in the future.\\\\
   \textbf{P-SE3:} The application architecture will allow for the addition of new campus buildings and clubs without considerable drawbacks in performance.\\\\
 \subsection{Longevity Requirements}
   \textbf{P-L1:} This application will be expected to operate without major malfunctions in release build for a minimum of 1 year while undergoing further development.\\\\
@@ -790,10 +803,10 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Wider Environment Requirements}
   \textbf{N/A}\\
 \subsection{Requirements for Interfacing with Adjacent Systems}
-  \textbf{OE-IAS1:} The product shall interface with all release of Android which is still under maintain (Android 11 and above).\\\\
+  \textbf{N/A}\\
 \subsection{Productization Requirements}
   \textbf{OE-P1:} The product shall be downloadable for Android devices.\\
-  \textbf{Fit criterion:} The product can be downloaded onto an Android device either from the Google Play Store or by downloading APK file directly.\\
+  \textbf{Fit criterion:} The product can be downloaded onto an Android device by downloading the APK file directly.\\
 \subsection{Release Requirements}
   \textbf{N/A}\\
 
@@ -815,21 +828,24 @@ The use case diagram depicted below identifies the boundaries between the users 
 
 \section{Security Requirements}
 \subsection{Access Requirements}
-  \textbf{S-A1:} The product shall have three levels of access:
-  \begin{enumerate}  
-    \item The first will be before login and account creation, where anyone can access. They must not have access to anything beyond the login, account creation, and account recovery pages.
-    \item The second will be after login that verifies their identity, where the user has provided information matching the McMaster student or faculty member with McMaster email account. Only the user can access this page.
-    \item The third level will the the administrator account, used for adding, deleting, or editing official events. This account can be accessed by login that verifies that they are the maintainer, this will be used by the maintainers to check the functionality of the product  and pull logs that are not accessible to users.
-  \end{enumerate}
-  \textbf{Fit criterion:} Certain features and sections of the product exclusive to higher access levels are not accessible by ends with a lower access level.\\
+  \textbf{S-A1:} User with first level access is treated as a guest.\\
+\textbf{Rational:} User persona: a grade 12 student on a university tour.\\
+\textbf{Fit Criterion:} Guest must not have access to anything beyond the login, account creation, public events, map without other users' locations and account recovery pages. \\\\
+\textbf{S-A2:} User with second level access is treated as an actual user.\\
+\textbf{Rational:} User persona: a software engineer undergrad student.\\
+\textbf{Fit Criterion:} User will have full access to all features except writing access to the database, which means a user cannot edit or create new lectures or events. \\\\
+\textbf{S-A3:} User with thrid level access is treated as an administrator.\\
+\textbf{Rational:} Full access of the system should be given to administrators who works as a maintainer.\\
+\textbf{Fit Criterion:} Administrator will have all the access users have and the power to add, delete and edit official events, lectures and all users profiles.\\\\
 \subsection{Integrity Requirements}
-  \textbf{S-IG1:} The product shall prevent introduction of duplicate data, to guarantee that all user identities are unique.\\
-  \textbf{Fit criterion:} Product blocks an attempt to create a user account using student/faculty-exclusive information (e.g. MacID) tied to an already existing account.\\
-  %In the future, the database and server can protect itself from excessive use with a load balancer and additional servers being added.
+  \textbf{N/A}\\
 \subsection{Privacy Requirements}
-  \textbf{S-P1:} All data collected must be encrypted on disk in the server by standard encryption algorithm.\\\\
-  \textbf{S-P2:} All data collected must be encrypted on transit by industry standard encryption algorithm.\\\\
-  \textbf{S-P3:} Accounts that are inactive for a certain period of time shall be deleted after notice to prevent unnecessary data being held.\\
+  \textbf{S-P1:} The application will comply with all relevant privacy laws and guidelines.\\
+  \textbf{Rational:} The application will respect the privacy of all the users.\\
+  \textbf{Fit Criterion:} The usage of a user’s personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws \cite{Legislative Services} \cite{CFLC}.\\\\
+  \textbf{S-P2:} Accounts that are inactive for a certain period shall be deleted after notice to prevent unnecessary data from being held.\\
+  \textbf{Rational:} It prevents personal information from being stored in the database unintentionally for a long time.\\
+  \textbf{Fit Criterion:} Accounts that are not logged in for a semester will be cleaned from the authentication system and database.
 
 \subsection{Audit Requirements}
   \textbf{N/A} (This currently does not apply, once the product is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
@@ -839,20 +855,16 @@ The use case diagram depicted below identifies the boundaries between the users 
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
   \textbf{CUL-C1:} The product shall not be offensive to any marginalized groups.\\
-  \textbf{Fit Criterion:} The product shall not use any language or symbols deemed offensive by a marginalized group.\\\\
-  \textbf{CUL-C2:} The product shall not be offensive to any religious or groups.\\
-  \textbf{Fit Criterion:} The product shall not use any language or symbols deemed offensive by a religious or ethnic group.\\
+  \textbf{Fit Criterion:} The product shall not use any language or symbols deemed offensive by any marginalized group.\\\\
 
 \section{Compliance Requirements}
 \subsection{Legal Requirements}
-  \textbf{COM-L1:} The data collected from users will be handled as per the same legal requirements for the university.\\
+  \textbf{COM-L1:} The data collected from users will be handled as per the same legal requirements for the university.\\\\
   %As this application will be used in university, it is subject to the same regulations that the university is beholden to.
   %In the future, different functions can be developed to match specific university or state/country requirements, but this is currently not in scope.
 \subsection{Standards Compliance Requirements}
-  \textbf{COM-SC1:} The encryption on data in storage and in transit must be industry standard.\\\\
   %This ensures that the application is safe and can be scaled and expanded to other universities or interested parties when needed.
-  \textbf{COM-SC2:} The application will abide by the guidelines set by the university and club managers, adding options to accomodate their requests.\\
-  %This will prevent the application from compromising the security standards of the university.
+  \textbf{COM-SC1:} The application will abide by the guidelines set by the university and club managers, adding options to accommodate their requests.\\\\
 
 \section{Open Issues}
 \begin{itemize}
