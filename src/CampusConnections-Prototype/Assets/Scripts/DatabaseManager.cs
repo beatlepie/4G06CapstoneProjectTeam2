@@ -16,9 +16,12 @@ public class DatabaseManager : MonoBehaviour
     [SerializeField] TMP_InputField lecCode;
     [SerializeField] TMP_InputField lecName;
     [SerializeField] TMP_InputField lecInstructor;
+    [SerializeField] TMP_InputField lecLocation;
+    [SerializeField] TMP_InputField lecTimes;
+
     // Start is called before the first frame update
 
-    
+
 
     void Start()
     {
@@ -34,14 +37,14 @@ public class DatabaseManager : MonoBehaviour
         options.StorageBucket = "campusconnections.appspot.com";
         FirebaseApp.Create(options);
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-        GetLectureData();
+    
     }
 
 
     public void WriteNewLec()
     {    
         //UnityEngine.Debug.Log(ServerValue.Timestamp);
-        Lecture lec = new Lecture(lecCode.text, lecName.text, lecInstructor.text, "Tue, Wed, Fri 12:30-13:20", "ITB AB102");
+        Lecture lec = new Lecture(lecCode.text, lecName.text, lecInstructor.text, lecTimes.text, lecLocation.text);
         string lecJson = JsonUtility.ToJson(lec);
 
         databaseReference.Child("lectures").Push().SetRawJsonValueAsync(lecJson);
@@ -57,41 +60,12 @@ public class DatabaseManager : MonoBehaviour
         addMSG.CrossFadeAlpha(1, 2f, false);
     }
 
-    IEnumerator GetLectures(Action<string> onCallBack)
-    {
-        var lecInfo = new List<string>();
-
-        var lectureData = databaseReference.Child("lectures").OrderByChild("instructor").LimitToFirst(2).GetValueAsync();
-        yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
-        if(lectureData != null)
-        {
-            string result = "";
-            DataSnapshot snapshot = lectureData.Result;
-            foreach (var x in snapshot.Children)
-            {
-                foreach (var i in x.Children)
-                {
-                    result += i.Value + " ";
-                    lecInfo.Add(i.Value.ToString());
-                    //UnityEngine.Debug.Log(lecInfo);
-                }
-                result += "\n";
-
-            }
-            onCallBack.Invoke(result);
-        }
-    }
-
-    public void GetLectureData()
-    {
-        StartCoroutine(GetLectures((string data) =>
-        {
-            lecList.text = data;
-        }));
-    }
 
     public void ExitDataPage()
     {
         SceneManager.LoadScene("MapComponent");
     }
+
+
+
 }
