@@ -46,7 +46,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
+Jan 11 & 1.0 & Add Section Timeline and Reflection\\
 Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
@@ -188,7 +188,23 @@ actually be implemented.
 
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mDB}:] Database Module
+\item [\refstepcounter{mnum} \mthemnum \label{mServer}:] Server Module
+\item [\refstepcounter{mnum} \mthemnum \label{mAuth}:] Authentication Module
+\item [\refstepcounter{mnum} \mthemnum \label{mARCamera}:] AR Camera Module
+\item [\refstepcounter{mnum} \mthemnum \label{mARInterface}:] AR Interface Module
+\item [\refstepcounter{mnum} \mthemnum \label{mMap}:] Map Module
+\item [\refstepcounter{mnum} \mthemnum \label{mUser}:] User Module
+\item [\refstepcounter{mnum} \mthemnum \label{mLec}:] Lecture Module
+\item [\refstepcounter{mnum} \mthemnum \label{mEvent}:] Event Module
+\item [\refstepcounter{mnum} \mthemnum \label{mUP}:] User Profile Module
+\item [\refstepcounter{mnum} \mthemnum \label{mFM}:] Friend Manager Module
+\item [\refstepcounter{mnum} \mthemnum \label{mADV}:] Activity Detail View Module
+\item [\refstepcounter{mnum} \mthemnum \label{mLDV}:] Lecture Detail View Module
+\item [\refstepcounter{mnum} \mthemnum \label{mEDV}:] Event Detail View Module
+\item [\refstepcounter{mnum} \mthemnum \label{mP&F}:] Pagination and Filter Module
+\item [\refstepcounter{mnum} \mthemnum \label{mLL}:] Lecture List Manager Module
+\item [\refstepcounter{mnum} \mthemnum \label{mEL}:] Event List Manager Module
 \end{description}
 
 
@@ -202,19 +218,27 @@ actually be implemented.
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}
+& AR Interface\\
+& User Module\\
+& Lecture Module\\
+& Event Module\\
+& User Profile Module\\
+& Friend Manager Module\\ 
+& Lecture Detail View Module\\
+& Event Detail View Module\\
+& Lecture List Manager Module\\
+& Event List Manager Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+\multirow{3}{0.3\textwidth}{Software Decision Module}
+& Database Module\\
+& Server Module\\
+& Authentication Module\\
+& AR Camera Module\\
+& Map Module\\
+& Activity Detail View Module\\
+& Pagination and Filter Module\\
 \bottomrule
 
 \end{tabular}
@@ -370,8 +394,40 @@ because they use modules from the lower levels.
 \label{FigUH}
 \end{figure}
 
-%\section*{References}
+\section{Timeline}
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.35\textwidth} p{0.3\textwidth}  p{0.3\textwidth}}
+\toprule
+Module Name & Team Member & Due Date \\
+\midrule
+Database & Zihao Du & Dec. 4, 2023\\
+User & Zihao Du & Nov 15, 2023\\
+Friend Manager & Zihao Du & Jan 15, 2024\\
+\bottomrule
+\end{tabular}
+\caption{CampusConnections Module Completion Timeline}
+\end{table}
 
+\newpage{}
+
+\appendix
+
+\section{Reflection}
+
+The information in this section will be used to evaluate the team members on the
+graduate attribute of Problem Analysis and Design.  Please answer the following questions:
+
+\begin{enumerate}
+  \item What are the limitations of your solution?  Put another way, given
+  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
+  \item Give a brief overview of other design solutions you considered.  What
+  are the benefits and tradeoffs of those other designs compared with the chosen
+  design?  From all the potential options, why did you select documented design?
+  (LO\_Explores)
+\end{enumerate}
+
+\newpage
 \bibliographystyle {plainnat}
 \bibliography{../../../refs/References}
 
