@@ -1,8 +1,18 @@
 ---
 name: Peer Review Template
 about: Team Meetings Minutes/Summary
-title: 
-labels: Review-SRS-Team11
+title: ''
+labels: ''
 assignees: ''
 
 ---
+
+@samm82
+Name:
+About:
+
+Summary
+
+Deadline
+
+Estimated Work Hours

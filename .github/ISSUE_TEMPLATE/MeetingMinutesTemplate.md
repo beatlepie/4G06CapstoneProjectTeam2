@@ -1,7 +1,7 @@
 ---
 name: Team Meeting Minutes Template
 about: Team Meetings Minutes/Summary
-title: Team Meeting <Number>
+title: YYYY-MM-DD Meeting Minutes
 labels: meeting
 assignees: ''
 
@@ -11,7 +11,7 @@ assignees: ''
 - **Date**: YYYY/MM/DD
 - **Time**: TBD
 -  **Location**: TBD
--  **Chairperson**: Michael Kim
+-  **Chairperson**: Zihao Du
 - **Attendees**: 
 	- [ ] Firas Elayan
 	- [ ] Abhiram Neelamraju
