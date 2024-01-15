@@ -54,7 +54,8 @@ public class LectureManager : MonoBehaviour
 
     }
 
-    private void CreateLectureEntryTransform(LectureEntry lectureEntry, Transform container, List<Transform> transformList){
+    private void CreateLectureEntryTransform(LectureEntry lectureEntry, Transform container, List<Transform> transformList)
+    {
         float templateHeight = 130f;
         Transform entryTransform = Instantiate(entryTemplate, container);
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
@@ -75,7 +76,7 @@ public class LectureManager : MonoBehaviour
     }
 
     public void clearing()
-    {           
+    {
         foreach (Transform entryTransform in lectureEntryTransformList)
         {
             Destroy(entryTransform.gameObject);
@@ -99,7 +100,7 @@ public class LectureManager : MonoBehaviour
         yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
         if (lectureData != null)
         {
-            
+
             string result = "";
             DataSnapshot snapshot = lectureData.Result;
             foreach (var x in snapshot.Children)
@@ -120,7 +121,7 @@ public class LectureManager : MonoBehaviour
                 newEntry.time = lecInfo[4];
 
                 //UnityEngine.Debug.Log(newEntry.code);
-                
+
                 lectureEntryList.Add(newEntry);
                 //empty lecInfo for next iteration
                 lecInfo.Clear();
@@ -129,13 +130,13 @@ public class LectureManager : MonoBehaviour
 
 
             }
-            
+
 
 
             maxPages = (int)(lectureEntryList.Count / entriesPerPage);
             //UnityEngine.Debug.Log(maxPages);
 
-            for (int i = ((Int32.Parse(pgNum.text)-1)*entriesPerPage); i < Math.Min((Int32.Parse(pgNum.text))*entriesPerPage, lectureEntryList.Count); i++)
+            for (int i = ((Int32.Parse(pgNum.text) - 1) * entriesPerPage); i < Math.Min((Int32.Parse(pgNum.text)) * entriesPerPage, lectureEntryList.Count); i++)
             {
                 if (lectureEntryList[i] != null)
                 {
@@ -184,7 +185,7 @@ public class LectureManager : MonoBehaviour
     {
 
         //clearing();
-        pgNum.text = (maxPages+1).ToString();
+        pgNum.text = (maxPages + 1).ToString();
         //GetLectureData();
     }
 
@@ -298,7 +299,8 @@ public class LectureManager : MonoBehaviour
 
 
 
-                if (newEntry.code.Contains(searchStr)) {
+                if (newEntry.code.Contains(searchStr))
+                {
                     UnityEngine.Debug.Log("match found");
                     lectureEntryList.Add(newEntry);
                 }

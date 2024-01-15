@@ -26,7 +26,7 @@ public class DatabaseManager : MonoBehaviour
     void Start()
     {
 
-        addMSG.CrossFadeAlpha(0f,0f,false);
+        addMSG.CrossFadeAlpha(0f, 0f, false);
 
         UnityEngine.Debug.Log("db manager script running");
         Firebase.AppOptions options = new Firebase.AppOptions();
@@ -37,19 +37,19 @@ public class DatabaseManager : MonoBehaviour
         options.StorageBucket = "campusconnections.appspot.com";
         FirebaseApp.Create(options);
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-    
+
     }
 
 
     public void WriteNewLec()
-    {    
+    {
         //UnityEngine.Debug.Log(ServerValue.Timestamp);
         Lecture lec = new Lecture(lecCode.text, lecName.text, lecInstructor.text, lecTimes.text, lecLocation.text);
         string lecJson = JsonUtility.ToJson(lec);
 
         databaseReference.Child("lectures").Push().SetRawJsonValueAsync(lecJson);
 
-   
+
         addMSG.CrossFadeAlpha(1f, 0f, false);
         addMSG.CrossFadeAlpha(0f, 2f, false);
 
@@ -63,7 +63,7 @@ public class DatabaseManager : MonoBehaviour
 
     public void ExitDataPage()
     {
-        SceneManager.LoadScene("MapComponent");
+        SceneManager.LoadScene("MenuScene");
     }
 
 
