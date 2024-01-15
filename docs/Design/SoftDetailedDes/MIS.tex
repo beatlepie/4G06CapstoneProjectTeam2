@@ -53,7 +53,7 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
+Jan 15 & 1.0 & Add introduction and module decomposition\\
 Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
@@ -62,9 +62,7 @@ Date 2 & 1.1 & Notes\\
 
 \section{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
-
-\wss{Also add any additional symbols, abbreviations or acronyms}
+See SRS Documentation at \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}
 
 \newpage
 
@@ -76,12 +74,11 @@ See SRS Documentation at \wss{give url}
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
+The following document details the Module Interface Specifications for CampusConnections. CampusConnections is a social media application with impressive AR camera and real time location map features that allows McMaster University students and visitors have an immersive user experience and expand their social networking. This application allows users to make new friends online and also encourage users to strengthen the friendship by in-person meet-ups with a on-campus location-sharing feature. It also provides heat maps of events and users, which allows users to join the most popular activities on campus. Besides, the application maintainers will post up-to-date events and lectures information for free with the community. The MIS will detail specifications for the project described above.
 
 Complementary documents include the System Requirement Specifications
 and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+found at \url{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf} and \url{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/Design/SoftArchitecture/MG.pdf}
 
 \section{Notation}
 
@@ -134,18 +131,28 @@ The following table is taken directly from the Module Guide document for this pr
 {Hardware-Hiding} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding}
+& AR Interface\\
+& User Module\\
+& Lecture Module\\
+& Event Module\\
+& User Profile Module\\
+& Friend Manager Module\\ 
+& Lecture Detail View Module\\
+& Event Detail View Module\\
+& Lecture List Manager Module\\
+& Event List Manager Module\\
+& Notification Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
+\multirow{3}{0.3\textwidth}{Software Decision}
+& Database Module\\
+& Server Module\\
+& Authentication Module\\
+& AR Camera Module\\
+& Map Module\\
+& Activity Detail View Module\\
+& Pagination and Filter Module\\
 \bottomrule
 
 \end{tabular}

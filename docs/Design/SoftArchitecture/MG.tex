@@ -47,7 +47,7 @@
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 Jan 11 & 1.0 & Add Section Timeline and Reflection\\
-Date 2 & 1.1 & Notes\\
+Jan 15 & 1.0 & Revision 0\\
 \bottomrule
 \end{tabularx}
 
@@ -74,7 +74,7 @@ This section records information for easy reference.
   SRS & Software Requirements Specification\\
   \progname & Explanation of program name\\
   UC & Unlikely Change \\
-  \wss{etc.} & \wss{...}\\
+  CRUD & Create, Read, Update and Delete\\
   \bottomrule
 \end{tabular}\\
 
@@ -202,9 +202,10 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mADV}:] Activity Detail View Module
 \item [\refstepcounter{mnum} \mthemnum \label{mLDV}:] Lecture Detail View Module
 \item [\refstepcounter{mnum} \mthemnum \label{mEDV}:] Event Detail View Module
-\item [\refstepcounter{mnum} \mthemnum \label{mP&F}:] Pagination and Filter Module
+\item [\refstepcounter{mnum} \mthemnum \label{mPF}:] Pagination and Filter Module
 \item [\refstepcounter{mnum} \mthemnum \label{mLL}:] Lecture List Manager Module
 \item [\refstepcounter{mnum} \mthemnum \label{mEL}:] Event List Manager Module
+\item [\refstepcounter{mnum} \mthemnum \label{mNotify}:] Notification Module
 \end{description}
 
 
@@ -229,6 +230,7 @@ actually be implemented.
 & Event Detail View Module\\
 & Lecture List Manager Module\\
 & Event List Manager Module\\
+& Notification Module\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision Module}
@@ -250,7 +252,7 @@ actually be implemented.
 
 The design of the system is intended to satisfy the requirements developed in
 the SRS. In this stage, the system is decomposed into modules. The connection
-between requirements and modules is listed in Table~\ref{TblRT}.
+between requirements and modules is listed in Table~\ref{TblFRT}, \ref{TblNFRT}, \ref{TblNFRT-CONT}.
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -291,15 +293,22 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{Friend Manager Module (\mref{mFM})}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type]
-  [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Secrets:]Friend related handlers including adding, deleting, messaging and viewing.
+\item[Services:]Provides adding friend, deleting friend, message friend, view friend profile functionalities for the current user and displays friends and friend requests as lists.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Notification Module (\mref{mNotify})}
+
+\begin{description}
+\item[Secrets:]Implementation detail and settings of toast notifications and alerts
+\item[Services:]Provides functionalities to display all notifications, alerts and consents.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Etc.}
@@ -307,15 +316,12 @@ to be implemented.
 
 \subsection{Software Decision Module}
 
+\subsubsection{Database Module (\mref{mDB})}
 \begin{description}
-\item[Secrets:] The design decision based on mathematical theorems, physical
-  facts, or programming considerations. The secrets of this module are
-  \emph{not} described in the SRS.
-\item[Services:] Includes data structure and algorithms used in the system that
-  do not provide direct interaction with the user. 
-  % Changes in these modules are more likely to be motivated by a desire to
-  % improve performance than by externally imposed changes.
-\item[Implemented By:] --
+\item[Secrets:]Data structures of stored data and how database connection is established
+\item[Services:]Provides CURD operations to database tables
+\item[Implemented By:] Firebase, CampusConnections
+\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Etc.}
@@ -333,21 +339,99 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+FR1-1 & \mref{mNotify}\\
+FR2-1 & \mref{mAuth}, \mref{mDB}\\
+FR2-2 & \mref{mAuth}, \mref{mUser}, \mref{mDB}\\
+FR2-3 & \mref{mAuth}\\
+FR2-4 & \mref{mAuth}\\
+FR2-5 & \mref{mAuth}\\
+FR2-6 & \mref{mUser}, \mref{mUP}, \mref{mDB}\\
+FR2-7 & \mref{mAuth}, \mref{mUP}\\
+FR2-8 & \mref{mUser}, \mref{mUP}, \mref{mDB}\\
+FR3-1 & \mref{mFM}, \mref{mDB}\\
+FR3-2 & \mref{mFM}, \mref{mDB}\\
+FR3-3 & \mref{mFM}, \mref{mServer}\\
+FR3-4 & \mref{mFM}, \mref{mServer}, \mref{mEvent}\\
+FR3-5 & \mref{mFM}, \mref{mServer}, \mref{mMap}\\
+FR3-6 & \mref{mFM}, \mref{mDB}\\
+FR4-1 & \mref{mUP}, \mref{mDB}, \mref{mEvent}, \mref{mEDV}, \mref{mADV}\\
+FR4-2 & \mref{mUP}, \mref{mDB}, \mref{mLec}, \mref{mLDV}, \mref{mADV}\\
+FR4-3 & \mref{mEvent}, \mref{mEDV}, \mref{mADV}, \mref{mDB}, \mref{mAuth}\\
+FR4-4 & \mref{mLec}, \mref{mLDV}, \mref{mADV}, \mref{mDB}, \mref{mAuth}\\
+FR4-5 & \mref{mEvent}\\
+FR4-6 & \mref{mLec}\\
+FR4-7 & \mref{mEvent}, \mref{mEL}, \mref{mPF}\\
+FR4-8 & \mref{mLec}, \mref{mLL}, \mref{mPF}\\
+FR5-1 & \mref{mARCamera}\\
+FR5-2 & \mref{mARInterface}\\
+FR6-1 & \mref{mMap}, \mref{mDB}\\
+FR6-2 & \mref{mMap}, \mref{mDB}\\
+FR6-3 & \mref{mMap}, \mref{mServer}\\
 \bottomrule
 \end{tabular}
-\caption{Trace Between Requirements and Modules}
-\label{TblRT}
+\caption{Trace Between Functional Requirements and Modules}
+\label{TblFRT}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Req.} & \textbf{Modules}\\
+\midrule
+LF-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+LF-A2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+LF-S1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+LF-S2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+UH-EOU1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+UH-L1 & \\
+UH-UP1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+UH-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+P-SL1 & \mref{mARCamera}, \mref{mARInterface}\\
+P-SL2 & \mref{mServer}, \mref{mMap}\\
+P-SC1 & \mref{mDB}, \mref{mServer}\\
+P-SC2 & \mref{mServer}\\
+P-SC3 & \mref{mNotify}\\
+P-SC4 & \mref{mServer}, \mref{mMap}\\
+P-SC5 & \mref{mAuth}, \mref{mUP}, \mref{mDB}\\
+P-SC6 & \mref{mAuth}, \mref{mDB}\\
+P-PA1 & \mref{mARCamera}\\
+P-RF1 & \mref{mNotify}\\
+P-RF2 & \mref{mDB}, \mref{mServer}, \mref{mAuth}\\
+P-RF3 & \mref{mServer}\\
+P-RF4 & \mref{mARInterface}\\
+P-SE1 & \mref{mServer}\\
+P-SE2 & \mref{mDB}, \mref{mAuth}\\
+P-SE3 & \mref{mDB}, \mref{mServer}, \mref{mAuth}\\
+P-L1 & \\
+P-L2 & \\
+OE-EPE1 & \\
+OE-P1 & \\
+\bottomrule
+\end{tabular}
+\caption{Trace Between Non-Functional Requirements and Modules}
+\label{TblNFRT}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Req.} & \textbf{Modules}\\
+\midrule
+MS-M1 & \\
+MS-S1 & \\
+S-A1 & \mref{mAuth}, \mref{mUser}\\
+S-A2 & \mref{mAuth}, \mref{mUser}\\
+S-A3 & \mref{mAuth}, \mref{mUser}\\
+S-P1 & \mref{mDB}, \mref{mServer}, \mref{mUser}, \mref{mEvent}, \mref{mLec}\\
+S-P2 & \mref{mDB}, \mref{mAuth}\\
+CUL-C1 & \mref{mARInterface}, \mref{mUP}, \mref{mFM}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}\\
+COM-L1 & \mref{mDB}, \mref{mUser}, \mref{mEvent}, \mref{mLec}\\
+\bottomrule
+\end{tabular}
+\caption{Trace Between Non-Functional Requirements and Modules Cont.}
+\label{TblNFRT-CONT}
 \end{table}
 
 \begin{table}[H]
@@ -404,6 +488,7 @@ Module Name & Team Member & Due Date \\
 Database & Zihao Du & Dec. 4, 2023\\
 User & Zihao Du & Nov 15, 2023\\
 Friend Manager & Zihao Du & Jan 15, 2024\\
+Notification & Zihao Du & Feb 5th, 2024\\
 \bottomrule
 \end{tabular}
 \caption{CampusConnections Module Completion Timeline}
