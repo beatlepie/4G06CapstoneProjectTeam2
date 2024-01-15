@@ -6,6 +6,7 @@ public class Lecture
     public string time;
     public string location;
 
+
     public Lecture(string code, string name, string instructor, string time, string location)
     {
         this.code = code;
