@@ -975,19 +975,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayCanvas: {fileID: 322727194}
   EditCanvas: {fileID: 767497036}
-  PasswordCanvas: {fileID: 0}
+  PasswordCanvas: {fileID: 895469486}
   EditButton: {fileID: 716100497}
   ChangePasswordButton: {fileID: 353221525}
-  userIDDisplay: {fileID: 0}
-  userIDEdit: {fileID: 0}
+  userIDDisplay: {fileID: 1082325885}
+  userIDEdit: {fileID: 1076070158}
   username: {fileID: 65299324}
-  program: {fileID: 0}
-  level: {fileID: 0}
-  x: {fileID: 0}
+  program: {fileID: 234751077}
+  level: {fileID: 1319308001}
+  status: {fileID: 1868845861}
   newUsername: {fileID: 490064350}
-  CurrentPassword: {fileID: 0}
-  NewPassword: {fileID: 0}
-  ConfirmPassword: {fileID: 0}
+  CurrentPassword: {fileID: 74491376}
+  NewPassword: {fileID: 90163842}
+  ConfirmPassword: {fileID: 822513994}
 --- !u!1 &143269926
 GameObject:
   m_ObjectHideFlags: 0
@@ -4954,7 +4954,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1111017202}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 125755928}
+        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
+        m_MethodName: Return
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1111017202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8023,7 +8035,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2031269908}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 125755928}
+        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
+        m_MethodName: SaveNewPassword
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2031269908
 MonoBehaviour:
   m_ObjectHideFlags: 0
