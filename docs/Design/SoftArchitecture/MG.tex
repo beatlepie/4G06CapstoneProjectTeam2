@@ -199,6 +199,7 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mEvent}:] Event Module
 \item [\refstepcounter{mnum} \mthemnum \label{mUP}:] User Profile Module
 \item [\refstepcounter{mnum} \mthemnum \label{mFM}:] Friend Manager Module
+\item [\refstepcounter{mnum} \mthemnum \label{mFR}:] Friend Request Module
 \item [\refstepcounter{mnum} \mthemnum \label{mADV}:] Activity Detail View Module
 \item [\refstepcounter{mnum} \mthemnum \label{mLDV}:] Lecture Detail View Module
 \item [\refstepcounter{mnum} \mthemnum \label{mEDV}:] Event Detail View Module
@@ -226,6 +227,7 @@ actually be implemented.
 & Event Module\\
 & User Profile Module\\
 & Friend Manager Module\\ 
+& Friend Request Module\\ 
 & Lecture Detail View Module\\
 & Event Detail View Module\\
 & Lecture List Manager Module\\
@@ -296,8 +298,17 @@ to be implemented.
 \subsubsection{Friend Manager Module (\mref{mFM})}
 
 \begin{description}
-\item[Secrets:]Friend related handlers including adding, deleting, messaging and viewing.
-\item[Services:]Provides adding friend, deleting friend, message friend, view friend profile functionalities for the current user and displays friends and friend requests as lists.
+\item[Secrets:]Friend related handlers including adding, messaging, deleting and viewing.
+\item[Services:]Provides adding friend, deleting friend, message friend, view friend profile functionalities for the current user and displays existing friends as a list.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Friend Request Module (\mref{mFR})}
+
+\begin{description}
+\item[Secrets:]Friend request related handlers including accepting and ignoring requests.
+\item[Services:]Provides accepting and ignoring functionalities for all friend requests and displays all requests as a list
 \item[Implemented By:] CampusConnections
 \item[Type of Module:] Library
 \end{description}
@@ -379,7 +390,7 @@ FR3-2 & \mref{mFM}, \mref{mDB}\\
 FR3-3 & \mref{mFM}, \mref{mServer}\\
 FR3-4 & \mref{mFM}, \mref{mServer}, \mref{mEvent}\\
 FR3-5 & \mref{mFM}, \mref{mServer}, \mref{mMap}\\
-FR3-6 & \mref{mFM}, \mref{mDB}\\
+FR3-6 & \mref{mFR}, \mref{mDB}\\
 FR4-1 & \mref{mUP}, \mref{mDB}, \mref{mEvent}, \mref{mEDV}, \mref{mADV}\\
 FR4-2 & \mref{mUP}, \mref{mDB}, \mref{mLec}, \mref{mLDV}, \mref{mADV}\\
 FR4-3 & \mref{mEvent}, \mref{mEDV}, \mref{mADV}, \mref{mDB}, \mref{mAuth}\\
@@ -405,14 +416,14 @@ FR6-3 & \mref{mMap}, \mref{mServer}\\
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-LF-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
-LF-A2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
-LF-S1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
-LF-S2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
-UH-EOU1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
-UH-L1 & \\
-UH-UP1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
-UH-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+LF-A1 & \mref{mARInterface} \mref{mFM}, \mref{mFR}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+LF-A2 & \mref{mARInterface} \mref{mFM}, \mref{mFR}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+LF-S1 & \mref{mARInterface} \mref{mFM}, \mref{mFR}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+LF-S2 & \mref{mARInterface} \mref{mFM}, \mref{mFR}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+UH-EOU1 & \mref{mARInterface} \mref{mFM}, \mref{mFR}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+UH-L1 & NA since it is a learning requirement related to document only\\
+UH-UP1 & All modules (Understandability requirement)\\
+UH-A1 & \mref{mARInterface} \mref{mFM}, \mref{mFR}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
 P-SL1 & \mref{mARCamera}, \mref{mARInterface}\\
 P-SL2 & \mref{mServer}, \mref{mMap}\\
 P-SC1 & \mref{mDB}, \mref{mServer}\\
@@ -429,10 +440,10 @@ P-RF4 & \mref{mARInterface}\\
 P-SE1 & \mref{mServer}\\
 P-SE2 & \mref{mDB}, \mref{mAuth}\\
 P-SE3 & \mref{mDB}, \mref{mServer}, \mref{mAuth}\\
-P-L1 & \\
-P-L2 & \\
-OE-EPE1 & \\
-OE-P1 & \\
+P-L1 & All modules (requirement related to coding style)\\
+P-L2 & All modules (requirement related to coding style)\\
+OE-EPE1 & NA since it is a device related requirement\\
+OE-P1 & NA since it is a productization requirement\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Non-Functional Requirements and Modules}
@@ -445,8 +456,8 @@ OE-P1 & \\
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-MS-M1 & \\
-MS-S1 & \\
+MS-M1 & NA since it is a requirement for maintainers\\
+MS-S1 & NA since it is a requirement for maintainers\\
 S-A1 & \mref{mAuth}, \mref{mUser}\\
 S-A2 & \mref{mAuth}, \mref{mUser}\\
 S-A3 & \mref{mAuth}, \mref{mUser}\\
@@ -499,7 +510,7 @@ because they use modules from the lower levels.
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=0.8\textwidth]{UsesHierarchy.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
@@ -514,6 +525,7 @@ Module Name & Team Member & Due Date \\
 Database & Zihao Du & Dec. 4, 2023\\
 User & Zihao Du & Nov 15, 2023\\
 Friend Manager & Zihao Du & Jan 15, 2024\\
+Friend Request & Zihao Du & Jan 10, 2024\\
 Notification & Zihao Du & Feb 5th, 2024\\
 \bottomrule
 \end{tabular}

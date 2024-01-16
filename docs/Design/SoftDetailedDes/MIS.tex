@@ -74,7 +74,7 @@ See SRS Documentation at \href{https://github.com/beatlepie/4G06CapstoneProjectT
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for CampusConnections. CampusConnections is a social media application with impressive AR camera and real time location map features that allows McMaster University students and visitors have an immersive user experience and expand their social networking. This application allows users to make new friends online and also encourage users to strengthen the friendship by in-person meet-ups with a on-campus location-sharing feature. It also provides heat maps of events and users, which allows users to join the most popular activities on campus. Besides, the application maintainers will post up-to-date events and lectures information for free with the community. The MIS will detail specifications for the project described above.
+The following document details the Module Interface Specifications for CampusConnections. CampusConnections is a social media application with impressive AR camera and real time location map features that allows McMaster University students and visitors have an immersive user experience and expand their social networking. This application allows users to make new friends online and also encourage users to strengthen the friendship by in-person meet-ups with a on-campus location-sharing feature. It also provides heat maps of events and users, which allows students to join the most popular activities on campus. Besides, the application maintainers will share up-to-date events and lectures information for the community. The MIS will detail specifications for the project described above.
 
 Complementary documents include the System Requirement Specifications
 and Module Guide.  The full documentation and implementation can be
@@ -138,6 +138,7 @@ The following table is taken directly from the Module Guide document for this pr
 & Event Module\\
 & User Profile Module\\
 & Friend Manager Module\\ 
+& Friend Request Module\\ 
 & Lecture Detail View Module\\
 & Event Detail View Module\\
 & Lecture List Manager Module\\
@@ -161,34 +162,35 @@ The following table is taken directly from the Module Guide document for this pr
 \end{table}
 
 \newpage
-~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\section{MIS of Friend Manager Module} \label{mFM}
 
 \subsection{Module}
 
-\wss{Short name for the module}
+FriendManager
 
 \subsection{Uses}
 
+User Module, Database Module, Authentication Module, Server Module
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None
 
 \subsubsection{Exported Access Programs}
-
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+GetUser & - & - & - \\
+GetFriendList & - & - & - \\
+DisplayFriendList & - & -\\
+DeleteFriend & String & - & IndexOutofBound Exception \\
+ViewFriend & String & - & IndexOutofBound Exception\\
+MessageFriend & String & - & IndexOutofBound Exception, ServerConnection Exception\\
+SendRequest & String & String & -\\
 \hline
 \end{tabular}
 \end{center}
@@ -197,42 +199,401 @@ The following table is taken directly from the Module Guide document for this pr
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+\begin{itemize}
+\item currentUser: FirebaseUser
+\item friends: set of User
+\item friendsContainer: set of Transform
+\end{itemize}
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+None
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+Assume friends are updated in the database immediately after the request is sent.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent GetUser():
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: $currentUser := Authentication.CurrentUser$
+\item output: none
+\item exception: none
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
+\noindent GetFriendList():
+\begin{itemize}
+\item transition: $friends := GetFriendsFromDB(currentUser)$ 
+\item output: none
+\item exception: none
+\end{itemize}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
+\noindent DisplayFriendList():
+\begin{itemize}
+\item transition: $(\forall x : \mathbb{Z} | 0 \leq x \leq friends.length:\\ friendsContainer[i].position, friendsContainer[i].content = (0, i*HEIGHT), friends[i])$, then display a list using friendsContainer
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DeleteFriend(targetEmail):
+\begin{itemize}
+\item transition: $friends :=$ friends - \{targetEmail\}
+\item output: none
+\item exception: $exc := targetEmail \notin friends \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent ViewFriend(targetEmail):
+\begin{itemize}
+\item transition: Switch scene to user profile of the target user
+\item output: none
+\item exception: $exc := targetEmail \notin friends \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent MessageFriend(targetEmail):
+\begin{itemize}
+\item transition: Display Chat UI between $currentUser$ and $targetEmail$
+\item output: none
+\item exception: $exc := targetEmail \notin friends \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent SendRequest(targetEmail):
+\begin{itemize}
+\item transition: $targetEmail \notin friends \Rightarrow$ Add request in target user request list in the database
+\item output: $targetEmail \notin friends$
+\item exception: none
+\end{itemize}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+\noindent GetFriendsFromDB(email): Seq of User\\
+It gets all friends under the input user email and convert them to an array of User
+\begin{itemize}
+\item transition: none
+\item output: $out := Database.GetValueAsync(ROOT + email + FRIENDPATH).ToArray()$
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Constants}
+HEIGHT = 300 px\\
+ROOT = Database root path\\
+FRIENDPATH = path string for user friends list
+
+\newpage
+
+\section{MIS of Friend Request Module} \label{mFR}
+
+\subsection{Module}
+
+FriendRequest
+
+\subsection{Uses}
+
+User Module, Database Module, Authentication Module,
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+GetUser & - & - & - \\
+GetRequestList & - & - & - \\
+DisplayRequestList & - & -\\
+AcceptRequest & String & - & IllegalArgument Exception \\
+IgnoreRequest & String & - & IllegalArgument Exception\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item currentUser: FirebaseUser
+\item requests: set of User
+\item requestsContainer: set of Transform
+\item requestNum: $\mathbb{Z}$
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+Assume friend requests are updated in the database immediately after the request is sent.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent GetUser():
+\begin{itemize}
+\item transition: $currentUser := Authentication.CurrentUser$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent GetRequestList():
+\begin{itemize}
+\item transition: $friends := GetRequestsFromDB(currentUser)$ 
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DisplayRequestList():
+\begin{itemize}
+\item transition: $(\forall x : \mathbb{Z} | 0 \leq x \leq requests.length:\\ requestsContainer[i].position, requestsContainer[i].content = (0, i*HEIGHT), requests[i])$, then display a list using requestsContainer
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AcceptRequest(targetEmail):
+\begin{itemize}
+\item transition: targetEmail is added in currentUser friend list and currentEmail is added in targetEmail friend list in the database\\$request := request - \{targetEmail\}$
+\item output: none
+\item exception: $exc := Database.HasChild(ROOT + targetEmail) = \text{null} \Rightarrow\\ IllegalArgument Exception$
+\end{itemize}
+
+\noindent IgnoreRequest(targetEmail):
+\begin{itemize}
+\item transition: $request := request - \{targetEmail\}$
+\item output: none
+\item exception: $exc := Database.HasChild(ROOT + targetEmail) = \text{null} \Rightarrow\\ IllegalArgument Exception$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent UpdateBadge(): String\\
+It returns the content of friend request badge given the request number
+\begin{itemize}
+\item transition: none
+\item output: $out := requestNum = 0 \Rightarrow empty string \\ 0 < requestNum < 100 \Rightarrow requestNum\\ 100 \leq requestNum \Rightarrow 99+$
+\item exception: none
+\end{itemize}
+
+\noindent GetRequestsFromDB(email): Seq of User\\
+It gets all friend requesters under the input user email and convert them to an array of User
+\begin{itemize}
+\item transition: none
+\item output: $out := Database.GetValueAsync(ROOT + email + REQUESTPATH).ToArray()$
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Constants}
+HEIGHT = 150 px\\
+ROOT = Database root path\\
+REQUESTPATH = path string for user friend requests list
+
+\newpage
+
+\section{MIS of Notification Module} \label{mNotify}
+
+\subsection{Module}
+
+Notification
+
+\subsection{Uses}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Consent & - & String & - \\
+MapWarning & - & String & - \\
+DataCollectionWarning & - & -\\
+NoInternetNotification & - & String & -\\
+ARCameraNotification & - & String & -\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Consent():
+\begin{itemize}
+\item transition: none
+\item output: $out := USERCONSENT$
+\item exception: none
+\end{itemize}
+
+\noindent MapWarning():
+\begin{itemize}
+\item transition: none
+\item output: $out := MAP$
+\item exception: none
+\end{itemize}
+
+\noindent DataCollectionWarning():
+\begin{itemize}
+\item transition: none
+\item output: $out := DATACOLLECTION$
+\item exception: none
+\end{itemize}
+
+\noindent NoInternetNotification():
+\begin{itemize}
+\item transition: none
+\item output: $out := NOINTERNET$
+\item exception: none
+\end{itemize}
+
+\noindent ARCameraNotification():
+\begin{itemize}
+\item transition: none
+\item output: $out := ARCAMERA$
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+USERCONSENT = Text of user consent when creating account\\
+MAP = Text of warning message show when start the map\\
+DATACOLLECTION = Text of warning before the application collects user data\\
+NOINTERNET = Notification message when the internet is lost\\
+ARCAMERA =  Help message for AR camera functionality\\
+
+\newpage
+
+\section{MIS of Database Module} \label{mDB}
+
+\subsection{Module}
+
+FirebaseDatabase
+
+\noindent This module uses Firebase Realtime Database library. For details of all syntax and semantics of exported constants and access programs, see \href{https://firebase.google.com/docs/reference/unity/namespace/firebase/database}{Firebase database documentation}.
+documentation
+\subsection{Uses}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+See \href{https://firebase.google.com/docs/reference/unity/namespace/firebase/database}{Firebase database documentation}.
+\subsubsection{Exported Access Programs}
+The following table will show some functions the application uses most frequently, for more details, see \href{https://firebase.google.com/docs/reference/unity/namespace/firebase/database}{Firebase database documentation}.
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Child & String & DatabaseReference & PermissionDenied, NetworkError, ExpiredToken \\
+HasChild & String & $\mathbb{B}$ & PermissionDenied, NetworkError, ExpiredToken \\
+RemoveValueAsync & String & Task$<\mathbb{B}>$ & PermissionDenied,  NetworkError,  ExpiredToken \\
+SetValueAsync & String , String & Task$<\mathbb{B}>$ & PermissionDenied,  NetworkError,  ExpiredToken \\
+GetValueAsync & String & Task$<$DataSnapshot$>$ & PermissionDenied, NetworkError,  ExpiredToken \\
+GoOffline & - & - & PermissionDenied, NetworkError,  ExpiredToken \\
+GoOnline & - & - & PermissionDenied, NetworkError,  ExpiredToken \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item DBreference: Firebase.Database.DatabaseReference\\
+A reference to the root location of this database
+\item User: Firebase.Auth.FirebaseUser\\
+The current user that operates this database
+\item PermittedUsers: set of String\\
+The list of user emails that are allowed to read the database content
+\item Admins: set of String\\
+The list of user emails that are allowed to edit the database content
+\end{itemize}
+
+
+\subsubsection{Assumptions}
+
+Assume the database connection is stable and it will not disconnect unless the user disconnect it manually.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Child(pathString):
+\begin{itemize}
+\item transition: none 
+\item output: $out :=$ DatabaseReference to pathString relative to the root
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin PermittedUsers \Rightarrow PermissionDenied$
+\end{itemize}
+
+\noindent HasChild(pathString):
+\begin{itemize}
+\item transition: none 
+\item output: $out := DBreference.Child(pathString) = \text{null}$
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin PermittedUsers \Rightarrow PermissionDenied$
+\end{itemize}
+
+\noindent RemoveValueAsync(pathString):
+\begin{itemize}
+\item transition: $DBreference.Child(pathString) := \text{null}$
+\item output: $out := DBreference.HasChild(pathString)$
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin Admins \Rightarrow PermissionDenied$
+\end{itemize}
+
+\noindent SetValueAsync(pathString, value):
+\begin{itemize}
+\item transition: $DBreference.Child(pathString) := value$
+\item output: $out := DBreference.Child(pathString) = value$
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin Admins \Rightarrow PermissionDenied$
+\end{itemize}
+
+\noindent GetValueAsync(pathString):
+\begin{itemize}
+\item transition: none
+\item output: $out :=$ Snapshot of $DBreference.Child(pathString)$
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin PermittedUsers \Rightarrow PermissionDenied$
+\end{itemize}
+
+\noindent GoOffline():
+\begin{itemize}
+\item transition: Manually disconnect the FirebaseDatabase client from the server and disable automatic reconnection.
+\item output: none
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin Admins \Rightarrow PermissionDenied$
+\end{itemize}
+
+\noindent GoOnline():
+\begin{itemize}
+\item transition: Manually reestablish a connection to the FirebaseDatabase server and enable automatic reconnection.
+\item output: none
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin Admins \Rightarrow PermissionDenied$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
 
 \newpage
 
