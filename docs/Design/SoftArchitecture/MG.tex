@@ -293,6 +293,22 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
+\subsubsection{AR Interface Module (\mref{mARInterface})}
+\begin{description}
+\item[Secrets:]How AR User Interface elements are created and managed.
+\item[Services:]Creates 3D AR elements when notified by the AR Camera of a new valid target. Handles user input relating to AR UI elements.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Map Module (\mref{mMap})}
+\begin{description}
+\item[Secrets:]How users, events and buildings are organized and displayed on a virtual map.
+\item[Services:]Displays points of interest such as buildings or events. Handles user interaction with points of interest. Displays user's avatar at their current location.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Library
+\end{description}
+
 \subsubsection{Friend Manager Module (\mref{mFM})}
 
 \begin{description}
@@ -334,6 +350,38 @@ to be implemented.
 \item[Secrets:]Data structures of stored data and how database connection is established
 \item[Services:]Provides CURD operations to database tables
 \item[Implemented By:] Firebase, CampusConnections
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Server Module (\mref{mServer})}
+\begin{description}
+\item[Secrets:]How data is sent to and received from clients.
+\item[Services:]Provides real-time communication endpoints for chatting and location sharing.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{AR Camera Module (\mref{mARCamera})}
+\begin{description}
+\item[Secrets:]How AR targets are detected.
+\item[Services:]Detects valid AR targets in the device's camera view and notifies the AR Interface module of the newly detected target.
+\item[Implemented By:] Vuforia
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Server Module (\mref{mServer})}
+\begin{description}
+\item[Secrets:]How data is sent to and received from clients.
+\item[Services:]Provides real-time communication endpoints for chatting and location sharing.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{AR Camera Module (\mref{mARCamera})}
+\begin{description}
+\item[Secrets:]How AR targets are detected.
+\item[Services:]Detects valid AR targets in the device's camera view and notifies the AR Interface module of the newly detected target.
+\item[Implemented By:] Vuforia
 \item[Type of Module:] Library
 \end{description}
 
