@@ -309,11 +309,29 @@ to be implemented.
 \item[Type of Module:] Library
 \end{description}
 
+\subsubsection{Lecture Module (\mref{mLec})}
+
+\begin{description}
+\item[Secrets:] Contains the details of a lecture.
+\item[Services:] Allows for the creation of a lecture with a code, lecture name, instructor name, time, and location.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Asbtract Data Type
+\end{description}
+
 \subsubsection{Friend Manager Module (\mref{mFM})}
 
 \begin{description}
 \item[Secrets:]Friend related handlers including adding, deleting, messaging and viewing.
 \item[Services:]Provides adding friend, deleting friend, message friend, view friend profile functionalities for the current user and displays friends and friend requests as lists.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Lecture List Manager Module (\mref{mLL})}
+
+\begin{description}
+\item[Secrets:] Implementation details of how lectures are created, stored, and retrieved in the database, including commands and queries to the database and the structure in which the data is stored.
+\item[Services:] Provides functionality for the creation and retrieval of lectures. Supports other potential operations such as editing and deleting lectures.
 \item[Implemented By:] CampusConnections
 \item[Type of Module:] Library
 \end{description}
