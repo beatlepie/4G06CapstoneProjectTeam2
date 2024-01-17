@@ -697,8 +697,351 @@ None
 
 \newpage
 
-\bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
+\section{MIS of Server Module} \label{mServer}
+
+\subsection{Module}
+
+RTCServer
+
+\subsection{Uses}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+SendMessage & User, String & Task & - \\
+SendLocation & Group, Double, Double & Task & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\subsubsection{Environment Variables}
+
+\subsubsection{Assumptions}
+
+User identifiers are unique.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent SendMessage(recipient, msg):
+\begin{itemize}
+\item transition: none
+\item output: $out :=$ Task; $out$.IsCompleted $:= True$
+\item exception: none
+\end{itemize}
+
+\noindent SendLocation(friendGroup, lat, lon):
+\begin{itemize}
+\item transition: none
+\item output: $out :=$ Task; $out$.IsCompleted $:= True$
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of AR Camera} \label{mARCamera}
+
+\subsection{Module}
+
+AR Camera
+
+\subsection{Uses}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+DetectTarget & - & - & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item cameraFeed: 2D array of pixels
+\item sceneCamera: Camera
+\item imageTargets: list of Target
+\item scanTargets: list of Target
+\end{itemize}
+
+
+\subsubsection{Assumptions}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent DetectTarget():
+\begin{itemize}
+\item transition: Implicitly invokes the AR Interface when a valid target is detected.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of AR Interface} \label{mARInterface}
+
+\subsection{Module}
+
+AR Interface
+
+\subsection{Uses}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+HandleInput & - & - & - \\
+Display & - & - & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\subsubsection{Environment Variables}
+
+\subsubsection{Assumptions}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent HandleInput():
+\begin{itemize}
+\item transition: none
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent Display():
+\begin{itemize}
+\item transition: none
+\item output: none
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of MapBox} \label{mMap}
+
+\subsection{Module}
+
+MapBox
+
+\subsection{Uses}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Display & - & - & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item APIKey: String
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Display():
+\begin{itemize}
+\item transition: none
+\item output: none
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of Map Interface} \label{mMapInterface}
+
+\subsection{Module}
+
+Map Interface
+
+\subsection{Uses}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+HandleInput & - & - & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item building: list of BuildingLocation
+%\item userMarkers: list of GameObject
+\end{itemize}
+
+\subsubsection{Environment Variables}
+\begin{itemize}
+\item camera: Camera
+\end{itemize}
+  
+
+\subsubsection{Assumptions}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent HandleInput():
+\begin{itemize}
+\item transition: Opens user interface when a building marker is tapped
+\item output: none
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of Friend Chat} \label{mFC}
+
+\subsection{Module}
+
+Friend Chat
+
+\subsection{Uses}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+StartConnection & String, String & - & - \\
+SendMessage & User, String & - & - \\
+ReceiveMessage & User, String & - & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item connection: HubConnection
+\item onMessageReceived: Action
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+\subsubsection{Assumptions}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent StartConnection(url, handler):
+\begin{itemize}
+\item transition: Creates a new HubConnection and stores it in connection. Connects the given handler to the server endpoint.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SendMessage(recipient, message):
+\begin{itemize}
+\item transition: Sends a message to the recipient through the server hub connection.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent ReceiveMessage(sender, message):
+\begin{itemize}
+\item transition: Receives a message from the server hub connection. The sender's id is received as well.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
 
 \newpage
 
