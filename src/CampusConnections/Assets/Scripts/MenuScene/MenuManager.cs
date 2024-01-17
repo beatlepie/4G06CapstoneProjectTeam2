@@ -18,6 +18,11 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("FriendScene");
     }
 
+    public void Settings()
+    {
+        SceneManager.LoadScene("SettingsScene");
+    }
+
     public void Quit()
     {
         Application.Quit();
