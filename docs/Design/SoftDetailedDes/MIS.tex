@@ -400,7 +400,7 @@ ActivityDetailViewModule
 
 \subsection{Uses}
 
-Database Module, Authentication Module
+Database Module, Permission Module
 
 \subsection{Syntax}
 
@@ -415,10 +415,10 @@ None
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 ViewActivities & - & - & - \\
-AddActivity & Activity & - & - \\
-EditActivity & Activity & - & IndexOutofBound Exception \\
-DeleteActivity & Activity & - & IndexOutofBound Exception \\
-PinActivity & Activity & - & IndexOutofBound Exception \\
+AddActivity & Activity & - & InvalidPermission Exception \\
+EditActivity & Activity, Activity & - & IndexOutofBound Exception, InvalidPermission Exception \\
+DeleteActivity & Activity & - & IndexOutofBound Exception, InvalidPermission Exception \\
+PinActivity & Activity & - & - \\
 UnpinActivity & Activity & - & IndexOutofBound Exception \\
 \hline
 \end{tabular}
@@ -430,6 +430,8 @@ UnpinActivity & Activity & - & IndexOutofBound Exception \\
 
 \begin{itemize}
   \item activities: set of Activity
+  \item pinnedActivities: set of Activity
+  \item permission: Permission
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -440,47 +442,49 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-ViewActivities():
+\noindent ViewActivities():
 \begin{itemize}
-  \item transition: Display user's activities
-  \item output: none
-  \item exception: none
-  \end{itemize}
+\item transition: Display activities
+\item output: none
+\item exception: none
+\end{itemize}
 
-AddActivity(targetActivity):
+\noindent AddActivity(newActivity):
 \begin{itemize}
-  \item transition:
-  \item output: none
-  \item exception:
-  \end{itemize}
+\item transition: $activities := activities + \{newActivity\}$
+\item output: none
+\item exception: $exc := \neg permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
 
-EditActivity(targetActivity):
+\noindent EditActivity(targetActivity, editedActivity):
 \begin{itemize}
-  \item transition:
-  \item output: none
-  \item exception:
-  \end{itemize}
+\item transition: $activities := activities - \{targetActivity\} + \{editedActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\ 
+                  exc := \neg permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
 
-DeleteActivity(targetActivity):
+\noindent DeleteActivity(targetActivity):
 \begin{itemize}
-  \item transition: $activities := activities - \{targetActivity\}$
-  \item output: none
-  \item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception$
-  \end{itemize}
+\item transition: $activities := activities - \{targetActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\
+                  exc := \neg permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
 
-PinActivity(targetActivity):
+\noindent PinActivity(newActivity):
 \begin{itemize}
-  \item transition:
-  \item output: none
-  \item exception:
-  \end{itemize}
+\item transition: $pinnedActivities := pinnedActivities + \{newActivity\}$
+\item output: none
+\item exception: none
+\end{itemize}
 
-UnpinActivity(targetActivity):
+\noindent UnpinActivity(targetActivity):
 \begin{itemize}
-  \item transition:
-  \item output: none
-  \item exception:
-  \end{itemize}
+\item transition: $pinnedActivities := pinnedActivities - \{targetActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin pinnedActivities \Rightarrow IndexOutofBound Exception$
+\end{itemize}
 
 \subsubsection{Local Functions}
 
@@ -488,7 +492,215 @@ None
 
 \subsubsection{Local Constants}
 
-ROOT = Database root path
+None
+
+\newpage
+
+\section{MIS of Lecture Detail View Module} \label{mLDV}
+
+\subsection{Module}
+
+LectureDetailViewModule
+
+\subsection{Uses}
+
+Activity Detail View Module, Lecture Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+ViewActivities & - & - & - \\
+AddActivity & Lecture & - & InvalidPermission Exception \\
+EditActivity & Lecture, Lecture & - & IndexOutofBound Exception, InvalidPermission Exception \\
+DeleteActivity & Lecture & - & IndexOutofBound Exception, InvalidPermission Exception \\
+PinActivity & Lecture & - & - \\
+UnpinActivity & Lecture & - & IndexOutofBound Exception \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item activities: set of Lecture
+  \item pinnedActivities: set of Lecture
+  \item permission: Permission
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent ViewActivities():
+\begin{itemize}
+\item transition: Display lectures
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AddActivity(newActivity):
+\begin{itemize}
+\item transition: $activities := activities + \{newActivity\}$
+\item output: none
+\item exception: $exc := \neg permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent EditActivity(targetActivity, editedActivity):
+\begin{itemize}
+\item transition: $activities := activities - \{targetActivity\} + \{editedActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\ 
+                  exc := \neg permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent DeleteActivity(targetActivity):
+\begin{itemize}
+\item transition: $activities := activities - \{targetActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\
+                  exc := \neg permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent PinActivity(newActivity):
+\begin{itemize}
+\item transition: $pinnedActivities := pinnedActivities + \{newActivity\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent UnpinActivity(targetActivity):
+\begin{itemize}
+\item transition: $pinnedActivities := pinnedActivities - \{targetActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin pinnedActivities \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+
+None
+
+\newpage
+
+\section{MIS of Event Detail View Module} \label{mEDV}
+
+\subsection{Module}
+
+EventDetailViewModule
+
+\subsection{Uses}
+
+Activity Detail View Module, Event Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+ViewActivities & - & - & - \\
+AddActivity & Event & - & InvalidPermission Exception \\
+EditActivity & Event, Event & - & IndexOutofBound Exception, InvalidPermission Exception \\
+DeleteActivity & Event & - & IndexOutofBound Exception, InvalidPermission Exception \\
+PinActivity & Event & - & - \\
+UnpinActivity & Event & - & IndexOutofBound Exception \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item activities: set of Event
+  \item pinnedActivities: set of Event
+  \item permission: Permission
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent ViewActivities():
+\begin{itemize}
+\item transition: Display events
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AddActivity(newActivity):
+\begin{itemize}
+\item transition: $activities := activities + \{newActivity\}$
+\item output: none
+\item exception: $exc := \neg permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent EditActivity(targetActivity, editedActivity):
+\begin{itemize}
+\item transition: $activities := activities - \{targetActivity\} + \{editedActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\ 
+                  exc := \neg permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent DeleteActivity(targetActivity):
+\begin{itemize}
+\item transition: $activities := activities - \{targetActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\
+                  exc := \neg permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent PinActivity(newActivity):
+\begin{itemize}
+\item transition: $pinnedActivities := pinnedActivities + \{newActivity\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent UnpinActivity(targetActivity):
+\begin{itemize}
+\item transition: $pinnedActivities := pinnedActivities - \{targetActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin pinnedActivities \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+
+None
 
 \newpage
 
