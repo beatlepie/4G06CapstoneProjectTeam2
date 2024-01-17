@@ -186,7 +186,7 @@ will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucInput}:]User Input for in-app control
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucInput}:]User input for in-app control
 \item[\refstepcounter{ucnum} \uctheucnum \label{ucOS}:]OS on which the application is running
 \item[\refstepcounter{ucnum} \uctheucnum \label{ucAccount}:]The information needed to create an account
 \item[\refstepcounter{ucnum} \uctheucnum \label{ucDB}:]The Firebase real-time database implementation
@@ -210,7 +210,7 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mAuth}:] Authentication Module
 \item [\refstepcounter{mnum} \mthemnum \label{mARCamera}:] AR Camera Module
 \item [\refstepcounter{mnum} \mthemnum \label{mARInterface}:] AR Interface Module
-\item [\refstepcounter{mnum} \mthemnum \label{mMap}:] MapBox Module
+\item [\refstepcounter{mnum} \mthemnum \label{mMap}:] Mapbox Module
 \item [\refstepcounter{mnum} \mthemnum \label{mMapInterface}:] MapInterface Module
 \item [\refstepcounter{mnum} \mthemnum \label{mUser}:] User Module
 \item [\refstepcounter{mnum} \mthemnum \label{mLec}:] Lecture Module
@@ -265,7 +265,7 @@ actually be implemented.
 & Server Module\\
 & Authentication Module\\
 & AR Camera Module\\
-& MapBox Module\\
+& Mapbox Module\\
 & Activity Detail View Module\\
 & Pagination and Filter Module\\
 \bottomrule
@@ -309,92 +309,140 @@ to be implemented.
 \end{description}
 
 \subsection{Behaviour-Hiding Module}
-
-\begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:] --
-\end{description}
-
 \subsubsection{AR Interface Module (\mref{mARInterface})}
 \begin{description}
-\item[Secrets:]How AR User Interface elements are created and managed.
+\item[Secrets:]How AR User Interface elements are created and displayed.
 \item[Services:]Creates 3D AR elements when notified by the AR Camera of a new valid target. Handles user input relating to AR UI elements.
 \item[Implemented By:] CampusConnections
-\item[Type of Module:] Library
+\item[Type of Module:] Abstract Data Type
 \end{description}
 
-\subsubsection{Map Module (\mref{mMap})}
+\subsubsection{MapInterface Module (\mref{mMapInterface})}
 \begin{description}
 \item[Secrets:]How users, events and buildings are organized and displayed on a virtual map.
 \item[Services:]Displays points of interest such as buildings or events. Handles user interaction with points of interest. Displays user's avatar at their current location.
 \item[Implemented By:] CampusConnections
-\item[Type of Module:] Library
+\item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{User Module (\mref{mUser})}
+\begin{description}
+  \item[Secrets:]Data structure of a User.
+  \item[Services:]Provides functionalities to interact with user data for other modules to use.
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Abstract Data Type
 \end{description}
 
 \subsubsection{Lecture Module (\mref{mLec})}
-
 \begin{description}
-\item[Secrets:] Contains the details of a lecture.
-\item[Services:] Allows for the creation of a lecture with a code, lecture name, instructor name, time, and location.
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Asbtract Data Type
+  \item[Secrets:]Data structure of a Lecture.
+  \item[Services:]Provides CRUD operations for users and administrators to interact with lecture data.
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{Event Module (\mref{mEvent})}
+\begin{description}
+  \item[Secrets:]Data structure of an Event.
+  \item[Services:]Provides CRUD operations for users and administrators to interact with event data.
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{Account Module (\mref{mAccount})}
+\begin{description}
+  \item[Secrets:]How user information is stored and used among modules.
+  \item[Services:]Provides functionalities to get and mutate state variables of the User representing current user.
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Permission Module (\mref{mPermission})}
+\begin{description}
+  \item[Secrets:]How current user authentication information is stored and used among modules.
+  \item[Services:]Provides functionalities to get current user permission information and methods inherited from Authentication Module.
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{User Profile Module (\mref{mUP})}
+\begin{description}
+  \item[Secrets:]How to display user profile and edit profile handlers
+  \item[Services:]Allows users to view and edit their own data, and allows them to view other user profile to limited degree.
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Library
+\end{description}
+
+\subsubsection{User Login Module (\mref{mUL})}
+\begin{description}
+  \item[Secrets:]The layout of account login/creation handlers and input fields
+  \item[Services:]Allows users to enter account information to login to the system or create an account. Provide functionality to reset password as well.
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Friend Manager Module (\mref{mFM})}
-
 \begin{description}
-\item[Secrets:]Friend related handlers including adding, deleting, messaging and viewing.
-\item[Services:]Provides adding friend, deleting friend, message friend, view friend profile functionalities for the current user and displays friends and friend requests as lists.
+\item[Secrets:]How to display friends as a list with corresponding handlers including adding, deleting, messaging and viewing.
+\item[Services:]Displays friends and as as a list and handle user input to add, message, delete a friend.
 \item[Implemented By:] CampusConnections
 \item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Friend Request Module (\mref{mFR})}
-
 \begin{description}
-\item[Secrets:]Friend request related handlers including accepting and ignoring requests.
-\item[Services:]Provides accepting and ignoring functionalities for all friend requests and displays all requests as a list.
+\item[Secrets:]How to display friend requests as a list with corresponding handlers to accept or ignore requests.
+\item[Services:]Displays friend requests and as as a list and handle user input to accept or ignore a request.
 \item[Implemented By:] CampusConnections
 \item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Friend Chat Module (\mref{mFC})}
+\begin{description}
+\item[Secrets:]How user-to-user chat session is established.
+\item[Services:]Establishes a connection between two users to send message to each other.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Event Detail View Module (\mref{mEDV})}
+\begin{description}
+\item[Secrets:]How to inherit (\mref{mADV}) with activity type Event.
+\item[Services:]All services inherited from (\mref{mADV}) with activity type Event
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{Lecture Detail View Module (\mref{mLDV})}
+\begin{description}
+\item[Secrets:]How to inherit (\mref{mADV}) with activity type lecture.
+\item[Services:]All services inherited from (\mref{mADV}) with activity type Event
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Abstract Data Type
 \end{description}
 
 \subsubsection{Lecture List Manager Module (\mref{mLL})}
-
 \begin{description}
-\item[Secrets:] Implementation details of how lectures are created, stored, and retrieved in the database, including commands and queries to the database and the structure in which the data is stored.
-\item[Services:] Provides functionality for the creation and retrieval of lectures. Supports other potential operations such as editing and deleting lectures.
+\item[Secrets:]Implementation details of how lectures are displayed as a list with services inherited from (\mref{mPF}).
+\item[Services:]Displays a sequence of lectures as a list with pagination and filtering functionalities inherited from (\mref{mPF}).
 \item[Implemented By:] CampusConnections
-\item[Type of Module:] Library
+\item[Type of Module:] Abstract Data Type
 \end{description}
 
-\subsubsection{User Module (\mref{mUser})}
+\subsubsection{Event List Manager Module (\mref{mEL})}
 \begin{description}
-  \item[Secrets:]Implementation details of user data and database structure for user data.
-  \item[Services:]Contains and structures user data for database communication and for other modules to use.
-  \item[Implemented By:] CampusConnections
-  \item[Type of Module:] Library
-  \end{description}
-
-\subsubsection{User Profile Module (\mref{mUP})}
-\begin{description}
-  \item[Secrets:]Handles database calls and update regarding user information.
-  \item[Services:]Allows users to view and edit their own data, and allows them to view other user profile to limited degree.
-  \item[Implemented By:] CampusConnections
-  \item[Type of Module:] Library
-  \end{description}
+\item[Secrets:]Implementation details of how events are displayed as a list with services inherited from (\mref{mPF}).
+\item[Services:]Displays a sequence of events as a list with pagination and filtering functionalities inherited from (\mref{mPF}).
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Abstract Data Type
+\end{description}
 
 \subsection{Software Decision Module}
-
 \subsubsection{Database Module (\mref{mDB})}
 \begin{description}
-\item[Secrets:]Data structures of stored data and how database connection is established
-\item[Services:]Provides CURD operations to database tables
-\item[Implemented By:] Firebase, CampusConnections
+\item[Secrets:]Data structures of stored data and how database connection is established.
+\item[Services:]Provides CURD operations to database tables.
+\item[Implemented By:] Firebase
 \item[Type of Module:] Library
 \end{description}
 
@@ -402,31 +450,7 @@ to be implemented.
 \begin{description}
 \item[Secrets:]How data is sent to and received from clients.
 \item[Services:]Provides real-time communication endpoints for chatting and location sharing.
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Library
-\end{description}
-
-\subsubsection{AR Camera Module (\mref{mARCamera})}
-\begin{description}
-\item[Secrets:]How AR targets are detected.
-\item[Services:]Detects valid AR targets in the device's camera view and notifies the AR Interface module of the newly detected target.
-\item[Implemented By:] Vuforia
-\item[Type of Module:] Library
-\end{description}
-
-\subsubsection{Server Module (\mref{mServer})}
-\begin{description}
-\item[Secrets:]How data is sent to and received from clients.
-\item[Services:]Provides real-time communication endpoints for chatting and location sharing.
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Library
-\end{description}
-
-\subsubsection{AR Camera Module (\mref{mARCamera})}
-\begin{description}
-\item[Secrets:]How AR targets are detected.
-\item[Services:]Detects valid AR targets in the device's camera view and notifies the AR Interface module of the newly detected target.
-\item[Implemented By:] Vuforia
+\item[Implemented By:] Microsoft
 \item[Type of Module:] Library
 \end{description}
 
@@ -434,8 +458,40 @@ to be implemented.
 \begin{description}
 \item[Secrets:]Authentication token and user data related to authentication
 \item[Services:]Provides authentication token to existing users and prevent unauthorized users from accessing any accounts.
-\item[Implemented By:] Firebase Authentication, CampusConnections
+\item[Implemented By:] Firebase
 \item[Type of Module:] Library
+\end{description}
+
+\subsubsection{AR Camera Module (\mref{mARCamera})}
+\begin{description}
+\item[Secrets:]How AR targets are detected.
+\item[Services:]Detects valid AR targets in the device's camera view and notifies the AR Interface module of the newly detected target.
+\item[Implemented By:] Vuforia
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Mapbox Module (\mref{mMap})}
+\begin{description}
+\item[Secrets:]How to build and display customizable maps.
+\item[Services:]Provides different styles of interactive and customizable maps with basic functionalities (e.g. pan, center).
+\item[Implemented By:] Mapbox
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Activity Detail View Module (\mref{mADV})}
+\begin{description}
+  \item[Secrets:]How details of activities are displayed and changed.
+  \item[Services:]Provides functionality for users and administrators to view, pin, unpin; edit, and delete activities respectively.
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{Pagination and Filter Module (\mref{mPF})}
+\begin{description}
+  \item[Secrets:]Algorithm used for paginating and filter activities.
+  \item[Services:]Displays activities as a paginated list which can be filtered by certain keyword.
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Abstract Data Type
 \end{description}
 
 \section{Traceability Matrix} \label{SecTM}
@@ -602,14 +658,56 @@ Database & Zihao Du & Dec. 4, 2023\\
 User & Zihao Du & Nov 15, 2023\\
 Friend Manager & Zihao Du & Jan 15, 2024\\
 Friend Request & Zihao Du & Jan 10, 2024\\
+Account & Zihao Du & Dec 4, 2023\\
 User Profile & Michael Kim & Jan 15, 2024\\
+User Login & Michael Kim & Jan 17, 2024\\
+Permission & Michael Kim & Jan 15, 2024\\
 Authentication & Michael Kim & Jan 15, 2024\\
-
+ARCamera &Waseef Nayeem, Zihao Du & Feb 2, 2024\\
+ARInterface & Waseef Nayeem, Zihao Du & Feb 2, 2024\\
+Server & Waseef Nayeem & Jan 15, 2024\\
+Mapbox & Waseef Nayeem & Jan 15, 2024\\
+MapInterface & Waseef Nayeem & Jan 17, 2024\\
+Chat & Waseef Nayeem, Zihao Du & Jan 15, 2024\\
+Lecture List Manager & Abhiram Neelamraju & Jan 15, 2024\\
+Lecture & Abhiram Neelamraju & Jan 15, 2024\\
+Event List Manager & Firas Elayan & Jan 17, 2024\\
+Event & Firas Elayan & Jan 17, 2024\\
+Pagination and Filter & Abhiram Neelamraju, Firas Elayan & Jan 15, 2024\\
+Activity Detail View & Matthew Miller & Jan 17, 2024\\
+Lecture Detail View & Matthew Miller & Jan 17, 2024\\
+Event Detail View & Matthew Miller & Jan 17, 2024\\
 \bottomrule
 \end{tabular}
 \caption{CampusConnections Module Completion Timeline}
 \end{table}
 
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.35\textwidth} p{0.3\textwidth}  p{0.3\textwidth}}
+\toprule
+Test Name & Team Member & Due Date \\
+\midrule
+Database Manual Test & Zihao Du & Jan 26, 2023\\
+Authentication Manual Test & Michael Kim & Jan 26, 2024\\
+Mapbox Manual Test & Waseef Nayeem & Jan 26, 2024\\
+Server Manual Test & Waseef Nayeem & Jan 26, 2024\\
+ARCamera Manual Test &Waseef Nayeem, Zihao Du & Feb 2, 2024\\
+User Unit Test & Zihao Du & Jan 26, 2023\\
+Event Unit Test & Firas Elayan & Jan 26, 2024\\
+Lecture Unit Test & Abhiram Neelamraju & Jan 26, 2024\\
+Friend Scene Manual Test & Zihao Du & Feb 2, 2024\\
+User Profile Scene Manual Test & Michael Kim & Feb 2, 2024\\
+User Login Scene Manual Test & Michael Kim & Feb 2, 2024\\
+AR Scene Manual Test & Waseef Nayeem, Zihao Du & Feb 2, 2024\\
+Map Scene Manual Test & Waseef Nayeem & Feb 2, 2024\\
+List View Manual Test & Abhiram Neelamraju, Firas Elayan & Feb 2, 2024\\
+Detail View Manual Test & Matthew Miller & Feb 2, 2024\\
+Integration Test for Rev 0 & All & Feb 5, 2024\\
+\bottomrule
+\end{tabular}
+\caption{CampusConnections Test Timeline}
+\end{table}
 \newpage{}
 
 \appendix
@@ -644,7 +742,7 @@ graduate attribute of Problem Analysis and Design.  Please answer the following 
   (LO\_Explores)
   
   We are implementing this application with Unity, using Firebase Database and Authentications. We also designed an ASP.NET server for multi-user chatting and location sharing.
-  The benefit of using Unity Engine is it has great support for AR features. Our AR Engine, Vuforia works perfectly fine with Unity.  Also, we can make use of lots of 3D/2D object related features when implementing maps and our interfaces, which provides an immersive user experience.  Unity also has a very active community and detailed documentation as well.  Compared to some other front-end frameworks like React, Unity doesn't have good support for UI components as a tradeoff. However, the team thinks map and AR components are much more important features than layout and UI.
+  The benefit of using Unity Engine is it has great support for AR features. Our AR Engine, Vuforia works perfectly fine with Unity.  Also, we can make use of lots of 3D/2D object from Unity Asset Store when implementing maps and our interfaces, which provides an immersive user experience.  Unity also has a very active community and detailed documentation as well.  Compared to some other front-end frameworks like React, Unity doesn't have good support for UI components as a tradeoff. However, the team thinks map and AR components are much more important features than layout and UI.
   	We are also using Firebase Real-time database, a non-relational database for this project. Compared to relational databases like Microsoft SQL,  it is flexible and updates in almost real-time. As a product of Firebase, it collaborates with Firebase Authentication System very well. It provides protection rules for reading and writing on the database side which prevent users from bypassing the front end and attacking the database directly. As a tradeoff, the data in the database are not well organized by schemas like relational databases, and it may be quite difficult to extend and maintain in the future.
 \end{enumerate}
 
