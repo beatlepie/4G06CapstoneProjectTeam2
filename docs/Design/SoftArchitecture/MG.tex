@@ -75,6 +75,9 @@ This section records information for easy reference.
   \progname & Explanation of program name\\
   UC & Unlikely Change \\
   CRUD & Create, Read, Update and Delete\\
+  AR & Augmented Reality\\
+  SQL & Structured Query Language\\
+  UI & User Interface\\
   \bottomrule
 \end{tabular}\\
 
@@ -159,9 +162,18 @@ change.
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
   hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+\item[\refstepcounter{acnum} \actheacnum \label{acPaginate}:] The algorithm for paginating
+\item[\refstepcounter{acnum} \actheacnum \label{acFilter}:] The implementation of lecture/event filter
+\item[\refstepcounter{acnum} \actheacnum \label{acProtocol}:] The protocol of server request and response
+\item[\refstepcounter{acnum} \actheacnum \label{acServerData}:] The format of the server data packets
+\item[\refstepcounter{acnum} \actheacnum \label{acListUI}:] The layout and styling of lecture/event list components UI
+\item[\refstepcounter{acnum} \actheacnum \label{acDetailViewUI}:] The layout and styling of lecture/event detail view components UI
+\item[\refstepcounter{acnum} \actheacnum \label{acMapInteract}:] Interaction with real-time map markers
+\item[\refstepcounter{acnum} \actheacnum \label{acMapLayout}:] The look and feel of map layout
+\item[\refstepcounter{acnum} \actheacnum \label{acUserUI}:] The layout and styling of User Profile component UI
+\item[\refstepcounter{acnum} \actheacnum \label{acLoginUI}:] The layout and styling of User Login component UI
+\item[\refstepcounter{acnum} \actheacnum \label{acFriendUI}:] The layout and styling of friend-related components UI
+\item[\refstepcounter{acnum} \actheacnum \label{acARUI}:] The look and feel of AR Interface elements
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
@@ -174,9 +186,14 @@ will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucInput}:]User Input for in-app control
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucOS}:]OS on which the application is running
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucAccount}:]The information needed to create an account
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucDB}:]The Firebase real-time database implementation
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucBackend}:]The ASP.NET server implementation for real-time chatting and location sharing
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucAR}:]The Vuforia AR Camera implementation
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucAccess}:]The three access levels of users
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucUnity}:]The application will be implemented with Unity Engine
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -193,19 +210,24 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mAuth}:] Authentication Module
 \item [\refstepcounter{mnum} \mthemnum \label{mARCamera}:] AR Camera Module
 \item [\refstepcounter{mnum} \mthemnum \label{mARInterface}:] AR Interface Module
-\item [\refstepcounter{mnum} \mthemnum \label{mMap}:] Map Module
+\item [\refstepcounter{mnum} \mthemnum \label{mMap}:] MapBox Module
+\item [\refstepcounter{mnum} \mthemnum \label{mMapInterface}:] MapInterface Module
 \item [\refstepcounter{mnum} \mthemnum \label{mUser}:] User Module
 \item [\refstepcounter{mnum} \mthemnum \label{mLec}:] Lecture Module
 \item [\refstepcounter{mnum} \mthemnum \label{mEvent}:] Event Module
+\item [\refstepcounter{mnum} \mthemnum \label{mAccount}:] Account Module
+\item [\refstepcounter{mnum} \mthemnum \label{mPermission}:] Permission Module
 \item [\refstepcounter{mnum} \mthemnum \label{mUP}:] User Profile Module
+\item [\refstepcounter{mnum} \mthemnum \label{mUL}:] User Login Module
 \item [\refstepcounter{mnum} \mthemnum \label{mFM}:] Friend Manager Module
+\item [\refstepcounter{mnum} \mthemnum \label{mFR}:] Friend Request Module
+\item [\refstepcounter{mnum} \mthemnum \label{mFC}:] Friend Chat Module
 \item [\refstepcounter{mnum} \mthemnum \label{mADV}:] Activity Detail View Module
 \item [\refstepcounter{mnum} \mthemnum \label{mLDV}:] Lecture Detail View Module
 \item [\refstepcounter{mnum} \mthemnum \label{mEDV}:] Event Detail View Module
 \item [\refstepcounter{mnum} \mthemnum \label{mPF}:] Pagination and Filter Module
 \item [\refstepcounter{mnum} \mthemnum \label{mLL}:] Lecture List Manager Module
 \item [\refstepcounter{mnum} \mthemnum \label{mEL}:] Event List Manager Module
-\item [\refstepcounter{mnum} \mthemnum \label{mNotify}:] Notification Module
 \end{description}
 
 
@@ -221,16 +243,21 @@ actually be implemented.
 
 \multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}
 & AR Interface\\
+& Map Interface\\
 & User Module\\
 & Lecture Module\\
 & Event Module\\
 & User Profile Module\\
+& User Login Module\\
 & Friend Manager Module\\ 
+& Friend Request Module\\
+& Friend Chat Module\\
 & Lecture Detail View Module\\
 & Event Detail View Module\\
 & Lecture List Manager Module\\
 & Event List Manager Module\\
-& Notification Module\\
+& Account Module\\
+& Permission Module\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision Module}
@@ -238,7 +265,7 @@ actually be implemented.
 & Server Module\\
 & Authentication Module\\
 & AR Camera Module\\
-& Map Module\\
+& MapBox Module\\
 & Activity Detail View Module\\
 & Pagination and Filter Module\\
 \bottomrule
@@ -327,20 +354,20 @@ to be implemented.
 \item[Type of Module:] Library
 \end{description}
 
+\subsubsection{Friend Request Module (\mref{mFR})}
+
+\begin{description}
+\item[Secrets:]Friend request related handlers including accepting and ignoring requests.
+\item[Services:]Provides accepting and ignoring functionalities for all friend requests and displays all requests as a list.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Library
+\end{description}
+
 \subsubsection{Lecture List Manager Module (\mref{mLL})}
 
 \begin{description}
 \item[Secrets:] Implementation details of how lectures are created, stored, and retrieved in the database, including commands and queries to the database and the structure in which the data is stored.
 \item[Services:] Provides functionality for the creation and retrieval of lectures. Supports other potential operations such as editing and deleting lectures.
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Library
-\end{description}
-
-\subsubsection{Notification Module (\mref{mNotify})}
-
-\begin{description}
-\item[Secrets:]Implementation detail and settings of toast notifications and alerts
-\item[Services:]Provides functionalities to display all notifications, alerts and consents.
 \item[Implemented By:] CampusConnections
 \item[Type of Module:] Library
 \end{description}
@@ -424,21 +451,21 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-FR1-1 & \mref{mNotify}\\
-FR2-1 & \mref{mAuth}, \mref{mDB}\\
-FR2-2 & \mref{mAuth}, \mref{mUser}, \mref{mDB}\\
-FR2-3 & \mref{mAuth}\\
-FR2-4 & \mref{mAuth}\\
-FR2-5 & \mref{mAuth}\\
+FR1-1 & \mref{mUL}\\
+FR2-1 & \mref{mPermission}, \mref{mDB}, \mref{mUL}\\
+FR2-2 & \mref{mPermission}, \mref{mUP}, \mref{mDB}\\
+FR2-3 & \mref{mPermission}, \mref{mUL}\\
+FR2-4 & \mref{mPermission}, \mref{mUL}\\
+FR2-5 & \mref{mPermission}, \mref{mUL}\\
 FR2-6 & \mref{mUser}, \mref{mUP}, \mref{mDB}\\
-FR2-7 & \mref{mAuth}, \mref{mUP}\\
+FR2-7 & \mref{mPermission}, \mref{mUP}\\
 FR2-8 & \mref{mUser}, \mref{mUP}, \mref{mDB}\\
-FR3-1 & \mref{mFM}, \mref{mDB}\\
-FR3-2 & \mref{mFM}, \mref{mDB}\\
-FR3-3 & \mref{mFM}, \mref{mServer}\\
-FR3-4 & \mref{mFM}, \mref{mServer}, \mref{mEvent}\\
-FR3-5 & \mref{mFM}, \mref{mServer}, \mref{mMap}\\
-FR3-6 & \mref{mFM}, \mref{mDB}\\
+FR3-1 & \mref{mFM}, \mref{mAccount}\\
+FR3-2 & \mref{mFM}, \mref{mAccount}\\
+FR3-3 & \mref{mFC}, \mref{mServer}\\
+FR3-4 & \mref{mFC}, \mref{mServer}, \mref{mEvent}\\
+FR3-5 & \mref{mFC}, \mref{mServer}, \mref{mMap}\\
+FR3-6 & \mref{mFR}, \mref{mAccount}\\
 FR4-1 & \mref{mUP}, \mref{mDB}, \mref{mEvent}, \mref{mEDV}, \mref{mADV}\\
 FR4-2 & \mref{mUP}, \mref{mDB}, \mref{mLec}, \mref{mLDV}, \mref{mADV}\\
 FR4-3 & \mref{mEvent}, \mref{mEDV}, \mref{mADV}, \mref{mDB}, \mref{mAuth}\\
@@ -449,9 +476,9 @@ FR4-7 & \mref{mEvent}, \mref{mEL}, \mref{mPF}\\
 FR4-8 & \mref{mLec}, \mref{mLL}, \mref{mPF}\\
 FR5-1 & \mref{mARCamera}\\
 FR5-2 & \mref{mARInterface}\\
-FR6-1 & \mref{mMap}, \mref{mDB}\\
-FR6-2 & \mref{mMap}, \mref{mDB}\\
-FR6-3 & \mref{mMap}, \mref{mServer}\\
+FR6-1 & \mref{mMap}, \mref{mMapInterface}, \mref{mDB}\\
+FR6-2 & \mref{mMap}, \mref{mMapInterface}, \mref{mDB}\\
+FR6-3 & \mref{mMap}, \mref{mMapInterface}, \mref{mServer}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Functional Requirements and Modules}
@@ -464,34 +491,34 @@ FR6-3 & \mref{mMap}, \mref{mServer}\\
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-LF-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
-LF-A2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
-LF-S1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
-LF-S2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
-UH-EOU1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
-UH-L1 & \\
-UH-UP1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
-UH-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNotify}\\
+LF-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
+LF-A2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
+LF-S1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
+LF-S2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
+UH-EOU1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
+UH-L1 & NA since it is a learning requirement related to document only\\
+UH-UP1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
+UH-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
 P-SL1 & \mref{mARCamera}, \mref{mARInterface}\\
 P-SL2 & \mref{mServer}, \mref{mMap}\\
 P-SC1 & \mref{mDB}, \mref{mServer}\\
 P-SC2 & \mref{mServer}\\
-P-SC3 & \mref{mNotify}\\
-P-SC4 & \mref{mServer}, \mref{mMap}\\
+P-SC3 & \mref{mMapInterface}\\
+P-SC4 & \mref{mServer}, \mref{mMapInterface}\\
 P-SC5 & \mref{mAuth}, \mref{mUP}, \mref{mDB}\\
 P-SC6 & \mref{mAuth}, \mref{mDB}\\
 P-PA1 & \mref{mARCamera}\\
-P-RF1 & \mref{mNotify}\\
+P-RF1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
 P-RF2 & \mref{mDB}, \mref{mServer}, \mref{mAuth}\\
 P-RF3 & \mref{mServer}\\
 P-RF4 & \mref{mARInterface}\\
 P-SE1 & \mref{mServer}\\
 P-SE2 & \mref{mDB}, \mref{mAuth}\\
 P-SE3 & \mref{mDB}, \mref{mServer}, \mref{mAuth}\\
-P-L1 & \\
-P-L2 & \\
-OE-EPE1 & \\
-OE-P1 & \\
+P-L1 & All modules (requirement related to coding style)\\
+P-L2 & All modules (requirement related to coding style)\\
+OE-EPE1 & NA since it is a device related requirement\\
+OE-P1 & NA since it is a productization requirement\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Non-Functional Requirements and Modules}
@@ -504,14 +531,14 @@ OE-P1 & \\
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-MS-M1 & \\
-MS-S1 & \\
+MS-M1 & NA since it is a requirement for maintainers\\
+MS-S1 & NA since it is a requirement for maintainers\\
 S-A1 & \mref{mAuth}, \mref{mUser}\\
 S-A2 & \mref{mAuth}, \mref{mUser}\\
 S-A3 & \mref{mAuth}, \mref{mUser}\\
 S-P1 & \mref{mDB}, \mref{mServer}, \mref{mUser}, \mref{mEvent}, \mref{mLec}\\
 S-P2 & \mref{mDB}, \mref{mAuth}\\
-CUL-C1 & \mref{mARInterface}, \mref{mUP}, \mref{mFM}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}\\
+CUL-C1 & \mref{mARInterface}, \mref{mMapInterface}, \mref{mUP}, \mref{mUL}, \mref{mFM}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}\\
 COM-L1 & \mref{mDB}, \mref{mUser}, \mref{mEvent}, \mref{mLec}\\
 \bottomrule
 \end{tabular}
@@ -526,17 +553,18 @@ COM-L1 & \mref{mDB}, \mref{mUser}, \mref{mEvent}, \mref{mLec}\\
 \textbf{AC} & \textbf{Modules}\\
 \midrule
 \acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acPaginate} & \mref{mPF}\\
+\acref{acFilter} & \mref{mPF}\\
+\acref{acProtocol} & \mref{mServer}\\
+\acref{acServerData} & \mref{mServer}\\
+\acref{acListUI} & \mref{mLL}, \mref{mEL}\\
+\acref{acDetailViewUI} & \mref{mADV}, \mref{mLDV}, \mref{mEDV}\\
+\acref{acMapInteract} & \mref{mMapInterface}, \mref{mMap}\\
+\acref{acMapLayout} & \mref{mMapInterface}\\
+\acref{acUserUI} & \mref{mUP}\\
+\acref{acLoginUI} & \mref{mUL}\\
+\acref{acFriendUI} & \mref{mFM}, \mref{mFR}, \mref{mFC}\\
+\acref{acARUI} & \mref{mARInterface}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -558,7 +586,7 @@ because they use modules from the lower levels.
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=0.9\textwidth]{UsesHierarchy.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
@@ -573,7 +601,7 @@ Module Name & Team Member & Due Date \\
 Database & Zihao Du & Dec. 4, 2023\\
 User & Zihao Du & Nov 15, 2023\\
 Friend Manager & Zihao Du & Jan 15, 2024\\
-Notification & Zihao Du & Feb 5th, 2024\\
+Friend Request & Zihao Du & Jan 10, 2024\\
 User Profile & Michael Kim & Jan 15, 2024\\
 Authentication & Michael Kim & Jan 15, 2024\\
 
@@ -594,10 +622,29 @@ graduate attribute of Problem Analysis and Design.  Please answer the following 
 \begin{enumerate}
   \item What are the limitations of your solution?  Put another way, given
   unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
+  
+	One of the main limitations of the solution is the time allotted for this project. This is an ambitious project that has various impressive features, but due to the time limitation, we have to limit the number of features and leave some good designs in the waiting room. One way to improve the project is to iterate over the project for several rounds when implementing and ranking all features by significance. For the very first round, we only import the fundamental features, and in the later round, we will work on other less important features and UI. Currently here is a list of features to implement in this round:
+	\begin{itemize}
+	\item Real-time system server
+	\item Multi-user location-sharing map
+	\item List view of events/lectures with pagination and filtering
+	\item Detail View of events/lectures
+	\item User Profile Page
+	\item Friend Chatting System
+	\end{itemize}
+ And there are also some features already on the list for the next round
+ like Event sharing, Heat map, etc.
+ 
+ 	Another limitation is the budget. Since we are using some third-party library (e.g. AR Engine) and the budget is limited, we can only use the free plan for now. The free plan has limited capacity and watermark, which affects the user experience and limits the features we can implement. To improve this, we need to limit the number of target buildings on the map and provide only a portion of indoor AR features for the first release.
+ 	
+ 	For this project, data-sharing restrictions limit the features as well. Since the administrator needs to feed the community up-to-date information about campus activities. If the administrator cannot provide good resources, the application is much less helpful for its user. One way to solve the problem is to invite club leaders or even McMaster staff as our administrators so that the community can be always active.
   \item Give a brief overview of other design solutions you considered.  What
   are the benefits and tradeoffs of those other designs compared with the chosen
   design?  From all the potential options, why did you select documented design?
   (LO\_Explores)
+  We are implementing this application with Unity, using Firebase Database and Authentications. We also designed an ASP.NET server for multi-user chatting and location sharing.
+  The benefit of using Unity Engine is it has great support for AR features. Our AR Engine, Vuforia works perfectly fine with Unity.  Also, we can make use of lots of 3D/2D object related features when implementing maps and our interfaces, which provides an immersive user experience.  Unity also has a very active community and detailed documentation as well.  Compared to some other front-end frameworks like React, Unity doesn't have good support for UI components as a tradeoff. However, the team thinks map and AR components are much more important features than layout and UI.
+  	We are also using Firebase Real-time database, a non-relational database for this project. Compared to relational databases like Microsoft SQL,  it is flexible and updates in almost real-time. As a product of Firebase, it collaborates with Firebase Authentication System very well. It provides protection rules for reading and writing on the database side which prevent users from bypassing the front end and attacking the database directly. As a tradeoff, the data in the database are not well organized by schemas like relational databases, and it may be quite difficult to extend and maintain in the future.
 \end{enumerate}
 
 \newpage
