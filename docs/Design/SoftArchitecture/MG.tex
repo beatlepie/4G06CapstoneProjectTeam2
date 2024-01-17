@@ -328,9 +328,9 @@ to be implemented.
 \item[Type of Module:] Library
 \end{description}
 
-\subsubsection{Map Module (\mref{mMap})}
+\subsubsection{Map Interface Module (\mref{mMapInterface})}
 \begin{description}
-\item[Secrets:]How users, events and buildings are organized and displayed on a virtual map.
+\item[Secrets:]How users, events and buildings are organized and displayed on the virtual map provided by the MapBox Module.
 \item[Services:]Displays points of interest such as buildings or events. Handles user interaction with points of interest. Displays user's avatar at their current location.
 \item[Implemented By:] CampusConnections
 \item[Type of Module:] Library
@@ -362,6 +362,16 @@ to be implemented.
 \item[Implemented By:] CampusConnections
 \item[Type of Module:] Library
 \end{description}
+
+\subsubsection{Friend Chat Module (\mref{mFC})}
+
+\begin{description}
+\item[Secrets:]Procedures related to how chat messages are sent, received and handled on the client side.
+\item[Services:]Provides a link between the user interface and the backend server to allow users to chat in real time. Converts user input in the form of messages to data packets that are sent to the backend server.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Library
+\end{description}
+
 
 \subsubsection{Lecture List Manager Module (\mref{mLL})}
 
@@ -406,19 +416,11 @@ to be implemented.
 \item[Type of Module:] Library
 \end{description}
 
-\subsubsection{AR Camera Module (\mref{mARCamera})}
+\subsubsection{MapBox Module (\mref{mMap})}
 \begin{description}
-\item[Secrets:]How AR targets are detected.
-\item[Services:]Detects valid AR targets in the device's camera view and notifies the AR Interface module of the newly detected target.
-\item[Implemented By:] Vuforia
-\item[Type of Module:] Library
-\end{description}
-
-\subsubsection{Server Module (\mref{mServer})}
-\begin{description}
-\item[Secrets:]How data is sent to and received from clients.
-\item[Services:]Provides real-time communication endpoints for chatting and location sharing.
-\item[Implemented By:] CampusConnections
+\item[Secrets:]How virtual maps are created and displayed from geographical data.
+\item[Services:]Provides a collection of tools and APIs for customizing and displaying virtual maps.
+\item[Implemented By:] MapBox
 \item[Type of Module:] Library
 \end{description}
 
