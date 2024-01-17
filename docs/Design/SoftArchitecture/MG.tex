@@ -242,8 +242,8 @@ actually be implemented.
 \midrule
 
 \multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}
-& AR Interface\\
-& Map Interface\\
+& AR Interface Module\\
+& Map Interface Module\\
 & User Module\\
 & Lecture Module\\
 & Event Module\\
@@ -398,7 +398,6 @@ to be implemented.
 \end{description}
 
 \subsubsection{Friend Chat Module (\mref{mFC})}
-
 \begin{description}
 \item[Secrets:]Procedures related to how chat messages are sent, received and handled on the client side.
 \item[Services:]Provides a link between the user interface and the backend server to allow users to chat in real time. Converts user input in the form of messages to data packets that are sent to the backend server.
@@ -406,8 +405,6 @@ to be implemented.
 \item[Type of Module:] Library
 \end{description}
 
-
-\subsubsection{Lecture List Manager Module (\mref{mLL})}
 \subsubsection{Event Detail View Module (\mref{mEDV})}
 \begin{description}
 \item[Secrets:]How to inherit (\mref{mADV}) with activity type Event.
@@ -467,9 +464,9 @@ to be implemented.
 
 \subsubsection{AR Camera Module (\mref{mARCamera})}
 \begin{description}
-\item[Secrets:]How virtual maps are created and displayed from geographical data.
-\item[Services:]Provides a collection of tools and APIs for customizing and displaying virtual maps.
-\item[Implemented By:] MapBox
+\item[Secrets:]How AR targets are detected.
+\item[Services:]Detects valid AR targets in the device's camera view and notifies the AR Interface module of the newly detected target.
+\item[Implemented By:] Vuforia
 \item[Type of Module:] Library
 \end{description}
 
