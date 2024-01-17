@@ -63,6 +63,19 @@ Jan 17 & 1.0 & Revision 0\\
 \section{Symbols, Abbreviations and Acronyms}
 
 See SRS Documentation at \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}
+\subsection{Abbreviations and Acronyms}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l l} 
+  \toprule		
+  \textbf{symbol} & \textbf{description}\\
+  \midrule 
+  MIS & Module Interface Specification \\
+  MG & Module Guide \\
+  SRS & Software Requirement Specification\\
+  AR & Augmented Reality\\
+  \bottomrule
+\end{tabular}\\
 
 \newpage
 
@@ -76,15 +89,11 @@ See SRS Documentation at \href{https://github.com/beatlepie/4G06CapstoneProjectT
 
 The following document details the Module Interface Specifications for CampusConnections. CampusConnections is a social media application with impressive AR camera and real time location map features that allows McMaster University students and visitors have an immersive user experience and expand their social networking. This application allows users to make new friends online and also encourage users to strengthen the friendship by in-person meet-ups with a on-campus location-sharing feature. It also provides heat maps of events and users, which allows students to join the most popular activities on campus. Besides, the application maintainers will share up-to-date events and lectures information for the community. The MIS will detail specifications for the project described above.
 
-Complementary documents include the System Requirement Specifications
-and Module Guide.  The full documentation and implementation can be
+Complementary documents include the System Requirement Specifications (SRS)
+and Module Guide. (MG)  The full documentation and implementation can be
 found at \url{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf} and \url{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/Design/SoftArchitecture/MG.pdf}
 
 \section{Notation}
-
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
-
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
 \cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
@@ -105,6 +114,9 @@ character & char & a single symbol or digit\\
 integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
 natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
 real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+boolean & $\mathbb{B}$ & True or False\\
+sequence of T & $<$T$>$ & a list of object with type T\\
+asynchronous step T & Task$<$T$>$ & an asynchronous result of T\\
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -326,7 +338,7 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-DisplayFriendList & - & seq of Tranform & - \\
+DisplayFriendList & - & $<$Tranform$>$ & - \\
 onClickDeleteFriend & User & - & IndexOutofBound Exception\\
 onClickViewFriend & User & - & IndexOutofBound Exception\\
 onClickMessageFriend & User & 2D seq of pixels & IndexOutofBound Exception\\
@@ -416,7 +428,7 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-DisplayRequestList & - & seq of Transform & -\\
+DisplayRequestList & - & $<$Transform$>$ & -\\
 onClickAcceptRequest & User & - & IllegalArgument Exception \\
 onClickIgnoreRequest & User & - & IllegalArgument Exception\\
 \hline
@@ -1390,5 +1402,7 @@ None
 		\hline
 \end{tabular}
 \end{table}
-
+\newpage
+\bibliographystyle {plainnat}
+\bibliography{../../../refs/References}
 \end{document}
