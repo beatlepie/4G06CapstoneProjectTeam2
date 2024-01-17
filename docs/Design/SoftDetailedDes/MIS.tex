@@ -392,6 +392,106 @@ REQUESTPATH = path string for user friend requests list
 
 \newpage
 
+\section{MIS of Activity Detail View Module} \label{mADV}
+
+\subsection{Module}
+
+ActivityDetailViewModule
+
+\subsection{Uses}
+
+Database Module, Authentication Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+ViewActivities & - & - & - \\
+AddActivity & Activity & - & - \\
+EditActivity & Activity & - & IndexOutofBound Exception \\
+DeleteActivity & Activity & - & IndexOutofBound Exception \\
+PinActivity & Activity & - & IndexOutofBound Exception \\
+UnpinActivity & Activity & - & IndexOutofBound Exception \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item activities: set of Activity
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+\subsubsection{Access Routine Semantics}
+
+ViewActivities():
+\begin{itemize}
+  \item transition: Display user's activities
+  \item output: none
+  \item exception: none
+  \end{itemize}
+
+AddActivity(targetActivity):
+\begin{itemize}
+  \item transition:
+  \item output: none
+  \item exception:
+  \end{itemize}
+
+EditActivity(targetActivity):
+\begin{itemize}
+  \item transition:
+  \item output: none
+  \item exception:
+  \end{itemize}
+
+DeleteActivity(targetActivity):
+\begin{itemize}
+  \item transition: $activities := activities - \{targetActivity\}$
+  \item output: none
+  \item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception$
+  \end{itemize}
+
+PinActivity(targetActivity):
+\begin{itemize}
+  \item transition:
+  \item output: none
+  \item exception:
+  \end{itemize}
+
+UnpinActivity(targetActivity):
+\begin{itemize}
+  \item transition:
+  \item output: none
+  \item exception:
+  \end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+
+ROOT = Database root path
+
+\newpage
+
 \section{MIS of Notification Module} \label{mNotify}
 
 \subsection{Module}
