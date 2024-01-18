@@ -240,6 +240,66 @@ None
 
 \newpage
 
+\section{MIS of Event Module} \label{mEvent}
+
+\subsection{Module}
+
+Event
+
+\subsection{Uses}
+
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Event & String, String, String, String & Event & -\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item Name: Event name
+\item Date: Event date
+\item Location: Event location
+\item Organizer: Event organizer
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+Parameters to the constructor are of the correct format.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Event(name, date, location, organizer):
+\begin{itemize}
+\item transition: Initializes an instance of the 'Event' class with the given parameters.
+\item output: Instance of 'Event'.
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
 \section{MIS of Account Module} \label{mAccount}
 
 \subsection{Module}
@@ -1014,6 +1074,137 @@ The lecture data is in the correct format and the database is accessible.
 \item transition: Changes the scene to "MenuScene".
 \item output: none
 \item exception: SceneLoadingException
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of Event List Manager Module} \label{mEL}
+
+\subsection{Module}
+
+Event List Manager
+
+\subsection{Uses}
+
+Event Module, Database Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Start & - & - & - \\
+Update & - & - & - \\
+HandleChildAdded & object, ChildChangedEventArgs & - & DatabaseError \\
+WriteNewEvent & - & - & InvalidDateFormatException, DatabaseException \\
+GetEvents & Action<string> & IEnumerator & - \\
+GetEventData & - & - & - \\
+ExitDataPage & - & - & - \\
+OnDestroy & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item databaseReference
+\item eventList
+\item scrollView
+\item eventsTextRectTransform
+\item errorMessage
+\item originalPosition
+\item eventName
+\item eventDate
+\item eventLocation
+\item eventOrganizer
+\item scrollRect
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+\item eventList
+\item scrollView
+\item eventsTextRectTransform
+\item errorMessage
+\item eventName
+\item eventDate
+\item eventLocation
+\item eventOrganizer
+\item scrollRect
+
+\subsubsection{Assumptions}
+
+The event data is in the correct format and the database is accessible.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Start():
+\begin{itemize}
+\item transition: Initializes the databaseReference, originalPosition, and subscribes to the ChildAdded event. Calls GetEventData.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent Update():
+\begin{itemize}
+\item transition: Updates the position of the eventsTextRectTransform based on the active state of scrollView.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent HandleChildAdded(object sender, ChildChangedEventArgs args):
+\begin{itemize}
+\item transition: If there is no database error, calls GetEvents to update the event list.
+\item output: none
+\item exception: DatabaseError
+\end{itemize}
+
+\noindent WriteNewEvent():
+\begin{itemize}
+\item transition: Validates the event date format, creates a new Event object, and writes it to the database.
+\item output: none
+\item exception: InvalidDateFormatException, DatabaseException
+\end{itemize}
+
+\noindent GetEvents(Action<string> onCallBack):
+\begin{itemize}
+\item transition: Retrieves event data from the database and formats it into a string.
+\item output: IEnumerator
+\item exception: none
+\end{itemize}
+
+\noindent GetEventData():
+\begin{itemize}
+\item transition: Calls GetEvents to retrieve event data and updates the eventList text and scrollRect position.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent ExitDataPage():
+\begin{itemize}
+\item transition: Loads the "LoginScene".
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent OnDestroy():
+\begin{itemize}
+\item transition: Unsubscribes from the ChildAdded event.
+\item output: none
+\item exception: none
 \end{itemize}
 
 \subsubsection{Local Functions}
