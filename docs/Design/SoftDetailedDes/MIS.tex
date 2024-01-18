@@ -257,7 +257,7 @@ Strings passed as input are of valid format, all the state variables of the obje
 \item exception: none
 \end{itemize}
 
-\noindent SetPhotoUri(newUri):
+\noindent SetPhotot(newUri):
 \begin{itemize}
 \item transition: $photoUri := newUri$
 \item output: none
@@ -1164,7 +1164,286 @@ None
 
 \newpage
 
-https://github.com/beatlepie/4G06CapstoneProjectTeam2.git
+\section{MIS of Authentication Module} \label{mAuth}
+
+\subsection{Module}
+
+Authentication
+
+\subsection{Uses}
+
+Database Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+	\hline
+	\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+	\hline
+	User & - & FirebaseUser & TokenExpiredException \\
+	\hline
+	\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item User: FirebaseUser
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The user will have a unique account and only has access to that account.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent User():
+\begin{itemize}
+\item transition: $(Auth.CurrentUser.valid = true) \rightarrow User = Auth.CurrentUser$ 
+\item output: $User := Auth.CurrentUser$
+\item exception: $(Auth.CurrentUser.valid = false) \rightarrow TokenExpiredException$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent Login(\_email, \_password):
+\begin{itemize}
+\item transition: $\exists <\_email, \_password> \in FirebaseAuth \Rightarrow Login$
+\item output: $User = AuthResult.CurrentUser$
+\item exception: $exc:= \lnot(\exists <\_email, \_password> \in FirebaseAuth) \Rightarrow AuthFailedException$
+\end{itemize}
+
+\noindent Register():
+\begin{itemize}
+\item transition: $\lnot(\exists \_email \in FirebaseAuth) \rightarrow FirebaseAuth.add(User) \land FirebaseDatabase.add(User)$ 
+\item output: $User \in FirebaseAuth \land User \in FirebaseDatabase$
+\item exception: $\exists \_email \in FirebaseAuth \rightarrow IllegalDatabaseOperationException$
+\end{itemize}
+
+\subsubsection{Local Constants}
+
+\begin{itemize}
+  \item auth: FirebaseAuth
+  \item DatabaseReference: DatabaseReference
+\end{itemize}
+
+\newpage
+
+\section{MIS of Permission Module} \label{mPerm}
+
+\subsection{Module}
+
+Permission
+
+\subsection{Uses}
+
+Authentication Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+	\hline
+	\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+	\hline
+	isAdmin & - & Boolean & - \\
+	ChangePermission & User & - & InvalidPermissionException \\
+	\hline
+	\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item User: FirebaseUser
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The user is logged in already.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent isAdmin():
+\begin{itemize}
+\item transition: $(Auth.CurrentUser.valid = true) \rightarrow User = Auth.CurrentUser$ 
+\item output: $(Auth.CurrentUser.admin = true \rightarrow true) \lor (Auth.CurrentUser.admin = false \rightarrow false)$
+\item exception: $(Auth.CurrentUser.valid = false) \rightarrow TokenExpiredException$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent RefreshToken(user):
+\begin{itemize}
+\item transition: $\exists <\_email, \_password> \in FirebaseAuth \Rightarrow Login$
+\item output: $User = AuthResult.CurrentUser$
+\item exception: $exc:= \lnot(\exists <\_email, \_password> \in FirebaseAuth) \Rightarrow AuthFailedException$
+\end{itemize}
+
+\subsubsection{Local Constants}
+
+None
+
+\newpage
+
+\section{MIS of User Profile Module} \label{mUP}
+
+\subsection{Module}
+
+User Profile
+
+\subsection{Uses}
+
+Authentication Module, Database Module, User Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+None
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item User: FirebaseUser
+\item CurrentUser: Boolean
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The user exists and the current user is logged in already.
+
+\subsubsection{Access Routine Semantics}
+
+\begin{center}
+	\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+	\hline
+	\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+	\hline
+	UpdateDisplay & String & Scene & - \\
+	\hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Local Functions}
+
+\noindent UpdateDisplay(Message):
+\begin{itemize}
+\item transition: $StatusMessage = Message$ 
+\item output: Scene
+\item exception: $(Auth.LoginResult = false) \rightarrow InvalidLoginException$
+\end{itemize}
+
+\noindent GetUserData(user):
+\begin{itemize}
+\item transition: $\exists \_email \in Database \Rightarrow Database.UserData$
+\item output: $User = UserData$
+\item exception: None
+\end{itemize}
+
+\subsubsection{Local Constants}
+
+\begin{itemize}
+	\item Placeholder: set of Strings
+	\item Scene: Unity Scene that contains the default UI page
+\end{itemize}
+
+\newpage
+
+\section{MIS of User Login Module} \label{mLogin}
+
+\subsection{Module}
+
+User Login
+
+\subsection{Uses}
+
+Authentication Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+	\hline
+	\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+	\hline
+	UpdateDisplay & String & Scene & - \\
+	\hline
+	\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item User: FirebaseUser
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The user is logged in already.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent UpdateDisplay(Message):
+\begin{itemize}
+\item transition: $StatusMessage = Message$ 
+\item output: Scene
+\item exception: $(Auth.LoginResult = false) \rightarrow InvalidLoginException$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent Login(\_email, \_password):
+\begin{itemize}
+\item transition: $\exists <\_email, \_password> \in Authentication \rightarrow User = Auth.LoginResult$ 
+\item output: true if the credential is correct, false otherwise
+\item exception: $(Auth.LoginResult = false) \rightarrow InvalidLoginException$
+\end{itemize}
+
+\subsubsection{Local Constants}
+
+Scene: Unity Scene that contains the default UI page
+
+\newpage
 
 \section{MIS of Lecture List Manager Module} \label{mLL}
 
@@ -1633,7 +1912,7 @@ None
 
 \subsection{Module}
 
-Real-time Server
+RTCServer
 
 \subsection{Uses}
 
@@ -1644,13 +1923,12 @@ Real-time Server
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-SendMessage & String, String & Task & - \\
-SendLocation & String, Double, Double & Task & - \\
-RegisterHub & Hub & - & - \\
+SendMessage & User, String & Task & - \\
+SendLocation & Group, Double, Double & Task & - \\
 
 \hline
 \end{tabular}
@@ -1659,36 +1937,26 @@ RegisterHub & Hub & - & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-\begin{itemize}
-\item hubMap: Set of Hub
-\end{itemize}
 
 \subsubsection{Environment Variables}
 
 \subsubsection{Assumptions}
 
-Assume that all user identifiers are unique.
+User identifiers are unique.
 
 \subsubsection{Access Routine Semantics}
 
 \noindent SendMessage(recipient, msg):
 \begin{itemize}
 \item transition: none
-\item output: $out :=$ Task $\land$ $out$.IsCompleted $:= True$
+\item output: $out :=$ Task; $out$.IsCompleted $:= True$
 \item exception: none
 \end{itemize}
 
 \noindent SendLocation(friendGroup, lat, lon):
 \begin{itemize}
 \item transition: none
-\item output: $out :=$ Task $\land$ $out$.IsCompleted $:= True$
-\item exception: none
-\end{itemize}
-
-\noindent RegisterHub(hub):
-\begin{itemize}
-\item transition: hubMap $:=$ hubMap + hub
-\item output: none
+\item output: $out :=$ Task; $out$.IsCompleted $:= True$
 \item exception: none
 \end{itemize}
 
@@ -1713,13 +1981,11 @@ AR Camera
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-RegisterImageTarget & Target & - & - \\
-RegisterScanTarget & Target & - & - \\
-DetectTarget & - & $\mathbb{B}$ & - \\
+DetectTarget & - & - & - \\
 
 \hline
 \end{tabular}
@@ -1728,16 +1994,14 @@ DetectTarget & - & $\mathbb{B}$ & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-\begin{itemize}
-\item imageTargets: list of Target
-\item scanTargets: list of Target
-\end{itemize}
 
 \subsubsection{Environment Variables}
 
 \begin{itemize}
 \item cameraFeed: 2D array of pixels
 \item sceneCamera: Camera
+\item imageTargets: list of Target
+\item scanTargets: list of Target
 \end{itemize}
 
 
@@ -1747,21 +2011,7 @@ DetectTarget & - & $\mathbb{B}$ & - \\
 
 \noindent DetectTarget():
 \begin{itemize}
-\item transition: none
-\item output: True if target is detected
-\item exception: none
-\end{itemize}
-
-\noindent RegisterImageTarget(target):
-\begin{itemize}
-\item transition: imageTargets $:=$ imageTargets + target
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent RegisterScanTarget(target):
-\begin{itemize}
-\item transition: scanTargets $:=$ scanTargets + target
+\item transition: Implicitly invokes the AR Interface when a valid target is detected.
 \item output: none
 \item exception: none
 \end{itemize}
