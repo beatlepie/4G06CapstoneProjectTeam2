@@ -179,6 +179,166 @@ The following table is taken directly from the Module Guide document for this pr
 
 \newpage
 
+\section{MIS of User Module} \label{mUser}
+
+\subsection{Module}
+
+User
+
+\subsection{Uses}
+
+Lecture Module, Event Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+User & String, String, Uri, String, $\mathbb{R}$, $<$User$>$, $<$User$>$, $<$Lecture$>$, $<$Event$>$ & User & -\\
+SetNickName & String & - & -\\
+SetPhotoUri & Uri & - & -\\
+SetProgram & String & - & -\\
+SetLevel & $\mathbb{R}$ & - & -\\
+AddFriend & User & - & -\\
+RemoveFriend & User & - & IndexOutofBound Exception\\
+AddRequester & User & - & -\\
+RemoveRequester & User & - & IndexOutofBound Exception\\
+AddLecture & Lecture & - & -\\
+RemoveLecture & Lecture & - & IndexOutofBound Exception\\
+AddEvent & Event & - & -\\
+RemoveEvent & Event & - & IndexOutofBound Exception\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item email: String, User email
+\item nickName: String, User nickName
+\item photoUri: Uri, User avatar
+\item program: String, User program
+\item level: $\mathbb{R}$, User program level
+\item friends: $<$User$>$, List of friends
+\item requesters: $<$User$>$, List of friend requester
+\item lectures: $<$Lecture$>$, Pinned lecture
+\item events: $<$Event$>$, Pinned event
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+Strings passed as input are of valid format, all the state variables of the object are directly accessible so getter is not needed.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent User(email, nickName, photoUri, program, level, friends, requesters, lectures,events):
+\begin{itemize}
+\item transition: $email, nickName, photoUri, program, level, friends, requesters, lectures, events := \\ email, nickName, photoUri, program, level, friends, requesters, lectures, events$
+\item output: $out := self$
+\item exception: none
+\end{itemize}
+
+\noindent SetNickName(newName):
+\begin{itemize}
+\item transition: $nickName := newName$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetPhotot(newUri):
+\begin{itemize}
+\item transition: $photoUri := newUri$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetProgram(newProgram):
+\begin{itemize}
+\item transition: $program := newProgram$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetLevel(newLevel):
+\begin{itemize}
+\item transition: $level := newLevel$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AddFriend(newFriend):
+\begin{itemize}
+\item transition: $friends := friends + \{newFriend\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent RemoveFriend(targetFriend):
+\begin{itemize}
+\item transition: $friends := friends - \{targetFriend\}$
+\item output: none
+\item exception: $exc := targetFriend \notin friends \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent AddRequester(newRequester):
+\begin{itemize}
+\item transition: $requesters := requesters + \{newRequester\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent RemoveRequester(targetRequester):
+\begin{itemize}
+\item transition: $requesters := requesters - \{targetRequester\}$
+\item output: none
+\item exception: $exc := targetRequester \notin requesters \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent AddLecture(newLec):
+\begin{itemize}
+\item transition: $lectures := lectures + \{newLec\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent RemoveLecture(targetLecture):
+\begin{itemize}
+\item transition: $lectures := lectures - \{targetLecture\}$
+\item output: none
+\item exception: $exc := targetLecture \notin lectures \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent AddEvent(newEvent):
+\begin{itemize}
+\item transition: $events := events + \{newEvent\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent RemoveEvent(targetEvent):
+\begin{itemize}
+\item transition: $events := events - \{targetEvent\}$
+\item output: none
+\item exception: $exc := targetEvent \notin events \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
 \section{MIS of Lecture Module} \label{mLec}
 
 \subsection{Module}
@@ -201,6 +361,10 @@ None
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 Lecture & String, String, String, String, String & Lecture & -\\
+SetName & String & - & -\\
+SetInstructor & String & - & -\\
+SetTime & String & - & -\\
+SetLocation & String & - & -\\
 \hline
 \end{tabular}
 \end{center}
@@ -210,11 +374,11 @@ Lecture & String, String, String, String, String & Lecture & -\\
 \subsubsection{State Variables}
 
 \begin{itemize}
-\item Code: Lecture code
-\item Name: Lecture name
-\item instructor: Lecture instructor
-\item time: Lecture time
-\item location: Lecture location
+\item code: String, Lecture code
+\item name: String, Lecture name
+\item instructor: String, Lecture instructor
+\item time: String, Lecture time
+\item location: String, Lecture location
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -223,17 +387,44 @@ None
 
 \subsubsection{Assumptions}
 
-Strings passed as input are of valid format.
+Strings passed as input are of valid format, all the state variables of the object are directly accessible so getter is not needed.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent Lecture(code, name, instructor, time, location):
+\noindent Lecture(lecCode, lecName, lecInstructor, lecTime, lecLocation):
 \begin{itemize}
-\item transition: Initializes an instance of the 'Lecture' class with the given parameters.
-\item output: Instance of 'Lecture'.
+\item transition: $code, name, instructor, time, location := \\ lecCode, lecName, lecInstructor, lecTime, lecLocation$
+\item output: $out := self$
 \item exception: none
 \end{itemize}
 
+\noindent SetName(newName):
+\begin{itemize}
+\item transition: $name := newName$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetInstructor(newInstructor):
+\begin{itemize}
+\item transition: $instructor := newInstructor$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetTime(newTime):
+\begin{itemize}
+\item transition: $time := newTime$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetLocation(newLocation):
+\begin{itemize}
+\item transition: $location := newLocation$
+\item output: none
+\item exception: none
+\end{itemize}
 \subsubsection{Local Functions}
 
 None
@@ -261,7 +452,13 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-Event & String, String, String, String & Event & -\\
+Event & String, String, String,DateTime, $\mathbb{R}$, String, $\mathbb{B}$ & Event & -\\
+SetDescription & String & - & -\\
+SetOrganizer & String & - & -\\
+SetStartTime & DateTime & - & -\\
+SetDuration & $\mathbb{R}$ & - & -\\
+SetLocation & String & - & -\\
+SetPublic & $\mathbb{B}$ & - & -\\
 \hline
 \end{tabular}
 \end{center}
@@ -271,10 +468,13 @@ Event & String, String, String, String & Event & -\\
 \subsubsection{State Variables}
 
 \begin{itemize}
-\item Name: Event name
-\item Date: Event date
-\item Location: Event location
-\item Organizer: Event organizer
+\item name: String, Event name
+\item description: String, Event description
+\item organizer: String, Event hosted by
+\item startTime: DateTime, Event start date and time
+\item duration: $\mathbb{R}$, Event duration (in minutes)
+\item location: String,Event location (room and building)
+\item public : $\mathbb{B}$, is event public
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -283,17 +483,58 @@ None
 
 \subsubsection{Assumptions}
 
-Parameters to the constructor are of the correct format.
+Strings passed as input are of valid format, all the state variables of the object are directly accessible so getter is not needed.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent Event(name, date, location, organizer):
+\noindent Event(name, description, organizer, startTime, duration, location, public):
 \begin{itemize}
-\item transition: Initializes an instance of the 'Event' class with the given parameters.
-\item output: Instance of 'Event'.
+\item transition: $name, description, organizer, startTime, duration, location, public := \\ name, description, organizer, startTime, duration, location, public$
+\item output: $out := self$
 \item exception: none
 \end{itemize}
 
+\noindent SetDescription(newDescription):
+\begin{itemize}
+\item transition: $description := newDescription$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetOrganizer(newOrganizer):
+\begin{itemize}
+\item transition: $organizer := newOrganizer$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetStartTime(newTime):
+\begin{itemize}
+\item transition: $startTime := newTime$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetDuration(newDuration):
+\begin{itemize}
+\item transition: $duration := newDuration$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetLocation(newLocation):
+\begin{itemize}
+\item transition: $location := newLocation$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetPublic(newPublicity):
+\begin{itemize}
+\item transition: $public := newPublicity$
+\item output: none
+\item exception: none
+\end{itemize}
 \subsubsection{Local Functions}
 
 None
@@ -357,77 +598,77 @@ All the sate variables of User is accessible directly so there is no getters in 
 
 \noindent UpdateNickName(newName):
 \begin{itemize}
-\item transition: $User.nickName := newName$
+\item transition: $User.SetNickName(newName)$
 \item output: none
 \item exception: none
 \end{itemize}
 
 \noindent UpdateProgram(newProgram):
 \begin{itemize}
-\item transition: $User.program := newProgram$
+\item transition: $User.SetProgram(newProgram)$
 \item output: none
 \item exception: none
 \end{itemize}
 
 \noindent UpdateLevel(newLevel):
 \begin{itemize}
-\item transition: $User.level := newLevel$
+\item transition: $User.SetLevel(newLevel)$
 \item output: none
 \item exception: none
 \end{itemize}
 
 \noindent AddFriend(newFriend):
 \begin{itemize}
-\item transition: $User.friends := User.friends + \{newFriend\}$ 
+\item transition: $User.AddFriend(newFriend)$ 
 \item output: none
 \item exception: none
 \end{itemize}
 
 \noindent DeleteFriend(targetFriend):
 \begin{itemize}
-\item transition: $User.friends := User.friends - \{targetFriend\}$ 
+\item transition: $User.RemoveFriend(targetFriend)$ 
 \item output: none
 \item exception: $exc := targetFriend \notin User.friends \Rightarrow IndexOutofBound Exception$
 \end{itemize}
 
 \noindent AddRequest(newFriend):
 \begin{itemize}
-\item transition: $User.friendRequests := User.friendRequests + \{newFriend\}$ 
+\item transition: $User.AddRequester(newFriend)$ 
 \item output: none
 \item exception: none
 \end{itemize}
 
 \noindent DeleteRequest(targetFriend):
 \begin{itemize}
-\item transition: $User.friendRequests := User.friendRequests - \{targetFriend\}$ 
+\item transition: $User.RemoveRequester(targetFriend)$ 
 \item output: none
 \item exception: $exc := targetFriend \notin User.friendRequests \Rightarrow IndexOutofBound Exception$
 \end{itemize}
 
 \noindent PinLecture(newLec):
 \begin{itemize}
-\item transition: $User.lectures := User.lectures + \{newLec\}$ 
+\item transition: $User.AddLecture(newLec)$ 
 \item output: none
 \item exception: none
 \end{itemize}
 
 \noindent UnpinLecture(targetLec):
 \begin{itemize}
-\item transition: $User.friendRequests := User.lectures - \{targetLec\}$ 
+\item transition: $User.RemoveLecture(targetLec)$ 
 \item output: none
 \item exception: $exc := targetLec \notin User.lectures \Rightarrow IndexOutofBound Exception$
 \end{itemize}
 
 \noindent PinEvent(newEvent):
 \begin{itemize}
-\item transition: $User.events := User.lectures + \{newEvent\}$ 
+\item transition: $User.AddEvent(newEvent)$ 
 \item output: none
 \item exception: none
 \end{itemize}
 
 \noindent UnpinLecture(targetEvent):
 \begin{itemize}
-\item transition: $User.friendRequests := User.events - \{targetEvent\}$ 
+\item transition: $User.RemoveEvent(targetEvent)$ 
 \item output: none
 \item exception: $exc := targetEvent \notin User.events \Rightarrow IndexOutofBound Exception$
 \end{itemize}
@@ -998,7 +1239,7 @@ Lecture List Manager
 
 \subsection{Uses}
 
-Lecture Module, Database Module
+Lecture Module, Pagination and Filter Module
 
 \subsection{Syntax}
 
@@ -1013,7 +1254,7 @@ None
 \hline
 Start & - & - & InitializationException \\
 WriteNewLec & - & - & DatabaseException \\
-GetLectures & Action<string> & - & DatabaseException \\
+GetLectures & Action$<$string$>$ & - & DatabaseException \\
 GetLectureData & - & - & CoroutineException \\
 ExitDataPage & - & - & SceneLoadingException \\
 \hline
@@ -1100,7 +1341,7 @@ None
 
 \subsubsection{Exported Access Programs}
 \begin{center}
-\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{4cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -1108,7 +1349,7 @@ Start & - & - & - \\
 Update & - & - & - \\
 HandleChildAdded & object, ChildChangedEventArgs & - & DatabaseError \\
 WriteNewEvent & - & - & InvalidDateFormatException, DatabaseException \\
-GetEvents & Action<string> & IEnumerator & - \\
+GetEvents & Action$<$string$>$ & IEnumerator & - \\
 GetEventData & - & - & - \\
 ExitDataPage & - & - & - \\
 OnDestroy & - & - & - \\
@@ -1451,6 +1692,8 @@ AR Interface
 
 \subsection{Uses}
 
+AR Camera
+
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -1462,8 +1705,8 @@ AR Interface
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-HandleInput & - & - & - \\
-Display & - & - & - \\
+Initialize & (String, $<$3D Objects$>$) & - & IllegalArgument Exception\\
+Display & String & - & llegalArgument Exception \\
 
 \hline
 \end{tabular}
@@ -1473,24 +1716,28 @@ Display & - & - & - \\
 
 \subsubsection{State Variables}
 
+\begin{itemize}
+\item dictionary: Dictionary$<$String, $<$3D Objects$>$$>$, the dictionary of target name and corresponding AR objects
+\end{itemize}
+
 \subsubsection{Environment Variables}
 
 \subsubsection{Assumptions}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent HandleInput():
+\noindent Initialize(target, objects):
 \begin{itemize}
-\item transition: none
+\item transition: $dictionary[target] := objects$
 \item output: none
-\item exception: none
+\item exception: $target \notin dictionary.keys \Rightarrow IllegalArgument Exception$
 \end{itemize}
 
-\noindent Display():
+\noindent Display(target):
 \begin{itemize}
-\item transition: none
+\item transition: Displays $dictionary[target]$ objects in Unity scene
 \item output: none
-\item exception: none
+\item exception: $target \notin dictionary.keys \Rightarrow IllegalArgument Exception$
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -1503,7 +1750,8 @@ None
 
 \subsection{Module}
 
-MapBox
+MapBox\\
+Third party library Mapbox
 
 \subsection{Uses}
 
@@ -1518,7 +1766,11 @@ MapBox
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
+Map & - & - & IllegalArgument Exception\\
 Display & - & - & - \\
+ChangeStyle & String & - & IllegalArgument Exception\\
+Pan & ($\mathbb{R}$, $\mathbb{R}$) & -\\
+Zoom &  $\mathbb{N}$ & -\\
 
 \hline
 \end{tabular}
@@ -1527,6 +1779,12 @@ Display & - & - & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
+
+\begin{itemize}
+\item MapStyle: String
+\item MapCenter: ($\mathbb{R}$, $\mathbb{R}$)
+\item Zoom: $\mathbb{N}$
+\end{itemize}
 
 \subsubsection{Environment Variables}
 
@@ -1538,9 +1796,37 @@ Display & - & - & - \\
 
 \subsubsection{Access Routine Semantics}
 
+\noindent Map():
+\begin{itemize}
+\item transition: Check APIKey and initialize the map
+\item output: none
+\item exception: $exc := APIKey expires \Rightarrow IllegalArgument Exception$
+\end{itemize}
+
 \noindent Display():
 \begin{itemize}
-\item transition: none
+\item transition: Displays a map with default state variables
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent ChangeStyle(style):
+\begin{itemize}
+\item transition: $MapStyle := style$
+\item output: none
+\item exception: $exc := style \notin MAPSTYLES \Rightarrow IllegalArgument Exception$
+\end{itemize}
+
+\noindent Pan((long, lat)):
+\begin{itemize}
+\item transition: $MapCenter := (long, lat)$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent Zoom(scale):
+\begin{itemize}
+\item transition: $Zoom := scale$
 \item output: none
 \item exception: none
 \end{itemize}
@@ -1549,6 +1835,10 @@ Display & - & - & - \\
 
 None
 
+\subsubsection{Local Constants}
+
+MAPSTYLES = a sequences of map styles with type String
+ 
 \newpage
 
 \section{MIS of Map Interface} \label{mMapInterface}
@@ -1559,6 +1849,8 @@ Map Interface
 
 \subsection{Uses}
 
+Map Module, Server Module, Database Module
+
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -1566,11 +1858,14 @@ Map Interface
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{3cm} p{3cm} p{4cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-HandleInput & - & - & - \\
+HandleInputBuilding & - & - & - \\
+DisplayAvatar & Uri, ($\mathbb{R}$, $\mathbb{R}$) & - & -\\
+DisplayUserHeatMap & - & -\\
+DisplayEventHeatMap & - & -\\
 
 \hline
 \end{tabular}
@@ -1595,9 +1890,30 @@ HandleInput & - & - & - \\
 
 \subsubsection{Access Routine Semantics}
 
-\noindent HandleInput():
+\noindent HandleInputBuilding():
 \begin{itemize}
 \item transition: Opens user interface when a building marker is tapped
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DisplayAvatar(photoUri, (long, lat)):
+\begin{itemize}
+\item transition: Displays the corresponding avatar on the map at (long, lat)
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DisplayUserHeatMap():
+\begin{itemize}
+\item transition: Retrieves collected user location data from the database and plot them on the map
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DisplayEventHeatMap():
+\begin{itemize}
+\item transition: Retrieves collected event location data from the database and plot them on the map
 \item output: none
 \item exception: none
 \end{itemize}
@@ -1616,6 +1932,8 @@ Friend Chat
 
 \subsection{Uses}
 
+Server Module
+
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -1623,7 +1941,7 @@ Friend Chat
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{3cm} p{3cm} p{4cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
