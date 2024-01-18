@@ -1336,7 +1336,7 @@ None
 
 \noindent AddLecture(newLec):
 \begin{itemize}
-\item transition: $lecList := lecList + \{newLec\}$ and update database
+\item transition: $lecList := PagniationandFilter.Add(lecList, newLec)$
 \item output: none
 \item exception: none
 \end{itemize}
@@ -1455,7 +1455,7 @@ None
 
 \noindent AddEvent(newEvent):
 \begin{itemize}
-\item transition: $eventList := eventList + \{newEvent\}$ and update database
+\item transition: $eventList := PagniationandFilter.Add(eventList, newEvent)$
 \item output: none
 \item exception: none
 \end{itemize}
@@ -1466,6 +1466,118 @@ None
 \subsubsection{Local Constants}
 
 PAGECOUNT = 10
+
+\newpage
+
+\section{MIS of Pagination and Filter Module} \label{mPF}
+
+\subsection{Module}
+
+Pagination and Filter
+
+\subsection{Uses}
+
+Database Module, Permission Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Initialize & - & - & -\\
+Display & - & - & - \\
+nextPage & - & - &  -\\
+prevPage & - & - &  -\\
+firstPage & - & - &  -\\
+lastPage & - & - &  -\\
+filter & String & - & -\\
+Add & $<$T$>$, Activity & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item list: $<$T$>$, displayed entries
+\item pageNum: $\mathbb{N}$, current page
+\item keyword: String, filter keyword
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+Activity is a generic type $<$T$>$ and it can be instantiated with type Lecture and Event.\\
+The singleton module Permission is accessible from this module.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Initialize():
+\begin{itemize}
+\item transition: $list, pageNum, keyword := $all type T entries in the database, 1, null
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent Display():
+\begin{itemize}
+\item transition: Display a list of event T, where $T := \\list.filter(keyword)[(pageNum-1) * PAGECOUNT, pageNum * PAGECOUNT]$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent nextPage():
+\begin{itemize}
+\item transition: $pageNum * PAGECOUNT < list.legnth \Rightarrow pageNum := pageNum + 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent prevPage():
+\begin{itemize}
+\item transition: $pageNum > 1 \Rightarrow pageNum := pageNum - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent firstPage():
+\begin{itemize}
+\item transition: $pageNum := 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent lastPage():
+\begin{itemize}
+\item transition: $pageNum := int(list/PAGECOUNT) + 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent Add(list, T):
+\begin{itemize}
+\item transition: none
+\item output: $out := Permission.isAdmin \Rightarrow list := list + \{T\}$ and update database
+\item exception: none
+\end{itemize}
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+
+PAGECOUNT: number of entries shown in one page
 
 \newpage
 
