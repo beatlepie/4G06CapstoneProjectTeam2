@@ -257,7 +257,7 @@ Strings passed as input are of valid format, all the state variables of the obje
 \item exception: none
 \end{itemize}
 
-\noindent SetPhotot(newUri):
+\noindent SetPhotoUri(newUri):
 \begin{itemize}
 \item transition: $photoUri := newUri$
 \item output: none
@@ -1586,7 +1586,7 @@ None
 
 \subsection{Module}
 
-RTCServer
+Real-time Server
 
 \subsection{Uses}
 
@@ -1597,12 +1597,13 @@ RTCServer
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-SendMessage & User, String & Task & - \\
-SendLocation & Group, Double, Double & Task & - \\
+SendMessage & String, String & Task & - \\
+SendLocation & String, Double, Double & Task & - \\
+RegisterHub & Hub & - & - \\
 
 \hline
 \end{tabular}
@@ -1611,26 +1612,36 @@ SendLocation & Group, Double, Double & Task & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
+\begin{itemize}
+\item hubMap: Set of Hub
+\end{itemize}
 
 \subsubsection{Environment Variables}
 
 \subsubsection{Assumptions}
 
-User identifiers are unique.
+Assume that all user identifiers are unique.
 
 \subsubsection{Access Routine Semantics}
 
 \noindent SendMessage(recipient, msg):
 \begin{itemize}
 \item transition: none
-\item output: $out :=$ Task; $out$.IsCompleted $:= True$
+\item output: $out :=$ Task $\land$ $out$.IsCompleted $:= True$
 \item exception: none
 \end{itemize}
 
 \noindent SendLocation(friendGroup, lat, lon):
 \begin{itemize}
 \item transition: none
-\item output: $out :=$ Task; $out$.IsCompleted $:= True$
+\item output: $out :=$ Task $\land$ $out$.IsCompleted $:= True$
+\item exception: none
+\end{itemize}
+
+\noindent RegisterHub(hub):
+\begin{itemize}
+\item transition: hubMap $:=$ hubMap + hub
+\item output: none
 \item exception: none
 \end{itemize}
 
@@ -1655,11 +1666,13 @@ AR Camera
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-DetectTarget & - & - & - \\
+RegisterImageTarget & Target & - & - \\
+RegisterScanTarget & Target & - & - \\
+DetectTarget & - & $\mathbb{B}$ & - \\
 
 \hline
 \end{tabular}
@@ -1668,14 +1681,16 @@ DetectTarget & - & - & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
+\begin{itemize}
+\item imageTargets: list of Target
+\item scanTargets: list of Target
+\end{itemize}
 
 \subsubsection{Environment Variables}
 
 \begin{itemize}
 \item cameraFeed: 2D array of pixels
 \item sceneCamera: Camera
-\item imageTargets: list of Target
-\item scanTargets: list of Target
 \end{itemize}
 
 
@@ -1685,7 +1700,21 @@ DetectTarget & - & - & - \\
 
 \noindent DetectTarget():
 \begin{itemize}
-\item transition: Implicitly invokes the AR Interface when a valid target is detected.
+\item transition: none
+\item output: True if target is detected
+\item exception: none
+\end{itemize}
+
+\noindent RegisterImageTarget(target):
+\begin{itemize}
+\item transition: imageTargets $:=$ imageTargets + target
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent RegisterScanTarget(target):
+\begin{itemize}
+\item transition: scanTargets $:=$ scanTargets + target
 \item output: none
 \item exception: none
 \end{itemize}
