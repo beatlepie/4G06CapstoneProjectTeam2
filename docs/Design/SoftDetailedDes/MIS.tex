@@ -1164,72 +1164,7 @@ None
 
 \newpage
 
-\section{MIS of Authentication Module} \label{mFM}
-
-\subsection{Module}
-
-Authentication
-
-\subsection{Uses}
-
-User Module, Database Module, Server Module
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-None
-
-\subsubsection{Exported Access Programs}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-\begin{itemize}
-\item User: FirebaseUser
-\end{itemize}
-
-\subsubsection{Environment Variables}
-
-None
-
-\subsubsection{Assumptions}
-
-The user will have a unique account and only has access to that account.
-
-\subsubsection{Access Routine Semantics}
-
-\noindent Register():
-\begin{itemize}
-\item transition: $friends := GetFriendsFromDB(currentUser)$ 
-\item output: none
-\item exception: none
-\end{itemize}
-
-\subsubsection{Local Functions}
-
-\noindent Login(\_email, \_password):
-\begin{itemize}
-\item transition: $\exists <\_email, \_password> \in FirebaseAuth \Rightarrow Login$
-\item output: $User = AuthResult.CurrentUser$
-\item exception: $exc:= \lnot(\exists <\_email, \_password> \in FirebaseAuth) \Rightarrow AuthFailedException$
-\end{itemize}
-
-\noindent Register():
-\begin{itemize}
-\item transition: $\lnot(\exists \_email \in FirebaseAuth) \rightarrow FirebaseAuth.add(User) \land FirebaseDatabase.add(User)$ 
-\item output: $User \in FirebaseAuth \land User \in FirebaseDatabase$
-\item exception: $\exists \_email \in FirebaseAuth \rightarrow IllegalDatabaseOperationException$
-\end{itemize}
-
-\subsubsection{Local Constants}
-
-\begin{itemize}
-  \item auth: FirebaseAuth
-  \item DatabaseReference: DatabaseReference
-\end{itemize}
-
-\newpage
+https://github.com/beatlepie/4G06CapstoneProjectTeam2.git
 
 \section{MIS of Lecture List Manager Module} \label{mLL}
 
