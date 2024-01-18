@@ -1252,11 +1252,15 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-Start & - & - & InitializationException \\
-WriteNewLec & - & - & DatabaseException \\
-GetLectures & Action$<$string$>$ & - & DatabaseException \\
-GetLectureData & - & - & CoroutineException \\
-ExitDataPage & - & - & SceneLoadingException \\
+LectureList & - & - & -\\
+Display & - & - & - \\
+OnClickLecture & Lecture & - & IllegalArgument Exception\\ 
+nextPage & - & - &  -\\
+prevPage & - & - &  -\\
+firstPage & - & - &  -\\
+lastPage & - & - &  -\\
+filter & String & - & -\\
+AddLecture & Lecture & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1266,11 +1270,9 @@ ExitDataPage & - & - & SceneLoadingException \\
 \subsubsection{State Variables}
 
 \begin{itemize}
-\item databaseReference
-\item lecList
-\item lecCode
-\item lecName
-\item lecInstructor
+\item lecList: $<$Lecture$>$, displayed lectures
+\item pageNum: $\mathbb{N}$, current page
+\item keyword: String, filter keyword
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -1279,48 +1281,72 @@ None
 
 \subsubsection{Assumptions}
 
-The lecture data is in the correct format and the database is accessible.
+None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent Start():
+\noindent LectureList():
 \begin{itemize}
-\item transition: Initializes the databaseReference and calls GetLectureData.
+\item transition: $lecList, pageNum, keyword := $all lectures in the database, 1, null
 \item output: none
-\item exception: InitializationException
+\item exception: none
 \end{itemize}
 
-\noindent WriteNewLec():
+\noindent Display():
 \begin{itemize}
-\item transition: Creates a new Lecture object with the data from lecCode, lecName, and lecInstructor, and writes it to the Firebase database.
+\item transition: Display a list of lecture displayedLecs, where $displayedLecs := \\lecList.filter(keyword)[(pageNum-1) * PAGECOUNT, pageNum * PAGECOUNT]$
 \item output: none
-\item exception: DatabaseException
+\item exception: none
 \end{itemize}
 
-\noindent GetLectures(onCallBack):
+\noindent OnClickLecture(targetLec):
 \begin{itemize}
-\item transition: Retrieves the lecture data from the Firebase database.
+\item transition: Switch to Lecture Detail view with targetLec
 \item output: none
-\item exception: DatabaseException
+\item exception: $exc := targetLec \notin lecList \Rightarrow IllegalArgument Exception$
 \end{itemize}
 
-\noindent GetLectureData():
+\noindent nextPage():
 \begin{itemize}
-\item transition: Calls GetLectures and sets the lecture data to the retrieved data.
+\item transition: $pageNum * PAGECOUNT < lecList.legnth \Rightarrow pageNum := pageNum + 1$
 \item output: none
-\item exception: CoroutineException
+\item exception: none
 \end{itemize}
 
-\noindent ExitDataPage():
+\noindent prevPage():
 \begin{itemize}
-\item transition: Changes the scene to "MenuScene".
+\item transition: $pageNum > 1 \Rightarrow pageNum := pageNum - 1$
 \item output: none
-\item exception: SceneLoadingException
+\item exception: none
 \end{itemize}
 
+\noindent firstPage():
+\begin{itemize}
+\item transition: $pageNum := 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent lastPage():
+\begin{itemize}
+\item transition: $pageNum := int(lecList/PAGECOUNT) + 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AddLecture(newLec):
+\begin{itemize}
+\item transition: $lecList := lecList + \{newLec\}$ and update database
+\item output: none
+\item exception: none
+\end{itemize}
 \subsubsection{Local Functions}
 
 None
+
+\subsubsection{Local Constants}
+
+PAGECOUNT = 10
 
 \newpage
 
@@ -1332,7 +1358,7 @@ Event List Manager
 
 \subsection{Uses}
 
-Event Module, Database Module
+Event Module, Pagination and Filter Module
 
 \subsection{Syntax}
 
@@ -1341,18 +1367,19 @@ None
 
 \subsubsection{Exported Access Programs}
 \begin{center}
-\begin{tabular}{p{4cm} p{4cm} p{4cm} p{4cm}}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-Start & - & - & - \\
-Update & - & - & - \\
-HandleChildAdded & object, ChildChangedEventArgs & - & DatabaseError \\
-WriteNewEvent & - & - & InvalidDateFormatException, DatabaseException \\
-GetEvents & Action$<$string$>$ & IEnumerator & - \\
-GetEventData & - & - & - \\
-ExitDataPage & - & - & - \\
-OnDestroy & - & - & - \\
+EventList & - & - & -\\
+Display & - & - & - \\
+OnClickEvent & Lecture & - & IllegalArgument Exception\\ 
+nextPage & - & - &  -\\
+prevPage & - & - &  -\\
+firstPage & - & - &  -\\
+lastPage & - & - &  -\\
+filter & String & - & -\\
+AddEvent & Event & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1362,98 +1389,83 @@ OnDestroy & - & - & - \\
 \subsubsection{State Variables}
 
 \begin{itemize}
-\item databaseReference
-\item eventList
-\item scrollView
-\item eventsTextRectTransform
-\item errorMessage
-\item originalPosition
-\item eventName
-\item eventDate
-\item eventLocation
-\item eventOrganizer
-\item scrollRect
+\item eventList: $<$Event$>$, displayed events
+\item pageNum: $\mathbb{N}$, current page
+\item keyword: String, filter keyword
 \end{itemize}
 
 \subsubsection{Environment Variables}
 
-\begin{itemize}
-\item eventList
-\item scrollView
-\item eventsTextRectTransform
-\item errorMessage
-\item eventName
-\item eventDate
-\item eventLocation
-\item eventOrganizer
-\item scrollRect
-\end{itemize}
+None
 
 \subsubsection{Assumptions}
 
-The event data is in the correct format and the database is accessible.
+None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent Start():
+\noindent EventList():
 \begin{itemize}
-\item transition: Initializes the databaseReference, originalPosition, and subscribes to the ChildAdded event. Calls GetEventData.
+\item transition: $eventList, pageNum, keyword := $all events in the database, 1, null
 \item output: none
 \item exception: none
 \end{itemize}
 
-\noindent Update():
+\noindent Display():
 \begin{itemize}
-\item transition: Updates the position of the eventsTextRectTransform based on the active state of scrollView.
+\item transition: Display a list of event displayedEvents, where $displayedEvents := \\eventList.filter(keyword)[(pageNum-1) * PAGECOUNT, pageNum * PAGECOUNT]$
 \item output: none
 \item exception: none
 \end{itemize}
 
-\noindent HandleChildAdded(object sender, ChildChangedEventArgs args):
+\noindent OnClickEvent(targetEvent):
 \begin{itemize}
-\item transition: If there is no database error, calls GetEvents to update the event list.
+\item transition: Switch to Event Detail view with targetEvent
 \item output: none
-\item exception: DatabaseError
+\item exception: $exc := targetEvent \notin eventList \Rightarrow IllegalArgument Exception$
 \end{itemize}
 
-\noindent WriteNewEvent():
+\noindent nextPage():
 \begin{itemize}
-\item transition: Validates the event date format, creates a new Event object, and writes it to the database.
-\item output: none
-\item exception: InvalidDateFormatException, DatabaseException
-\end{itemize}
-
-\noindent GetEvents(Action<string> onCallBack):
-\begin{itemize}
-\item transition: Retrieves event data from the database and formats it into a string.
-\item output: IEnumerator
-\item exception: none
-\end{itemize}
-
-\noindent GetEventData():
-\begin{itemize}
-\item transition: Calls GetEvents to retrieve event data and updates the eventList text and scrollRect position.
+\item transition: $pageNum * PAGECOUNT < eventList.legnth \Rightarrow pageNum := pageNum + 1$
 \item output: none
 \item exception: none
 \end{itemize}
 
-\noindent ExitDataPage():
+\noindent prevPage():
 \begin{itemize}
-\item transition: Loads the "LoginScene".
+\item transition: $pageNum > 1 \Rightarrow pageNum := pageNum - 1$
 \item output: none
 \item exception: none
 \end{itemize}
 
-\noindent OnDestroy():
+\noindent firstPage():
 \begin{itemize}
-\item transition: Unsubscribes from the ChildAdded event.
+\item transition: $pageNum := 1$
 \item output: none
 \item exception: none
 \end{itemize}
 
+\noindent lastPage():
+\begin{itemize}
+\item transition: $pageNum := int(eventList/PAGECOUNT) + 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AddEvent(newEvent):
+\begin{itemize}
+\item transition: $eventList := eventList + \{newEvent\}$ and update database
+\item output: none
+\item exception: none
+\end{itemize}
 \subsubsection{Local Functions}
 
 None
+
+\subsubsection{Local Constants}
+
+PAGECOUNT = 10
 
 \newpage
 
