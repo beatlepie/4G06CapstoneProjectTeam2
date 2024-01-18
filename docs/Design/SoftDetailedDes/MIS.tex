@@ -179,6 +179,67 @@ The following table is taken directly from the Module Guide document for this pr
 
 \newpage
 
+\section{MIS of Lecture Module} \label{mLec}
+
+\subsection{Module}
+
+Lecture
+
+\subsection{Uses}
+
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Lecture & String, String, String, String, String & Lecture & -\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item Code: Lecture code
+\item Name: Lecture name
+\item instructor: Lecture instructor
+\item time: Lecture time
+\item location: Lecture location
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+Strings passed as input are of valid format.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Lecture(code, name, instructor, time, location):
+\begin{itemize}
+\item transition: Initializes an instance of the 'Lecture' class with the given parameters.
+\item output: Instance of 'Lecture'.
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
 \section{MIS of Account Module} \label{mAccount}
 
 \subsection{Module}
@@ -869,6 +930,97 @@ The user will have a unique account and only has access to that account.
 
 \newpage
 
+\section{MIS of Lecture List Manager Module} \label{mAccount}
+
+\subsection{Module}
+
+Lecture List Manager
+
+\subsection{Uses}
+
+Lecture Module, Database Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Start & - & - & InitializationException \\
+WriteNewLec & - & - & DatabaseException \\
+GetLectures & Action<string> & - & DatabaseException \\
+GetLectureData & - & - & CoroutineException \\
+ExitDataPage & - & - & SceneLoadingException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item databaseReference
+\item lecList
+\item lecCode
+\item lecName
+\item lecInstructor
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The lecture data is in the correct format and the database is accessible.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Start():
+\begin{itemize}
+\item transition: Initializes the databaseReference and calls GetLectureData.
+\item output: none
+\item exception: InitializationException
+\end{itemize}
+
+\noindent WriteNewLec():
+\begin{itemize}
+\item transition: Creates a new Lecture object with the data from lecCode, lecName, and lecInstructor, and writes it to the Firebase database.
+\item output: none
+\item exception: DatabaseException
+\end{itemize}
+
+\noindent GetLectures(onCallBack):
+\begin{itemize}
+\item transition: Retrieves the lecture data from the Firebase database.
+\item output: none
+\item exception: DatabaseException
+\end{itemize}
+
+\noindent GetLectureData():
+\begin{itemize}
+\item transition: Calls GetLectures and sets the lecture data to the retrieved data.
+\item output: none
+\item exception: CoroutineException
+
+\noindent ExitDataPage():
+\begin{itemize}
+\item transition: Changes the scene to "MenuScene".
+\item output: none
+\item exception: SceneLoadingException
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
 
 \section{MIS of Database Module} \label{mDB}
 
