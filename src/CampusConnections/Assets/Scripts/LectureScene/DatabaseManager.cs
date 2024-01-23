@@ -25,19 +25,9 @@ public class DatabaseManager : MonoBehaviour
 
     void Start()
     {
-
         addMSG.CrossFadeAlpha(0f, 0f, false);
-
         UnityEngine.Debug.Log("db manager script running");
-        Firebase.AppOptions options = new Firebase.AppOptions();
-        options.ApiKey = "AIzaSyADnG2YOg9G7q9pddYlTthUj9G16G8dlOE";
-        options.AppId = "1:89992135088:android:0f8c9a92bf587c521e5675";
-        options.ProjectId = "campusconnections";
-        options.DatabaseUrl = new System.Uri("https://campusconnections-default-rtdb.firebaseio.com");
-        options.StorageBucket = "campusconnections.appspot.com";
-        FirebaseApp.Create(options);
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-
     }
 
 
@@ -47,7 +37,7 @@ public class DatabaseManager : MonoBehaviour
         Lecture lec = new Lecture(lecCode.text, lecName.text, lecInstructor.text, lecTimes.text, lecLocation.text);
         string lecJson = JsonUtility.ToJson(lec);
 
-        databaseReference.Child("lectures").Push().SetRawJsonValueAsync(lecJson);
+        databaseReference.Child("lectures/" + lecCode.text).SetRawJsonValueAsync(lecJson);
 
 
         addMSG.CrossFadeAlpha(1f, 0f, false);

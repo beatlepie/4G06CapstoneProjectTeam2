@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 using Firebase;
 using Firebase.Database;
 using TMPro;
+using UnityEngine.EventSystems;
 
 
 public class LectureManager : MonoBehaviour
@@ -16,7 +16,8 @@ public class LectureManager : MonoBehaviour
 
     private Transform entryContainer;
     private Transform entryTemplate;
-    private List<LectureEntry> lectureEntryList;
+    private List<Lecture> lectureEntryList;
+    public static Lecture currentLecture; //The one we want to see details
     private List<Transform> lectureEntryTransformList;
 
     private DatabaseReference databaseReference;
@@ -30,17 +31,7 @@ public class LectureManager : MonoBehaviour
     {
         UnityEngine.Debug.Log("lecture manager script running");
         //db setup
-        Firebase.AppOptions options = new Firebase.AppOptions();
-        options.ApiKey = "AIzaSyADnG2YOg9G7q9pddYlTthUj9G16G8dlOE";
-        options.AppId = "1:89992135088:android:0f8c9a92bf587c521e5675";
-        options.ProjectId = "campusconnections";
-        options.DatabaseUrl = new System.Uri("https://campusconnections-default-rtdb.firebaseio.com");
-        options.StorageBucket = "campusconnections.appspot.com";
-        FirebaseApp.Create(options);
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-
-
-
         //after db stuff
 
         pgNum.text = "1";
@@ -54,7 +45,7 @@ public class LectureManager : MonoBehaviour
 
     }
 
-    private void CreateLectureEntryTransform(LectureEntry lectureEntry, Transform container, List<Transform> transformList)
+    private void CreateLectureEntryTransform(Lecture lectureEntry, Transform container, List<Transform> transformList)
     {
         float templateHeight = 130f;
         Transform entryTransform = Instantiate(entryTemplate, container);
@@ -89,7 +80,7 @@ public class LectureManager : MonoBehaviour
     IEnumerator GetLectures(Action<string> onCallBack)
     {
         var lecInfo = new List<string>();
-        lectureEntryList = new List<LectureEntry>();
+        lectureEntryList = new List<Lecture>();
 
         var entriesPerPage = 10;
 
@@ -113,15 +104,7 @@ public class LectureManager : MonoBehaviour
                 }
                 result += "\n";
                 // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
-                LectureEntry newEntry = new LectureEntry();
-                newEntry.code = lecInfo[0];
-                newEntry.instructor = lecInfo[1];
-                newEntry.location = lecInfo[2];
-                newEntry.name = lecInfo[3];
-                newEntry.time = lecInfo[4];
-
-                //UnityEngine.Debug.Log(newEntry.code);
-
+                Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
                 lectureEntryList.Add(newEntry);
                 //empty lecInfo for next iteration
                 lecInfo.Clear();
@@ -141,7 +124,7 @@ public class LectureManager : MonoBehaviour
                 if (lectureEntryList[i] != null)
                 {
                     //UnityEngine.Debug.Log(i);
-                    LectureEntry lectureEntry = lectureEntryList[i];
+                    Lecture lectureEntry = lectureEntryList[i];
                     CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
                 }
             }
@@ -264,7 +247,7 @@ public class LectureManager : MonoBehaviour
         var searchStr = SearchString.text;
 
 
-        lectureEntryList = new List<LectureEntry>();
+        lectureEntryList = new List<Lecture>();
 
         var entriesPerPage = 10;
 
@@ -290,15 +273,7 @@ public class LectureManager : MonoBehaviour
                 result += "\n";
                 // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
 
-                LectureEntry newEntry = new LectureEntry();
-                newEntry.code = lecInfo[0];
-                newEntry.instructor = lecInfo[1];
-                newEntry.location = lecInfo[2];
-                newEntry.name = lecInfo[3];
-                newEntry.time = lecInfo[4];
-
-
-
+                Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
                 if (newEntry.code.Contains(searchStr))
                 {
                     UnityEngine.Debug.Log("match found");
@@ -323,7 +298,7 @@ public class LectureManager : MonoBehaviour
                 if (lectureEntryList[i] != null)
                 {
                     //UnityEngine.Debug.Log(i);
-                    LectureEntry lectureEntry = lectureEntryList[i];
+                    Lecture lectureEntry = lectureEntryList[i];
                     CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
                 }
             }
@@ -352,7 +327,7 @@ public class LectureManager : MonoBehaviour
         var searchStr = SearchString.text;
 
 
-        lectureEntryList = new List<LectureEntry>();
+        lectureEntryList = new List<Lecture>();
 
         var entriesPerPage = 10;
 
@@ -378,15 +353,7 @@ public class LectureManager : MonoBehaviour
                 result += "\n";
                 // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
 
-                LectureEntry newEntry = new LectureEntry();
-                newEntry.code = lecInfo[0];
-                newEntry.instructor = lecInfo[1];
-                newEntry.location = lecInfo[2];
-                newEntry.name = lecInfo[3];
-                newEntry.time = lecInfo[4];
-
-
-
+                Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
                 if (newEntry.instructor.Contains(searchStr))
                 {
                     UnityEngine.Debug.Log("match found");
@@ -411,7 +378,7 @@ public class LectureManager : MonoBehaviour
                 if (lectureEntryList[i] != null)
                 {
                     //UnityEngine.Debug.Log(i);
-                    LectureEntry lectureEntry = lectureEntryList[i];
+                    Lecture lectureEntry = lectureEntryList[i];
                     CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
                 }
             }
@@ -441,7 +408,7 @@ public class LectureManager : MonoBehaviour
         var searchStr = SearchString.text;
 
 
-        lectureEntryList = new List<LectureEntry>();
+        lectureEntryList = new List<Lecture>();
 
         var entriesPerPage = 10;
 
@@ -467,15 +434,7 @@ public class LectureManager : MonoBehaviour
                 result += "\n";
                 // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
 
-                LectureEntry newEntry = new LectureEntry();
-                newEntry.code = lecInfo[0];
-                newEntry.instructor = lecInfo[1];
-                newEntry.location = lecInfo[2];
-                newEntry.name = lecInfo[3];
-                newEntry.time = lecInfo[4];
-
-
-
+                Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
                 if (newEntry.location.Contains(searchStr))
                 {
                     UnityEngine.Debug.Log("match found");
@@ -500,29 +459,21 @@ public class LectureManager : MonoBehaviour
                 if (lectureEntryList[i] != null)
                 {
                     //UnityEngine.Debug.Log(i);
-                    LectureEntry lectureEntry = lectureEntryList[i];
+                    Lecture lectureEntry = lectureEntryList[i];
                     CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
                 }
             }
-
-
             onCallBack.Invoke(result);
         }
-
-
     }
 
-
-
-    private class LectureEntry
+    public void OnEntryClick()
     {
-        public string code;
-        public string instructor;
-        public string location;
-        public string name;
-        public string time;
+        GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+        string code = template.transform.Find("codeText").GetComponent<TMP_Text>().text;
+        Lecture target = lectureEntryList.Find(lecture => lecture.code == code);
+        currentLecture = target;
     }
-
 }
 
 
