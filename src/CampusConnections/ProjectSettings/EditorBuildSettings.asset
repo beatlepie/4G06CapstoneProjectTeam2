@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FriendScene.unity
     guid: 0826616858884b04aa00e15bbfa0ad9d
+  - enabled: 1
+    path: Assets/Scenes/SettingsScene.unity
+    guid: 005f3bb15fc6ceb4292f85f39d15199d
   m_configObjects: {}

@@ -22,6 +22,7 @@ public class AuthManager : MonoBehaviour
     public TMP_InputField passwordLoginField;
     public TMP_Text warningLoginText;
     public TMP_Text confirmLoginText;
+    public TMP_InputField forgetEmailField;
 
     //Register variables
     [Header("Register")]
@@ -68,6 +69,15 @@ public class AuthManager : MonoBehaviour
     {
         //Call the register coroutine passing the email, password, and username
         StartCoroutine(Register(emailRegisterField.text, passwordRegisterField.text, usernameRegisterField.text));
+    }
+
+    public void ForgetPasswordButton()
+    {
+        forgetEmailField.text = "";
+    }
+    public void ForgetPasswordSubmitButton()
+    {
+        StartCoroutine(ForgetPassword(forgetEmailField.text));
     }
 
     private IEnumerator Login(string _email, string _password)
@@ -198,6 +208,26 @@ public class AuthManager : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    private IEnumerator ForgetPassword(string _email)
+    {
+        Task ResetPwdTask = auth.SendPasswordResetEmailAsync(_email);
+        yield return new WaitUntil(predicate: () => ResetPwdTask.IsCompleted);
+        if(ResetPwdTask.IsFaulted)
+        {
+            Debug.LogError("SendPasswordResetEmailAsync encountered an error: " + ResetPwdTask.Exception);
+            warningRegisterText.text = "SendPasswordResetEmailAsync encountered an error:" + ResetPwdTask.Exception;            
+        }
+        else if (ResetPwdTask.IsCanceled)
+        {
+            Debug.LogError("SendPasswordResetEmailAsync was canceled.");
+            warningRegisterText.text = "SendPasswordResetEmailAsync was canceled.";
+        }
+        else
+        {
+            confirmLoginText.text = "Password reset email sent successfully.";
         }
     }
 }
