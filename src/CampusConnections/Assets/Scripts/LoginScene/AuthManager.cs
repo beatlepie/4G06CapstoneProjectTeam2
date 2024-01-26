@@ -120,6 +120,11 @@ public class AuthManager : MonoBehaviour
             //User is now logged in
             //Now get the result
             User = LoginTask.Result.User;
+            if (!User.IsEmailVerified)
+            {
+                Task verification = User.SendEmailVerificationAsync();
+                yield return new WaitUntil(predicate: () => verification.IsCompleted);
+            }
             Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
@@ -205,6 +210,20 @@ public class AuthManager : MonoBehaviour
                         string emailWithoutDot = Utilities.removeDot(User.Email);
                         databaseReference.Child("users").Child(emailWithoutDot).SetRawJsonValueAsync(JsonUtility.ToJson(user));
                         warningRegisterText.text = "";
+
+                        // Since the registration was success, the email verification can be sent
+                        Task verification = User.SendEmailVerificationAsync();
+                        yield return new WaitUntil(predicate: () => verification.IsCompleted);
+
+                        // If it fails, will attempt at login instead!
+                        if (verification.IsCompletedSuccessfully)
+                        {
+                            confirmLoginText.text = "Email verification sent!";
+                        }
+                        else
+                        {
+                            confirmLoginText.text = "Email verification will be sent on login!";
+                        }
                     }
                 }
             }
