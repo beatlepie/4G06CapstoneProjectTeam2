@@ -9,11 +9,12 @@ using System.Collections.Generic;
 
 public class SettingsManager : MonoBehaviour
 {
-    public static SettingsManager instance;
-
+    // These are used for accessing database and current user
     private FirebaseAuth auth;
     private DatabaseReference db;
-    private FirebaseUser query;
+    // These are used to open the profile page for other users
+    public static bool currentUser;
+    public static FirebaseUser query;
 
     [Header("Canvas")]
     // Canvas containing user information
@@ -46,18 +47,20 @@ public class SettingsManager : MonoBehaviour
     public TMP_InputField NewPassword;
     public TMP_InputField ConfirmPassword;
 
+    [Header("Pinned")]
+    [SerializeField] Transform PinnedTemplate;
+
     private void Start()
     {
         // This value should be the query user value when navigated from friend!
         auth = FirebaseAuth.DefaultInstance;
-        query = auth.CurrentUser;
         db = FirebaseDatabase.DefaultInstance.RootReference;
         // Display is the default view
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
         PasswordCanvas.SetActive(false);
         // If the id is not the user, then remove the edit button!
-        if (auth.CurrentUser != query)
+        if (currentUser)
         {
             EditButton.SetActive(false);
             ChangePasswordButton.SetActive(false);
@@ -72,48 +75,78 @@ public class SettingsManager : MonoBehaviour
         }));
     }
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != null)
-        {
-            Debug.Log("Instance already exists, destroying object!");
-            Destroy(this);
-        }
-    }
-
     /// <summary>
-    /// Function for calling values from the database.
+    /// 
     /// </summary>
-    private IEnumerator getDBdata(Action<List<string>> onCallBack)
+    //private void favorites()
+    //{
+    //    StartCoroutine(getFavorites((List<string> data) =>
+    //    {
+    //        foreach (string entry in data)
+    //        {
+    //            Transform entryTransform = Instantiate(friendEntryTemplate, friendEntryContainer);
+    //            RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+    //            entryRectTransform.anchoredPosition = new Vector2(0, -friendEntryHeight * friendEntryTransformList.Count);
+    //            entryTransform.gameObject.SetActive(true);
+    //            entryTransform.Find("Email").GetComponent<TMP_Text>().text = friend.email;
+    //            entryTransform.Find("Name").GetComponent<TMP_Text>().text = friend.nickName;
+    //            friendEntryTransformList.Add(entryTransform);
+    //        }
+    //        if (friendEntryHeight * friends.Count > 1460)
+    //        {
+    //            // If the friend list is short, the default container height is viewport height (1460)
+    //            friendEntryContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(800, friendEntryHeight * friends.Count);
+    //        }
+    //    }));
+
+    //}
+
+    private IEnumerable getFavorites(Action<List<string>> onCallBack)
     {
-        List<string> userData = new List<string>();
-
-        var value = db.Child("users").Child(Utilities.removeDot(query.Email)).GetValueAsync();
-        yield return new WaitUntil(predicate: () => value.IsCompleted);
-
-        if(value != null)
+        string emailWithoutDot = Utilities.removeDot(auth.CurrentUser.Email);
+        var userData = db.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
+        yield return new WaitUntil(predicate: () => userData.IsCompleted);
+        if (userData != null)
         {
-            DataSnapshot item = value.Result;
-            userData.Add(item.Child("email").Value.ToString());
-            userData.Add(item.Child("level").Value.ToString());
-            userData.Add(item.Child("nickName").Value.ToString());
-            userData.Add(item.Child("program").Value.ToString());
+            List<string> pinnedLectures = new List<string>();
+            DataSnapshot snapshot = userData.Result;
+            foreach (var x in snapshot.Children)
+            {
+                pinnedLectures.Add(x.Key.ToString());
+            }
+            onCallBack.Invoke(pinnedLectures);
         }
-        else
-        {
-            // TODO: make this better?
-            // Handles case where no data was retrieved
-            userData.Add("Email Placeholder");
-            userData.Add("Level Placeholder");
-            userData.Add("Username Placeholder");
-            userData.Add("Program Placeholder");
-        }
-        onCallBack.Invoke(userData);
     }
+
+        /// <summary>
+        /// Function for calling values from the database.
+        /// </summary>
+        private IEnumerator getDBdata(Action<List<string>> onCallBack)
+        {
+            List<string> userData = new List<string>();
+
+            var value = db.Child("users").Child(Utilities.removeDot(query.Email)).GetValueAsync();
+            yield return new WaitUntil(predicate: () => value.IsCompleted);
+
+            if(value != null)
+            {
+                DataSnapshot item = value.Result;
+                userData.Add(item.Child("email").Value.ToString());
+                userData.Add(item.Child("level").Value.ToString());
+                userData.Add(item.Child("nickName").Value.ToString());
+                userData.Add(item.Child("program").Value.ToString());
+            }
+            else
+            {
+                // TODO: make this better?
+                // Handles case where no data was retrieved
+                userData.Add("Email Placeholder");
+                userData.Add("Level Placeholder");
+                userData.Add("Username Placeholder");
+                userData.Add("Program Placeholder");
+            }
+            onCallBack.Invoke(userData);
+        }
 
     /// <summary>
     /// Function for updating the db with the new data set by the user.
@@ -189,7 +222,6 @@ public class SettingsManager : MonoBehaviour
         });
 
         // Need to fix this, this method must be coroutined to work!
-        status.ForceMeshUpdate(true);
 
         // Leaving the IEnumerator code here just in case!
         //Debug.LogFormat("new password attempt!");
@@ -238,7 +270,7 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void Return()
     {
-    SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene("MenuScene");
     }
 
     /// <summary>
