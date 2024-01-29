@@ -49,6 +49,7 @@ public class SettingsManager : MonoBehaviour
 
     [Header("Pinned")]
     [SerializeField] Transform PinnedTemplate;
+    [SerializeField] Transform PinnedView;
 
     private void Start()
     {
@@ -59,8 +60,11 @@ public class SettingsManager : MonoBehaviour
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
         PasswordCanvas.SetActive(false);
+
+        currentUser = true;
+        query = auth.CurrentUser;
         // If the id is not the user, then remove the edit button!
-        if (currentUser)
+        if (!currentUser)
         {
             EditButton.SetActive(false);
             ChangePasswordButton.SetActive(false);
@@ -73,36 +77,38 @@ public class SettingsManager : MonoBehaviour
             level.text = data[1];
             program.text = data[3];
         }));
+
+        favorites();
+    }
+
+    private void favorites()
+    {
+        StartCoroutine(getPinned((List<string> data) =>
+        {
+            int entryHeight = -100;
+
+            for (int i = 0; i < data.Count; i = i + 2)
+            {
+                Transform entryTransform = Instantiate(PinnedTemplate, PinnedView);
+                RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+                entryRectTransform.anchoredPosition = new Vector2(0, entryHeight * i/3);
+                entryTransform.gameObject.SetActive(true);
+
+                entryTransform.Find("Code").GetComponent<TMP_Text>().text = data[i];
+                entryTransform.Find("Name").GetComponent<TMP_Text>().text = data[i+1];
+                entryTransform.Find("Data").GetComponent<TMP_Text>().text = data[i+1];
+            }
+        }));
     }
 
     /// <summary>
-    /// 
+    /// Returns the list of pinned events and lectures.
     /// </summary>
-    //private void favorites()
-    //{
-    //    StartCoroutine(getFavorites((List<string> data) =>
-    //    {
-    //        foreach (string entry in data)
-    //        {
-    //            Transform entryTransform = Instantiate(friendEntryTemplate, friendEntryContainer);
-    //            RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-    //            entryRectTransform.anchoredPosition = new Vector2(0, -friendEntryHeight * friendEntryTransformList.Count);
-    //            entryTransform.gameObject.SetActive(true);
-    //            entryTransform.Find("Email").GetComponent<TMP_Text>().text = friend.email;
-    //            entryTransform.Find("Name").GetComponent<TMP_Text>().text = friend.nickName;
-    //            friendEntryTransformList.Add(entryTransform);
-    //        }
-    //        if (friendEntryHeight * friends.Count > 1460)
-    //        {
-    //            // If the friend list is short, the default container height is viewport height (1460)
-    //            friendEntryContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(800, friendEntryHeight * friends.Count);
-    //        }
-    //    }));
-
-    //}
-
-    private IEnumerable getFavorites(Action<List<string>> onCallBack)
+    /// <param name="onCallBack">List to be returned.</param>
+    /// <returns>Returns list of events/lectures that are pinned by the user. </returns>
+    private IEnumerator getPinned(Action<List<string>> onCallBack)
     {
+        //Currently a duplicate of a function in the lecture view side!
         string emailWithoutDot = Utilities.removeDot(auth.CurrentUser.Email);
         var userData = db.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
@@ -113,40 +119,47 @@ public class SettingsManager : MonoBehaviour
             foreach (var x in snapshot.Children)
             {
                 pinnedLectures.Add(x.Key.ToString());
+
+                var lecture = db.Child("lectures").Child(x.Key.ToString()).GetValueAsync();
+                yield return new WaitUntil(predicate: () => lecture.IsCompleted);
+
+                Debug.LogError(lecture.Result.Child("location").Value.ToString());
+                pinnedLectures.Add(lecture.Result.Child("location").Value.ToString());
+                
             }
             onCallBack.Invoke(pinnedLectures);
         }
     }
 
-        /// <summary>
-        /// Function for calling values from the database.
-        /// </summary>
-        private IEnumerator getDBdata(Action<List<string>> onCallBack)
+    /// <summary>
+    /// Function for calling values from the database.
+    /// </summary>
+    private IEnumerator getDBdata(Action<List<string>> onCallBack)
+    {
+        List<string> userData = new List<string>();
+
+        var value = db.Child("users").Child(Utilities.removeDot(query.Email)).GetValueAsync();
+        yield return new WaitUntil(predicate: () => value.IsCompleted);
+
+        if (value != null)
         {
-            List<string> userData = new List<string>();
-
-            var value = db.Child("users").Child(Utilities.removeDot(query.Email)).GetValueAsync();
-            yield return new WaitUntil(predicate: () => value.IsCompleted);
-
-            if(value != null)
-            {
-                DataSnapshot item = value.Result;
-                userData.Add(item.Child("email").Value.ToString());
-                userData.Add(item.Child("level").Value.ToString());
-                userData.Add(item.Child("nickName").Value.ToString());
-                userData.Add(item.Child("program").Value.ToString());
-            }
-            else
-            {
-                // TODO: make this better?
-                // Handles case where no data was retrieved
-                userData.Add("Email Placeholder");
-                userData.Add("Level Placeholder");
-                userData.Add("Username Placeholder");
-                userData.Add("Program Placeholder");
-            }
-            onCallBack.Invoke(userData);
+            DataSnapshot item = value.Result;
+            userData.Add(item.Child("email").Value.ToString());
+            userData.Add(item.Child("level").Value.ToString());
+            userData.Add(item.Child("nickName").Value.ToString());
+            userData.Add(item.Child("program").Value.ToString());
         }
+        else
+        {
+            // TODO: make this better?
+            // Handles case where no data was retrieved
+            userData.Add("Email Placeholder");
+            userData.Add("Level Placeholder");
+            userData.Add("Username Placeholder");
+            userData.Add("Program Placeholder");
+        }
+        onCallBack.Invoke(userData);
+    }
 
     /// <summary>
     /// Function for updating the db with the new data set by the user.
@@ -311,4 +324,13 @@ public class SettingsManager : MonoBehaviour
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
     }
+
+    // Copied over from lecturemanager, need to change for pinned view!
+    //public void OnEntryClick()
+    //{
+    //    GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+    //    string code = template.transform.Find("codeText").GetComponent<TMP_Text>().text;
+    //    Lecture target = lectureEntryList.Find(lecture => lecture.code == code);
+    //    currentLecture = target;
+    //}
 }
