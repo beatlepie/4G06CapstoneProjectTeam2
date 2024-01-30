@@ -1,0 +1,118 @@
+\documentclass{article}
+ 
+\usepackage{float}
+\restylefloat{table}
+ 
+\usepackage{booktabs}
+ 
+\title{Team Contributions: Rev 0\\\progname}
+ 
+\author{\authname}
+ 
+\date{}
+ 
+\input{../Comments}
+\input{../Common}
+ 
+\begin{document}
+ 
+\maketitle
+
+\section{Demo Plans}
+
+For the demo, we plan to demonstrate the following:
+\begin{itemize}
+    \item Social feature: Friend Chatting
+    \item Upgraded UI
+    \item Login Page
+    \item Menu Page
+    \item Friend and Friend Request Pages
+    \item Lecture and Lecture Detail View Pages
+    \item Single-user Map Page
+    \item User Profile Page
+    \item AR Camera (JHE only, will show a recorded video)
+    \item CI/CD
+\end{itemize}
+
+\section{Meeting Attendance}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Student} & \textbf{Meetings}\\
+\midrule
+Total & 17\\
+Firas Elayan & 9\\
+Abhiram Neelamraju & 11\\
+Zihao Du & 17\\
+Matthew Miller & 16\\
+Michael Kim & 17\\
+Waseef Nayeem & 17\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Lecture Attendance}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Student} & \textbf{Lectures}\\
+\midrule
+Total & 2\\
+Firas Elayan & 0\\
+Abhiram Neelamraju & 0\\
+Zihao Du & 2\\
+Matthew Miller & 1\\
+Michael Kim & 2\\
+Waseef Nayeem & 2\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Commits}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Student} & \textbf{Commits} & \textbf{Percent}\\
+\midrule
+Total & 77 & 100\% \\
+Firas Elayan & 4 & 5.2\%\\
+Abhiram Neelamraju & 10 & 13.0\%\\
+Zihao Du & 25& 32.5\%\\
+Matthew Miller & 12 & 15.6\%\\
+Michael Kim & 14& 18.2\%\\
+Waseef Nayeem & 12 & 15.6\%\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Issue Tracker}
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Student} & \textbf{Authored (O+C)} & \textbf{Assigned (C only)}\\
+\midrule
+Firas Elayan & 12 & 8\\
+Abhiram Neelamraju & 10 & 9\\
+Zihao Du & 26 & 25\\
+Matthew Miller & 17 & 17\\
+Michael Kim & 12 & 13\\
+Waseef Nayeem & 15 & 12\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{CICD}
+\begin{itemize}
+    \item Linter Docs: Do a chxTex check to lint the latex documentations we have had
+    \item Linter Code: Run Super-Linter for the C\# scripts we created under the folder `CampusConnections/Assets/Scripts/'
+    \item TODO: Unit test: Run simple unit tests for the Unity project
+    \item TODO: Server Deployment: Automated build and deployment of the ASP.NET Core server to Azure App Services
+\end{itemize}
+\end{document}
