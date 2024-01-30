@@ -34,7 +34,7 @@ public class DatabaseManager : MonoBehaviour
     public void WriteNewLec()
     {
         //UnityEngine.Debug.Log(ServerValue.Timestamp);
-        Lecture lec = new Lecture(lecCode.text, lecName.text, lecInstructor.text, lecTimes.text, lecLocation.text);
+        Lecture lec = new Lecture(lecCode.text, lecInstructor.text, lecLocation.text, lecName.text, lecTimes.text);
         string lecJson = JsonUtility.ToJson(lec);
 
         databaseReference.Child("lectures/" + lecCode.text).SetRawJsonValueAsync(lecJson);
