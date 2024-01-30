@@ -7,42 +7,88 @@ using Firebase.Database;
 using TMPro;
 using UnityEngine.EventSystems;
 
-
 public class LectureManager : MonoBehaviour
 {
-
+    [Header("List View")]
     [SerializeField] TMP_Dropdown FilterDropdown;
     [SerializeField] TMP_InputField SearchString;
-
     private Transform entryContainer;
     private Transform entryTemplate;
     private List<Lecture> lectureEntryList;
-    public static Lecture currentLecture; //The one we want to see details
+    private List<Lecture> filteredList;
     private List<Transform> lectureEntryTransformList;
-
-    private DatabaseReference databaseReference;
     public TMP_Text lecList;
-
     public TMP_Text pgNum;
-
     public int maxPages;
+    public const int PAGECOUNT = 10;
 
+    [Header("Detail View")]
+    public static Lecture currentLecture; //The one we want to see details
+
+    [Header("Database")]
+    public DatabaseReference databaseReference;
     private void Awake()
     {
         UnityEngine.Debug.Log("lecture manager script running");
         //db setup
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         //after db stuff
-
         pgNum.text = "1";
         entryContainer = transform.Find("lectureEntryContainer");
         entryTemplate = entryContainer.Find("lectureEntryTemplate");
         entryTemplate.gameObject.SetActive(false);
-        lectureEntryTransformList = new List<Transform>();
-
-
         GetLectureData();
+    }
 
+    public void GetLectureData()
+    {
+        StartCoroutine(GetLectures());
+    }
+
+    IEnumerator GetLectures()
+    {
+        lectureEntryTransformList = new List<Transform>();
+        lectureEntryList = new List<Lecture>();
+        var lecInfo = new List<string>();
+        var lectureData = databaseReference.Child("lectures").OrderByKey().StartAt("-").GetValueAsync();
+        yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
+        if (lectureData != null)
+        {
+            string result = "";
+            DataSnapshot snapshot = lectureData.Result;
+            foreach (var x in snapshot.Children)
+            {
+                foreach (var i in x.Children)
+                {
+                    result += i.Value + " ";
+                    lecInfo.Add(i.Value.ToString());
+                    //UnityEngine.Debug.Log(lecInfo);
+                }
+                result += "\n";
+                // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
+                Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
+                lectureEntryList.Add(newEntry);
+                filteredList = new List<Lecture>(lectureEntryList);
+                //empty lecInfo for next iteration
+                lecInfo.Clear();
+                //CreateLectureEntryTransform(newEntry, entryContainer, lectureEntryTransformList);
+            }
+            maxPages = lectureEntryList.Count % PAGECOUNT == 0 ? lectureEntryList.Count / PAGECOUNT : (int)(lectureEntryList.Count / PAGECOUNT) + 1;
+            DisplayLectureList();
+        }
+    }
+
+    public void DisplayLectureList()
+    {
+        for (int i = ((Int32.Parse(pgNum.text) - 1) * PAGECOUNT); i < Math.Min((Int32.Parse(pgNum.text)) * PAGECOUNT, filteredList.Count); i++)
+        {
+            if (filteredList[i] != null)
+            {
+                //UnityEngine.Debug.Log(i);
+                Lecture lectureEntry = filteredList[i];
+                CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
+            }
+        }
     }
 
     private void CreateLectureEntryTransform(Lecture lectureEntry, Transform container, List<Transform> transformList)
@@ -72,399 +118,79 @@ public class LectureManager : MonoBehaviour
         {
             Destroy(entryTransform.gameObject);
         }
-
         lectureEntryTransformList.Clear();  //even after destroying size isnt 0 so we have to clear
-
-    }
-
-    IEnumerator GetLectures(Action<string> onCallBack)
-    {
-        var lecInfo = new List<string>();
-        lectureEntryList = new List<Lecture>();
-
-        var entriesPerPage = 10;
-
-        var lectureData = databaseReference.Child("lectures").OrderByKey().StartAt("-").LimitToFirst(60).GetValueAsync();
-
-
-
-        yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
-        if (lectureData != null)
-        {
-
-            string result = "";
-            DataSnapshot snapshot = lectureData.Result;
-            foreach (var x in snapshot.Children)
-            {
-                foreach (var i in x.Children)
-                {
-                    result += i.Value + " ";
-                    lecInfo.Add(i.Value.ToString());
-                    //UnityEngine.Debug.Log(lecInfo);
-                }
-                result += "\n";
-                // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
-                Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
-                lectureEntryList.Add(newEntry);
-                //empty lecInfo for next iteration
-                lecInfo.Clear();
-
-                //CreateLectureEntryTransform(newEntry, entryContainer, lectureEntryTransformList);
-
-
-            }
-
-
-
-            maxPages = (int)(lectureEntryList.Count / entriesPerPage);
-            //UnityEngine.Debug.Log(maxPages);
-
-            for (int i = ((Int32.Parse(pgNum.text) - 1) * entriesPerPage); i < Math.Min((Int32.Parse(pgNum.text)) * entriesPerPage, lectureEntryList.Count); i++)
-            {
-                if (lectureEntryList[i] != null)
-                {
-                    //UnityEngine.Debug.Log(i);
-                    Lecture lectureEntry = lectureEntryList[i];
-                    CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
-                }
-            }
-
-
-            onCallBack.Invoke(result);
-        }
-    }
-
-    public void GetLectureData()
-    {
-        StartCoroutine(GetLectures((string data) =>
-        {
-            //lecList.text = data;
-        }));
     }
 
     public void nextPage()
     {
-        if (Int32.Parse(pgNum.text) > maxPages)
+        if (Int32.Parse(pgNum.text) == maxPages)
         {
             return;
         }
-        //clearing();
         pgNum.text = (Int32.Parse(pgNum.text) + 1).ToString();
-        //GetLectureData();
     }
 
     public void prevPage()
     {
-        if (Int32.Parse(pgNum.text) < 2)
+        if (Int32.Parse(pgNum.text) <= 1)
         {
             return;
         }
-        //clearing();
         pgNum.text = (Int32.Parse(pgNum.text) - 1).ToString();
-        //GetLectureData();
     }
 
     public void lastPage()
     {
-
-        //clearing();
-        pgNum.text = (maxPages + 1).ToString();
-        //GetLectureData();
+        pgNum.text = (maxPages).ToString();
     }
 
     public void firstPage()
     {
-
-        //clearing();
-        pgNum.text = (1).ToString();
-        //GetLectureData();
-    }
-
-
-    /// <summary>
-    ///
-    /// </summary>
-
-
-
-    public void FilterSearch()
-    {
-        var selection = FilterDropdown.options[FilterDropdown.value].text;
-        var searchStr = SearchString.text;
-
         pgNum.text = "1";
-
-        GetFilteredData(selection, searchStr);
-
     }
 
-    public void GetFilteredData(string selection, string searchStr)
+    public void onFilter()
     {
-
-        if (selection == "Code")
+        filteredList.Clear();
+        switch (FilterDropdown.value)
         {
-            UnityEngine.Debug.Log("Code branch");
-            GetLectureDataByCode();
+            case(0):
+            // Code
+                foreach (Lecture l in lectureEntryList)
+                {
+                    if(l.code.Contains(SearchString.text))
+                    {
+                        filteredList.Add(l);
+                    }
+                }
+                break;
+            case(1):
+            // Instructor
+                foreach (Lecture l in lectureEntryList)
+                {
+                    if(l.instructor.Contains(SearchString.text))
+                    {
+                        filteredList.Add(l);
+                    }
+                }
+                break;
+            case(2):
+            // Location
+                foreach (Lecture l in lectureEntryList)
+                {
+                    if(l.location.Contains(SearchString.text))
+                    {
+                        filteredList.Add(l);
+                    }
+                }
+                break;
+            default:
+                filteredList = lectureEntryList;
+                break;
         }
-
-        else if (selection == "Instructor")
-        {
-            UnityEngine.Debug.Log("Instructor branch");
-            GetLectureDataByInstructor();
-        }
-        else if (selection == "Location")
-        {
-            UnityEngine.Debug.Log("Location branch");
-            GetLectureDataByLocation();
-        }
-        else
-        {
-            UnityEngine.Debug.Log("Wrong branch");
-        }
-        /*
-        StartCoroutine(GetLectures((string data) =>
-        {
-            //lecList.text = data;
-        }));
-        */
-    }
-
-
-    public void GetLectureDataByCode()
-    {
-        StartCoroutine(GetLecturesByCode((string data) =>
-        {
-            //lecList.text = data;
-        }));
-    }
-
-
-
-    IEnumerator GetLecturesByCode(Action<string> onCallBack)
-    {
-        var lecInfo = new List<string>();
-
-        var searchStr = SearchString.text;
-
-
-        lectureEntryList = new List<Lecture>();
-
-        var entriesPerPage = 10;
-
-        var lectureData = databaseReference.Child("lectures").OrderByKey().StartAt("-").LimitToFirst(60).GetValueAsync();
-        yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
-        if (lectureData != null)
-        {
-
-            string result = "";
-            DataSnapshot snapshot = lectureData.Result;
-
-
-
-
-            foreach (var x in snapshot.Children)
-            {
-                foreach (var i in x.Children)
-                {
-                    result += i.Value + " ";
-                    lecInfo.Add(i.Value.ToString());
-                    //UnityEngine.Debug.Log(lecInfo);
-                }
-                result += "\n";
-                // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
-
-                Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
-                if (newEntry.code.Contains(searchStr))
-                {
-                    UnityEngine.Debug.Log("match found");
-                    lectureEntryList.Add(newEntry);
-                }
-
-                //empty lecInfo for next iteration
-                lecInfo.Clear();
-
-                //CreateLectureEntryTransform(newEntry, entryContainer, lectureEntryTransformList);
-
-
-            }
-
-
-
-            maxPages = (int)(lectureEntryList.Count / entriesPerPage);
-            //UnityEngine.Debug.Log(maxPages);
-
-            for (int i = ((Int32.Parse(pgNum.text) - 1) * entriesPerPage); i < Math.Min((Int32.Parse(pgNum.text)) * entriesPerPage, lectureEntryList.Count); i++)
-            {
-                if (lectureEntryList[i] != null)
-                {
-                    //UnityEngine.Debug.Log(i);
-                    Lecture lectureEntry = lectureEntryList[i];
-                    CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
-                }
-            }
-
-
-            onCallBack.Invoke(result);
-        }
-
-
-    }
-
-    public void GetLectureDataByInstructor()
-    {
-        StartCoroutine(GetLecturesByInstructor((string data) =>
-        {
-            //lecList.text = data;
-        }));
-    }
-
-
-
-    IEnumerator GetLecturesByInstructor(Action<string> onCallBack)
-    {
-        var lecInfo = new List<string>();
-
-        var searchStr = SearchString.text;
-
-
-        lectureEntryList = new List<Lecture>();
-
-        var entriesPerPage = 10;
-
-        var lectureData = databaseReference.Child("lectures").OrderByKey().StartAt("-").LimitToFirst(60).GetValueAsync();
-        yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
-        if (lectureData != null)
-        {
-
-            string result = "";
-            DataSnapshot snapshot = lectureData.Result;
-
-
-
-
-            foreach (var x in snapshot.Children)
-            {
-                foreach (var i in x.Children)
-                {
-                    result += i.Value + " ";
-                    lecInfo.Add(i.Value.ToString());
-                    //UnityEngine.Debug.Log(lecInfo);
-                }
-                result += "\n";
-                // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
-
-                Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
-                if (newEntry.instructor.Contains(searchStr))
-                {
-                    UnityEngine.Debug.Log("match found");
-                    lectureEntryList.Add(newEntry);
-                }
-
-                //empty lecInfo for next iteration
-                lecInfo.Clear();
-
-                //CreateLectureEntryTransform(newEntry, entryContainer, lectureEntryTransformList);
-
-
-            }
-
-
-
-            maxPages = (int)(lectureEntryList.Count / entriesPerPage);
-            //UnityEngine.Debug.Log(maxPages);
-
-            for (int i = ((Int32.Parse(pgNum.text) - 1) * entriesPerPage); i < Math.Min((Int32.Parse(pgNum.text)) * entriesPerPage, lectureEntryList.Count); i++)
-            {
-                if (lectureEntryList[i] != null)
-                {
-                    //UnityEngine.Debug.Log(i);
-                    Lecture lectureEntry = lectureEntryList[i];
-                    CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
-                }
-            }
-
-
-            onCallBack.Invoke(result);
-        }
-
-
-    }
-
-
-    public void GetLectureDataByLocation()
-    {
-        StartCoroutine(GetLecturesByLocation((string data) =>
-        {
-            //lecList.text = data;
-        }));
-    }
-
-
-
-    IEnumerator GetLecturesByLocation(Action<string> onCallBack)
-    {
-        var lecInfo = new List<string>();
-
-        var searchStr = SearchString.text;
-
-
-        lectureEntryList = new List<Lecture>();
-
-        var entriesPerPage = 10;
-
-        var lectureData = databaseReference.Child("lectures").OrderByKey().StartAt("-").LimitToFirst(60).GetValueAsync();
-        yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
-        if (lectureData != null)
-        {
-
-            string result = "";
-            DataSnapshot snapshot = lectureData.Result;
-
-
-
-
-            foreach (var x in snapshot.Children)
-            {
-                foreach (var i in x.Children)
-                {
-                    result += i.Value + " ";
-                    lecInfo.Add(i.Value.ToString());
-                    //UnityEngine.Debug.Log(lecInfo);
-                }
-                result += "\n";
-                // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
-
-                Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
-                if (newEntry.location.Contains(searchStr))
-                {
-                    UnityEngine.Debug.Log("match found");
-                    lectureEntryList.Add(newEntry);
-                }
-
-                //empty lecInfo for next iteration
-                lecInfo.Clear();
-
-                //CreateLectureEntryTransform(newEntry, entryContainer, lectureEntryTransformList);
-
-
-            }
-
-
-
-            maxPages = (int)(lectureEntryList.Count / entriesPerPage);
-            //UnityEngine.Debug.Log(maxPages);
-
-            for (int i = ((Int32.Parse(pgNum.text) - 1) * entriesPerPage); i < Math.Min((Int32.Parse(pgNum.text)) * entriesPerPage, lectureEntryList.Count); i++)
-            {
-                if (lectureEntryList[i] != null)
-                {
-                    //UnityEngine.Debug.Log(i);
-                    Lecture lectureEntry = lectureEntryList[i];
-                    CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
-                }
-            }
-            onCallBack.Invoke(result);
-        }
+        firstPage();
+        maxPages = filteredList.Count % PAGECOUNT == 0 ? filteredList.Count / PAGECOUNT : (int)(filteredList.Count / PAGECOUNT) + 1;;
+        DisplayLectureList();
     }
 
     public void OnEntryClick()
