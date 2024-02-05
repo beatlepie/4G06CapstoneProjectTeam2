@@ -16,7 +16,7 @@ public class SettingsManager : MonoBehaviour
     private DatabaseReference db;
     // These are used to open the profile page for other users
     public static bool currentUser;
-    public static FirebaseUser query;
+    public static string queryEmail;
 
     [Header("Canvas")]
     // Canvas containing user information
@@ -65,14 +65,15 @@ public class SettingsManager : MonoBehaviour
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
         PasswordCanvas.SetActive(false);
-
-        currentUser = true;
-        query = auth.CurrentUser;
         // If the id is not the user, then remove the edit button!
         if (!currentUser)
         {
             EditButton.SetActive(false);
             ChangePasswordButton.SetActive(false);
+        }
+        else
+        {
+            queryEmail = auth.CurrentUser.Email;
         }
 
         StartCoroutine(getDBdata((List<string> data) =>
@@ -97,7 +98,7 @@ public class SettingsManager : MonoBehaviour
             {
                 Transform entryTransform = Instantiate(PinnedTemplate, PinnedView);
                 RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-                entryRectTransform.anchoredPosition = new Vector2(0, entryHeight * i/3);
+                entryRectTransform.anchoredPosition = new Vector2(0, entryHeight * i/2);
                 entryTransform.gameObject.SetActive(true);
 
                 entryTransform.Find("Code").GetComponent<TMP_Text>().text = data[i];
@@ -143,7 +144,7 @@ public class SettingsManager : MonoBehaviour
     {
         List<string> userData = new List<string>();
 
-        var value = db.Child("users").Child(Utilities.removeDot(query.Email)).GetValueAsync();
+        var value = db.Child("users").Child(Utilities.removeDot(queryEmail)).GetValueAsync();
         yield return new WaitUntil(predicate: () => value.IsCompleted);
 
         if (value != null)

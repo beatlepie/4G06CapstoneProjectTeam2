@@ -6,6 +6,7 @@ using Firebase.Database;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class FriendManager : MonoBehaviour
 {
@@ -161,6 +162,14 @@ public class FriendManager : MonoBehaviour
         databaseReference.Child("users/" + userEmailWithoutDot + "/friends/" + targetEmailWithoutDot).SetValueAsync(null);
         // Remove target user from current user list in database
         databaseReference.Child("users/" + targetEmailWithoutDot + "/friends/" + userEmailWithoutDot).SetValueAsync(null);
+    }
+
+    public void OnFriendViewclick()
+    {
+        GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+        string targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
+        SettingsManager.queryEmail = targetEmail;
+        SceneManager.LoadScene("SettingsScene");
     }
 
     private void refreshRequestList()
