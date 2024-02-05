@@ -6,6 +6,8 @@ using TMPro;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -37,11 +39,14 @@ public class SettingsManager : MonoBehaviour
     public TMP_Text program;
     public TMP_Text level;
     public TMP_Text status;
+    public Image profileDisplay;
+    public Image profileEdit;
 
     [Header("Input Values")]
     public TMP_InputField newUsername;
     public TMP_InputField newLevel;
     public TMP_InputField newProgram;
+    public TMP_InputField profileImageLink;
     // These values are used during change password
     public TMP_InputField CurrentPassword;
     public TMP_InputField NewPassword;
@@ -76,6 +81,7 @@ public class SettingsManager : MonoBehaviour
             username.text = data[2];
             level.text = data[1];
             program.text = data[3];
+            profileImageLink.text = data[4];
         }));
 
         favorites();
@@ -123,7 +129,6 @@ public class SettingsManager : MonoBehaviour
                 var lecture = db.Child("lectures").Child(x.Key.ToString()).GetValueAsync();
                 yield return new WaitUntil(predicate: () => lecture.IsCompleted);
 
-                Debug.LogError(lecture.Result.Child("location").Value.ToString());
                 pinnedLectures.Add(lecture.Result.Child("location").Value.ToString());
                 
             }
@@ -148,6 +153,23 @@ public class SettingsManager : MonoBehaviour
             userData.Add(item.Child("level").Value.ToString());
             userData.Add(item.Child("nickName").Value.ToString());
             userData.Add(item.Child("program").Value.ToString());
+            userData.Add(item.Child("photo").Value.ToString());
+
+            // GET image from web
+            UnityWebRequest www = UnityWebRequestTexture.GetTexture(item.Child("photo").Value.ToString());
+            yield return www.SendWebRequest();
+
+            Texture2D tex = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            // Below method must be used as resize and reinitialize only changes the container not the image!
+            Texture2D scaled = new Texture2D(300, 300);
+            Graphics.ConvertTexture(tex, scaled);
+            // Convert to sprite and give to profileDisplay!
+            Sprite displayable = Sprite.Create(scaled, new Rect(new Vector2(0, 0), new Vector2(300, 300)), new Vector2(0, 0));
+            profileDisplay.sprite = displayable;
+            profileEdit.sprite = displayable;
+            //// Clean up
+            www.Dispose();
+            www = null;
         }
         else
         {
@@ -171,6 +193,7 @@ public class SettingsManager : MonoBehaviour
         db.Child("users").Child(emailWithoutDot).Child("level").SetValueAsync(newLevel.text);
         db.Child("users").Child(emailWithoutDot).Child("nickName").SetValueAsync(newUsername.text);
         db.Child("users").Child(emailWithoutDot).Child("program").SetValueAsync(newProgram.text);
+        db.Child("users").Child(emailWithoutDot).Child("photo").SetValueAsync(profileImageLink.text);
     }
 
     /// <summary>
@@ -317,9 +340,15 @@ public class SettingsManager : MonoBehaviour
     {
         updateDBdata();
 
-        username.text = newUsername.text;
-        level.text = newLevel.text;
-        program.text = newProgram.text;
+        // reusing this function as it will also update profile image
+        StartCoroutine(getDBdata((List<string> data) =>
+        {
+            userIDDisplay.text = data[0];
+            username.text = data[2];
+            level.text = data[1];
+            program.text = data[3];
+            profileImageLink.text = data[4];
+        }));
 
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);

@@ -34,6 +34,8 @@ public class AuthManager : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("Firebase!");
+
         //Check that all of the necessary dependencies for Firebase are present on the system
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
