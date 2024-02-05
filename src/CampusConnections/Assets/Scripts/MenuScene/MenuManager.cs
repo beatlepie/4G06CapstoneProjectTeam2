@@ -26,6 +26,7 @@ public class MenuManager : MonoBehaviour
     public void Settings()
     {
         SceneManager.LoadScene("SettingsScene");
+        SettingsManager.currentUser = true;
     }
 
     public void Quit()

@@ -6,14 +6,17 @@ using TMPro;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class SettingsManager : MonoBehaviour
 {
-    public static SettingsManager instance;
-
+    // These are used for accessing database and current user
     private FirebaseAuth auth;
     private DatabaseReference db;
-    private FirebaseUser query;
+    // These are used to open the profile page for other users
+    public static bool currentUser;
+    public static FirebaseUser query;
 
     [Header("Canvas")]
     // Canvas containing user information
@@ -36,28 +39,37 @@ public class SettingsManager : MonoBehaviour
     public TMP_Text program;
     public TMP_Text level;
     public TMP_Text status;
+    public Image profileDisplay;
+    public Image profileEdit;
 
     [Header("Input Values")]
     public TMP_InputField newUsername;
     public TMP_InputField newLevel;
     public TMP_InputField newProgram;
+    public TMP_InputField profileImageLink;
     // These values are used during change password
     public TMP_InputField CurrentPassword;
     public TMP_InputField NewPassword;
     public TMP_InputField ConfirmPassword;
 
+    [Header("Pinned")]
+    [SerializeField] Transform PinnedTemplate;
+    [SerializeField] Transform PinnedView;
+
     private void Start()
     {
         // This value should be the query user value when navigated from friend!
         auth = FirebaseAuth.DefaultInstance;
-        query = auth.CurrentUser;
         db = FirebaseDatabase.DefaultInstance.RootReference;
         // Display is the default view
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
         PasswordCanvas.SetActive(false);
+
+        currentUser = true;
+        query = auth.CurrentUser;
         // If the id is not the user, then remove the edit button!
-        if (auth.CurrentUser != query)
+        if (!currentUser)
         {
             EditButton.SetActive(false);
             ChangePasswordButton.SetActive(false);
@@ -69,19 +81,58 @@ public class SettingsManager : MonoBehaviour
             username.text = data[2];
             level.text = data[1];
             program.text = data[3];
+            profileImageLink.text = data[4];
+        }));
+
+        favorites();
+    }
+
+    private void favorites()
+    {
+        StartCoroutine(getPinned((List<string> data) =>
+        {
+            int entryHeight = -100;
+
+            for (int i = 0; i < data.Count; i = i + 2)
+            {
+                Transform entryTransform = Instantiate(PinnedTemplate, PinnedView);
+                RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+                entryRectTransform.anchoredPosition = new Vector2(0, entryHeight * i/3);
+                entryTransform.gameObject.SetActive(true);
+
+                entryTransform.Find("Code").GetComponent<TMP_Text>().text = data[i];
+                entryTransform.Find("Name").GetComponent<TMP_Text>().text = data[i+1];
+                entryTransform.Find("Data").GetComponent<TMP_Text>().text = data[i+1];
+            }
         }));
     }
 
-    private void Awake()
+    /// <summary>
+    /// Returns the list of pinned events and lectures.
+    /// </summary>
+    /// <param name="onCallBack">List to be returned.</param>
+    /// <returns>Returns list of events/lectures that are pinned by the user. </returns>
+    private IEnumerator getPinned(Action<List<string>> onCallBack)
     {
-        if (instance == null)
+        //Currently a duplicate of a function in the lecture view side!
+        string emailWithoutDot = Utilities.removeDot(auth.CurrentUser.Email);
+        var userData = db.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
+        yield return new WaitUntil(predicate: () => userData.IsCompleted);
+        if (userData != null)
         {
-            instance = this;
-        }
-        else if (instance != null)
-        {
-            Debug.Log("Instance already exists, destroying object!");
-            Destroy(this);
+            List<string> pinnedLectures = new List<string>();
+            DataSnapshot snapshot = userData.Result;
+            foreach (var x in snapshot.Children)
+            {
+                pinnedLectures.Add(x.Key.ToString());
+
+                var lecture = db.Child("lectures").Child(x.Key.ToString()).GetValueAsync();
+                yield return new WaitUntil(predicate: () => lecture.IsCompleted);
+
+                pinnedLectures.Add(lecture.Result.Child("location").Value.ToString());
+                
+            }
+            onCallBack.Invoke(pinnedLectures);
         }
     }
 
@@ -95,13 +146,30 @@ public class SettingsManager : MonoBehaviour
         var value = db.Child("users").Child(Utilities.removeDot(query.Email)).GetValueAsync();
         yield return new WaitUntil(predicate: () => value.IsCompleted);
 
-        if(value != null)
+        if (value != null)
         {
             DataSnapshot item = value.Result;
             userData.Add(item.Child("email").Value.ToString());
             userData.Add(item.Child("level").Value.ToString());
             userData.Add(item.Child("nickName").Value.ToString());
             userData.Add(item.Child("program").Value.ToString());
+            userData.Add(item.Child("photo").Value.ToString());
+
+            // GET image from web
+            UnityWebRequest www = UnityWebRequestTexture.GetTexture(item.Child("photo").Value.ToString());
+            yield return www.SendWebRequest();
+
+            Texture2D tex = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            // Below method must be used as resize and reinitialize only changes the container not the image!
+            Texture2D scaled = new Texture2D(300, 300);
+            Graphics.ConvertTexture(tex, scaled);
+            // Convert to sprite and give to profileDisplay!
+            Sprite displayable = Sprite.Create(scaled, new Rect(new Vector2(0, 0), new Vector2(300, 300)), new Vector2(0, 0));
+            profileDisplay.sprite = displayable;
+            profileEdit.sprite = displayable;
+            //// Clean up
+            www.Dispose();
+            www = null;
         }
         else
         {
@@ -125,6 +193,7 @@ public class SettingsManager : MonoBehaviour
         db.Child("users").Child(emailWithoutDot).Child("level").SetValueAsync(newLevel.text);
         db.Child("users").Child(emailWithoutDot).Child("nickName").SetValueAsync(newUsername.text);
         db.Child("users").Child(emailWithoutDot).Child("program").SetValueAsync(newProgram.text);
+        db.Child("users").Child(emailWithoutDot).Child("photo").SetValueAsync(profileImageLink.text);
     }
 
     /// <summary>
@@ -189,7 +258,6 @@ public class SettingsManager : MonoBehaviour
         });
 
         // Need to fix this, this method must be coroutined to work!
-        status.ForceMeshUpdate(true);
 
         // Leaving the IEnumerator code here just in case!
         //Debug.LogFormat("new password attempt!");
@@ -238,7 +306,7 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void Return()
     {
-    SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene("MenuScene");
     }
 
     /// <summary>
@@ -272,11 +340,26 @@ public class SettingsManager : MonoBehaviour
     {
         updateDBdata();
 
-        username.text = newUsername.text;
-        level.text = newLevel.text;
-        program.text = newProgram.text;
+        // reusing this function as it will also update profile image
+        StartCoroutine(getDBdata((List<string> data) =>
+        {
+            userIDDisplay.text = data[0];
+            username.text = data[2];
+            level.text = data[1];
+            program.text = data[3];
+            profileImageLink.text = data[4];
+        }));
 
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
     }
+
+    // Copied over from lecturemanager, need to change for pinned view!
+    //public void OnEntryClick()
+    //{
+    //    GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+    //    string code = template.transform.Find("codeText").GetComponent<TMP_Text>().text;
+    //    Lecture target = lectureEntryList.Find(lecture => lecture.code == code);
+    //    currentLecture = target;
+    //}
 }
