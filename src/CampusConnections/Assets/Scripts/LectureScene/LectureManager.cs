@@ -68,11 +68,11 @@ public class LectureManager : MonoBehaviour
                 // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
                 Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
                 lectureEntryList.Add(newEntry);
-                filteredList = new List<Lecture>(lectureEntryList);
                 //empty lecInfo for next iteration
                 lecInfo.Clear();
                 //CreateLectureEntryTransform(newEntry, entryContainer, lectureEntryTransformList);
             }
+            filteredList = new List<Lecture>(lectureEntryList);
             maxPages = lectureEntryList.Count % PAGECOUNT == 0 ? lectureEntryList.Count / PAGECOUNT : (int)(lectureEntryList.Count / PAGECOUNT) + 1;
             DisplayLectureList();
         }

@@ -9,6 +9,7 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+/QCAR/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -46,6 +47,7 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+*.tgz
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -77,4 +79,6 @@ crashlytics-build.properties
 /[Aa]ssets/Firebase/
 /[Aa]ssets/Plugins/
 
-
+#Vuforia related
+/[Aa]ssets/Editor/Vuforia/
+/[Aa]ssets/Editor/Migration/
