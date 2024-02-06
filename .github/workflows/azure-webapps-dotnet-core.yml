@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
         run:
-        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+            working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
     steps:
       - uses: actions/checkout@v4
