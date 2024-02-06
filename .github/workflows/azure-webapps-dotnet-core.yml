@@ -22,7 +22,7 @@ name: Backend Server Deployment
 env:
   AZURE_WEBAPP_NAME: RTCServer20240128130732    # set this to the name of your Azure Web App
   AZURE_WEBAPP_PACKAGE_PATH: 'src/RTCServer'      # set this to the path to your web app project, defaults to the repository root
-  DOTNET_VERSION: '5'                 # set this to the .NET Core version to use
+  DOTNET_VERSION: '8'                 # set this to the .NET Core version to use
 
 on:
   push:
@@ -35,6 +35,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+        run:
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
     steps:
       - uses: actions/checkout@v4
