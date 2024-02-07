@@ -18,9 +18,15 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("FriendScene");
     }
 
+    public void AR()
+    {
+        SceneManager.LoadScene("ARCameraScene");
+    }
+
     public void Settings()
     {
         SceneManager.LoadScene("SettingsScene");
+        SettingsManager.currentUser = true;
     }
 
     public void Quit()
