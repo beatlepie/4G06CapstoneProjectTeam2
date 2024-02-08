@@ -30,6 +30,9 @@
 # Visual Studio cache directory
 .vscode/
 
+# JetBrains .idea directory
+.idea/
+
 # Gradle cache directory
 .gradle/
 
