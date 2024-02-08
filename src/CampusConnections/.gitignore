@@ -78,7 +78,3 @@ crashlytics-build.properties
 /[Aa]ssets/ExternalDependencyManager/
 /[Aa]ssets/Firebase/
 /[Aa]ssets/Plugins/
-
-#Vuforia related
-/[Aa]ssets/Editor/Vuforia/
-/[Aa]ssets/Editor/Migration/
