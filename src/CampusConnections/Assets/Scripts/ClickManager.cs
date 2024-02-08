@@ -95,7 +95,7 @@ public class ClickManager : MonoBehaviour
     {
         if (!isPanelActive)
         {
-            isPanelActive = true;
+            isPanelActive = true; // Prevents bug that causes app to freeze when displaying target events after returning to Map Scene
         }
         SceneManager.LoadScene("MenuScene");
     }
