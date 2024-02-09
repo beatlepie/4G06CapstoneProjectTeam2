@@ -97,16 +97,16 @@ public class SettingsManager : MonoBehaviour
         {
             int entryHeight = -200;
 
-            for (int i = 0; i < data.Count; i = i + 2)
+            for (int i = 0; i < data.Count; i = i + 3)
             {
                 Transform entryTransform = Instantiate(PinnedTemplate, PinnedView);
                 RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-                entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i/2);
+                entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i/3);
                 entryTransform.gameObject.SetActive(true);
 
                 entryTransform.Find("Code").GetComponent<TMP_Text>().text = data[i];
                 entryTransform.Find("Name").GetComponent<TMP_Text>().text = data[i+1];
-                entryTransform.Find("Location").GetComponent<TMP_Text>().text = data[i+1];
+                entryTransform.Find("Location").GetComponent<TMP_Text>().text = data[i+2];
             }
         }));
     }
@@ -133,6 +133,7 @@ public class SettingsManager : MonoBehaviour
                 var lecture = db.Child("lectures").Child(x.Key.ToString()).GetValueAsync();
                 yield return new WaitUntil(predicate: () => lecture.IsCompleted);
 
+                pinnedLectures.Add(lecture.Result.Child("instructor").Value.ToString());
                 pinnedLectures.Add(lecture.Result.Child("location").Value.ToString());
                 
             }
