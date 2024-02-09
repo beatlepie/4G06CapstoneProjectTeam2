@@ -7,6 +7,14 @@
       "dependencies": {},
       "hash": "7388d28922b2144497f639630fd8b8b7a3c1ee6d"
     },
+    "com.ptc.vuforia.engine": {
+      "version": "file:com.ptc.vuforia.engine-10.20.3.tgz",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      }
+    },
     "com.unity.ai.navigation": {
       "version": "1.1.5",
       "depth": 0,
