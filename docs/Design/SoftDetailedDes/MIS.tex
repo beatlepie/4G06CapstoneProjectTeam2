@@ -117,6 +117,16 @@ real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
 boolean & $\mathbb{B}$ & True or False\\
 sequence of T & $<$T$>$ & a list of object with type T\\
 asynchronous step T & Task$<$T$>$ & an asynchronous result of T\\
+activity & Activity & generic class with $<$T$>$ that can be instantiated with type Lecture or Event\\
+lecture & Lecture & see MIS of Lecture Module \\
+event & Event & see MIS of Lecture Module \\
+uniform resource identifier & Uri & C\# Class that provides easy access to a link (URI) \\
+date and time & DateTime & provides a specific date and time \\
+user & User & see MIS of User Module \\
+scene & Scene & a user interface created in Unity \\
+database reference & DatabaseReference & reference to the root location of a database \\
+
+
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -895,7 +905,6 @@ None
 
 \subsubsection{Assumptions}
 
-Activity is a generic class with $<$T$>$ and it can be instantiated with type Lecture and Event.\\
 The singleton module Permission is accessible from this module.
 
 \subsubsection{Access Routine Semantics}
@@ -1942,7 +1951,7 @@ None
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 SendMessage & User, String & Task & - \\
-SendLocation & Group, Double, Double & Task & - \\
+SendLocation & Group, $\mathbb{R}$, $\mathbb{R}$ & Task & - \\
 
 \hline
 \end{tabular}
