@@ -16,19 +16,19 @@ public class InputFieldHandler : MonoBehaviour
 
     private string messageLog = "";
 
-    void Start()
+    private void Start()
     {
         _rtcService = rtcObject.GetComponent<SignalRService>();
         _messages = messageObject.GetComponent<TMP_Text>();
         _rtcService.NewMessageReceived.AddListener(OnReceivedListener);
-        
+
         _input = GetComponent<TMP_InputField>();
         _input.onEndEdit.AddListener(OnEndEditListener);
 
         _username = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName;
     }
 
-    void Update()
+    private void Update()
     {
         _messages.text = messageLog;
     }
@@ -37,12 +37,12 @@ public class InputFieldHandler : MonoBehaviour
     {
         value = value.Trim();
         var chatMessage = $"{_username}: {value}\n";
-        
+
         if (!Input.GetButton("Submit")) return;
-        
+
         var msg = new Message { Content = chatMessage };
         await _rtcService.SendAsync(msg);
-                
+
         messageLog += chatMessage;
         _input.text = "";
         _input.ActivateInputField();
@@ -51,7 +51,7 @@ public class InputFieldHandler : MonoBehaviour
     private void OnReceivedListener(Message msg)
     {
         Debug.Log("OnReceivedListener fired.");
-        
+
         var value = msg.Content.Trim();
         var chatMessage = $"{value}\n";
 
@@ -60,17 +60,17 @@ public class InputFieldHandler : MonoBehaviour
         //_messages.ForceMeshUpdate(true, true);
         Debug.Log("OnReceivedListener ended.");
     }
-    
+
     public async void ButtonListener()
     {
         var value = _input.text;
-        
+
         value = value.Trim();
         var chatMessage = $"{_username}: {value}\n";
-        
+
         var msg = new Message { Content = chatMessage };
         await _rtcService.SendAsync(msg);
-                
+
         messageLog += chatMessage;
         _input.text = "";
         _input.ActivateInputField();
