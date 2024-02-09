@@ -30,6 +30,7 @@ public class SettingsManager : MonoBehaviour
     // Edit button in display canvas
     public GameObject EditButton;
     public GameObject ChangePasswordButton;
+    public GameObject EditAvatarButton;
 
     [Header("Values")]
     // UserID, immutable value, for display and edit canvas
@@ -72,11 +73,14 @@ public class SettingsManager : MonoBehaviour
         {
             EditButton.SetActive(false);
             ChangePasswordButton.SetActive(false);
+            EditAvatarButton.SetActive(false);
         }
         else
         {
-            // This is technically only reachable from debug, but if there is an error, it will display the user profile page.
             queryEmail = auth.CurrentUser.Email;
+            EditButton.SetActive(true);
+            ChangePasswordButton.SetActive(true);
+            EditAvatarButton.SetActive(true);
         }
 
         StartCoroutine(getDBdata((List<string> data) =>
@@ -160,21 +164,7 @@ public class SettingsManager : MonoBehaviour
             userData.Add(item.Child("program").Value.ToString());
             userData.Add(item.Child("photo").Value.ToString());
 
-            // GET image from web
-            UnityWebRequest www = UnityWebRequestTexture.GetTexture(item.Child("photo").Value.ToString());
-            yield return www.SendWebRequest();
-
-            Texture2D tex = ((DownloadHandlerTexture)www.downloadHandler).texture;
-            // Below method must be used as resize and reinitialize only changes the container not the image!
-            Texture2D scaled = new Texture2D(300, 300);
-            Graphics.ConvertTexture(tex, scaled);
-            // Convert to sprite and give to profileDisplay!
-            Sprite displayable = Sprite.Create(scaled, new Rect(new Vector2(0, 0), new Vector2(300, 300)), new Vector2(0, 0));
-            profileDisplay.sprite = displayable;
-            profileEdit.sprite = displayable;
-            //// Clean up
-            www.Dispose();
-            www = null;
+            StartCoroutine(getImage(userData[4]));
         }
         else
         {
@@ -186,6 +176,37 @@ public class SettingsManager : MonoBehaviour
             userData.Add("Program Placeholder");
         }
         onCallBack.Invoke(userData);
+    }
+
+    /// <summary>
+    /// Retrieves and sets the 
+    /// </summary>
+    /// <param name="url">url of the photo we want to retrieve.</param>
+    /// <returns></returns>
+    private IEnumerator getImage(string url, Action<bool> success = null)
+    {
+        // GET image from web
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
+        yield return www.SendWebRequest();
+
+        if(www.result == UnityWebRequest.Result.Success)
+        {
+            Texture2D tex = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            // Below method must be used as resize and reinitialize only changes the container not the image!
+            Texture2D scaled = new Texture2D(500, 500);
+            Graphics.ConvertTexture(tex, scaled);
+            // Convert to sprite and give to profileDisplay!
+            Sprite displayable = Sprite.Create(scaled, new Rect(new Vector2(0, 0), new Vector2(500, 500)), new Vector2(0, 0));
+            profileDisplay.sprite = displayable;
+            profileEdit.sprite = displayable;
+        }
+        else
+        {
+            Debug.Log("Error retrieving profile image!");
+            success.Invoke(false);
+        }
+        //// Clean up
+        www.Dispose();
     }
 
     /// <summary>
