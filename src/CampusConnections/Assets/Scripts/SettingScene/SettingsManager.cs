@@ -24,6 +24,7 @@ public class SettingsManager : MonoBehaviour
     // Canvas handling the edit of user information
     public GameObject EditCanvas;
     public GameObject PasswordCanvas;
+    public GameObject PinnedCanvas;
 
     [Header("Buttons")]
     // Edit button in display canvas
@@ -58,14 +59,15 @@ public class SettingsManager : MonoBehaviour
 
     private void Start()
     {
-        // This value should be the query user value when navigated from friend!
+        // Default values for profile page.
         auth = FirebaseAuth.DefaultInstance;
         db = FirebaseDatabase.DefaultInstance.RootReference;
         // Display is the default view
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
         PasswordCanvas.SetActive(false);
-        // If the id is not the user, then remove the edit button!
+        PinnedCanvas.SetActive(false);
+        // If the id is not the user, then remove the edit buttons!
         if (!currentUser)
         {
             EditButton.SetActive(false);
@@ -73,6 +75,7 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
+            // This is technically only reachable from debug, but if there is an error, it will display the user profile page.
             queryEmail = auth.CurrentUser.Email;
         }
 
@@ -92,18 +95,18 @@ public class SettingsManager : MonoBehaviour
     {
         StartCoroutine(getPinned((List<string> data) =>
         {
-            int entryHeight = -100;
+            int entryHeight = -200;
 
             for (int i = 0; i < data.Count; i = i + 2)
             {
                 Transform entryTransform = Instantiate(PinnedTemplate, PinnedView);
                 RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-                entryRectTransform.anchoredPosition = new Vector2(0, entryHeight * i/2);
+                entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i/2);
                 entryTransform.gameObject.SetActive(true);
 
                 entryTransform.Find("Code").GetComponent<TMP_Text>().text = data[i];
                 entryTransform.Find("Name").GetComponent<TMP_Text>().text = data[i+1];
-                entryTransform.Find("Data").GetComponent<TMP_Text>().text = data[i+1];
+                entryTransform.Find("Location").GetComponent<TMP_Text>().text = data[i+1];
             }
         }));
     }
@@ -332,6 +335,7 @@ public class SettingsManager : MonoBehaviour
     {
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
+        PinnedCanvas.SetActive(false);
     }
 
     /// <summary>
@@ -353,6 +357,14 @@ public class SettingsManager : MonoBehaviour
 
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
+    }
+
+    public void Pinned()
+    {
+        DisplayCanvas.SetActive(false);
+        EditCanvas.SetActive(false);
+        PinnedCanvas.SetActive(true);
+        PasswordCanvas.SetActive(false);
     }
 
     // Copied over from lecturemanager, need to change for pinned view!
