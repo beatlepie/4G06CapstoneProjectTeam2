@@ -14,6 +14,8 @@ public class InputFieldHandler : MonoBehaviour
 
     private string _username;
 
+    private string messageLog = "";
+
     void Start()
     {
         _rtcService = rtcObject.GetComponent<SignalRService>();
@@ -26,6 +28,11 @@ public class InputFieldHandler : MonoBehaviour
         _username = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName;
     }
 
+    void Update()
+    {
+        _messages.text = messageLog;
+    }
+
     private async void OnEndEditListener(string value)
     {
         value = value.Trim();
@@ -36,7 +43,7 @@ public class InputFieldHandler : MonoBehaviour
         var msg = new Message { Content = chatMessage };
         await _rtcService.SendAsync(msg);
                 
-        _messages.text += chatMessage;
+        messageLog += chatMessage;
         _input.text = "";
         _input.ActivateInputField();
     }
@@ -47,8 +54,11 @@ public class InputFieldHandler : MonoBehaviour
         
         var value = msg.Content.Trim();
         var chatMessage = $"{value}\n";
-                
-        _messages.text += chatMessage;
+
+        messageLog += chatMessage;
+        //_messages.SetAllDirty();
+        //_messages.ForceMeshUpdate(true, true);
+        Debug.Log("OnReceivedListener ended.");
     }
     
     public async void ButtonListener()
@@ -61,7 +71,7 @@ public class InputFieldHandler : MonoBehaviour
         var msg = new Message { Content = chatMessage };
         await _rtcService.SendAsync(msg);
                 
-        _messages.text += chatMessage;
+        messageLog += chatMessage;
         _input.text = "";
         _input.ActivateInputField();
     }
