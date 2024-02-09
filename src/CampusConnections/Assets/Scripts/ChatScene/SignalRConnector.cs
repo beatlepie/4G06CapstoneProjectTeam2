@@ -15,12 +15,9 @@ public class SignalRConnector
             .WithUrl(url)
             .WithAutomaticReconnect()
             .Build();
-        
-        _connection.On<T>(handler, (message) =>
-        {
-            OnMessageReceived?.Invoke(message);
-        });
-        
+
+        _connection.On<T>(handler, (message) => { OnMessageReceived?.Invoke(message); });
+
         await StartConnectionAsync();
     }
 
