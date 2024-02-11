@@ -30,7 +30,6 @@ public class SettingsManager : MonoBehaviour
     // Edit button in display canvas
     public GameObject EditButton;
     public GameObject ChangePasswordButton;
-    public GameObject EditAvatarButton;
 
     [Header("Values")]
     // UserID, immutable value, for display and edit canvas
@@ -73,14 +72,12 @@ public class SettingsManager : MonoBehaviour
         {
             EditButton.SetActive(false);
             ChangePasswordButton.SetActive(false);
-            EditAvatarButton.SetActive(false);
         }
         else
         {
             queryEmail = auth.CurrentUser.Email;
             EditButton.SetActive(true);
             ChangePasswordButton.SetActive(true);
-            EditAvatarButton.SetActive(true);
         }
 
         StartCoroutine(getDBdata((List<string> data) =>
@@ -90,6 +87,8 @@ public class SettingsManager : MonoBehaviour
             level.text = data[1];
             program.text = data[3];
             profileImageLink.text = data[4];
+
+            StartCoroutine(getImage(data[4]));
         }));
 
         favorites();
@@ -163,8 +162,6 @@ public class SettingsManager : MonoBehaviour
             userData.Add(item.Child("nickName").Value.ToString());
             userData.Add(item.Child("program").Value.ToString());
             userData.Add(item.Child("photo").Value.ToString());
-
-            StartCoroutine(getImage(userData[4]));
         }
         else
         {
@@ -192,6 +189,7 @@ public class SettingsManager : MonoBehaviour
         if(www.result == UnityWebRequest.Result.Success)
         {
             Texture2D tex = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            Debug.Log("texture recieved!");
             // Below method must be used as resize and reinitialize only changes the container not the image!
             Texture2D scaled = new Texture2D(500, 500);
             Graphics.ConvertTexture(tex, scaled);
@@ -366,6 +364,11 @@ public class SettingsManager : MonoBehaviour
     public void Save()
     {
         updateDBdata();
+
+        StartCoroutine(getImage(profileImageLink.text, success => {
+            profileImageLink.text = "This image is invalid!";
+            return;
+        }));
 
         // reusing this function as it will also update profile image
         StartCoroutine(getDBdata((List<string> data) =>
