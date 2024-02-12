@@ -616,7 +616,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \end{enumerate}
 \textbf{Postcondition:} The system provides information of the building the user locates now.\\
 \section{Functional Requirements}
-\subsection{Pre-Game Settings}
+\subsection{Pre-Login Settings}
     \textbf{FR-1-1:} The system shall ask all users to sign a consent form disclosure of personal information.\\
     \textbf{Rationale:} It is a must to ask for users' permission before making use of their personal information.\\
     \textbf{Fit Criterion:} Users must be able to sign or reject a consent form when they first log in.\\\\
@@ -634,16 +634,13 @@ The use case diagram depicted below identifies the boundaries between the users 
     \textbf{FR-2-4:} The system shall allow users to change their password.\\
     \textbf{Rationale:} This will allow users to improve the security of their account and recover the account if they forget their password.\\
     \textbf{Fit Criterion:} Users may request a password reset on the login page. The user shall receive an email to reset the password later.\\\\
-    \textbf{FR-2-5:} The system must verify new users as human.\\
-    \textbf{Rationale:} This system can be vulnerable since anyone can create an account if all the information is provided. So CAPTCHA is needed to prevent bot attacks.\\
-    \textbf{Fit Criterion:} New users need to pass a human verification test when creating a new account.\\\\
-     \textbf{FR-2-6:} The system shall allow users to create and change a virtual avatar.\\
+     \textbf{FR-2-5:} The system shall allow users to create and change a virtual avatar.\\
     \textbf{Rationale:} A customizable avatar gives users a much stronger feeling of personalization. \\
     \textbf{Fit Criterion:} Users shall be able to upload images as their avatar on the user profile page.\\\\
-    \textbf{FR-2-7:} The system shall allow users to verify their school email.\\
+    \textbf{FR-2-6:} The system shall allow users to verify their school email.\\
     \textbf{Rationale:} Users shall be identified as McMaster students to have full access to all the resources. Therefore identifying McMaster email is necessary. \\
     \textbf{Fit Criterion:} The user shall be able to add McMaster email to their profile and verify the email after receiving an email from the system.\\\\
-    \textbf{FR-2-8:} Users shall be able to edit their profile.\\
+    \textbf{FR-2-7:} Users shall be able to edit their profile.\\
     \textbf{Rationale:} Users shall always be able to update their displayed information for better socializing.\\
     \textbf{Fit Criterion:} Users shall be able to edit their user profile (e.g. nickname program and level) on the user profile page.\\\\
 
@@ -654,13 +651,13 @@ The use case diagram depicted below identifies the boundaries between the users 
     \textbf{FR-3-2:} The system shall allow users to delete friends.\\
     \textbf{Rationale:} When users add users as friends by accident or they no longer connect, they should be able to remove them from the friend list.\\
     \textbf{Fit Criterion:} Users can remove any friends from their friend list.\\\\
-    \textbf{FR-3-3:} The system shall allow users to send text messages to other users.\\
+    \textbf{FR-3-3:} The system shall allow users to send text messages to their friends.\\
     \textbf{Rationale:} This will make the app more interactive and encourage and enhance socialization between users.\\
     \textbf{Fit Criterion:} Users must be able to send messages and view received messages.\\\\
     \textbf{FR-3-4:} The system shall allow users to share events conveniently with friends.\\
     \textbf{Rationale:} This encourages onsite socialization and allows users to make better use of resources provided by the application.\\
     \textbf{Fit Criterion:} Users shall be able to share a link that can be redirected to an event in the chat.\\\\
-    \textbf{FR-3-5:} The system shall allow users to share their location with others.\\
+    \textbf{FR-3-5:} The system shall allow users to share their location with friends.\\
     \textbf{Rationale:} To expand social networking and meet friends in person, users shall be able to share their current location on campus with friends.\\
     \textbf{Fit Criterion:} Users should be able to share their real-time location with friends as long as they agree on the corresponding terms.\\\\
     \textbf{FR-3-6:} The system shall allow users to manage friend requests.\\
@@ -703,18 +700,12 @@ The use case diagram depicted below identifies the boundaries between the users 
     \textbf{FR-5-1:} The system shall recognize specific buildings on campus.\\
     \textbf{Rationale:} AR camera will give users an immersive user experience interacting with campus buildings.\\
     \textbf{Fit Criterion:} The system shall recognize proper camera input as buildings in the database.\\\\
-    \textbf{FR-5-2:} The system shall display corresponding event/lecture information as AR objects when a building is recognized.\\
+    \textbf{FR-5-2:} The system shall display corresponding event/lecture information as AR objects when a target is recognized.\\
     \textbf{Rationale:} AR camera will give users an immersive user experience interacting with campus buildings.\\
-    \textbf{Fit Criterion:} User must see corresponding information about the target (e.g. events and lectures) in the format of AR objects once a target building is recognized.\\\\
+    \textbf{Fit Criterion:} User must see corresponding information about the target (e.g. events and lectures) in the format of AR objects once a target is recognized.\\\\
 
 \subsection{Map and Location}
-    \textbf{FR-6-1:} The system shall allow users to view an events heat map on the McMaster University campus.\\
-    \textbf{Rationale:} Heat map of events that happened in a period (e.g. last week) tells users information about event distribution and allows them to schedule the time better.\\
-    \textbf{Fit Criterion:} Users shall be able to see all event locations depicted in different colors based on the number of events hosted here on the campus map. Red denotes places that host more events.\\\\
-    \textbf{FR-6-2:} The system shall allow users to view a user location heat map on the McMaster University campus.\\
-    \textbf{Rationale:} Heat map of user location tells users where their connections spend most of their time so that they know where they can find people with similar interests.\\
-    \textbf{Fit Criterion:} Users shall be able to visualize user location histories on the campus map. Red denotes places that are most frequently visited.\\\\
-    \textbf{FR-6-3:} The system shall allow users to see their own real-time locations on campus and the locations of friends who are willing to share.\\
+    \textbf{FR-6-1:} The system shall allow users to see their own real-time locations on campus and the locations of friends who are willing to share.\\
     \textbf{Rationale:} Sharing locations with connections can make it easier for friends to sync up in person on campus, which provides more opportunities for users to network\\
     \textbf{Fit Criterion:} Users shall be able to see their avatar on the map showing their real-time positions, and also other users' avatars and locations on campus.\\\\
 
