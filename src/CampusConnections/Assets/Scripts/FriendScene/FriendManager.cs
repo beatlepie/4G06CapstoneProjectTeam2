@@ -46,20 +46,20 @@ public class FriendManager : MonoBehaviour
 
     void Update()
     {
-        if (invitationCount == 0)
-        {
-            badge.SetActive(false);
-        }
-        else if (invitationCount < 100)
-        {
-            badge.SetActive(true);
-            badge.GetComponentInChildren<TMP_Text>().text = invitationCount.ToString();
-        }
-        else
-        {
-            badge.SetActive(true);
-            badge.GetComponentInChildren<TMP_Text>().text = "99+";
-        }
+        // if (invitationCount == 0)
+        // {
+        //     badge.SetActive(false);
+        // }
+        // else if (invitationCount < 100)
+        // {
+        //     badge.SetActive(true);
+        //     badge.GetComponentInChildren<TMP_Text>().text = invitationCount.ToString();
+        // }
+        // else
+        // {
+        //     badge.SetActive(true);
+        //     badge.GetComponentInChildren<TMP_Text>().text = "99+";
+        // }
     }
 
     IEnumerator GetFriends(Action<List<User>> onCallBack)
