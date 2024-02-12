@@ -28,6 +28,8 @@ public class ClickManager : MonoBehaviour
         {
             _locationProvider = LocationProviderFactory.Instance.DefaultLocationProvider as AbstractLocationProvider;
         }
+
+        isPanelActive = false;
     }
     
     void Update()
@@ -87,5 +89,14 @@ public class ClickManager : MonoBehaviour
     public void onCenterButtonClick()
     {
         _map.UpdateMap(new Vector2d(userLocation.LatitudeLongitude.x, userLocation.LatitudeLongitude.y), _map.AbsoluteZoom);
+    }
+
+    public void onReturnButtonClick()
+    {
+        if (!isPanelActive)
+        {
+            isPanelActive = true; // Prevents bug that causes app to freeze when displaying target events after returning to Map Scene
+        }
+        SceneManager.LoadScene("MenuScene");
     }
 }

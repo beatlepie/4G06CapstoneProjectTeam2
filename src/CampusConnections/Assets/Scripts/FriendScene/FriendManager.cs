@@ -173,6 +173,11 @@ public class FriendManager : MonoBehaviour
         SceneManager.LoadScene("SettingsScene");
     }
 
+    public void OnFriendNameClick()
+    {
+        SceneManager.LoadScene("ChatScene");
+    }
+
     private void refreshRequestList()
     {
         // Update transforms of all request templates once requests changes (accept/ignore)
