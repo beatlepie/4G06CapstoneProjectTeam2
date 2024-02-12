@@ -24,6 +24,7 @@ public class SettingsManager : MonoBehaviour
     // Canvas handling the edit of user information
     public GameObject EditCanvas;
     public GameObject PasswordCanvas;
+    public GameObject PinnedCanvas;
 
     [Header("Buttons")]
     // Edit button in display canvas
@@ -58,14 +59,15 @@ public class SettingsManager : MonoBehaviour
 
     private void Start()
     {
-        // This value should be the query user value when navigated from friend!
+        // Default values for profile page.
         auth = FirebaseAuth.DefaultInstance;
         db = FirebaseDatabase.DefaultInstance.RootReference;
         // Display is the default view
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
         PasswordCanvas.SetActive(false);
-        // If the id is not the user, then remove the edit button!
+        PinnedCanvas.SetActive(false);
+        // If the id is not the user, then remove the edit buttons!
         if (!currentUser)
         {
             EditButton.SetActive(false);
@@ -74,6 +76,8 @@ public class SettingsManager : MonoBehaviour
         else
         {
             queryEmail = auth.CurrentUser.Email;
+            EditButton.SetActive(true);
+            ChangePasswordButton.SetActive(true);
         }
 
         StartCoroutine(getDBdata((List<string> data) =>
@@ -83,6 +87,8 @@ public class SettingsManager : MonoBehaviour
             level.text = data[1];
             program.text = data[3];
             profileImageLink.text = data[4];
+
+            StartCoroutine(getImage(data[4]));
         }));
 
         favorites();
@@ -92,18 +98,18 @@ public class SettingsManager : MonoBehaviour
     {
         StartCoroutine(getPinned((List<string> data) =>
         {
-            int entryHeight = -100;
+            int entryHeight = -200;
 
-            for (int i = 0; i < data.Count; i = i + 2)
+            for (int i = 0; i < data.Count; i = i + 3)
             {
                 Transform entryTransform = Instantiate(PinnedTemplate, PinnedView);
                 RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-                entryRectTransform.anchoredPosition = new Vector2(0, entryHeight * i/2);
+                entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i/3);
                 entryTransform.gameObject.SetActive(true);
 
                 entryTransform.Find("Code").GetComponent<TMP_Text>().text = data[i];
                 entryTransform.Find("Name").GetComponent<TMP_Text>().text = data[i+1];
-                entryTransform.Find("Data").GetComponent<TMP_Text>().text = data[i+1];
+                entryTransform.Find("Location").GetComponent<TMP_Text>().text = data[i+2];
             }
         }));
     }
@@ -130,6 +136,7 @@ public class SettingsManager : MonoBehaviour
                 var lecture = db.Child("lectures").Child(x.Key.ToString()).GetValueAsync();
                 yield return new WaitUntil(predicate: () => lecture.IsCompleted);
 
+                pinnedLectures.Add(lecture.Result.Child("instructor").Value.ToString());
                 pinnedLectures.Add(lecture.Result.Child("location").Value.ToString());
                 
             }
@@ -155,22 +162,6 @@ public class SettingsManager : MonoBehaviour
             userData.Add(item.Child("nickName").Value.ToString());
             userData.Add(item.Child("program").Value.ToString());
             userData.Add(item.Child("photo").Value.ToString());
-
-            // GET image from web
-            UnityWebRequest www = UnityWebRequestTexture.GetTexture(item.Child("photo").Value.ToString());
-            yield return www.SendWebRequest();
-
-            Texture2D tex = ((DownloadHandlerTexture)www.downloadHandler).texture;
-            // Below method must be used as resize and reinitialize only changes the container not the image!
-            Texture2D scaled = new Texture2D(300, 300);
-            Graphics.ConvertTexture(tex, scaled);
-            // Convert to sprite and give to profileDisplay!
-            Sprite displayable = Sprite.Create(scaled, new Rect(new Vector2(0, 0), new Vector2(300, 300)), new Vector2(0, 0));
-            profileDisplay.sprite = displayable;
-            profileEdit.sprite = displayable;
-            //// Clean up
-            www.Dispose();
-            www = null;
         }
         else
         {
@@ -182,6 +173,38 @@ public class SettingsManager : MonoBehaviour
             userData.Add("Program Placeholder");
         }
         onCallBack.Invoke(userData);
+    }
+
+    /// <summary>
+    /// Retrieves and sets the 
+    /// </summary>
+    /// <param name="url">url of the photo we want to retrieve.</param>
+    /// <returns></returns>
+    private IEnumerator getImage(string url, Action<bool> success = null)
+    {
+        // GET image from web
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
+        yield return www.SendWebRequest();
+
+        if(www.result == UnityWebRequest.Result.Success)
+        {
+            Texture2D tex = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            Debug.Log("texture recieved!");
+            // Below method must be used as resize and reinitialize only changes the container not the image!
+            Texture2D scaled = new Texture2D(500, 500);
+            Graphics.ConvertTexture(tex, scaled);
+            // Convert to sprite and give to profileDisplay!
+            Sprite displayable = Sprite.Create(scaled, new Rect(new Vector2(0, 0), new Vector2(500, 500)), new Vector2(0, 0));
+            profileDisplay.sprite = displayable;
+            profileEdit.sprite = displayable;
+        }
+        else
+        {
+            Debug.Log("Error retrieving profile image!");
+            success.Invoke(false);
+        }
+        //// Clean up
+        www.Dispose();
     }
 
     /// <summary>
@@ -332,6 +355,7 @@ public class SettingsManager : MonoBehaviour
     {
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
+        PinnedCanvas.SetActive(false);
     }
 
     /// <summary>
@@ -340,6 +364,11 @@ public class SettingsManager : MonoBehaviour
     public void Save()
     {
         updateDBdata();
+
+        StartCoroutine(getImage(profileImageLink.text, success => {
+            profileImageLink.text = "This image is invalid!";
+            return;
+        }));
 
         // reusing this function as it will also update profile image
         StartCoroutine(getDBdata((List<string> data) =>
@@ -353,6 +382,14 @@ public class SettingsManager : MonoBehaviour
 
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
+    }
+
+    public void Pinned()
+    {
+        DisplayCanvas.SetActive(false);
+        EditCanvas.SetActive(false);
+        PinnedCanvas.SetActive(true);
+        PasswordCanvas.SetActive(false);
     }
 
     // Copied over from lecturemanager, need to change for pinned view!

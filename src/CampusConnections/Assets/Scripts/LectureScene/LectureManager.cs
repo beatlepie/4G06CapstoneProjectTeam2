@@ -107,7 +107,8 @@ public class LectureManager : MonoBehaviour
         entryTransform.Find("locText").GetComponent<TMP_Text>().text = lectureEntry.location;
         //entryTransform.Find("timeText").GetComponent<TMP_Text>().text = lectureEntry.time;
 
-        entryTransform.Find("entryBG").gameObject.SetActive(ind % 2 == 1);  //alternate bg
+        //entryTransform.Find("entryBG").gameObject.SetActive(ind % 2 == 1);  //alternate bg
+        entryTransform.Find("entryBG").gameObject.SetActive(true);  //always original bg
 
         transformList.Add(entryTransform);
     }
