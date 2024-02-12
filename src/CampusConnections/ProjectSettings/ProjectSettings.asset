@@ -255,7 +255,7 @@ PlayerSettings:
   useCustomGradlePropertiesTemplate: 0
   useCustomGradleSettingsTemplate: 0
   useCustomProguardFile: 0
-  AndroidTargetArchitectures: 2
+  AndroidTargetArchitectures: 3
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
@@ -826,7 +826,7 @@ PlayerSettings:
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
-    Standalone: 1
+    Standalone: 0
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   managedStrippingLevel:
@@ -854,7 +854,7 @@ PlayerSettings:
   gcIncremental: 0
   gcWBarrierValidation: 0
   apiCompatibilityLevelPerPlatform:
-    Standalone: 3
+    Standalone: 6
     WebGL: 3
   m_RenderingPath: 1
   m_MobileRenderingPath: 1

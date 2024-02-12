@@ -10,12 +10,12 @@ namespace RTCServer.Hubs
             await Clients.Others.SendAsync("ReceiveMessage", message);
         }
 
-        public override async Task OnConnectedAsync()
-        {
-            Console.WriteLine($"{Context.ConnectionId} has joined.");
-            var message = new Message { Content = $"{Context.ConnectionId} has joined." };
-            await Clients.Others.SendAsync("ReceiveMessage", message);
-        }
+        //public override async Task OnConnectedAsync()
+        //{
+        //    Console.WriteLine($"{Context.ConnectionId} has joined.");
+        //    var message = new Message { Content = $"{Context.ConnectionId} has joined." };
+        //    await Clients.Others.SendAsync("ReceiveMessage", message);
+        //}
     }
 
     [System.Serializable]

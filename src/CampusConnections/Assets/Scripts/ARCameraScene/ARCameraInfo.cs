@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Firebase.Database;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ARCameraInfo : MonoBehaviour
 {
@@ -50,7 +51,6 @@ public class ARCameraInfo : MonoBehaviour
     {
         // E.g. room JHE 103 - JHE 124
         // Find the 3 digit room number, check if the part before room number(e.g. JHE A vs JHE ) is the same and compare room number as a integer
-        Debug.Log("asdaq" + allLectures.Count);
         Regex regex = new Regex(@"\d+");
         string roomNumU = regex.Match(UpperBound).Value;
         string roomNumL = regex.Match(LowerBound).Value;
@@ -66,7 +66,11 @@ public class ARCameraInfo : MonoBehaviour
                 filteredLectures.Add(l);
             }
         }
-        Debug.Log("gdsa" + filteredLectures.Count);
         return filteredLectures;
+    }
+
+    public void OnBack()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 }
