@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class FriendManager : MonoBehaviour
 {
@@ -204,6 +205,7 @@ public class FriendManager : MonoBehaviour
                 entryRectTransform.anchoredPosition = new Vector2(0, -requestEntryHeight * requestEntryTransformList.Count);
                 entryTransform.gameObject.SetActive(true);
                 entryTransform.Find("Email").GetComponent<TMP_Text>().text = requester.email;
+                entryTransform.Find("Name").GetComponent<TMP_Text>().text = requester.nickName;
                 requestEntryTransformList.Add(entryTransform);  
             }
             invitationCount = requesters.Count;
@@ -303,5 +305,20 @@ public class FriendManager : MonoBehaviour
         refreshRequestList();
         // Remove invitation from database
         databaseReference.Child("users/" + userEmailWithoutDot + "/invitations/" + requesterEmailWithoutDot).SetValueAsync(null);     
+    }
+
+    public void SwitchToFriends()
+    {
+        SceneManager.LoadScene("FriendScene");
+    }
+
+    public void SwitchToRequests()
+    {
+        SceneManager.LoadScene("FriendRequestScene");
+    }
+
+    public void GoBack()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 }
