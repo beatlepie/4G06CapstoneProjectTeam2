@@ -13,6 +13,7 @@ public class LectureManager : MonoBehaviour
     [Header("List View")]
     [SerializeField] TMP_Dropdown FilterDropdown;
     [SerializeField] TMP_InputField SearchString;
+    private Transform tabeltitleTemplate;
     private Transform entryContainer;
     private Transform entryTemplate;
     private List<Lecture> lectureList;
@@ -44,6 +45,7 @@ public class LectureManager : MonoBehaviour
         //after db stuff
         pgNum.text = "1";
         entryContainer = transform.Find("lectureEntryContainer");
+        tabeltitleTemplate = entryContainer.Find("TableTitle");
         entryTemplate = entryContainer.Find("lectureEntryTemplate");
         entryTemplate.gameObject.SetActive(false);
         GetLectureData();
@@ -100,6 +102,10 @@ public class LectureManager : MonoBehaviour
 
     public void DisplayLectureList()
     {
+        RectTransform titleRectTransform = tabeltitleTemplate.GetComponent<RectTransform>();
+        titleRectTransform.sizeDelta = new Vector2((float)(Screen.width/1.2), titleRectTransform.sizeDelta.y);
+        Debug.Log(Screen.width);
+        Debug.Log(titleRectTransform.sizeDelta);
         for (int i = ((Int32.Parse(pgNum.text) - 1) * PAGECOUNT); i < Math.Min((Int32.Parse(pgNum.text)) * PAGECOUNT, filteredList.Count); i++)
         {
             if (filteredList[i] != null)
@@ -112,10 +118,13 @@ public class LectureManager : MonoBehaviour
 
     private void CreateLectureEntryTransform(Lecture lectureEntry, Transform container, List<Transform> transformList)
     {
-        float templateHeight = 130f;
+        // The arbitray number comes from marron header + filter + table title + footer height 
+        float templateHeight = (Screen.height-690)/PAGECOUNT;
         Transform entryTransform = Instantiate(entryTemplate, container);
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
+        entryRectTransform.sizeDelta = new Vector2((float)(Screen.width/1.2), templateHeight);
+        Debug.Log(Screen.width);
         entryTransform.gameObject.SetActive(true);
 
         int ind = transformList.Count + 1; //count for each entry starting at 1
