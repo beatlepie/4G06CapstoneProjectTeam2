@@ -24,7 +24,8 @@ public class SettingsManager : MonoBehaviour
     // Canvas handling the edit of user information
     public GameObject EditCanvas;
     public GameObject PasswordCanvas;
-    public GameObject PinnedCanvas;
+    public GameObject PinnedLectureCanvas;
+    public GameObject PinnedEventCanvas;
 
     [Header("Buttons")]
     // Edit button in display canvas
@@ -53,9 +54,13 @@ public class SettingsManager : MonoBehaviour
     public TMP_InputField NewPassword;
     public TMP_InputField ConfirmPassword;
 
-    [Header("Pinned")]
-    [SerializeField] Transform PinnedTemplate;
-    [SerializeField] Transform PinnedView;
+    [Header("PinnedLecture")]
+    [SerializeField] Transform PinnedLectureTemplate;
+    [SerializeField] Transform PinnedLectureView;
+
+    [Header("PinnedEvent")]
+    [SerializeField] Transform PinnedEventTemplate;
+    [SerializeField] Transform PinnedEventView;
 
     private void Start()
     {
@@ -66,7 +71,8 @@ public class SettingsManager : MonoBehaviour
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
         PasswordCanvas.SetActive(false);
-        PinnedCanvas.SetActive(false);
+        PinnedLectureCanvas.SetActive(false);
+        PinnedEventCanvas.SetActive(false);
         // If the id is not the user, then remove the edit buttons!
         if (!currentUser)
         {
@@ -96,13 +102,13 @@ public class SettingsManager : MonoBehaviour
 
     private void favorites()
     {
-        StartCoroutine(getPinned((List<string> data) =>
+        StartCoroutine(getPinnedLectures((List<string> data) =>
         {
             int entryHeight = -200;
 
             for (int i = 0; i < data.Count; i = i + 3)
             {
-                Transform entryTransform = Instantiate(PinnedTemplate, PinnedView);
+                Transform entryTransform = Instantiate(PinnedLectureTemplate, PinnedLectureView);
                 RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
                 entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i/3);
                 entryTransform.gameObject.SetActive(true);
@@ -112,14 +118,29 @@ public class SettingsManager : MonoBehaviour
                 entryTransform.Find("Location").GetComponent<TMP_Text>().text = data[i+2];
             }
         }));
+        StartCoroutine(getPinnedEvents((List<string> data) =>
+        {
+            int entryHeight = -200;
+            for (int i = 0; i < data.Count; i = i + 3)
+            {
+                Transform entryTransform = Instantiate(PinnedEventTemplate, PinnedEventView);
+                RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+                entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i/3);
+                entryTransform.gameObject.SetActive(true);
+
+                entryTransform.Find("Name").GetComponent<TMP_Text>().text = data[i];
+                entryTransform.Find("Organizer").GetComponent<TMP_Text>().text = data[i+1];
+                entryTransform.Find("Location").GetComponent<TMP_Text>().text = data[i+2];
+            }
+        }));
     }
 
     /// <summary>
-    /// Returns the list of pinned events and lectures.
+    /// Returns the list of pinned lectures.
     /// </summary>
     /// <param name="onCallBack">List to be returned.</param>
-    /// <returns>Returns list of events/lectures that are pinned by the user. </returns>
-    private IEnumerator getPinned(Action<List<string>> onCallBack)
+    /// <returns>Returns list of lectures that are pinned by the user. </returns>
+    private IEnumerator getPinnedLectures(Action<List<string>> onCallBack)
     {
         //Currently a duplicate of a function in the lecture view side!
         string emailWithoutDot = Utilities.removeDot(auth.CurrentUser.Email);
@@ -141,6 +162,41 @@ public class SettingsManager : MonoBehaviour
                 
             }
             onCallBack.Invoke(pinnedLectures);
+        }
+    }
+
+    /// <summary>
+    /// Returns the list of pinned events.
+    /// </summary>
+    /// <param name="onCallBack">List to be returned.</param>
+    /// <returns>Returns list of events that are pinned by the user. </returns>
+    private IEnumerator getPinnedEvents(Action<List<string>> onCallBack)
+    {
+        //Currently a duplicate of a function in the lecture view side!
+        string emailWithoutDot = Utilities.removeDot(auth.CurrentUser.Email);
+        var userData = db.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
+        yield return new WaitUntil(predicate: () => userData.IsCompleted);
+        if (userData != null)
+        {
+            List<string> pinnedEvents = new List<string>();
+            DataSnapshot snapshot = userData.Result;
+            foreach (var x in snapshot.Children)
+            {
+                pinnedEvents.Add(x.Key.ToString());
+
+                var e1 = db.Child("events/public").Child(x.Key.ToString()).GetValueAsync();
+                var e2 = db.Child("events/private").Child(x.Key.ToString()).GetValueAsync();
+                yield return new WaitUntil(predicate: () => e1.IsCompleted & e2.IsCompleted);
+                if (e1 != null & e1.Result.HasChild("name")) {
+                    pinnedEvents.Add(e1.Result.Child("organizer").Value.ToString());
+                    pinnedEvents.Add(e1.Result.Child("location").Value.ToString());
+                }
+                else if (e2 != null & e2.Result.HasChild("name")) {
+                    pinnedEvents.Add(e2.Result.Child("organizer").Value.ToString());
+                    pinnedEvents.Add(e2.Result.Child("location").Value.ToString());
+                } 
+            }
+            onCallBack.Invoke(pinnedEvents);
         }
     }
 
@@ -355,7 +411,8 @@ public class SettingsManager : MonoBehaviour
     {
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
-        PinnedCanvas.SetActive(false);
+        PinnedLectureCanvas.SetActive(false);
+        PinnedEventCanvas.SetActive(false);
     }
 
     /// <summary>
@@ -384,11 +441,21 @@ public class SettingsManager : MonoBehaviour
         EditCanvas.SetActive(false);
     }
 
-    public void Pinned()
+    public void PinnedLecture()
     {
         DisplayCanvas.SetActive(false);
         EditCanvas.SetActive(false);
-        PinnedCanvas.SetActive(true);
+        PinnedLectureCanvas.SetActive(true);
+        PinnedEventCanvas.SetActive(false);
+        PasswordCanvas.SetActive(false);
+    }
+
+    public void PinnedEvent()
+    {
+        DisplayCanvas.SetActive(false);
+        EditCanvas.SetActive(false);
+        PinnedLectureCanvas.SetActive(false);
+        PinnedEventCanvas.SetActive(true);
         PasswordCanvas.SetActive(false);
     }
 
