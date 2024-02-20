@@ -6,24 +6,34 @@ using Firebase;
 using Firebase.Database;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class LectureManager : MonoBehaviour
 {
     [Header("List View")]
     [SerializeField] TMP_Dropdown FilterDropdown;
     [SerializeField] TMP_InputField SearchString;
+    private Transform tabeltitleTemplate;
     private Transform entryContainer;
     private Transform entryTemplate;
-    private List<Lecture> lectureEntryList;
+    private List<Lecture> lectureList;
     private List<Lecture> filteredList;
     private List<Transform> lectureEntryTransformList;
-    public TMP_Text lecList;
     public TMP_Text pgNum;
     public int maxPages;
     public const int PAGECOUNT = 10;
 
     [Header("Detail View")]
     public static Lecture currentLecture; //The one we want to see details
+    [Header("Detail View View")]
+    [SerializeField] TMP_Text lecCodeView;
+
+    [Header("Detail View Edit")]
+    [SerializeField] TMP_InputField lecCodeEdit;
+    [SerializeField] TMP_InputField lecNameEdit;
+    [SerializeField] TMP_InputField lecInstructorEdit;
+    [SerializeField] TMP_InputField lecLocationEdit;
+    [SerializeField] TMP_InputField lecTimesEdit;
 
     [Header("Database")]
     public DatabaseReference databaseReference;
@@ -35,11 +45,23 @@ public class LectureManager : MonoBehaviour
         //after db stuff
         pgNum.text = "1";
         entryContainer = transform.Find("lectureEntryContainer");
+        tabeltitleTemplate = entryContainer.Find("TableTitle");
         entryTemplate = entryContainer.Find("lectureEntryTemplate");
         entryTemplate.gameObject.SetActive(false);
         GetLectureData();
     }
 
+    private void UpdateMaxPage()
+    {
+        if(filteredList.Count == 0)
+        {
+            maxPages = 1;
+        }
+        else
+        {
+            maxPages = filteredList.Count % PAGECOUNT == 0 ? filteredList.Count / PAGECOUNT : (int)(filteredList.Count / PAGECOUNT) + 1;
+        }
+    }
     public void GetLectureData()
     {
         StartCoroutine(GetLectures());
@@ -48,7 +70,7 @@ public class LectureManager : MonoBehaviour
     IEnumerator GetLectures()
     {
         lectureEntryTransformList = new List<Transform>();
-        lectureEntryList = new List<Lecture>();
+        lectureList = new List<Lecture>();
         var lecInfo = new List<string>();
         var lectureData = databaseReference.Child("lectures").OrderByKey().StartAt("-").GetValueAsync();
         yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
@@ -67,24 +89,27 @@ public class LectureManager : MonoBehaviour
                 result += "\n";
                 // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
                 Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
-                lectureEntryList.Add(newEntry);
+                lectureList.Add(newEntry);
                 //empty lecInfo for next iteration
                 lecInfo.Clear();
                 //CreateLectureEntryTransform(newEntry, entryContainer, lectureEntryTransformList);
             }
-            filteredList = new List<Lecture>(lectureEntryList);
-            maxPages = lectureEntryList.Count % PAGECOUNT == 0 ? lectureEntryList.Count / PAGECOUNT : (int)(lectureEntryList.Count / PAGECOUNT) + 1;
+            filteredList = new List<Lecture>(lectureList);
+            UpdateMaxPage();
             DisplayLectureList();
         }
     }
 
     public void DisplayLectureList()
     {
+        RectTransform titleRectTransform = tabeltitleTemplate.GetComponent<RectTransform>();
+        titleRectTransform.sizeDelta = new Vector2((float)(Screen.width/1.2), titleRectTransform.sizeDelta.y);
+        Debug.Log(Screen.width);
+        Debug.Log(titleRectTransform.sizeDelta);
         for (int i = ((Int32.Parse(pgNum.text) - 1) * PAGECOUNT); i < Math.Min((Int32.Parse(pgNum.text)) * PAGECOUNT, filteredList.Count); i++)
         {
             if (filteredList[i] != null)
             {
-                //UnityEngine.Debug.Log(i);
                 Lecture lectureEntry = filteredList[i];
                 CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
             }
@@ -93,10 +118,13 @@ public class LectureManager : MonoBehaviour
 
     private void CreateLectureEntryTransform(Lecture lectureEntry, Transform container, List<Transform> transformList)
     {
-        float templateHeight = 130f;
+        // The arbitray number comes from marron header + filter + table title + footer height 
+        float templateHeight = (Screen.height-690)/PAGECOUNT;
         Transform entryTransform = Instantiate(entryTemplate, container);
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
+        entryRectTransform.sizeDelta = new Vector2((float)(Screen.width/1.2), templateHeight);
+        Debug.Log(Screen.width);
         entryTransform.gameObject.SetActive(true);
 
         int ind = transformList.Count + 1; //count for each entry starting at 1
@@ -109,7 +137,6 @@ public class LectureManager : MonoBehaviour
 
         //entryTransform.Find("entryBG").gameObject.SetActive(ind % 2 == 1);  //alternate bg
         entryTransform.Find("entryBG").gameObject.SetActive(true);  //always original bg
-
         transformList.Add(entryTransform);
     }
 
@@ -157,7 +184,7 @@ public class LectureManager : MonoBehaviour
         {
             case(0):
             // Code
-                foreach (Lecture l in lectureEntryList)
+                foreach (Lecture l in lectureList)
                 {
                     if(l.code.Contains(SearchString.text))
                     {
@@ -167,7 +194,7 @@ public class LectureManager : MonoBehaviour
                 break;
             case(1):
             // Instructor
-                foreach (Lecture l in lectureEntryList)
+                foreach (Lecture l in lectureList)
                 {
                     if(l.instructor.Contains(SearchString.text))
                     {
@@ -177,7 +204,7 @@ public class LectureManager : MonoBehaviour
                 break;
             case(2):
             // Location
-                foreach (Lecture l in lectureEntryList)
+                foreach (Lecture l in lectureList)
                 {
                     if(l.location.Contains(SearchString.text))
                     {
@@ -186,11 +213,11 @@ public class LectureManager : MonoBehaviour
                 }
                 break;
             default:
-                filteredList = lectureEntryList;
+                filteredList = lectureList;
                 break;
         }
         firstPage();
-        maxPages = filteredList.Count % PAGECOUNT == 0 ? filteredList.Count / PAGECOUNT : (int)(filteredList.Count / PAGECOUNT) + 1;;
+        UpdateMaxPage();
         DisplayLectureList();
     }
 
@@ -198,8 +225,40 @@ public class LectureManager : MonoBehaviour
     {
         GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         string code = template.transform.Find("codeText").GetComponent<TMP_Text>().text;
-        Lecture target = lectureEntryList.Find(lecture => lecture.code == code);
+        Lecture target = lectureList.Find(lecture => lecture.code == code);
         currentLecture = target;
+    }
+
+    public void ExitLecturePage()
+    {
+        SceneManager.LoadScene("MenuScene");
+    }
+
+    public void WriteNewLec()
+    {
+        Lecture lec = new Lecture(lecCodeEdit.text, lecInstructorEdit.text, lecLocationEdit.text, lecNameEdit.text, lecTimesEdit.text);
+        string lecJson = JsonUtility.ToJson(lec);
+        databaseReference.Child("lectures/" + lecCodeEdit.text).SetRawJsonValueAsync(lecJson);
+        // Add new lecture to the rendered list, clear the filter and render the first page
+        lectureList.Add(lec);
+        filteredList = new List<Lecture>(lectureList);
+        clearing();
+        DisplayLectureList();
+        UpdateMaxPage();
+        firstPage();
+    }
+
+    public void DeleteLec()
+    {
+        databaseReference.Child("lectures/" + lecCodeView.text).SetValueAsync(null);
+        // Delete this lecture from the rendered list, clear the filter and render the first page
+        var target = lectureList.Find(lec => lec.code == lecCodeView.text);
+        lectureList.Remove(target);
+        filteredList = new List<Lecture>(lectureList);
+        clearing();
+        DisplayLectureList();
+        UpdateMaxPage();
+        firstPage();
     }
 }
 
