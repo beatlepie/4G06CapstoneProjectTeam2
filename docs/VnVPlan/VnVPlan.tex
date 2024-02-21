@@ -38,6 +38,7 @@ Oct 31 & 1.0 & Add Non-Functional Requirement Tests\\
 Nov 1 & 1.0 & Add Unit Tests\\
 Nov 3 & 1.0 & Add Tables And More Tests\\
 Nov 22 & 1.0 & Revision 0: Resolve issues\\
+Feb 21 & 1.1 & Revision 1: Introduce new usability testing\\
 \bottomrule
 \end{tabularx}
 
@@ -1894,21 +1895,80 @@ USER\_PROFILE & All information about the user & username, password, gender, age
 \end{tabular}
 \end{table}
 
-\subsection{Usability Survey Questions}
+\subsection{Usability Survey}
 \label{sec:survey}
-\textbf{Please rate each of the following questions on a rating scale of 1-10 where 10 represents the most positive experience, and 0 illustrates the most negative experience.}
+Usability testing holds particular significance, especially for a social networking application such as this one. We intend to conduct a usability survey among a select group of students to gather feedback. Initially, we will start with a sample size of 5 to 10 participants. If we consistently receive repetitive suggestions, signalling that we've addressed the majority of issues, we will maintain this sample size. However, if new issues arise or further insights are needed, we will consider conducting another survey with a larger sample size in the future.\\
+The survey will be composed of following three session and take about 30 minutes to complete:
+\subsubsection{Tasks}
+\textbf{The participant will be completing the following tasks. They will use the project as a guest or user or administrator. Each role will have unique tasks and the role is assigned randomly at the start of a test. A task fails if the tester asks for help or spends more than 1 minute to complete a single subtask. This section is to test if the UI and layout is user-friendly and easy-to-understand.}
 \begin{enumerate}
-	\item \textbf{User-friendly Layout:} Do you think that the layout of this product is user-friendly?
-	\item \textbf{Intuitive icons:} Do you feel comfortable running different features without needing assistance or a tutorial?
-	\item \textbf{Immediate Visual Response when Clicking:} Does the application provide visual feedback when using different features/switching betewen pages?
-	\item \textbf{Appealing Colour Scheme:} Do you think that the colour scheme chosen for the interface is appealing?
-	\item \textbf{Easy to Navigate:} Do you feel that the user interface is easy to navigate?
-	\item \textbf{Helpful Tutorial:} After viewing the tutorial, do you feel that you have a better understanding of the product's features?
-	\item \textbf{No Technical or Software-specific Language:} Do you believe that the product avoids the use of technical/software-specific language unless necessary?
-	\item \textbf{Common periods of usage:} At what times of the day/week do you find yourself using the product?
-	\item \textbf{Cultural Friendliness:} Do you agree that the product does not display any offensive language/symbols?
+\item Lecture
+\begin{enumerate}
+\item Direct from menu page to lecture page
+\item Search for a lecture the tester asked for
+\item Check the location of the lecture
+\item Pin and then unpin the lecture
 \end{enumerate}
-
+\item Event
+\begin{enumerate}
+\item Direct from map page to event page
+\item Search for an event the tester asked for
+\item Check the location of the event
+\item Pin and then unpin the event
+\end{enumerate}
+\item Activity Management
+\begin{enumerate}
+\item Direct from menu page to event/lecture page (tester decide which page they will test)
+\item Add a new activity, where the tester will provide details
+\end{enumerate}
+\item Map
+\begin{enumerate}
+\item Direct from menu page to map page
+\item Zoom in and center the map to show the current location
+\end{enumerate}
+\item AR Camera
+\begin{enumerate}
+\item Direct from menu page to AR page
+\item Walk around and check if there exist AR object or watch the recording if the participant is not in a target building
+\end{enumerate}
+\item User Profile
+\begin{enumerate}
+\item Direct from map page to user profile page
+\item Check the program and level of the user
+\item Edit any part of the profiles
+\item Check the lectures and events that are pinned
+\end{enumerate}
+\item Friend and Chat
+\begin{enumerate}
+\item Direct from menu page to friend page
+\item \textit{option 1:} Send a request to tester's account
+\item \textit{option 2:} Accept a request from tester
+\item Open a chat with tester and send a message
+\end{enumerate}
+\end{enumerate}
+\textbf{Reminder: A participant will not do all of the tasks. They will be given a random role at the start of the test and the tasks they will have depend on the role. Administrator will perform task 3, 4, 5, 6, 7; User will perform task 1, 4, 5, 6, 7; Guest will perform task 2, 4, 6.}
+\subsubsection{Rating}
+\textbf{This section covers tests for some non-functional requirements. The participant will answer the following agree/disagree questions on a rating scale of 5. Here is a breakdown:}
+\begin{itemize}
+\item 1: Strongly Disagree
+\item 2: Disagree
+\item 3: Neutral
+\item 4: Agree
+\item 5: Strongly Agree
+\end{itemize}
+\begin{enumerate}
+	\item \textbf{Immediate Visual Response when Clicking:}  The application provides visual feedback when using different features or switching between pages.
+	\item \textbf{Appealing Colour Scheme:} The colour scheme chosen for the interface is similar to McMaster official application.
+	\item \textbf{No Technical or Software-specific Language:} The product does not use technical/software-specific language unless necessary.
+	\item \textbf{Common periods of usage:} You will be using the application mostly during school time (from 8:30 AM to 6:30 PM).
+	\item \textbf{Cultural Friendliness:} The application does not have any words or symbols that are offensive to you.
+\end{enumerate}
+\subsubsection{Open-ended Questions}
+\textbf{In this section we invite participants to provide their thoughts on the pros and cons of the project. They should feel free to share any feedback or insights.}
+\begin{itemize}
+\item What do you think is the most difficult to use feature and why?
+\item Which feature will you use the most in your daily live and why?
+\end{itemize}
 \newpage{}
 \section*{Appendix --- Reflection}
 
