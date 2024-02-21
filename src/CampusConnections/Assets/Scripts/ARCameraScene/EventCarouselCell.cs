@@ -3,25 +3,25 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LectureCarouselCell : CarouselCell<LectureCarouselData, LectureCarouselCell>
+public class EventCarouselCell : CarouselCell<EventCarouselData, EventCarouselCell>
 {
     [SerializeField] private Image _image;
-    [SerializeField] private TMP_Text _code;
     [SerializeField] private TMP_Text _name;
+    [SerializeField] private TMP_Text _description;
     [SerializeField] private TMP_Text _location;
-    [SerializeField] private TMP_Text _instructor;
+    [SerializeField] private TMP_Text _organizer;
     [SerializeField] private Button _button;
 
-    private LectureCarouselData _data;
+    private EventCarouselData _data;
 
-    protected override void Refresh(LectureCarouselData data)
+    protected override void Refresh(EventCarouselData data)
     {
         _data = data;
         _image.sprite = Resources.Load<Sprite>("Carousel_Background/" + data.SpriteResourceKey);
-        _code.text = data.Lecture.code;
-        _name.text = data.Lecture.name;
-        _location.text = data.Lecture.location;
-        _instructor.text = data.Lecture.instructor;
+        _name.text = data.eve.name;
+        _description.text = data.eve.description;
+        _location.text = data.eve.location;
+        _organizer.text = data.eve.organizer;
     }
 
     protected override void OnVisibilityChanged(bool visibility)
