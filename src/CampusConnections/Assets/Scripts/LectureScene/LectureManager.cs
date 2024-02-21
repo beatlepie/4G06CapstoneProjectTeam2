@@ -28,7 +28,7 @@ public class LectureManager : MonoBehaviour
     [Header("Detail View View")]
     [SerializeField] TMP_Text lecCodeView;
 
-    [Header("Detail View Edit")]
+    [Header("Edit Page")]
     [SerializeField] TMP_InputField lecCodeEdit;
     [SerializeField] TMP_InputField lecNameEdit;
     [SerializeField] TMP_InputField lecInstructorEdit;
@@ -84,7 +84,6 @@ public class LectureManager : MonoBehaviour
                 {
                     result += i.Value + " ";
                     lecInfo.Add(i.Value.ToString());
-                    //UnityEngine.Debug.Log(lecInfo);
                 }
                 result += "\n";
                 // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
@@ -104,8 +103,6 @@ public class LectureManager : MonoBehaviour
     {
         RectTransform titleRectTransform = tabeltitleTemplate.GetComponent<RectTransform>();
         titleRectTransform.sizeDelta = new Vector2((float)(Screen.width/1.2), titleRectTransform.sizeDelta.y);
-        Debug.Log(Screen.width);
-        Debug.Log(titleRectTransform.sizeDelta);
         for (int i = ((Int32.Parse(pgNum.text) - 1) * PAGECOUNT); i < Math.Min((Int32.Parse(pgNum.text)) * PAGECOUNT, filteredList.Count); i++)
         {
             if (filteredList[i] != null)
@@ -124,7 +121,6 @@ public class LectureManager : MonoBehaviour
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
         entryRectTransform.sizeDelta = new Vector2((float)(Screen.width/1.2), templateHeight);
-        Debug.Log(Screen.width);
         entryTransform.gameObject.SetActive(true);
 
         int ind = transformList.Count + 1; //count for each entry starting at 1
@@ -261,5 +257,3 @@ public class LectureManager : MonoBehaviour
         firstPage();
     }
 }
-
-

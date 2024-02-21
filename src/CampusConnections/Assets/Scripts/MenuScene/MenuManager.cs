@@ -8,6 +8,11 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("LectureScene");
     }
 
+    public void Events()
+    {
+        SceneManager.LoadScene("EventScene");
+    }
+
     public void Map()
     {
         SceneManager.LoadScene("MapScene");

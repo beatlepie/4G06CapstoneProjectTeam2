@@ -3,7 +3,7 @@ using System;
 public class Event
 {
     public string name;
-    public DateTime time;
+    public long time;
     public int duration;
     public string organizer;
     public string description;
@@ -14,7 +14,7 @@ public class Event
     {
         // Default evet
         this.name = name;
-        this.time = new DateTime(2023, 09, 18);
+        this.time = 1695056400;  // Start date of project
         this.duration = 30;
         this.organizer = "NA";
         this.description = "NA";
@@ -22,7 +22,7 @@ public class Event
         this.isPublic = false;
     }
 
-    public Event(string name, DateTime time, int duration, string organizer, string description, string location, bool isPublic)
+    public Event(string name, long time, int duration, string organizer, string description, string location, bool isPublic)
     {
         // Event with all information
         this.name = name;
