@@ -143,7 +143,7 @@ public class SettingsManager : MonoBehaviour
     private IEnumerator getPinnedLectures(Action<List<string>> onCallBack)
     {
         //Currently a duplicate of a function in the lecture view side!
-        string emailWithoutDot = Utilities.removeDot(auth.CurrentUser.Email);
+        string emailWithoutDot = Utilities.removeDot(queryEmail);
         var userData = db.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if (userData != null)
@@ -173,7 +173,7 @@ public class SettingsManager : MonoBehaviour
     private IEnumerator getPinnedEvents(Action<List<string>> onCallBack)
     {
         //Currently a duplicate of a function in the lecture view side!
-        string emailWithoutDot = Utilities.removeDot(auth.CurrentUser.Email);
+        string emailWithoutDot = Utilities.removeDot(queryEmail);
         var userData = db.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if (userData != null)
@@ -186,6 +186,11 @@ public class SettingsManager : MonoBehaviour
 
                 var e1 = db.Child("events/public").Child(x.Key.ToString()).GetValueAsync();
                 var e2 = db.Child("events/private").Child(x.Key.ToString()).GetValueAsync();
+                // If the user is a guest, then DO NOT query the private events!
+                if (AuthManager.perms == 0)
+                {
+                    e2 = null;
+                }
                 yield return new WaitUntil(predicate: () => e1.IsCompleted & e2.IsCompleted);
                 if (e1 != null & e1.Result.HasChild("name")) {
                     pinnedEvents.Add(e1.Result.Child("organizer").Value.ToString());

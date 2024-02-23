@@ -22,6 +22,7 @@ public class EventManager : MonoBehaviour
     public TMP_Text pgNum;
     public int maxPages;
     public const int PAGECOUNT = 10;
+    [SerializeField] Image EditButton;
 
     [Header("Detail View")]
     public static Event currentEvent; //The one we want to see details
@@ -51,6 +52,11 @@ public class EventManager : MonoBehaviour
         tabeltitleTemplate = entryContainer.Find("TableTitle");
         entryTemplate = entryContainer.Find("eventEntryTemplate");
         entryTemplate.gameObject.SetActive(false);
+        // If they are not admin, do not show edit button!
+        if(AuthManager.perms != 2)
+        {
+            EditButton.gameObject.SetActive(false);
+        }
         GetEventData();
     }
 
@@ -84,14 +90,17 @@ public class EventManager : MonoBehaviour
                 eventList.Add(Utilities.FormalizeDBEventData(e));    
             }
         }
-        var privateEventData = databaseReference.Child("events/private").OrderByKey().StartAt("-").GetValueAsync();
-        yield return new WaitUntil(predicate: () => privateEventData.IsCompleted);
-        if (privateEventData != null)
+        if(AuthManager.perms != 0)
         {
-            DataSnapshot snapshot = privateEventData.Result;
-            foreach (var e in snapshot.Children)
+            var privateEventData = databaseReference.Child("events/private").OrderByKey().StartAt("-").GetValueAsync();
+            yield return new WaitUntil(predicate: () => privateEventData.IsCompleted);
+            if (privateEventData != null)
             {
-                eventList.Add(Utilities.FormalizeDBEventData(e));    
+                DataSnapshot snapshot = privateEventData.Result;
+                foreach (var e in snapshot.Children)
+                {
+                    eventList.Add(Utilities.FormalizeDBEventData(e));
+                }
             }
         }
         filteredList = new List<Event>(eventList);

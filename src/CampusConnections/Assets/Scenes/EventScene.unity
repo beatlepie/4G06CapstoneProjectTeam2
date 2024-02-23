@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731713, g: 0.13414736, b: 0.12107852, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -646,7 +646,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 343, y: -473.881}
+  m_AnchoredPosition: {x: 343, y: -451.131}
   m_SizeDelta: {x: 414.86, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &51644307
@@ -1926,7 +1926,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 343, y: -44.483}
+  m_AnchoredPosition: {x: 343, y: -41.233}
   m_SizeDelta: {x: 414.86, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &129508631
@@ -5139,7 +5139,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 343, y: -1025.745}
+  m_AnchoredPosition: {x: 343, y: -976.995}
   m_SizeDelta: {x: 414.86, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &425619339
@@ -7526,7 +7526,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 343, y: -611.84705}
+  m_AnchoredPosition: {x: 343, y: -582.59705}
   m_SizeDelta: {x: 414.86, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &641696006
@@ -11133,7 +11133,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 343, y: -749.813}
+  m_AnchoredPosition: {x: 343, y: -714.063}
   m_SizeDelta: {x: 414.86, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &953673807
@@ -13883,6 +13883,7 @@ MonoBehaviour:
   SearchString: {fileID: 1950408905}
   pgNum: {fileID: 1665623887}
   maxPages: 1
+  EditButton: {fileID: 1217125510}
   eventNameView: {fileID: 1991584889}
   eventIsPublicView: {fileID: 1715945806}
   eventNameEdit: {fileID: 1601142325}
@@ -15272,7 +15273,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 343, y: -157.949}
+  m_AnchoredPosition: {x: 343, y: -148.199}
   m_SizeDelta: {x: 414.86, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1413366835
@@ -17846,7 +17847,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 343, y: -887.77905}
+  m_AnchoredPosition: {x: 343, y: -845.52905}
   m_SizeDelta: {x: 414.86, y: 109}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1671056811
@@ -20823,7 +20824,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 343, y: -315.915}
+  m_AnchoredPosition: {x: 343, y: -299.665}
   m_SizeDelta: {x: 414.86, y: 149}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1943970412

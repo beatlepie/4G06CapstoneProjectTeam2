@@ -9,11 +9,13 @@ using Firebase.Database;
 
 public class AuthManager : MonoBehaviour
 {
+    public static int perms;
+
     //Firebase variables
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
     public FirebaseAuth auth;    
-    public FirebaseUser User;
+    public static FirebaseUser User;
     public DatabaseReference databaseReference;
 
     //Login variables
@@ -122,6 +124,11 @@ public class AuthManager : MonoBehaviour
             //User is now logged in
             //Now get the result
             User = LoginTask.Result.User;
+            var getPerms = databaseReference.Child("users/" + Utilities.removeDot(User.Email) + "/perms").GetValueAsync();
+            yield return new WaitUntil(predicate: () => getPerms.IsCompleted);
+            perms = (int) getPerms.Result.Value;
+
+            // Email verification if they have not accepted the email yet
             if (!User.IsEmailVerified)
             {
                 Task verification = User.SendEmailVerificationAsync();
