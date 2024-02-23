@@ -126,7 +126,7 @@ public class AuthManager : MonoBehaviour
             User = LoginTask.Result.User;
             var getPerms = databaseReference.Child("users/" + Utilities.removeDot(User.Email) + "/perms").GetValueAsync();
             yield return new WaitUntil(predicate: () => getPerms.IsCompleted);
-            perms = (int) getPerms.Result.Value;
+            perms = int.Parse(getPerms.Result.Value.ToString());
 
             // Email verification if they have not accepted the email yet
             if (!User.IsEmailVerified)
