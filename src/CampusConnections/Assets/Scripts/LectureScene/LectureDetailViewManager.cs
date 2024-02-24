@@ -16,6 +16,8 @@ public class LectureDetailViewManager : MonoBehaviour
     [Header("DetailView")]
     [SerializeField] GameObject ViewPanel;
     [SerializeField] GameObject EditPanel;
+    [SerializeField] GameObject DeleteIcon;
+    [SerializeField] GameObject EditIcon;
     private Lecture target;
     private Boolean pinned;
     private List<string> myLectureCodes = new List<string>();
@@ -37,6 +39,11 @@ public class LectureDetailViewManager : MonoBehaviour
         auth = FirebaseAuth.DefaultInstance;
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         currentUser = auth.CurrentUser;
+        if(AuthManager.perms != 2)
+        {
+            DeleteIcon.SetActive(false);
+            EditIcon.SetActive(false);
+        }
         StartCoroutine(GetPinnedLectures((List<string> data) =>
         {
             myLectureCodes = data;

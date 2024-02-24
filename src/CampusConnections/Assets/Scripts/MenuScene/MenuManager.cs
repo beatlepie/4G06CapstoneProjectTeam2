@@ -3,6 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    [SerializeField] GameObject LecturesButton;
+
+    private void Awake()
+    {
+        if(AuthManager.perms == 0)
+        {
+            LecturesButton.SetActive(false);
+        }
+    }
     public void Lectures()
     {
         SceneManager.LoadScene("LectureScene");

@@ -22,6 +22,8 @@ public class EventDetailViewManager : MonoBehaviour
     private List<string> myEventNames = new List<string>();
     [SerializeField] GameObject PinIcon;
     [SerializeField] GameObject UnpinIcon;
+    [SerializeField] GameObject DeleteIcon;
+    [SerializeField] GameObject EditIcon;
 
     [Header("ViewPanel")]
     [SerializeField] TMP_Text viewName;
@@ -46,6 +48,11 @@ public class EventDetailViewManager : MonoBehaviour
         auth = FirebaseAuth.DefaultInstance;
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         currentUser = auth.CurrentUser;
+        if(AuthManager.perms != 2)
+        {
+            DeleteIcon.SetActive(false);
+            EditIcon.SetActive(false);
+        }
         StartCoroutine(GetPinnedLectures((List<string> data) =>
         {
             myEventNames = data;

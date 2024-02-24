@@ -13,6 +13,7 @@ public class LectureManager : MonoBehaviour
     [Header("List View")]
     [SerializeField] TMP_Dropdown FilterDropdown;
     [SerializeField] TMP_InputField SearchString;
+    [SerializeField] GameObject NewLectureIcon;
     private Transform tabeltitleTemplate;
     private Transform entryContainer;
     private Transform entryTemplate;
@@ -48,6 +49,10 @@ public class LectureManager : MonoBehaviour
         tabeltitleTemplate = entryContainer.Find("TableTitle");
         entryTemplate = entryContainer.Find("lectureEntryTemplate");
         entryTemplate.gameObject.SetActive(false);
+        if(AuthManager.perms != 2)
+        {
+            NewLectureIcon.SetActive(false);
+        }
         GetLectureData();
     }
 
