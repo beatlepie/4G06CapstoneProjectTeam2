@@ -102,22 +102,26 @@ public class SettingsManager : MonoBehaviour
 
     private void favorites()
     {
-        StartCoroutine(getPinnedLectures((List<string> data) =>
+        //NO lectures are visible for guest accounts
+        if(AuthManager.perms != 0)
         {
-            int entryHeight = -200;
-
-            for (int i = 0; i < data.Count; i = i + 3)
+            StartCoroutine(getPinnedLectures((List<string> data) =>
             {
-                Transform entryTransform = Instantiate(PinnedLectureTemplate, PinnedLectureView);
-                RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-                entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i/3);
-                entryTransform.gameObject.SetActive(true);
+                int entryHeight = -200;
 
-                entryTransform.Find("Code").GetComponent<TMP_Text>().text = data[i];
-                entryTransform.Find("Name").GetComponent<TMP_Text>().text = data[i+1];
-                entryTransform.Find("Location").GetComponent<TMP_Text>().text = data[i+2];
-            }
-        }));
+                for (int i = 0; i < data.Count; i = i + 3)
+                {
+                    Transform entryTransform = Instantiate(PinnedLectureTemplate, PinnedLectureView);
+                    RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+                    entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i / 3);
+                    entryTransform.gameObject.SetActive(true);
+
+                    entryTransform.Find("Code").GetComponent<TMP_Text>().text = data[i];
+                    entryTransform.Find("Name").GetComponent<TMP_Text>().text = data[i + 1];
+                    entryTransform.Find("Location").GetComponent<TMP_Text>().text = data[i + 2];
+                }
+            }));
+        }
         StartCoroutine(getPinnedEvents((List<string> data) =>
         {
             int entryHeight = -200;
