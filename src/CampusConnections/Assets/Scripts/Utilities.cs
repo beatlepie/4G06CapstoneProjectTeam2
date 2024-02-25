@@ -100,4 +100,30 @@ public class Utilities
         }
         return result;
     }
+    public static Lecture FormalizeDBLectureData(DataSnapshot e)
+    {
+        Lecture result = new Lecture("InvalidLecture");
+        foreach (var x in e.Children)
+        {
+            switch(x.Key.ToString())
+            {
+                case "code":
+                result.code = x.Value.ToString();
+                break;
+                case "name":
+                result.name = x.Value.ToString();
+                break;
+                case "location":
+                result.location = x.Value.ToString();
+                break;
+                case "instructor":
+                result.instructor = x.Value.ToString();
+                break;
+                case "time":
+                result.time = x.Value.ToString();
+                break;
+            }
+        }
+        return result;
+    }
 }

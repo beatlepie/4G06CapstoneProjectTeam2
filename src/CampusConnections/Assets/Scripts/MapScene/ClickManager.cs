@@ -9,7 +9,6 @@ using UnityEngine.SceneManagement;
 public class ClickManager : MonoBehaviour
 {
     [SerializeField] private GameObject targetActions;
-    [SerializeField] private GameObject notInRangePanel;
     [SerializeField] private AbstractMap _map;
 
     [SerializeField] private GameObject ARCameraButton;
@@ -56,35 +55,33 @@ public class ClickManager : MonoBehaviour
         }
     }
 
-    public void OnViewButtonClick()
+    public void OnViewLecButtonClick()
     {
         Debug.Log("Welcome to " + currentBuilding.buildingName);
         SceneManager.LoadScene("LectureScene");
     }
 
+    public void OnViewEventButtonClick()
+    {
+        Debug.Log("Welcome to " + currentBuilding.buildingName);
+        SceneManager.LoadScene("EventScene");
+        EventManager.defaultSearchString = currentBuilding.buildingName;
+        EventManager.defaultSearchOption = "location";
+    }
+
     public void onARButtonClick()
     {
         var currentPlayerLocation = new GeoCoordinatePortable.GeoCoordinate(userLocation.LatitudeLongitude.x, userLocation.LatitudeLongitude.y);
-        var targetLocation = new GeoCoordinatePortable.GeoCoordinate(currentBuilding.buildingCoords.x, currentBuilding.buildingCoords.y);
-        var distance = currentPlayerLocation.GetDistanceTo(targetLocation);
-        
+        var targetLocation = new GeoCoordinatePortable.GeoCoordinate(currentBuilding.buildingCoords.x, currentBuilding.buildingCoords.y);        
         Debug.Log(currentPlayerLocation);
         Debug.Log(targetLocation);
-        Debug.Log("Distance is " + distance);
-        
-        if (distance > maximumDistance) {
-            targetActions.SetActive(false);
-            notInRangePanel.SetActive(true);
-        } else {
-            Debug.Log("AR Camera Mode");
-            SceneManager.LoadScene("LectureScene");
-        }
+        Debug.Log("AR Camera Mode");
+        SceneManager.LoadScene("ARCameraScene");
     }
 
     public void onBackButtonClick()
     {
         targetActions.SetActive(true);
-        notInRangePanel.SetActive(false);
     }
 
     public void onCloseButtonClick()
