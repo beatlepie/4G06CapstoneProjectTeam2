@@ -4,12 +4,14 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] GameObject LecturesButton;
+    [SerializeField] GameObject ARButton;
 
     private void Awake()
     {
         if(AuthManager.perms == 0)
         {
             LecturesButton.SetActive(false);
+            ARButton.SetActive(false);
         }
     }
     public void Lectures()
