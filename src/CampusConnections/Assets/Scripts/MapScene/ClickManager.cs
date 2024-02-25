@@ -11,7 +11,10 @@ public class ClickManager : MonoBehaviour
     [SerializeField] private GameObject targetActions;
     [SerializeField] private GameObject notInRangePanel;
     [SerializeField] private AbstractMap _map;
-    
+
+    [SerializeField] private GameObject ARCameraButton;
+    [SerializeField] private GameObject LectureButton;
+
     private AbstractLocationProvider _locationProvider = null;
     private Location userLocation;
     
@@ -27,6 +30,12 @@ public class ClickManager : MonoBehaviour
         if (null == _locationProvider)
         {
             _locationProvider = LocationProviderFactory.Instance.DefaultLocationProvider as AbstractLocationProvider;
+        }
+        //Check user permissions
+        if(AuthManager.perms == 0)
+        {
+            ARCameraButton.SetActive(false);
+            LectureButton.SetActive(false);
         }
 
         isPanelActive = false;

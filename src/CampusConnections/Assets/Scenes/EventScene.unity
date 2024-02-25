@@ -8305,6 +8305,8 @@ MonoBehaviour:
   EditPanel: {fileID: 860076521}
   PinIcon: {fileID: 182104821}
   UnpinIcon: {fileID: 945685991}
+  DeleteIcon: {fileID: 106295725}
+  EditIcon: {fileID: 21585065}
   viewName: {fileID: 1991584889}
   viewDescription: {fileID: 1553730200}
   viewOrganizer: {fileID: 618572608}

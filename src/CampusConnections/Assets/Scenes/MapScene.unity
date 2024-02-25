@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028377, g: 0.22571409, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2481,6 +2481,8 @@ MonoBehaviour:
   targetActions: {fileID: 1162611710}
   notInRangePanel: {fileID: 1958292612}
   _map: {fileID: 524771372}
+  ARCameraButton: {fileID: 1430719026}
+  LectureButton: {fileID: 1604167414}
   maximumDistance: 30
 --- !u!1 &1905888359
 GameObject:
