@@ -9,16 +9,19 @@ public class Event
     public string description;
     public string location;
     public bool isPublic;
+    public static long defaultTime = 1695056400;  // Start date of project
+    public static int defaultDuration = 30;  // Minimium 30 mins
+    public static string placeholder = "NA";
 
     public Event(string name)
     {
         // Default evet
         this.name = name;
-        this.time = 1695056400;  // Start date of project
-        this.duration = 30;
-        this.organizer = "NA";
-        this.description = "NA";
-        this.location = "NA";
+        this.time = defaultTime;
+        this.duration = defaultDuration;
+        this.organizer = placeholder;
+        this.description = placeholder;
+        this.location = placeholder;
         this.isPublic = false;
     }
 

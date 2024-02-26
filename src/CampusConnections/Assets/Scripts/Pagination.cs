@@ -1,25 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 
 public class Pagination<T>
 {
-    private List<T> entryList;
-    private List<T> filteredList;
-    private int maxPage;
-    private int currentPage;
+    public List<T> entryList;
+    public List<T> filteredList;
+    public int maxPage;
+    public int currentPage;
     public int pageCount;
-    private string filterBy;
-    private string filterString;
+    public string filterBy;
+    public string filterString;
 
     public Pagination(List<T> entryList, string filterBy, string filterString, int pageCount = 10)
     {
-        this.entryList = entryList;
+        this.entryList = new List<T>(entryList);
+        this.filteredList = new List<T>(entryList);
         this.filterBy = filterBy;
         this.filterString = filterString;
         this.pageCount = pageCount;
         filterEntries();
-        UpdateMaxPage();
         this.currentPage = 1;
     }
 
@@ -29,7 +30,8 @@ public class Pagination<T>
         {
             filteredList.Clear();
             foreach (T x in entryList) {
-                string target = (string)x.GetType().GetProperty(filterBy).GetValue(x, null);
+                JObject json = JObject.Parse(JsonUtility.ToJson(x));
+                string target = (string)json[filterBy];
                 if (target.Contains(filterString))
                 {
                     filteredList.Add(x);
@@ -38,7 +40,7 @@ public class Pagination<T>
         }
         else
         {
-            filteredList = entryList;
+            filteredList = new List<T>(entryList);
         }
         UpdateMaxPage();
         firstPage();
