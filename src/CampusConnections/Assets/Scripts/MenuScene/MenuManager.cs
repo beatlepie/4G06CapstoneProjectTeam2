@@ -17,11 +17,15 @@ public class MenuManager : MonoBehaviour
     public void Lectures()
     {
         SceneManager.LoadScene("LectureScene");
+        LectureManager.defaultSearchOption = null;
+        LectureManager.defaultSearchString = null;
     }
 
     public void Events()
     {
         SceneManager.LoadScene("EventScene");
+        EventManager.defaultSearchOption = null;
+        EventManager.defaultSearchString = null;
     }
 
     public void Map()

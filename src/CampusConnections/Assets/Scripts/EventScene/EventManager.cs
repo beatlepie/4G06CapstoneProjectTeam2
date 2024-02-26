@@ -7,10 +7,13 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 
 public class EventManager : MonoBehaviour
 {
     [Header("List View")]
+    public static string defaultSearchString;
+    public static string defaultSearchOption;
     [SerializeField] TMP_Dropdown FilterDropdown;
     [SerializeField] TMP_InputField SearchString;
     private Transform tabeltitleTemplate;
@@ -56,8 +59,13 @@ public class EventManager : MonoBehaviour
         if(AuthManager.perms != 2)
         {
             EditButton.gameObject.SetActive(false);
-        }
+        }        
         GetEventData();
+        if (defaultSearchOption != null & defaultSearchString != null)
+        {
+            SearchString.text = defaultSearchString;
+            FilterDropdown.value = defaultSearchOption == "location" ? 2 : 0;
+        }
     }
 
     private void UpdateMaxPage()
@@ -103,7 +111,30 @@ public class EventManager : MonoBehaviour
                 }
             }
         }
-        filteredList = new List<Event>(eventList);
+        if (defaultSearchOption != null & defaultSearchString != null)
+        {
+            filteredList = new List<Event>();
+            if (defaultSearchOption == "location")
+            {
+                foreach (Event e in eventList) {
+                    if (e.location.Contains(defaultSearchString)) {
+                        filteredList.Add(e);
+                    }
+                }
+            }
+            else
+            {
+                foreach (Event e in eventList) {
+                    if (e.name.Contains(defaultSearchString)) {
+                        filteredList.Add(e);
+                    }
+                }    
+            }
+        }
+        else
+        {
+            filteredList = new List<Event>(eventList);
+        }
         UpdateMaxPage();
         DisplayEventList();
     }

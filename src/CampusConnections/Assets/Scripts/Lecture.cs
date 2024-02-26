@@ -5,14 +5,15 @@ public class Lecture
     public string instructor;
     public string time;
     public string location;
+    public static string placeholder = "NA";
 
     public Lecture(string code)
     {
         this.code = code;
-        this.name = "NA";
-        this.instructor = "NA";
-        this.time = "NA";
-        this.location = "NA";
+        this.name = placeholder;
+        this.instructor = placeholder;
+        this.time = placeholder;
+        this.location = placeholder;
     }
 
     public Lecture(string code, string instructor, string location, string name, string time)

@@ -11,8 +11,10 @@ using UnityEngine.SceneManagement;
 public class LectureManager : MonoBehaviour
 {
     [Header("List View")]
+    public static string defaultSearchString;
+    public static string defaultSearchOption;
     [SerializeField] TMP_Dropdown FilterDropdown;
-    [SerializeField] TMP_InputField SearchString;
+    [SerializeField] public TMP_InputField SearchString;
     [SerializeField] GameObject NewLectureIcon;
     private Transform tabeltitleTemplate;
     private Transform entryContainer;
@@ -54,6 +56,11 @@ public class LectureManager : MonoBehaviour
             NewLectureIcon.SetActive(false);
         }
         GetLectureData();
+        if (defaultSearchOption != null & defaultSearchString != null)
+        {
+            SearchString.text = defaultSearchString;
+            FilterDropdown.value = defaultSearchOption == "location" ? 2 : 0;
+        }
     }
 
     private void UpdateMaxPage()
@@ -81,27 +88,38 @@ public class LectureManager : MonoBehaviour
         yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
         if (lectureData != null)
         {
-            string result = "";
             DataSnapshot snapshot = lectureData.Result;
             foreach (var x in snapshot.Children)
             {
-                foreach (var i in x.Children)
-                {
-                    result += i.Value + " ";
-                    lecInfo.Add(i.Value.ToString());
-                }
-                result += "\n";
-                // make a lectureEntry object with constructor  (lecInfo[0],lecInfo[1]...)
-                Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
-                lectureList.Add(newEntry);
-                //empty lecInfo for next iteration
-                lecInfo.Clear();
-                //CreateLectureEntryTransform(newEntry, entryContainer, lectureEntryTransformList);
+                lectureList.Add(Utilities.FormalizeDBLectureData(x));
             }
-            filteredList = new List<Lecture>(lectureList);
-            UpdateMaxPage();
-            DisplayLectureList();
         }
+        if (defaultSearchOption != null & defaultSearchString != null)
+        {
+            filteredList = new List<Lecture>();
+            if (defaultSearchOption == "location")
+            {
+                foreach (Lecture l in lectureList) {
+                    if (l.location.Contains(defaultSearchString)) {
+                        filteredList.Add(l);
+                    }
+                }
+            }
+            else
+            {
+                foreach (Lecture l in lectureList) {
+                    if (l.code.Contains(defaultSearchString)) {
+                        filteredList.Add(l);
+                    }
+                }  
+            }
+        }
+        else
+        {
+            filteredList = new List<Lecture>(lectureList);
+        }
+        UpdateMaxPage();
+        DisplayLectureList();
     }
 
     public void DisplayLectureList()

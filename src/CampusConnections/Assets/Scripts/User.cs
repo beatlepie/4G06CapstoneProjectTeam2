@@ -17,6 +17,10 @@ public class User
     public User(string email)
     {
         this.email = email;
+        this.nickName = "";
+        this.program = "";
+        this.level = 0;
+        this.photoUri = null;
         this.friends = new List<string>();
         this.events = new List<string>();
         this.lectures = new List<string>();

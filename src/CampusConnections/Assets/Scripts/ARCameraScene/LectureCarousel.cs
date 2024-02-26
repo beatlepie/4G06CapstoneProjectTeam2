@@ -39,13 +39,7 @@ public class LectureCarousel : MonoBehaviour
             DataSnapshot snapshot = lectureData.Result;
             foreach (var lecture in snapshot.Children)
             {
-                var lecInfo = new List<string>();
-                foreach (var i in lecture.Children)
-                {
-                    lecInfo.Add(i.Value.ToString());
-                }
-                Lecture newEntry = new Lecture(lecInfo[0], lecInfo[1], lecInfo[2], lecInfo[3], lecInfo[4]);
-                allLectures.Add(newEntry);
+                allLectures.Add(Utilities.FormalizeDBLectureData(lecture));
             }
             List<LectureCarouselData> items = new List<LectureCarouselData>();
             List<Lecture> filteredLectures = FilterLecturesbyRoom(allLectures, _RoomNumLowerRange, _RoomNumUpperRange);
