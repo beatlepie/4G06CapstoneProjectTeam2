@@ -1,7 +1,13 @@
 {
+<<<<<<< Updated upstream
     "dependencies": {
     "com.ptc.vuforia.engine": "file:com.ptc.vuforia.engine-10.20.3.tgz",
+=======
+  "dependencies": {
+>>>>>>> Stashed changes
     "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
+    "com.google.external-dependency-manager": "1.2.179",
+    "com.ptc.vuforia.engine": "file:com.ptc.vuforia.engine-10.20.3.tgz",
     "com.unity.ai.navigation": "1.1.5",
     "com.unity.ide.rider": "3.0.27",
     "com.unity.ide.visualstudio": "2.0.22",
@@ -42,5 +48,19 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
+<<<<<<< Updated upstream
   }
 }
+=======
+  },
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.google.external-dependency-manager"
+      ]
+    }
+  ]
+}
+>>>>>>> Stashed changes
