@@ -1,0 +1,4 @@
+<linker>
+	<!--Preserve an entire assembly-->
+ 	<assembly fullname="Microsoft.AspNetCore.SignalR.Client.Core" preserve="all"/>
+</linker>
