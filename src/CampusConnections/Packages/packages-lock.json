@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "7388d28922b2144497f639630fd8b8b7a3c1ee6d"
     },
+    "com.google.external-dependency-manager": {
+      "version": "1.2.179",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.ptc.vuforia.engine": {
       "version": "file:com.ptc.vuforia.engine-10.20.3.tgz",
       "depth": 0,
