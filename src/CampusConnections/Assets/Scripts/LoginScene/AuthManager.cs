@@ -5,18 +5,16 @@ using Firebase;
 using Firebase.Auth;
 using TMPro;
 using System.Threading.Tasks;
+using Assets.Mapbox.Unity.MeshGeneration.Modifiers.MeshModifiers;
+using Database;
 using Firebase.Database;
 
 public class AuthManager : MonoBehaviour
 {
-    public static int perms;
 
     //Firebase variables
     [Header("Firebase")]
-    public DependencyStatus dependencyStatus;
-    public FirebaseAuth auth;    
     public static FirebaseUser User;
-    public DatabaseReference databaseReference;
 
     //Login variables
     [Header("Login")]
@@ -36,10 +34,8 @@ public class AuthManager : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("Firebase!");
-
         //Check that all of the necessary dependencies for Firebase are present on the system
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        /*FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
             dependencyStatus = task.Result;
             if (dependencyStatus == DependencyStatus.Available)
@@ -51,16 +47,16 @@ public class AuthManager : MonoBehaviour
             {
                 Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
             }
-        });
+        });*/
     }
 
-    private void InitializeFirebase()
+    /*private void InitializeFirebase()
     {
         //Set the authentication instance object
         auth = FirebaseAuth.DefaultInstance;
         //Set the firebase reference
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-    }
+    }*/
 
     //Function for the login button
     public void LoginButton()
@@ -87,7 +83,7 @@ public class AuthManager : MonoBehaviour
     private IEnumerator Login(string _email, string _password)
     {
         //Call the Firebase auth signin function passing the email and password
-        Task<AuthResult> LoginTask = auth.SignInWithEmailAndPasswordAsync(_email, _password);
+        Task<AuthResult> LoginTask = DatabaseConnector.Instance.Auth.SignInWithEmailAndPasswordAsync(_email, _password);
         //Wait until the task completes
         yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
 
@@ -124,9 +120,9 @@ public class AuthManager : MonoBehaviour
             //User is now logged in
             //Now get the result
             User = LoginTask.Result.User;
-            var getPerms = databaseReference.Child("users/" + Utilities.removeDot(User.Email) + "/perms").GetValueAsync();
+            var getPerms = DatabaseConnector.Instance.Root.Child("users/" + Utilities.removeDot(User.Email) + "/perms").GetValueAsync();
             yield return new WaitUntil(predicate: () => getPerms.IsCompleted);
-            perms = int.Parse(getPerms.Result.Value.ToString());
+            DatabaseConnector.Instance.Perms = (PermissonLevel) int.Parse(getPerms.Result.Value.ToString());
 
             // Email verification if they have not accepted the email yet
             if (!User.IsEmailVerified)
@@ -156,7 +152,7 @@ public class AuthManager : MonoBehaviour
         else 
         {
             //Call the Firebase auth signin function passing the email and password
-            Task<AuthResult> RegisterTask = auth.CreateUserWithEmailAndPasswordAsync(_email, _password);
+            Task<AuthResult> RegisterTask = DatabaseConnector.Instance.Auth.CreateUserWithEmailAndPasswordAsync(_email, _password);
             //Wait until the task completes
             yield return new WaitUntil(predicate: () => RegisterTask.IsCompleted);
 
@@ -217,7 +213,7 @@ public class AuthManager : MonoBehaviour
                         User user = new User(User.Email);
                         user.nickName = User.DisplayName;
                         string emailWithoutDot = Utilities.removeDot(User.Email);
-                        databaseReference.Child("users").Child(emailWithoutDot).SetRawJsonValueAsync(JsonUtility.ToJson(user));
+                        DatabaseConnector.Instance.Root.Child("users").Child(emailWithoutDot).SetRawJsonValueAsync(JsonUtility.ToJson(user));
                         warningRegisterText.text = "";
 
                         // Since the registration was success, the email verification can be sent
@@ -241,7 +237,7 @@ public class AuthManager : MonoBehaviour
 
     private IEnumerator ForgetPassword(string _email)
     {
-        Task ResetPwdTask = auth.SendPasswordResetEmailAsync(_email);
+        Task ResetPwdTask = DatabaseConnector.Instance.Auth.SendPasswordResetEmailAsync(_email);
         yield return new WaitUntil(predicate: () => ResetPwdTask.IsCompleted);
         if(ResetPwdTask.IsFaulted)
         {

@@ -6,14 +6,14 @@ using TMPro;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using System.Security.Permissions;
+using Assets.Mapbox.Unity.MeshGeneration.Modifiers.MeshModifiers;
+using Database;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
 public class SettingsManager : MonoBehaviour
 {
-    // These are used for accessing database and current user
-    private FirebaseAuth auth;
-    private DatabaseReference db;
     // These are used to open the profile page for other users
     public static bool currentUser;
     public static string queryEmail;
@@ -65,8 +65,6 @@ public class SettingsManager : MonoBehaviour
     private void Start()
     {
         // Default values for profile page.
-        auth = FirebaseAuth.DefaultInstance;
-        db = FirebaseDatabase.DefaultInstance.RootReference;
         // Display is the default view
         DisplayCanvas.SetActive(true);
         EditCanvas.SetActive(false);
@@ -81,7 +79,7 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
-            queryEmail = auth.CurrentUser.Email;
+            queryEmail = DatabaseConnector.Instance.CurrentUser.Email;
             EditButton.SetActive(true);
             ChangePasswordButton.SetActive(true);
         }
@@ -103,7 +101,7 @@ public class SettingsManager : MonoBehaviour
     private void favorites()
     {
         //NO lectures are visible for guest accounts
-        if(AuthManager.perms != 0)
+        if(DatabaseConnector.Instance.Perms != PermissonLevel.Guest)
         {
             StartCoroutine(getPinnedLectures((List<string> data) =>
             {
@@ -148,7 +146,8 @@ public class SettingsManager : MonoBehaviour
     {
         //Currently a duplicate of a function in the lecture view side!
         string emailWithoutDot = Utilities.removeDot(queryEmail);
-        var userData = db.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
+        var dbRoot = DatabaseConnector.Instance.Root;
+        var userData = dbRoot.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if (userData != null)
         {
@@ -158,7 +157,7 @@ public class SettingsManager : MonoBehaviour
             {
                 pinnedLectures.Add(x.Key.ToString());
 
-                var lecture = db.Child("lectures").Child(x.Key.ToString()).GetValueAsync();
+                var lecture = dbRoot.Child("lectures").Child(x.Key.ToString()).GetValueAsync();
                 yield return new WaitUntil(predicate: () => lecture.IsCompleted);
 
                 pinnedLectures.Add(lecture.Result.Child("instructor").Value.ToString());
@@ -178,7 +177,8 @@ public class SettingsManager : MonoBehaviour
     {
         //Currently a duplicate of a function in the lecture view side!
         string emailWithoutDot = Utilities.removeDot(queryEmail);
-        var userData = db.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
+        var dbRoot = DatabaseConnector.Instance.Root;
+        var userData = dbRoot.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if (userData != null)
         {
@@ -188,10 +188,10 @@ public class SettingsManager : MonoBehaviour
             {
                 pinnedEvents.Add(x.Key.ToString());
 
-                var e1 = db.Child("events/public").Child(x.Key.ToString()).GetValueAsync();
-                var e2 = db.Child("events/private").Child(x.Key.ToString()).GetValueAsync();
+                var e1 = dbRoot.Child("events/public").Child(x.Key.ToString()).GetValueAsync();
+                var e2 = dbRoot.Child("events/private").Child(x.Key.ToString()).GetValueAsync();
                 // If the user is a guest, then DO NOT query the private events!
-                if (AuthManager.perms == 0)
+                if (DatabaseConnector.Instance.Perms == PermissonLevel.Guest)
                 {
                     e2 = null;
                 }
@@ -216,7 +216,8 @@ public class SettingsManager : MonoBehaviour
     {
         List<string> userData = new List<string>();
 
-        var value = db.Child("users").Child(Utilities.removeDot(queryEmail)).GetValueAsync();
+        var dbRoot = DatabaseConnector.Instance.Root;
+        var value = dbRoot.Child("users").Child(Utilities.removeDot(queryEmail)).GetValueAsync();
         yield return new WaitUntil(predicate: () => value.IsCompleted);
 
         if (value != null)
@@ -278,11 +279,13 @@ public class SettingsManager : MonoBehaviour
     private void updateDBdata()
     {
         // TODO: implement safety feature!
-        string emailWithoutDot = Utilities.removeDot(auth.CurrentUser.Email);
-        db.Child("users").Child(emailWithoutDot).Child("level").SetValueAsync(newLevel.text);
-        db.Child("users").Child(emailWithoutDot).Child("nickName").SetValueAsync(newUsername.text);
-        db.Child("users").Child(emailWithoutDot).Child("program").SetValueAsync(newProgram.text);
-        db.Child("users").Child(emailWithoutDot).Child("photo").SetValueAsync(profileImageLink.text);
+        string emailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
+
+        var dbRoot = DatabaseConnector.Instance.Root;
+        dbRoot.Child("users").Child(emailWithoutDot).Child("level").SetValueAsync(newLevel.text);
+        dbRoot.Child("users").Child(emailWithoutDot).Child("nickName").SetValueAsync(newUsername.text);
+        dbRoot.Child("users").Child(emailWithoutDot).Child("program").SetValueAsync(newProgram.text);
+        dbRoot.Child("users").Child(emailWithoutDot).Child("photo").SetValueAsync(profileImageLink.text);
     }
 
     /// <summary>
@@ -301,7 +304,7 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void SaveNewPassword()
     {
-        FirebaseUser user = auth.CurrentUser;
+        FirebaseUser user = DatabaseConnector.Instance.CurrentUser;
 
         // This checks the current password
         user.ReauthenticateAsync(EmailAuthProvider.GetCredential(user.Email, CurrentPassword.text)).ContinueWith(task =>

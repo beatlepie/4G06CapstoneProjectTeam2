@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Linq;
+using Database;
 
 public class EventManager : MonoBehaviour
 {
@@ -41,14 +42,9 @@ public class EventManager : MonoBehaviour
     [SerializeField] TMP_InputField eventTimeEdit;
     [SerializeField] TMP_InputField eventDurationEdit;
     [SerializeField] Toggle eventIsPublicEdit;
-
-    [Header("Database")]
-    public DatabaseReference databaseReference;
     private void Awake()
     {
         UnityEngine.Debug.Log("lecture manager script running");
-        //db setup
-        databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         //after db stuff
         pgNum.text = "1";
         entryContainer = transform.Find("eventEntryContainer");
@@ -56,7 +52,7 @@ public class EventManager : MonoBehaviour
         entryTemplate = entryContainer.Find("eventEntryTemplate");
         entryTemplate.gameObject.SetActive(false);
         // If they are not admin, do not show edit button!
-        if(AuthManager.perms != 2)
+        if(DatabaseConnector.Instance.Perms != PermissonLevel.Admin)
         {
             EditButton.gameObject.SetActive(false);
         }        
@@ -88,7 +84,7 @@ public class EventManager : MonoBehaviour
     {
         eventEntryTransformList = new List<Transform>();
         eventList = new List<Event>();
-        var publicEventData = databaseReference.Child("events/public").OrderByKey().StartAt("-").GetValueAsync();
+        var publicEventData = DatabaseConnector.Instance.Root.Child("events/public").OrderByKey().StartAt("-").GetValueAsync();
         yield return new WaitUntil(predicate: () => publicEventData.IsCompleted);
         if (publicEventData != null)
         {
@@ -98,9 +94,9 @@ public class EventManager : MonoBehaviour
                 eventList.Add(Utilities.FormalizeDBEventData(e));    
             }
         }
-        if(AuthManager.perms != 0)
+        if(DatabaseConnector.Instance.Perms != PermissonLevel.Guest)
         {
-            var privateEventData = databaseReference.Child("events/private").OrderByKey().StartAt("-").GetValueAsync();
+            var privateEventData = DatabaseConnector.Instance.Root.Child("events/private").OrderByKey().StartAt("-").GetValueAsync();
             yield return new WaitUntil(predicate: () => privateEventData.IsCompleted);
             if (privateEventData != null)
             {
@@ -272,7 +268,7 @@ public class EventManager : MonoBehaviour
         Event e = new Event(eventNameEdit.text, dto.ToUnixTimeSeconds(), int.Parse(eventDurationEdit.text), eventOrganizerEdit.text, eventDescriptionEdit.text, eventLocationEdit.text, eventIsPublicEdit.isOn);
         string eventJson = JsonUtility.ToJson(e);
         string prefix = eventIsPublicEdit.isOn ? "events/public/" : "events/private/";
-        databaseReference.Child(prefix + eventNameEdit.text).SetRawJsonValueAsync(eventJson);
+        DatabaseConnector.Instance.Root.Child(prefix + eventNameEdit.text).SetRawJsonValueAsync(eventJson);
         // Add new event to the rendered list, clear the filter and render the first page
         eventList.Add(e);
         filteredList = new List<Event>(eventList);
@@ -285,7 +281,7 @@ public class EventManager : MonoBehaviour
     public void DeleteEvent()
     {
         string prefix = eventIsPublicView.isOn ? "events/public/" : "events/private/";
-        databaseReference.Child(prefix + eventNameView.text).SetValueAsync(null);
+        DatabaseConnector.Instance.Root.Child(prefix + eventNameView.text).SetValueAsync(null);
         // Delete this lecture from the rendered list, clear the filter and render the first page
         var target = eventList.Find(e => e.name == eventNameView.text);
         eventList.Remove(target);
