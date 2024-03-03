@@ -38,6 +38,11 @@ Oct 31 & 1.0 & Add Non-Functional Requirement Tests\\
 Nov 1 & 1.0 & Add Unit Tests\\
 Nov 3 & 1.0 & Add Tables And More Tests\\
 Nov 22 & 1.0 & Revision 0: Resolve issues\\
+Feb 21 & 1.1 & Revision 1: Introduce new usability testing\\
+Feb 25 & 1.1 & Revision 1: Resolve TA Feedback: add TA review in the plan and fix grammar inconsistency\\
+Feb 27 & 1.1 & Revision 1: Resolve TA Feedback for functional requirements: make functional tests more specific and add/remove tests according to Revision 1 requirements\\
+Mar 2 & 1.1 & Revision 1: Resolve TA Feedback for non-functional requirements: add usability survey content to non-functional tests\\
+Mar 3 & 1.1 & Revision 1: Add unit tests according to the design documentation; Add new non-dynamic tests to the table\\
 \bottomrule
 \end{tabularx}
 
@@ -56,31 +61,39 @@ Nov 22 & 1.0 & Revision 0: Resolve issues\\
   \toprule		
   \textbf{symbol} & \textbf{description}\\
   \midrule 
-  VnV & Verification and Validation\\
-  \midrule
-  HA & Hazard Analysis\\
-  \midrule
-  UI & User Interface\\
-  \midrule
   AR & Augmented Reality\\
   \midrule
-  SRS & Software Requirement Specification\\
-  \midrule
-  CAPTCHA & Human Verification Test\\
-  \midrule
-  MIS & Module Interface Specification\\
-  \midrule
-  Vuforia & AR software development kit\\
-  \midrule
-  FEMA & Failure Mode and Effect Analysis\\
-  \midrule
-  UTF & Unity Test Framework\\
+  Apache JMeter & A load testing tool for performance analysis\\
   \midrule
   APK & Android Package, a file format used by Android\\
   \midrule
+  CAPTCHA & Human Verification Test\\
+  \midrule
+  FEMA & Failure Mode and Effect Analysis\\
+  \midrule
   GPS & Global Positioning System\\
   \midrule
-  Apache JMeter & A load testing tool for performance analysis\\
+  HA & Hazard Analysis\\
+  \midrule
+  JHE & John Hodgins Engineering Building\\
+  \midrule
+  Mapbox & A provider of custom online maps for websites and applications\\
+  \midrule
+  MIS & Module Interface Specification\\
+  \midrule
+  SRS & Software Requirement Specification\\
+  \midrule
+  TA & Teaching Assistant\\
+  \midrule
+  UI & User Interface\\
+  \midrule
+  URI & Uniform Resource Identifier, identifies an abstract or physical resource\\
+  \midrule
+  UTF & Unity Test Framework\\
+  \midrule
+  VnV & Verification and Validation\\
+  \midrule
+  Vuforia & AR software development kit\\
   \bottomrule
 \end{tabular}\\
 
@@ -90,13 +103,13 @@ Nov 22 & 1.0 & Revision 0: Resolve issues\\
 
 This document describes the verification and validation plan for CampusConnection.  Within this document, there will be plans to verify the SRS document, the design plan, the VnV plan, the implementation plan, and the software validation plan.  Furthermore, this document will list specific system tests that cover all functional and non-function requirements we mentioned in the SRS, along with a traceability table between test cases and requirements to bind all requirements with tests. 
 
-This document also includes unit tests, but since the design documentation like MIS is not ready yet, we will only cover the most important modules and its corresponding methods test. The team will iterate on the VnV plan and have a more detailed version with test code when the modules are specified in the design document.
+This document also includes unit tests, but since the design documentation like MIS is not ready yet, we will only cover the most important modules and their corresponding methods tests. The team will iterate on the VnV plan and have a more detailed version with the test code when the modules are specified in the design document.
 
 \section{General Information}
 
 \subsection{Summary}
   
-The software being tested is a social media application which also uses Augmented Reality features to allow McMaster University students to connect with each other. The software has many different functions to be able to accomplish its goals. These are some of the important functions:
+The software we test is a social media application which also uses Augmented Reality features to allow McMaster University students to connect with each other. The software has many different functions to be able to accomplish its goals. These are some of the important functions:
 
  \begin{itemize}
      \item  Allowing the users to create and manage their account.
@@ -105,9 +118,11 @@ The software being tested is a social media application which also uses Augmente
 
      \item  Allowing the users with administrator access to add and manage events and lectures.
 
-     \item  Allowing the users to view ongoing events and pin and unpin them based on interest.
+     \item  Allowing the users to view and filter lectures and events 
+     
+     \item Allowing the user to customize their schedule -- pin and unpin events or lectures based on their interest.
 
-     \item  Identifying major campus buildings through the user's location and camera view, and using the information to display relevant lectures, events and their timings.
+     \item  Identifying major campus buildings through the user's location and camera view, and using the information to display relevant lectures and events.
 
  \end{itemize}
 
@@ -143,7 +158,11 @@ While we would want to satisfy as many positive qualities as possible, due to li
 
     \item  Testing learning requirements:
 
-    We will be producing material to make it easier to understand and use our product but to test every piece of supporting documentation and tutorial content would require long testing sessions with volunteers which can be out of the scope. Instead, we could use the feedback obtained from the survey to improve our learning specific content.
+    We will be producing material to make it easier to understand and use our product but to test every piece of supporting documentation and tutorial content would require long testing sessions with volunteers which can be out of the scope. Instead, we could use the feedback obtained from the survey to improve our learning-specific content.
+    
+   \item  Advanced extensibility and maintenance requirements:
+   
+    This is because the project only aims to support senior software students for now and We are not expected to serve all students by the end of Revision 1.  Maintenance requirements are designed for maintainers to maintain the project well in the future (after Revision 1 if the project can be used in real life), not developers. Therefore they will be out of the scope of this documentation. 
     
 \end{itemize}
 
@@ -168,7 +187,7 @@ Many of the other documents associated with our project are relevant to the Veri
           
           The SRS has a lot of components relevant to the VnV plan. The functional requirements are important in identifying the primary functions of the the project while the non functional requirements are critical in identifying the main qualities and objectives of the product. It also contains constraint and assumption information which can help identify out-of-scope objectives.
 
-          \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/docs-VnV-plan/docs/SRS-Volere/SRS.pdf}{Software Requirement Specification (SRS)}
+          \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/docs-VnV-plan/docs/SRS/SRS.pdf}{Software Requirement Specification (SRS)}
     \item Hazard Analysis (HA):
     
         The HA document contains the Failure Mode and Effect Analysis (FMEA) which is incredibly useful in understanding the possible failures and their consequences. This can help us assign priorities to different failures that can be translated into priorities for different qualities identified earlier in the document. It also contains more detailed safety and security requirements that we can use to verify our project.
@@ -188,9 +207,9 @@ Many of the other documents associated with our project are relevant to the Veri
   \hline
   \textbf{Team Member} & \textbf{Role in Verification and Validation} \\
   \hline
-  Abhiram Neelamraju & \textbf{Lead tester}, Leads the testing process and generate test reports \\
+  Abhiram Neelamraju & \textbf{Lead tester, Unit tester}, Leads the testing process, runs unit tests and generates test reports \\
   \hline
-  Michael Kim & \textbf{User Experience Tester}, Tests the user interface of the software to assess how intuitive the AR aspects are. \\
+  Michael Kim & \textbf{Usability Tester}, Tests the user interface of the software to assess how intuitive the layout and UI are. \\
   \hline
   Firas Elayan & \textbf{Validation analyst}, Analyses test results against standards and project goals to ensure alignment. \\
   \hline
@@ -210,7 +229,7 @@ We will be following a few approaches to verify our SRS document, establishing a
 \begin{itemize}
   \item Ad-hoc review by classmates:
 
-      We will be conducting unstructured reviews of our SRS document with our classmates. A couple of different teams of students will go through the document to give us feedback and improvement suggestions around its contents and formatting by creating GitHub issues. This has been done before for Revision 0 and we decide to continue verifying the document for Revision 1.
+      We will be conducting unstructured reviews of our SRS document with our classmates. A couple of different teams of students will go through the document to give us feedback and improvement suggestions around its contents and formatting by creating GitHub issues. This has been done before for Revision 0 and we decided to continue verifying the document for Revision 1.
   
   \item Ad-hoc review by our supervisor:
 
@@ -218,7 +237,11 @@ We will be following a few approaches to verify our SRS document, establishing a
 
     \item SRS walkthrough by team:
 
-      A walkthrough of the document will be performed together by the members of our team. We will all go through each section and analyse it, where we'l lbe able to suggest changes and improvements. Different team members worked on different parts of the document, so this walkthrough will allow for new perspectives on each section.
+      A walkthrough of the document will be performed together by the members of our team. We will all go through each section and analyse it, where we'll be able to suggest changes and improvements. Different team members worked on different parts of the document, so this walkthrough will allow for new perspectives on each section.
+      
+   \item Ad-hoc review by TA:
+   
+   We will perform a review of our SRS with our TA, Sam. This meeting will be used to discuss how we can resolve Revision 0 feedback and we can also get some more suggestions about what can be improved in Revision 1.
 
 \end{itemize}
 
@@ -240,6 +263,10 @@ We will be following a few approaches to verify our SRS document, establishing a
   \item Classmates review:
 
       We will conduct reviews with our classmates to get their input on our designs. This is very valuable for us as our classmates fall under one of our stakeholders, the customers.
+      
+  \item TA review:
+
+      We will conduct reviews with our TA Same to get his ideas about our designs. He can also help us resolve feedback he gave for Revision 0.
 
 \end{itemize}
 
@@ -257,24 +284,29 @@ We will be following a few approaches to verify our SRS document, establishing a
   \item Classmates review:
 
       Our classmates will conduct their own review of our VnV plan. As they resemble our stakeholders and each have their own experience and skills, their feedback can prove to be very beneficial and can provide a range of perspectives on the effectiveness our plan.
+      
+  \item TA feedback:
+
+      Our TA, Sam will give us feedback on VnV plan.  This feedback will be useful to improve our documentation in Revision 1.
 
   \item Mutation testing:
 
-      In order to determine how effective our outlined tests in the VnV plan are at ensuring the correctness of our product, we will employ mutation testings. Mutations will be introduced to the parts of our source code that is covered by the test cases outlined here. These mutations would be very small but should cause the tests to fail. This would allow us to determine how effective our tests are at finding faults and flaws in our product's code.
+      In order to determine how effective our outlined tests in the VnV plan are at ensuring the correctness of our product, we will employ mutation testing. Mutations will be introduced to the parts of our source code that is covered by the test cases outlined here. These mutations would be very small but should cause the tests to fail. This would allow us to determine how effective our tests are at finding faults and flaws in our product's code.
 
 \end{itemize}
 
 \subsection{Implementation Verification Plan}
 
-      Our implementation verification plan involves making use of the system and unit tests we've outlined in the VnV plan to ensure the correctness and quality of our implementation of our product.\\\\
-      We've outlined system tests and unit tests for our requirements. The system tests apply to the application as a whole, placing a focus on verifying the correctness of the application and how well it satisfies the requirements we've outlined in our SRS document. Our unit tests focus on specific modules within our application, aiming at assessing the accuracy of each module, both individually and when working together. All our tests are based on our functional and non-functional requirements to ensure our application adheres to our goals for the project.\\\\
-      In addition to the tests outlined in this document, we will also employ some static technqiues to verify our implementation. We will be making use of verification tools that are able to identify errors and issues in our source code. We will also be conducting code reviews, where we'll be examining our code (without executing it) to find any problems in relation with our code's adherence to our design and requirements.
+      Our implementation verification plan involves making use of the system and unit tests we've outlined in the VnV plan to ensure the correctness and quality of the implementation of our product.\\\\
+      We've outlined system tests and unit tests for our requirements. The system tests apply to the application as a whole, placing a focus on verifying the correctness of the application and how well it satisfies the requirements we've outlined in our SRS document. Our unit tests focus on specific modules within our application, aiming at assessing the robustness and accuracy of each module when working individually. All our tests are based on our functional and non-functional requirements to ensure our application adheres to our goals for the project.\\\\
+      In addition to the tests outlined in this document, we will also employ some static techniques to verify our implementation. We will be making use of verification tools that are able to identify errors and issues in our source code. We will also be conducting code reviews, where we'll be examining our code (without executing it) to find any problems in relation with our code's adherence to our design and requirements.
 
 \subsection{Automated Testing and Verification Tools}
 
       We intend to make use of several different tools that will help us in the testing and verification of our product. We have outlined some of these tools in our development plan.\\\\
-      Since we are coding our product using C\#, we will be making use of JetBrains Rider's in-built linter for C\#. Linters are incredibly useful tools that we can use to detect any programming errors and bugs in our source code, as well as any issues with the style. Using this linter would help avoid these problems growing as we build the project, ensuring its correctness.\\\\
-      As we are using Unity as our engine to develop our application, our testing framework will be the Unity Test Framework. Unity Test Framework can be used for both automated testing (Play Mode) and unit testing tool (edit mode) and there are other UI driven end to end automated tool that we can use like AltTester if it is too complicated to write automated testing code in Unity Test Framework.
+      Since we are coding our product using C\#, we will be making use of dotnet format for C\# to format our code. Linters are incredibly useful tools that we can use to detect any programming errors and bugs in our source code, as well as any issues with the style. Using this linter would help avoid these problems growing as we build the project, ensuring its correctness.\\\\
+      As we are using Unity as our engine to develop our application, our testing framework will be the Unity Test Framework. Unity Test Framework can be used in both Play Mode and Edit mode and there are other UI driven end to end automated tool that we can use if it is manual testing spends too much time.\\\\
+      For all tests or linter mentioned above, we will build a continuous integration pipeline in our Github repo so that they can be tested automatically. 
 
 \subsection{Software Validation Plan}
 
@@ -286,47 +318,47 @@ We will be following a few approaches to verify our SRS document, establishing a
 	
 \subsection{Tests for Functional Requirements}
 
-The following section includes system tests for functional requirements defined in the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document. In order to cover all the functional requirements, these subsections match exactly the subsections in the SRS document, which cover all the different components of this application. These tests will ensure all requirements are fulfilled and the application works as we expected. Most of the following tests will be run manually while some of them will be automated.
+The following section includes system tests for functional requirements defined in the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS/SRS.pdf}{SRS} document. In order to cover all the functional requirements, these subsections match exactly the subsections in the SRS document, which cover all the different components of this application. These tests will ensure all requirements are fulfilled and the application works as we expected. Most of the following tests will be run manually while some of them will be automated.
 
-\subsubsection{Pre-Game Settings}
+\subsubsection{Pre-Registration Settings}
 
-This section includes all test cases related to what users can do before they start to use the application. This will include the requirement for the consent form and user privacy protection (FR-1-1). In order to plan the game, the user must agree to the terms and conditions in the consent form.
+This section includes all test cases related to what users can do before they start to use the application. This will include the requirement for the consent form and user privacy protection (FR-1-1). In order to create an account and use the application, the user must agree to the terms and conditions in the consent form. The following tests will have random accounts as input and we assume the success of the test on random accounts indicates the success of the test on all accounts.
 
 \begin{enumerate}
 
-\item{\textbf{FRT-PG1}}
+\item{\textbf{FRT-PR1}}
 
 \textbf{Name:} Agree To Consent Form
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} The user is not logged in to the application, and all features in the application are not accessible to the user. A consent form appears asking for access to the device and permission to collect user data
+\textbf{Initial State:} The user does not have an account, and they starts to register an account. A consent form appears asking for access to the device and permission to collect user data
 
-\textbf{Input:} The user agrees to all the terms and conditions and clicks 'Agree'
+\textbf{Input:} The user agrees to all the terms and conditions and clicks `Agree' and continues to complete the registration process
 					
-\textbf{Output:} The user is redirected to the login screen
+\textbf{Output:} A notification shows the registration succeeds and the user is redirected to the login screen
 
 \textbf{Test Case Derivation:} It is a must to request users' consent before collecting their information or using any hardware component
 					
-\textbf{How test will be performed:} The tester will first clear the app cache and data. Then the tester will run the application, accept the consent form and verify login screen shows up
+\textbf{How test will be performed:} The tester will first clear the app cache and data. Then the tester will run the application and register a new account. Then they will open up the consent form and click on `Agree' button, try to finish the registration and verify the registration is successful and the login screen shows up as well
 
 \textbf{Related Requirement(s):} FR-1-1
 					
-\item{\textbf{FRT-PG2}}
+\item{\textbf{FRT-PR2}}
 
 \textbf{Name:} Disagree To Consent Form
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} The user is not logged in to the application, and all features in the application are not accessible to the user. A consent form appears asking for access to the device and permission to collect user data
+\textbf{Initial State:} The user does not have an account, and they starts to register an account. A consent form appears asking for access to the device and permission to collect user data
 					
-\textbf{Input:} The user rejects the terms and conditions and clicks 'Disagree'
+\textbf{Input:} The user rejects the terms and conditions and clicks `Disagree' and continues to complete the registration process
 					
-\textbf{Output:} The user is not redirected to the login screen
+\textbf{Output:} The registration fails and a warning will show up notifying the user that they cannot create an account unless they agree to the consent form
 
 \textbf{Test Case Derivation:} It is a must to request users' consent before collecting their information or using any hardware component
 
-\textbf{How test will be performed:} The tester will first clear the app cache and data. Then the tester will run the application, reject the consent form and verify login screen does not show up
+\textbf{How test will be performed:} The tester will first clear the app cache and data. Then the tester will run the application and register a new account. Then they will open up the consent form and click on `Disagree' button, try to finish the registration and verify a warning shows up
 
 \textbf{Related Requirement(s):} FR-1-1
 
@@ -334,7 +366,7 @@ This section includes all test cases related to what users can do before they st
 
 \subsubsection{User Account}
 
-This section includes all test cases related to user accounts. This will include the requirements for account creation (FR-2-1), login (FR-2-3), deletion (FR-2-2) and email verification(FR-2-8), along with user avatar settings (FR-2-6, FR-2-7). User accounts and virtual avatars are necessary for all users who want to use this application.
+This section includes all test cases related to user accounts. This will include the requirements for account creation (FR-2-1), login (FR-2-3), deletion (FR-2-2) and email verification(FR-2-6), along with user avatar settings (FR-2-5), password management(FR-2-4) and profile management (FR-2-7). User accounts and virtual avatars are necessary for all users who want to use this application. The following tests will have random accounts as input and we assume the success of the test on random accounts indicates the success of the test on all accounts.
 
 \begin{enumerate}
 
@@ -346,13 +378,18 @@ This section includes all test cases related to user accounts. This will include
 					
 \textbf{Initial State:} The user does not have an account and is not logged in to the application
 
-\textbf{Input:} All information needed to create an account (username and password)
+\textbf{Input:} All information needed to create an account:
+\begin{itemize}
+\item Email: testUA1@gmail.com
+\item password: FRT-UA1
+\item nickname: UA1
+\end{itemize}
 					
 \textbf{Output:} An Account with corresponding information is created in the database with the account initialized to INITIAL\_USER\_STATE
 
 \textbf{Test Case Derivation:}  User account operations are the foundation of the application. All functionalities work only with an existing account. Also, it is essential to ensure the account information reflects the input information when creating accounts
 					
-\textbf{How test will be performed:} The tester will create an account with all information and verify that the account can be logged into
+\textbf{How test will be performed:} The tester will create a test account with all information above and verify that the account can be logged into
 
 \textbf{Related Requirement(s):} FR-2-1
 
@@ -364,13 +401,18 @@ This section includes all test cases related to user accounts. This will include
 					
 \textbf{Initial State:} The user does not have an account and is not logged in to the application
 
-\textbf{Input:} All information needed to create an account with an existing username
+\textbf{Input:} All information needed to create an account:
+\begin{itemize}
+\item Email: qtest@gmail.com (this is an existing test account)
+\item password: FRT-UA1
+\item nickname: UA1
+\end{itemize}
 					
-\textbf{Output:} Account creation fails with an error message telling the user the username already exists
+\textbf{Output:} Account creation fails with a warning telling the user the email has already been used
 
-\textbf{Test Case Derivation:} Username is the identifier of a user account, which should be unique
+\textbf{Test Case Derivation:} Email is the identifier of a user account, which should be unique
 					
-\textbf{How test will be performed:} The tester will create an account with an existing username and verify that the creation fails
+\textbf{How test will be performed:} The tester will create an account with the information above and verify that the registration fails with a warning
 
 \textbf{Related Requirement(s):} FR-2-1
 
@@ -378,17 +420,21 @@ This section includes all test cases related to user accounts. This will include
 
 \textbf{Name:} Successful Account Login
 
-\textbf{Control:} Automated
+\textbf{Control:} Manual
 					
 \textbf{Initial State:} The user has an account and is not logged in to the application
 
-\textbf{Input:} Username and valid password
+\textbf{Input:} All information needed to login:
+\begin{itemize}
+\item Email: FRT-UA3@test.com (this account exists in the system already)
+\item password: FRT-UA3
+\end{itemize}
 					
-\textbf{Output:} User successfully logs into the application
+\textbf{Output:} User successfully logs into the application and goes to the menu page
 
 \textbf{Test Case Derivation:} User account operations are the foundation of the application. All functionalities work only with an existing account. Also, it is essential to verify that users can log in with only the correct password 
 					
-\textbf{How test will be performed:} The tester will create an automated test that inputs a valid password and verifies that the login is completed
+\textbf{How test will be performed:} The tester will login with the email and password given above and verifies that the login succeeds and the user is redirected to the menu page
 
 \textbf{Related Requirement(s):} FR-2-3
 
@@ -396,17 +442,21 @@ This section includes all test cases related to user accounts. This will include
 
 \textbf{Name:} Unsuccessful Account Login
 
-\textbf{Control:} Automated
+\textbf{Control:} Manual
 					
 \textbf{Initial State:} The user has an account and is not logged in to the application
 
-\textbf{Input:} Username and wrong password
+\textbf{Input:} All information needed to login:
+\begin{itemize}
+\item Email: FRT-UA3@test.com (this account exists in the system already)
+\item password: FRT321 (wrong password)
+\end{itemize}
 					
-\textbf{Output:} Login fails with an error message telling the user the password is wrong
+\textbf{Output:} Login fails with a warning telling the user the password is wrong
 
-\textbf{Test Case Derivation:} User account operations are the foundation of the application. All functionalities work only with an existing account. Also, it is essential to verify that users can log in with only the correct password
+\textbf{Test Case Derivation:} User account operations are the foundation of the application. All functionalities work only with an existing account. Also, it is essential to verify that users can not log in with a wrong password
 					
-\textbf{How test will be performed:} The tester will create an automated test that inputs an invalid password and verifies that a corresponding error is returned
+\textbf{How test will be performed:} The tester will login with the email and password given above and verifies that the login fails with a warning
 
 \textbf{Related Requirement(s):} FR-2-3
 
@@ -417,14 +467,19 @@ This section includes all test cases related to user accounts. This will include
 \textbf{Control:} Manual
 					
 \textbf{Initial State:} The user has an account and is logged into the application
+\begin{itemize}
+\item Email: FRT-UA5@gmail.com (this is an existing test account)
+\item password: FRT-UA5
+\item nickname: UA5
+\end{itemize}
 
-\textbf{Input:} User clicks on the delete account button
+\textbf{Input:} User clicks on the delete account button on the profile page and confirms the deletion
 					
-\textbf{Output:} Data pertaining to the given username is deleted
+\textbf{Output:} The user is redirected to the login page and the account cannot be logged in any more
 
 \textbf{Test Case Derivation:} User account operations are the foundation of the application. When users want to quit, they should be able to delete all related information in the application by deleting their account
 					
-\textbf{How test will be performed:} The tester will delete the test account and verify the account does not exist anymore in-game
+\textbf{How test will be performed:} The tester will delete the account above and verify the account cannot be logged in any more
 
 \textbf{Related Requirement(s):} FR-2-2
 
@@ -432,78 +487,101 @@ This section includes all test cases related to user accounts. This will include
 
 \textbf{Name:} Reset Account Password
 
-\textbf{Control:} Automated
+\textbf{Control:} Manual
 					
-\textbf{Initial State:} The user has an account
+\textbf{Initial State:} The user has an account:
+\begin{itemize}
+\item Email: campusconnections@gmail.com (this is an existing test account)
+\item password: qtesting
+\end{itemize}
 
-\textbf{Input:} New password and answers to security questions for password recovery
+\textbf{Input:} Email address and new password
+\begin{itemize}
+\item new nickname: QTesting
+\end{itemize}
 					
 \textbf{Output:} Password is successfully reset
 
 \textbf{Test Case Derivation:} In case the user misplaces or forgets the password, they can still get their account back
 					
-\textbf{How test will be performed:} The tester will first reset the password. Then the tester will try to log in with the new password and verify the new password works properly
+\textbf{How test will be performed:} The user will click on `Forget Password' button on the login page and enter the email address above. Then the user will follow the instruction on the email sent by the system and enters a new password. After that the user will login with the new password to verify the new password works properly
 
 \textbf{Related Requirement(s):} FR-2-4
 
 \item{\textbf{FRT-UA7}}
 
-\textbf{Name:} Human Verification Test
+\textbf{Name:} Avatar Creation and Modification
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} The user does not have an account and is not logged into the application
+\textbf{Initial State:} The user has an account with DEFAULT\_AVATAR
 
-\textbf{Input:} All information needed to create an account (username and password)
+\textbf{Input:} URI represents the new avatar:
+\begin{itemize}
+\item URI: https://upload.wikimedia.org/wikipedia/commons/2/2f/Google\_2015\_logo.svg
+\end{itemize}
 					
-\textbf{Output:} The tester passes the test and creates an account successfully
+\textbf{Output:} The user changes the avatar to a Google logo
 
-\textbf{Test Case Derivation:} To prevent malicious automated systems from creating bot accounts
+\textbf{Test Case Derivation:} To help users enjoy social networking when using this application, we should allow them to customize their account, therefore it is necessary to verify they can create an avatar and change it whenever they want
 					
-\textbf{How test will be performed:} The tester will verify the CAPTCHA test appears and functions well when creating an account
+\textbf{How test will be performed:} The tester will edit the avatar URI and change it to be the URI above. Then the tester will verify the avatar has been changed to a Google logo
 
 \textbf{Related Requirement(s):} FR-2-5
 
 \item{\textbf{FRT-UA8}}
 
-\textbf{Name:} Avatar Creation and Modification
-
-\textbf{Control:} Manual
-					
-\textbf{Initial State:} The user has an account with INITIAL\_AVATAR
-
-\textbf{Input:} Avatar and user clicks on modifying avatar button
-					
-\textbf{Output:} User creates an avatar and changes it
-
-\textbf{Test Case Derivation:} To help users enjoy social networking when using this application, users shall be able to personalize their account, therefore it is necessary to verify they can create an avatar and change it whenever they want
-					
-\textbf{How test will be performed:} The tester will create an avatar from the initial one and modify it. Then the tester will verify the changes are visible for all friends from another test account
-
-\textbf{Related Requirement(s):} FR-2-6, FR-2-7
-
-\item{\textbf{FRT-UA9}}
-
 \textbf{Name:} Email verification
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} The user adds McMaster email to user profile
+\textbf{Initial State:} The user has an account whose email has not been verified yet
+\begin{itemize}
+\item Email: fuz15@mcmaster.ca (this is an existing test account)
+\item password: password
+\end{itemize}
 
-\textbf{Input:} User verifying after receving the verification email
+\textbf{Input:} User clicks on `Verify Email` button on user profile page and follows instructions on the email sent from the system
 					
-\textbf{Output:} User email is verified and all access is granted for the account
+\textbf{Output:} That email above is verified as a valid email address
 
-\textbf{Test Case Derivation:} The user has to be identified as a McMaster student to have enough access to all functionalities (Event and Lecture information). So it is essential to test the email verification functionality
+\textbf{Test Case Derivation:} For students to get access to events and lectures, they must prove the system that they have a valid school email, therefore, email verification is important.
 					
-\textbf{How test will be performed:} The tester will add a test McMaster email to the test account and verify the email can be verified and all functionalities work for the account after email verification
+\textbf{How test will be performed:} The tester will login with the email and password given above and go to user profile page and click on `Verify Email' button. Then the tester will follow the instructions of the email sent by the system to verify the email. Finally the tester will login and verify that the email verification button is disabled because the email has been verified
 
-\textbf{Related Requirement(s):} FR-2-8
+\textbf{Related Requirement(s):} FR-2-6
+
+\item{\textbf{FRT-UA9}}
+
+\textbf{Name:} Edit profile
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} The user has an account 
+\begin{itemize}
+\item Email: qtest@gmail.com (this is an existing test account)
+\item password: qtesting
+\item newProgram: Computer Science
+\end{itemize}
+
+\textbf{Input:} New Profile:
+\begin{itemize}
+\item newProgram: Computer Science
+\item newLevel: 4
+\end{itemize}
+					
+\textbf{Output:} The program and level are updated
+
+\textbf{Test Case Derivation:} To help users enjoy social networking when using the application, we should allow them to edit their information whenever they want
+					
+\textbf{How test will be performed:} The tester will login with the email and password given above and go to user profile page and click on `Edit' button. Then the tester will enter new program and level and save the changes Finally the tester will verify the profile has been updated
+
+\textbf{Related Requirement(s):} FR-2-7
 \end{enumerate}
 
 \subsubsection{Social Networking System}
 
-This section includes all test cases related to the social networking system. This will include the requirements for adding (FR-3-1), deleting (FR-3-2), messaging friends of the user (FR-3-3, FR-3-4) and sharing location (FR-3-5). Expanding student social network is the most significant motivation of this application and it is necessary to verify all associated requirements are fully fulfilled.
+This section includes all test cases related to the social networking system. This will include the requirements for adding (FR-3-1), deleting (FR-3-2), messaging friends of the user (FR-3-3, FR-3-4) and sharing location (FR-3-5). Expanding student social network is the most significant motivation of this application and it is necessary to verify all associated requirements are fully fulfilled. The following tests will have random accounts as input and we assume the success of the test on random accounts indicates the success of the test on all accounts.
 
 \begin{enumerate}
 \item{\textbf{FRT-SN1}}
@@ -512,15 +590,22 @@ This section includes all test cases related to the social networking system. Th
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} The user is logged in
+\textbf{Initial State:} The user is logged in with the following account:
+\begin{itemize}
+\item Semail: FRT-SN1@test.com
+\item password: testing
+\end{itemize}
 
-\textbf{Input:} A valid username and corresponding user request
+\textbf{Input:} A valid email to send the request:
+\begin{itemize}
+\item Temail: FRT-SN1-F@test.com
+\end{itemize}
 					
-\textbf{Output:} A Request is sent to the given user
+\textbf{Output:} A Request is sent to the target user
 
-\textbf{Test Case Derivation:} Users should be able to make friends on this social media platform by searching for names and sending requests
+\textbf{Test Case Derivation:} Users should be able to make friends on this social media platform by searching for their ID (email) and sending requests
 					
-\textbf{How test will be performed:} The tester will first send a friend request to a test account. Then the tester will verify that test account receives a friend request
+\textbf{How test will be performed:} The tester will login and send a friend request from the account given in initial state to the target user. Then the tester will login to the target account and verify that there is a pending friend request
 
 \textbf{Related Requirement(s):} FR-3-1
 
@@ -530,17 +615,21 @@ This section includes all test cases related to the social networking system. Th
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} A friend request was sent
+\textbf{Initial State:} A friend request was sent from an account (Semail) to the target account (Temail):
+\begin{itemize}
+\item Semail: FRT-SN1@test.com
+\item Temail: FRT-SN1-F@test.com
+\end{itemize}
 
-\textbf{Input:} User accepts the request
+\textbf{Input:} The request is accepted
 					
 \textbf{Output:} Two users are added to each other's friend lists
 
 \textbf{Test Case Derivation:} Users should be able to expand networking by accepting friend requests
 					
-\textbf{How test will be performed:} The tester will first accept the request. Then the tester will verify that the two accounts become friends of each other
+\textbf{How test will be performed:} The tester will first login to target account and accept the request. Then the tester will login to sender account to verify that they are in friend lists of each other
 
-\textbf{Related Requirement(s):} FR-3-1
+\textbf{Related Requirement(s):} FR-3-1, FR-3-6
 
 \item{\textbf{FRT-SN3}}
 
@@ -548,17 +637,21 @@ This section includes all test cases related to the social networking system. Th
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} A friend request was sent
+\textbf{Initial State:} A friend request was sent from an account (Semail) to the target account (Temail):
+\begin{itemize}
+\item Semail: FRT-SN1@test.com
+\item Temail: FRT-SN1-F@test.com
+\end{itemize}
 
-\textbf{Input:} User rejects the request
+\textbf{Input:} The request is rejected
 					
-\textbf{Output:} The request is declined and no friend is added to the list
+\textbf{Output:} The request is declined and no friend is added for both accounts
 
 \textbf{Test Case Derivation:} Users should be able to decline friend requests from strangers
 					
-\textbf{How test will be performed:} The tester will first reject the request. Then the tester will verify that no friendship relation is generated between the two accounts
+\textbf{How test will be performed:} The tester will first login to target account and reject the request. Then the tester will login to sender account to verify that they are not in friend lists of each other
 
-\textbf{Related Requirement(s):} FR-3-1
+\textbf{Related Requirement(s):} FR-3-1, FR-3-6
 
 \item{\textbf{FRT-SN4}}
 
@@ -566,7 +659,11 @@ This section includes all test cases related to the social networking system. Th
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} A friend exists in the friend list
+\textbf{Initial State:} A friend (Femail) exist in the friend list of the test account (Temail):
+\begin{itemize}
+\item Temail: FRT-SN4@test.com
+\item Femail: FRT-SN4-F@test.com
+\end{itemize}
 
 \textbf{Input:} User deletes the chosen friend
 					
@@ -574,7 +671,7 @@ This section includes all test cases related to the social networking system. Th
 
 \textbf{Test Case Derivation:} Users should be able to remove friends from their list to make space for new friends
 					
-\textbf{How test will be performed:} The tester will delete a test friend account and verify the friend is removed from the list
+\textbf{How test will be performed:} The tester will login to the test account (Temail) and delete the friend (Femail) and verify the friend is removed from the list
 
 \textbf{Related Requirement(s):} FR-3-2
 
@@ -584,40 +681,428 @@ This section includes all test cases related to the social networking system. Th
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} A friend exists in the friend list
+\textbf{Initial State:} A friend (Femail) exist in the friend list of the test account (Temail):
+\begin{itemize}
+\item Temail: FRT-SN5@test.com
+\item Femail: FRT-SN5-F@test.com
+\end{itemize}
 
-\textbf{Input:} Audio/text message to send
+\textbf{Input:} Message: `Hello World'
 					
 \textbf{Output:} The corresponding message is sent to the friend
 
 \textbf{Test Case Derivation:} Chatting with friends is the core functionality of expanding social networks. Friends should be able to send and receive messages from each other
 					
-\textbf{How test will be performed:} The tester will send an audio and text message to another test friend account. Then the tester will verify the other account received the correct message
+\textbf{How test will be performed:} The tester will log in to both the test account and the friend account. Then the tester will open the chat and send the input message from test account and verify that message shows up in the friend account chat
 
-\textbf{Related Requirement(s):} FR-3-3, FR-3-4
+\textbf{Related Requirement(s):} FR-3-3
 
 \item{\textbf{FRT-SN6}}
 
-\textbf{Name:} Friend Location Sharing
+\textbf{Name:} Friend Sharing Event
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} A friend exists in the friend list
+\textbf{Initial State:} A friend (Femail) exist in the friend list of the test account (Temail):
+\begin{itemize}
+\item Temail: FRT-SN6@test.com
+\item Femail: FRT-SN6-F@test.com
+\end{itemize}
 
-\textbf{Input:} User Location
+\textbf{Input:} Message that contains event name and follows some specific pattern:
+Hey, check this event: \textunderscore E\textunderscore[EXPO]
 					
-\textbf{Output:} User location is visible to the corresponding friend
+\textbf{Output:} User will be redirect to the event page with that event once they click on the message
 
-\textbf{Test Case Derivation:} Users shall be able to share their current location with friends to meet in person. It is essential to verify the location is accurate and up-to-date
+\textbf{Test Case Derivation:} Users shall be able to share events they found with friends conveniently so that they can join events together in person.
 					
-\textbf{How test will be performed:} The tester will share the location with a friend, and then verify the location is visible and accurate (accuracy of GPS\_ACCURACY) from the other test account
+\textbf{How test will be performed:} The tester will log in to both the test account and the friend account. Then the tester will open the chat and send that message from test account and verify that message can be clicked in the friend account chat and it redirects to event page correctly.
+
+\textbf{Related Requirement(s):} FR-3-4
+
+\item{\textbf{FRT-SN7}}
+
+\textbf{Name:} Friend Sharing Lecture
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A friend (Femail) exist in the friend list of the test account (Temail):
+\begin{itemize}
+\item Temail: FRT-SN7@test.com
+\item Femail: FRT-SN7-F@test.com
+\end{itemize}
+
+\textbf{Input:} Message that contains lecture code and follows some specific pattern:
+`Hey, are you in this lecture: \textunderscore L\textunderscore[SFRWENG 4G06]'
+					
+\textbf{Output:} User will be redirect to the lecture page with that lecture once they click on the message
+
+\textbf{Test Case Derivation:} Users shall be able to share lectures they found with friends conveniently so that they can meet more classmate and study together.
+					
+\textbf{How test will be performed:} The tester will log in to both the test account and the friend account. Then the tester will open the chat and send that message from test account and verify that message can be clicked in the friend account chat and it redirects to lecture page correctly.
 
 \textbf{Related Requirement(s):} FR-3-5
 \end{enumerate}
 
-\subsubsection{AR Campus}
+\subsubsection{Lectures and Events}
 
-This section includes all test cases related to campus navigation with AR technology. This will include the requirements for building recognition (FR-4-1) and demonstration building information (FR-4-2, FR-4-3). Augmented reality provides an immersive user experience and it is the unique selling point of the application.
+This section includes all test cases related to events and lectures happening on campus. This will include the requirements for events and lectures themselves, users interacting with these properties, and the power of administration accounts. The test cases ensure that the lectures and events information is accurate and helpful for all users. The following tests will have random lecture/event as input and we assume the success of the test on random event/lecture indicates the success of the test on all of them.
+
+\begin{enumerate}
+\item{\textbf{FRT-LE1}}
+
+\textbf{Name:} Save Event
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A sample event:
+\begin{itemize}
+\item Name: EXPO
+\end{itemize}
+
+\textbf{Input:} On the event page, user clicks on the save button on the pop-up window with details of the sample event
+					
+\textbf{Output:} The event is saved to the user's event list
+
+\textbf{Test Case Derivation:} The user should be able to interact with events available on campus and customize their own event list. Therefore, they should be able to save events for later
+					
+\textbf{How test will be performed:} The tester will go to event page and find the sample event, click on the save button on the pop-up window. Then the tester will verify the event shows up in the user's saved event list.
+
+\textbf{Related Requirement(s):} FR-4-1
+
+\item{\textbf{FRT-LE2}}
+
+\textbf{Name:} Unsave Event
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A sample event that is already been saved:
+\begin{itemize}
+\item Name: EXPO
+\end{itemize}
+
+\textbf{Input:} On the event page, user clicks on the unsave button on the pop-up window with details of the sample event
+					
+\textbf{Output:} The event is removed from the user's event list
+
+\textbf{Test Case Derivation:} The user should be able to interact with events available on campus and customize their own event list. Therefore, they should be able to unsave events if that is no longer needed
+					
+\textbf{How test will be performed:} The tester will go to event page and find the sample event, click on the unsave button on the pop-up window. Then the tester will verify the event disappears in the user's saved event list.
+
+\textbf{Related Requirement(s):} FR-4-1
+
+\item{\textbf{FRT-LE3}}
+
+\textbf{Name:} Save Lecture
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A sample lecture:
+\begin{itemize}
+\item Code: SFWRENG 4G06
+\end{itemize}
+
+\textbf{Input:} On the lecture page, user clicks on the save button on the pop-up window with details of the sample lecture
+					
+\textbf{Output:} The event is saved to the user's lecture list
+
+\textbf{Test Case Derivation:} The user should be able to interact with lectures available on campus and customize their own lecture list. Therefore, they should be able to save lectures for later
+					
+\textbf{How test will be performed:} The tester will go to lecture page and find the sample lecture, click on the save button on the pop-up window. Then the tester will verify the event shows up in the user's saved lecture list.
+
+\textbf{Related Requirement(s):} FR-4-2
+
+\item{\textbf{FRT-LE4}}
+
+\textbf{Name:} Unsave Lecture
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A sample lecture that is already been saved:
+\begin{itemize}
+\item Code: SFWRENG 4G06
+\end{itemize}
+
+\textbf{Input:} On the lecture page, user clicks on the unsave button on the pop-up window with details of the sample lecture
+					
+\textbf{Output:} The event is removed from the user's lecture list
+
+\textbf{Test Case Derivation:} The user should be able to interact with lectures available on campus and customize their own lecture list. Therefore, they should be able to unsave lectures if that is no longer needed
+					
+\textbf{How test will be performed:} The tester will go to lecture page and find the sample lecture, click on the unsave button on the pop-up window. Then the tester will verify the event disappears in the user's saved lecture list.
+
+\textbf{Related Requirement(s):} FR-4-2
+
+\item{\textbf{FRT-LE5}}
+
+\textbf{Name:} Administrator Add Events
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} Sample event:
+\begin{itemize}
+\item name: Test event
+\item description: Sample event for system test
+\item time: 0
+\item duration: 0
+\item location: Online
+\item isPublic: true
+\item organizer: Team 2
+\end{itemize}
+					
+\textbf{Output:} The event is added to the event list
+
+\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to create new events for all users
+					
+\textbf{How test will be performed:} The tester will log in as an administrator and add the sample event. Then the tester will verify the event is shown in the list with all information
+
+\textbf{Related Requirement(s):} FR-4-3
+
+\item{\textbf{FRT-LE6}}
+
+\textbf{Name:} Administrator Edit Events
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} Sample event name and new location:
+\begin{itemize}
+\item name: Test event
+\item location: ITB AB102
+\end{itemize}
+					
+\textbf{Output:} The test event location is updated to the new one
+
+\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to update event information if that is out of date
+					
+\textbf{How test will be performed:} The tester will log in as an administrator, find the sample event and update the sample event location. Then the tester will verify the event location shown in the list is updated
+
+\textbf{Related Requirement(s):} FR-4-3
+
+\item{\textbf{FRT-LE7}}
+
+\textbf{Name:} Administrator Delete Events
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} Sample event (already in the system) name:
+\begin{itemize}
+\item name: Test event
+\end{itemize}
+					
+\textbf{Output:} The event is deleted and disappears from the list
+
+\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to clean old events
+					
+\textbf{How test will be performed:} The tester will log in as an administrator, find the sample event and click on delete button. Then the tester will verify the event disappears from the list
+
+\textbf{Related Requirement(s):} FR-4-3
+
+\item{\textbf{FRT-LE8}}
+
+\textbf{Name:} Administrator Add Lectures
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} Sample lecture:
+\begin{itemize}
+\item code: TEST 1T03
+\item name: Test lecture
+\item time: 12:00 - 13:00, Mon
+\item location: Online
+\item instructor: NA
+\end{itemize}
+					
+\textbf{Output:} The lecture is added to the lecture list
+
+\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to create new lectures for all users
+					
+\textbf{How test will be performed:} The tester will log in as an administrator and add the sample lecture. Then the tester will verify the lecture is shown in the list with all information
+
+\textbf{Related Requirement(s):} FR-4-4
+
+\item{\textbf{FRT-LE9}}
+
+\textbf{Name:} Administrator Edit Lectures
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} Sample lecture name and new location:
+\begin{itemize}
+\item code: TEST 1T03
+\item location: ITB AB102
+\end{itemize}
+					
+\textbf{Output:} The test lecture location is updated to the new one
+
+\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to update lecture information if that is out of date
+					
+\textbf{How test will be performed:} The tester will log in as an administrator, find the sample lecture and update the sample lecture location. Then the tester will verify the lecture location shown in the list is updated
+
+\textbf{Related Requirement(s):} FR-4-4
+
+\item{\textbf{FRT-LE10}}
+
+\textbf{Name:} Administrator Delete Lectures
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} Sample lecture (already in the system) name:
+\begin{itemize}
+\item code: TEST 1T03
+\end{itemize}
+					
+\textbf{Output:} The lecture is deleted and disappears from the list
+
+\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to clean old lectures
+					
+\textbf{How test will be performed:} The tester will log in as an administrator, find the sample lecture and click on delete button. Then the tester will verify the lecture disappears from the list
+
+\textbf{Related Requirement(s):} FR-4-4
+
+\item{\textbf{FRT-LE11}}
+
+\textbf{Name:} Event Information
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A sample event exists:
+\begin{itemize}
+\item name: EXPO
+\end{itemize}
+
+\textbf{Input:} User clicks on the sample event
+					
+\textbf{Output:} All event information is shown in a pop-up window
+
+\textbf{Test Case Derivation:} All events should follow some pattern and have following information:
+\begin{itemize}
+\item organizer
+\item location
+\item time
+\item duration
+\end{itemize}
+					
+\textbf{How test will be performed:} The tester will find the sample event in the table and click on it. Then the tester will verify all entries listed above are shown in the pop-up window
+
+\textbf{Related Requirement(s):} FR-4-5
+
+\item{\textbf{FRT-LE12}}
+
+\textbf{Name:} Lecture Information
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} A sample lecture exists:
+\begin{itemize}
+\item code: SFWRENG 4G06
+\end{itemize}
+
+\textbf{Input:} User clicks on the sample lecture
+					
+\textbf{Output:} All lecture information is shown in a pop-up window
+
+\textbf{Test Case Derivation:} All events should follow some pattern and have following information:
+\begin{itemize}
+\item instructor
+\item location
+\item time
+\item code
+\end{itemize}
+					
+\textbf{How test will be performed:} The tester will find the sample lecture in the table and click on it. Then the tester will verify all entries listed above are shown in the pop-up window
+
+\textbf{Related Requirement(s):} FR-4-6
+
+\item{\textbf{FRT-LE13}}
+
+\textbf{Name:} Lecture Filter by code
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} Some software engineering lecture exists:
+\begin{itemize}
+\item SFWRENG 4G06
+\item SFWRENG 4E03
+\end{itemize}
+
+\textbf{Input:} Filter:
+\begin{itemize}
+\item FilterString: SFWRENG
+\end{itemize}
+					
+\textbf{Output:} All lectures which does not contain the FilterString in the code are removed from the list
+
+\textbf{Test Case Derivation:} In order to find lectures easily, filter by lecture course code is needed if the lecture list is very long
+					
+\textbf{How test will be performed:} The tester will find go to the lecture page and enter the FilterString and click the search button. Then the tester will verify only software engineering courses are left in the list
+
+\textbf{Related Requirement(s):} FR-4-7
+
+\item{\textbf{FRT-LE14}}
+
+\textbf{Name:} Event Filter by name
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} Some job fair event exists:
+\begin{itemize}
+\item Job Fair: March 4
+\item Job Fair: March 10
+\end{itemize}
+
+\textbf{Input:} Filter:
+\begin{itemize}
+\item FilterString: Job Fair
+\end{itemize}
+					
+\textbf{Output:} All event which does not contain the FilterString in the name are removed from the list
+
+\textbf{Test Case Derivation:} In order to find event easily, filter by event name is needed if the event list is very long
+					
+\textbf{How test will be performed:} The tester will find go to the event page and enter the FilterString and click the search button. Then the tester will verify only job fair events are left in the list
+
+\textbf{Related Requirement(s):} FR-4-8
+\end{enumerate}
+
+\subsubsection{AR Camera}
+
+This section includes all test cases related to campus navigation with AR technology. This will include the requirements for building recognition (FR-5-1) and demonstrating activities in this building (FR-5-2). Augmented reality provides an immersive user experience and it is the unique selling point of the application. The following tests are about one of the buildings (JHE) only we assume the success of these tests indicates the success of the test on all other target buildings.
 
 \begin{enumerate}
 \item{\textbf{FRT-AR1}}
@@ -626,17 +1111,17 @@ This section includes all test cases related to campus navigation with AR techno
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} User looks at a building on campus
+\textbf{Initial State:} User is at the front door of JHE
 
-\textbf{Input:} Clear Camera view
+\textbf{Input:} Clear camera view
 					
-\textbf{Output:} The building is recognized and its name is given
+\textbf{Output:} The building is recognized with name and description shown as an AR object
 
 \textbf{Test Case Derivation:} Building recognition is the essential functionality for AR technology applied in this application. The building should be recognizable from a certain angle when users look at their camera
 					
-\textbf{How test will be performed:} The tester will walk around a building on campus and look into the camera, verifying the building is recognized and a list of events/lectures is displayed on the screen
+\textbf{How test will be performed:} The tester will walk to the front door of JHE, open AR camera and look into it, verifying the building is recognized and a name and description is displayed on the screen
 
-\textbf{Related Requirement(s):} FR-4-1, FR-4-2, FR-4-3
+\textbf{Related Requirement(s):} FR-5-1
 
 \item{\textbf{FRT-AR2}}
 
@@ -644,173 +1129,84 @@ This section includes all test cases related to campus navigation with AR techno
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} User looks at a building off-campus
+\textbf{Initial State:} User is out of campus
 
-\textbf{Input:} Camera view
+\textbf{Input:} Clear camera view
 					
-\textbf{Output:} The building is not recognized correctly
+\textbf{Output:} No AR objects is shown
+
+\textbf{Test Case Derivation:} Building recognition is the essential functionality for AR technology applied in this application. Any buildings out of campus should not be recognized because they are out of the scope of this project and buildings that are not targets should not be recognized for high accuracy oft AR camera
+					
+\textbf{How test will be performed:} The tester will walk out of campus, open AR camera and look into it, verifying there is no objects shown on the screen
+
+\textbf{Related Requirement(s):} FR-5-1
+
+\item{\textbf{FRT-AR3}}
+
+\textbf{Name:} Building Lectures/Events
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is in JHE lobby
+
+\textbf{Input:} Clear camera view
+					
+\textbf{Output:} Event and lecture information separated by room number at the corresponding locations of the building
 
 \textbf{Test Case Derivation:} Building recognition is the essential functionality for AR technology applied in this application. The building should be recognizable from a certain angle when users look at their camera
 					
-\textbf{How test will be performed:} The tester will walk around a building that is not on campus and look into the camera, verifying the building is not recognized or the system recognizing it as a school building
+\textbf{How test will be performed:} The tester will walk around in JHE lobby, open AR camera and look into it, verifying there are lectures and events information shown at the rooms where they will be held
 
-\textbf{Related Requirement(s):} FR-4-1, FR-4-2, FR-4-3
+\textbf{Related Requirement(s):} FR-5-2
 \end{enumerate}
 
-\subsubsection{Lectures and Events}
-
-This section includes all test cases related to events and lectures happening on campus. This will include the requirements for events and lectures themselves, users interacting with these properties, and the power of administration accounts (All FR-5 requirements in the SRS document). The test cases ensure that the lectures and events information is accurate and helpful for all users.
-
+\subsection{Map and Location}
 \begin{enumerate}
-\item{\textbf{FRT-LE1}}
+\item{\textbf{FRT-MAP1}}
 
-\textbf{Name:} Interest/Disinterest Event
-
-\textbf{Control:} Manual
-					
-\textbf{Initial State:} An event exists in a specific building
-
-\textbf{Input:} User clicks on the corresponding button of the event
-					
-\textbf{Output:} The event with all necessary information is added/removed from the user's event list
-
-\textbf{Test Case Derivation:} The user should be able to interact with events available on campus and share their activities with friends. Therefore, they should be able to switch between 'interest' and 'disinterest' states for all events 
-					
-\textbf{How test will be performed:} The tester will pin and unpin the event and verify the event shows up and disappears from the user's interested event list. Then the tester will verify the event has all associated information including club/department, location and time
-
-\textbf{Related Requirement(s):} FR-5-1, FR-5-2, FR-5-7
-
-\item{\textbf{FRT-LE2}}
-
-\textbf{Name:} Pin/unpin Lectures
+\textbf{Name:} User Position
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} A lecture with all necessary information exists in a specific building
+\textbf{Initial State:} User allows the user to use their real-time location
 
-\textbf{Input:} User clicks on the corresponding button of the lecture
+\textbf{Input:} User enters the map page
 					
-\textbf{Output:} The lecture is added/removed from the user's lecture list
+\textbf{Output:} A model represents the user shows up on the map and moves correspondingly when the user moves
 
-\textbf{Test Case Derivation:} The user should be able to interact with lectures shown in the app and share their schedule with friends. Therefore, they should be able to switch between 'pinned' and 'unpinned' states for all lectures 
+\textbf{Test Case Derivation:} For those who come to the campus for the first time, a map is necessary for them to find the building they want to go to
 					
-\textbf{How test will be performed:} The tester will pin and unpin the lecture and verify the lecture shows up and disappears from the user's pinned lecture list. Then the tester will verify the event has all associated information including instructor, location and time
+\textbf{How test will be performed:} The tester will go to map page and walk around on campus and verify if the model moves correspondingly on the map
 
-\textbf{Related Requirement(s):} FR-5-3, FR-5-4, FR-5-8
+\textbf{Related Requirement(s):} FR-6-1
 
-\item{\textbf{FRT-LE3}}
+\item{\textbf{FRT-MAP2}}
 
-\textbf{Name:} Administrator Add Events
+\textbf{Name:} Friend Positions
 
 \textbf{Control:} Manual
 					
-\textbf{Initial State:} User is logged in as an admin
+\textbf{Initial State:} User has some friends who are willing to share locations:
+\begin{itemize}
+\item email1: MAP2-1@test.com
+\item email2: MAP2-2@test.com
+\end{itemize}
 
-\textbf{Input:} Sample event with name, department, time and location
+\textbf{Input:} User enters the map page
 					
-\textbf{Output:} The event is posted on the building and is available for all users to pin
+\textbf{Output:} Another models represent friends shows up on the map and moves correspondingly when friends moves
 
-\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to create new events for all users
+\textbf{Test Case Derivation:} It will be fun to know where your friends are currently on campus and it makes it easier to have in person communications
 					
-\textbf{How test will be performed:} The tester will log in as an administrator and add the sample event. Then the tester will verify the event shown in the corresponding building is available for all users
+\textbf{How test will be performed:} Testers will login with friends account (email1 and email2), go to map page and walk around on campus and the other tester will verify if their model moves correspondingly on the map
 
-\textbf{Related Requirement(s):} FR-5-5
-
-\item{\textbf{FRT-LE4}}
-
-\textbf{Name:} Administrator Change Events
-
-\textbf{Control:} Manual
-					
-\textbf{Initial State:} User is logged in as an admin
-
-\textbf{Input:} New event information and the admin clicks on modify event button
-					
-\textbf{Output:} The posted event information is changed to the new one
-
-\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to update event information to get users noticed
-					
-\textbf{How test will be performed:} The tester will log in as an administrator and update the sample event. Then the tester will verify the event shown in the corresponding building is updated for all users
-
-\textbf{Related Requirement(s):} FR-5-5
-
-\item{\textbf{FRT-LE5}}
-
-\textbf{Name:} Administrator Delete Events
-
-\textbf{Control:} Manual
-					
-\textbf{Initial State:} User is logged in as an admin
-
-\textbf{Input:} Existing event and the admin clicks on delete event button
-					
-\textbf{Output:} The event is deleted and no user can see it from their end any more
-
-\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to clean out-of-date event
-					
-\textbf{How test will be performed:} The tester will log in as an administrator and delete the sample event. Then the tester will verify the event shown in the corresponding building is deleted for all users 
-
-\textbf{Related Requirement(s):} FR-5-5
-
-\item{\textbf{FRT-LE6}}
-
-\textbf{Name:} Administrator Add Lectures
-
-\textbf{Control:} Manual
-					
-\textbf{Initial State:} User is logged in as an admin
-
-\textbf{Input:} Sample lecture with name, instructor, time and location
-					
-\textbf{Output:} The lecture is posted on the building and is available for all users to pin
-
-\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to create new lectures for all users when new semesters come
-					
-\textbf{How test will be performed:} The tester will log in as an administrator and add the sample lecture. Then the tester will verify the lecture shown in the corresponding building is available for all users 
-
-\textbf{Related Requirement(s):} FR-5-6
-
-\item{\textbf{FRT-LE7}}
-
-\textbf{Name:} Administrator Change Lecture
-
-\textbf{Control:} Manual
-					
-\textbf{Initial State:} User is logged in as an admin
-
-\textbf{Input:} New lecture information and the admin clicks on modify lecture button
-					
-\textbf{Output:} The posted lecture information is changed to the new one
-
-\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to update lecture information to get users noticed
-					
-\textbf{How test will be performed:} The tester will log in as an administrator and update the sample lecture. Then the tester will verify the lecture shown in the corresponding building is updated for all users
-
-\textbf{Related Requirement(s):} FR-5-6
-
-\item{\textbf{FRT-LE8}}
-
-\textbf{Name:} Administrator Delete Lectures
-
-\textbf{Control:} Manual
-					
-\textbf{Initial State:} User is logged in as an admin
-
-\textbf{Input:} Existing lecture and and the admin clicks on delete lecture button
-					
-\textbf{Output:} The lecture is deleted and no user can see it from their end any more
-
-\textbf{Test Case Derivation:} Administrators work as a source of truth in this application, therefore they shall be able to clean out-of-date lectures after each semester
-					
-\textbf{How test will be performed:} The tester will log in as an administrator and delete the sample lecture. Then the tester will verify the lecture shown in the corresponding building is deleted for all users
-
-\textbf{Related Requirement(s):} FR-5-6
+\textbf{Related Requirement(s):} FR-6-1
 \end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 \label{sec:nonfunctional}
 
-The following section includes tests for non-functional requirements defined in the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document. Areas of testing follow the subsections of requirements in the previous document, which mainly include Look and Feel, Usability and Humanity, Performance and Security.\\ 
+The following section includes tests for non-functional requirements defined in the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS/SRS.pdf}{SRS} document. Areas of testing follow the subsections of requirements in the previous document, which mainly include Look and Feel, Usability and Humanity, Performance and Security.\\ 
 This section also includes new requirements for the HA, but when they are added to the SRS, they are given new IDs for consistency, please check the HA for more details. \\
 Usability requirements will be tested by asking users to do a survey, whose content can be found in section \ref{sec:survey}. Most of the tests here are dynamic and will be done manually or automatically, but there are some tests that need non-dynamic testing like peer code review or code walkthrough.
 
@@ -823,34 +1219,37 @@ Usability requirements will be tested by asking users to do a survey, whose cont
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
-\textbf{Initial State:} User has an account
+\textbf{Initial State:} User has an account:
+\begin{itemize}
+\item email: mtest@gmail.com
+\item password: mtesting
+\end{itemize}
 
-\textbf{Input/Condition:} User is logged into the homepage and pokes around the application
+\textbf{Input/Condition:} User follows the instructions and attempts to finish tasks in the survey 
 					
-\textbf{Output/Result:} Get feedback and verify layout is user-friendly. The average individual score is over MIN\_SCORE in the "User-friendly Layout",\
-``Intuitive icons'', ``Immediate Visual Response when Clicking'' and ``Appealing Colour Scheme'' categories of the User Experience Survey
+\textbf{Output/Result:} The users should be able to complete tasks without any help and the average individual score is over MIN\_SCORE in the``Immediate Visual Response when Clicking'' and ``Appealing Colour Scheme'' categories of the Usability Survey
 					
 \textbf{How test will be performed:} A survey will be given to at least
-SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements of the interface. All of the survey takers are selected randomly from McMaster University
+SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements of the interface. All of the survey takers are McMaster students
 
-\textbf{Related Requirement(s):} LF-A1, LF-A2, LF-S2
+\textbf{Related Requirement(s):} LF-A1, LF-S2
 
 \item{\textbf{NFRT-LF2}}
 
-\textbf{Name:} Visual Inspection with different screen sizes
+\textbf{Name:} Visual inspection with different screen sizes
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
-\textbf{Initial State:} User has the application downloaded on their phone
+\textbf{Initial State:} NA
 					
-\textbf{Input/Condition:} User has the application open on their phone
-					
+\textbf{Input/Condition:} User opens the application on the phone with all different screen sizes in the SCREEN\_VIEWPORTS list
+
 \textbf{Output/Result:} For all different pages all visual elements on the screen are within the borders of the screen for all screens in the SCREEN\_VIEWPORTS list
 
 \textbf{How test will be performed:} The application will be opened on all screens in the SCREEN\_VIEWPORTS list.\
 The testers will visually inspect each page and each screen to make sure that all visual elements on the screen are within its borders
 
-\textbf{Related Requirement(s):} LF-A3
+\textbf{Related Requirement(s):} LF-A2
 
 \item{\textbf{NFRT-LF3}}
 
@@ -858,13 +1257,13 @@ The testers will visually inspect each page and each screen to make sure that al
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
-\textbf{Initial State:} User has the application downloaded on their phone
+\textbf{Initial State:} NA
 					
-\textbf{Input/Condition:} User has the application open on their phone
+\textbf{Input/Condition:} User opens the application on their phone
 					
 \textbf{Output/Result:} For all different pages the colour scheme is the same
 
-\textbf{How test will be performed:} The testers will visually inspect each page to make sure that the colour scheme on each page is the same
+\textbf{How test will be performed:} The tester will visually inspect each page to make sure that the colour scheme on each page is the same
 
 \textbf{Related Requirement(s):} LF-S1
 \end{enumerate}
@@ -878,53 +1277,50 @@ The testers will visually inspect each page and each screen to make sure that al
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
-\textbf{Initial State:} User has an account
+\textbf{Initial State:} User has an account:
+\begin{itemize}
+\item email: mtest@gmail.com
+\item password: mtesting
+\end{itemize}
 
-\textbf{Input/Condition:} User is logged into the homepage and pokes around the application
+\textbf{Input/Condition:} User follows the instructions and attempts to finish tasks in the survey 
 					
-\textbf{Output/Result:} Get feedback and verify layout is user-friendly. The average individual score is over MIN\_SCORE in the ``Easy to Navigate'',\
-``Helpful Tutorial'' and ``No Technical or Software-Specific Language'' categories of the User Experience Survey
+\textbf{Output/Result:} The user can finish tasks without help and the average individual score is over MIN\_SCORE in the ``No Technical or Software-Specific Language'' category of the Usability Survey
 					
 \textbf{How test will be performed:} A survey will be given to at least
-SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements of the interface. All of the survey takers are selected randomly from McMaster University
+SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements of the interface. All of the survey takers are McMaster students
 
-\textbf{Related Requirement(s):} UH-EOU1, UH-L2, UH-UP1
+\textbf{Related Requirement(s):} UH-EOU1, UH-UP1
 
 \item{\textbf{NFRT-UH2}}
 
-\textbf{Name:} Visual inspection of user profile
+\textbf{Name:} Walkthrough of user guide 
 
-\textbf{Type:} Non-functional, Dynamic, Manual
+\textbf{Type:} Non-functional, Static, Manual
 					
-\textbf{Initial State:} User has the application downloaded on their phone
+\textbf{Input/Condition:} GitHub web page
 					
-\textbf{Input/Condition:} User has the application open on their phone
-					
-\textbf{Output/Result:}
-\begin{itemize}
-  \item The name, time, and location of all pinned events and lectures are displayed on a user's personal page
-  \item The user is able to update their USER\_PROFILE and avatar
-\end{itemize}
+\textbf{Output/Result:} The main features are explained in the GitHub repo
 
-\textbf{How test will be performed:} The testers will open the application on one device and go to the user profile page. The testers will visually inspect the page to check that the above conditions are satisfied.
+\textbf{How test will be performed:} The tester will use a guest GitHub account and navigate to the GitHub page and verify there exists explanation of application features
 
-\textbf{Related Requirement(s):} UH-PI1, UH-PI2
+\textbf{Related Requirement(s):} UH-L1
 
 \item{\textbf{NFRT-UH3}}
 
-\textbf{Name:} Visual inspection of tutorial
+\textbf{Name:} Visual inspection of color contrast 
 
-\textbf{Type:} Non-functional, Dynamic, Manual
+\textbf{Type:} Non-functional, Manual
 					
-\textbf{Initial State:} User has the application downloaded on their phone
+\textbf{Initial State:} NA
 					
-\textbf{Input/Condition:} User has the application open on their phone
+\textbf{Input/Condition:} User checks the color contrast statically
 					
-\textbf{Output/Result:} A tutorial explaining the features of the application appears on first launch, and is available upon request from the user
+\textbf{Output/Result:} The color contrast value is given
 
-\textbf{How test will be performed:} The testers will open the application on one device and visually inspect the application to check that the tutorial appears on first launch and is available upon request
+\textbf{How test will be performed:} The tester will statically check if the color contrast is enough for items to be easily visible. (Contrast between background color and text)
 
-\textbf{Related Requirement(s):} UH-L1
+\textbf{Related Requirement(s):} UH-A1
 \end{enumerate}
 
 \subsubsection{Performance}
@@ -932,149 +1328,37 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 \begin{enumerate}
 \item{\textbf{NFRT-P1}}
 
-\textbf{Name:} Weak network strength Notification
+\textbf{Name:} AR camera recognition
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
-\textbf{Initial State:} User has the application downloaded on their phone
+\textbf{Initial State:} The user is near a target building (JHE)
 					
-\textbf{Input/Condition:} User enters a zone with week internet connection
+\textbf{Input/Condition:} User turns on AR camera
 					
-\textbf{Output/Result:} A notification in the application appears saying the network strength weak or the server connection is poor
+\textbf{Output/Result:} Corresponding AR objects appears quickly
 
-\textbf{How test will be performed:} The testers will open the application on one device and visually inspect the application sending a message when the network strength is weak
-
-\textbf{Related Requirement(s):} P-RF1
-
-\item{\textbf{NFRT-P2}}
-
-\textbf{Name:} Error Message when internet connection is lost
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} User has the application downloaded on their phone
-					
-\textbf{Input/Condition:} User loses internet connection
-					
-\textbf{Output/Result:} An error message stating that there is no internet connection is displayed
-
-\textbf{How test will be performed:} The testers will open the application on one device and visually inspect the application to check the error message appears when the application fails to connect to the internet
-
-\textbf{Related Requirement(s):} P-RF3
-
-\item{\textbf{NFRT-P3}}
-
-\textbf{Name:} AR incompatibility Warning
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} User has the application downloaded on their phone which is not compatible with AR features
-					
-\textbf{Input/Condition:} User uses the AR feature
-					
-\textbf{Output/Result:} A warning message is displayed telling the user AR is not available
-
-\textbf{How test will be performed:} The testers will open the application on a device not compatible with AR functions and visually inspect the error message appears when AR feature is used
-
-\textbf{Related Requirement(s):} P-RF5
-
-\item{\textbf{NFRT-P4}}
-
-\textbf{Name:} Message when starting AR 
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} User has the application downloaded on their phone
-					
-\textbf{Input/Condition:} User uses the AR feature
-					
-\textbf{Output/Result:} A message telling the user to be aware of their surroundings is displayed upon startup.
-
-\textbf{How test will be performed:} The testers will open the AR feature on one device and visually inspect the application to check that the message is shown
-
-\textbf{Related Requirement(s):} P-RF4
-
-\item{\textbf{NFRT-P5}}
-
-\textbf{Name:} Rudimentary functions when internet connection is lost
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} User has no internet connection
-					
-\textbf{Input/Condition:} User opens the application
-					
-\textbf{Output/Result:} The application still works with limited functionalities (personal profile and events view)
-
-\textbf{How test will be performed:} The testers will open the application with offline mode and check the personal profile and pinned events/lectures are still available
-
-\textbf{Related Requirement(s):} P-RF6
-
-\item{\textbf{NFRT-P6}}
-
-\textbf{Name:} Builing Recognition Response Time
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} The product is installed
-
-\textbf{Input/Condition:} The user opens the AR feature and points the camera to a building on campus
-
-\textbf{Output/Result:} The popup response following successful image recognitions appears within RECOGNITION\_TIME
-
-\textbf{How test will be performed:} The tester will start a timer when the recognition process starts and end the timer when the recognition is successful. Then the tester can verify if the time is within RECOGNITION\_TIME
+\textbf{How test will be performed:} The tester will turn on the AR camera and look at JHE and verify that the recognition time ls less than RECOGNITION\_TIME
 
 \textbf{Related Requirement(s):} P-SL1
 
-\item{\textbf{NFRT-P7}}
+\item{\textbf{NFRT-P2}}
 
-\textbf{Name:} Message Sent Response Time
+\textbf{Name:} Real-time location update
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
-\textbf{Initial State:} Two test accounts are friends of each other
+\textbf{Initial State:} User allows the application to use device location
+					
+\textbf{Input/Condition:} User turns on the map and walks around on campus
+					
+\textbf{Output/Result:} The user model on the map is updated when the user is moving
 
-\textbf{Input/Condition:} A message is sent from one account to the other
-
-\textbf{Output/Result:} The user receives a message within MESSAGE\_TIME after being sent by another user
-
-\textbf{How test will be performed:} The tester will start a timer when the message is sent and end the timer when the message is received. Then the tester can verify if the time is within MESSAGE\_TIME
+\textbf{How test will be performed:} The tester will open the map and walk around, and verify that the model on the map is updated within LOCATION\_UPDATE\_TIME
 
 \textbf{Related Requirement(s):} P-SL2
 
-\item{\textbf{NFRT-P8}}
-
-\textbf{Name:} Location Sharing Update Time
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} Two test accounts are friends of each other, one account starts location sharing
-
-\textbf{Input/Condition:} The device sharing its location moves in a period of time
-
-\textbf{Output/Result:} The user's updated location must appear on their friends' device within LOCATION\_UPDATE\_TIME of the location change
-
-\textbf{How test will be performed:} The tester will start a timer when the device moves and end the timer when the location change is shown on the other device. Then the tester can verify if the time is within LOCATION\_UPDATE\_TIME
-
-\textbf{Related Requirement(s):} P-SL3
-
-\item{\textbf{NFRT-P9}}
-
-\textbf{Name:} Messaging When Location Sharing Is Not Working
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} Two test accounts are friends of each other, one of them cannot share location
-
-\textbf{Input/Condition:} The one device that cannot share location messages the other one
-
-\textbf{Output/Result:} The message is sent successfully
-
-\textbf{How test will be performed:} The tester will turn off the location permission and send a message. Then the tester will verify the message is sent without a problem
-
-\textbf{Related Requirement(s):} P-RF2
-
-\item{\textbf{NFRT-P10}}
+\item{\textbf{NFRT-P3}}
 
 \textbf{Name:} Code Walkthrough For User Personal Data
 
@@ -1091,9 +1375,9 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-SC1
 
-\item{\textbf{NFRT-P11}}
+\item{\textbf{NFRT-P4}}
 
-\textbf{Name:} Code Inspection For Legitimate Use Of Personal Data
+\textbf{Name:} Code Walkthrough For Data Transmission Encryption
 
 \textbf{Type:} Non-functional, Static, Manual
 
@@ -1101,48 +1385,210 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
 \begin{itemize}
-  \item The usage of a user's persona information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario's data protection laws
+  \item The product only transmits encrypted data from server to user
 \end{itemize}
 
-\textbf{How test will be performed:} A code inspection will be held with supervisor's attendance to show the usage of personal data is legitimate
+\textbf{How test will be performed:}  A code walkthough will be held by the developers to show that the application transmit encrypted data only
+
+\textbf{Related Requirement(s):} P-SC2
+
+\item{\textbf{NFRT-P5}}
+
+\textbf{Name:} Warning when starting AR camera
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User allows the application to use camera
+					
+\textbf{Input/Condition:} User turns on the AR camera
+					
+\textbf{Output/Result:} A warning telling the user to be aware of their surroundings is displayed upon start-up.
+
+\textbf{How test will be performed:} The testers will open the AR camera on one device and visually inspect if the message is shown
 
 \textbf{Related Requirement(s):} P-SC3
 
-\item{\textbf{NFRT-P12}}
+\item{\textbf{NFRT-P6}}
 
-\textbf{Name:} Code Walkthrough For Data Transmission
+\textbf{Name:} Leaving campus warning
 
-\textbf{Type:} Non-functional, Static, Manual
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User opens the map
+					
+\textbf{Input/Condition:} User moves out of the campus
+					
+\textbf{Output/Result:} A warning message is displayed telling the user that the map is not available out of campus
 
-\textbf{Input/Condition:} Source code
-
-\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
-\begin{itemize}
-  \item The product does not execute any code that involves the transmission of information outside of the product
-\end{itemize}
-
-\textbf{How test will be performed:}  A code walkthough will be held by the developers to show that the application does not transmit data while not in use
+\textbf{How test will be performed:} The tester will open the map and walk out of campus and visually inspect if the warning message appears
 
 \textbf{Related Requirement(s):} P-SC4
 
-\item{\textbf{NFRT-P13}}
+\item{\textbf{NFRT-P7}}
 
-\textbf{Name:} Code Walkthrough For Database
+\textbf{Name:} Special character warning
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User starts to register
+					
+\textbf{Input/Condition:} User enters nickname with some special character: `; DELETE *'
+					
+\textbf{Output/Result:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
+
+\textbf{How test will be performed:} The tester will start to register and enter the nickname above and visually inspect if the warning message appears
+
+\textbf{Related Requirement(s):} P-SC5
+
+\item{\textbf{NFRT-P8}}
+
+\textbf{Name:} Email format warning
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User starts to register
+					
+\textbf{Input/Condition:} User enters a not email string in the email field:
+`SELECT * FROM TABLE'
+					
+\textbf{Output/Result:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
+
+\textbf{How test will be performed:} The tester will start to register and enters a email `SELECT * FROM TABLE' and visually inspect if the warning message appears
+
+\textbf{Related Requirement(s):} P-SC6
+
+\item{\textbf{NFRT-P9}}
+
+\textbf{Name:} AR camera accuracy
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User is near a target building (JHE)
+					
+\textbf{Input/Condition:} User turns on the AR Camera
+					
+\textbf{Output/Result:} AR objects shows up
+
+\textbf{How test will be performed:} The tester will try the camera from different angles and verify that the success rate is at lease AR\_ACCURACY
+
+\textbf{Related Requirement(s):} P-PA1
+
+\item{\textbf{NFRT-P10}}
+
+\textbf{Name:} Warning when internet connection is lost
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User has no internet connection
+					
+\textbf{Input/Condition:} User opens the application
+					
+\textbf{Output/Result:} There is a pop-up window telling the user the internet is lost
+
+\textbf{How test will be performed:} The tester will open the application with offline mode and visually check the warning message appears
+
+\textbf{Related Requirement(s):} P-RF1
+
+\item{\textbf{NFRT-P11}}
+
+\textbf{Name:} Rudimentary functions when internet/server connection is lost
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User has no internet connection
+					
+\textbf{Input/Condition:} User opens the application
+					
+\textbf{Output/Result:} The application still works with limited functionalities
+
+\textbf{How test will be performed:} The tester will open the application with offline mode and check the map can still show the user location, the saved events and lectures and other user profile information can be viewed and changed
+
+\textbf{Related Requirement(s):} P-RF2
+
+\item{\textbf{NFRT-P12}}
+
+\textbf{Name:} Code inspection for server restart
 
 \textbf{Type:} Non-functional, Static, Manual
+					
+\textbf{Input/Condition:} Server settings
+					
+\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\begin{itemize}
+\item Server attempts to restart when it crashes
+\end{itemize}
+
+\textbf{How test will be performed:} A code inspection will be held with superior's attendance to show that the server is set to restart upon crash
+
+\textbf{Related Requirement(s):} P-RF3
+
+\item{\textbf{NFRT-P13}}
+
+\textbf{Name:} AR camera help button
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User turns on the AR camera
+
+\textbf{Input/Condition:} User clicks the help button
+					
+\textbf{Output/Result:} A message telling the user things that may affect AR camera appears
+
+\textbf{How test will be performed:} The tester will turn on the AR camera and click on the help button and visually check if the message shows up
+
+\textbf{Related Requirement(s):} P-RF4
+
+\item{\textbf{NFRT-P14}}
+
+\textbf{Name:} Load testing for server
+
+\textbf{Type:} Non-functional, Dynamic, Automatic
+					
+\textbf{Initial State:} The server is online and ready to connect to
+
+\textbf{Input/Condition:} Load testing tool simulates there are MAX\_CAPACITY users simultaneously accessing the server
+
+\textbf{Output/Result:} The server is able to handle all the users connecting to the server at once
+
+\textbf{How test will be performed:} The tester will use Apache JMeter for the load test simulation
+
+\textbf{Related Requirement(s):} P-SE1
+
+\item{\textbf{NFRT-P15}}
+
+\textbf{Name:} Code inspection for database capacity
+
+\textbf{Type:} Non-functional, Static, Automatic
+
+\textbf{Input/Condition:} Database documentation
+
+\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\begin{itemize}
+\item The database is able to store all the information
+\end{itemize}
+
+\textbf{How test will be performed:} A code inspection will be held with superior's attendance to show that the Firebase database official document states there will be enough capacity with the current plan
+
+\textbf{Related Requirement(s):} P-SE2
+
+\item{\textbf{NFRT-P16}}
+
+\textbf{Name:} Code walkthrough for adding new building
+
+\textbf{Type:} Non-functional, Static, Automatic
 
 \textbf{Input/Condition:} Source code
 
 \textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
 \begin{itemize}
-  \item Information for an event added to the database is still present at least 3 months after its addition
+\item A new target building can be added without causing the application running any slower
 \end{itemize}
 
-\textbf{How test will be performed:} A code walkthough will be held by the developers to show that the database is reliable and the tables will be kept for at least 3 months
+\textbf{How test will be performed:} A code walkthrough will be held with the superior's attendance to show that an extra target building will not affect the performance of the application
 
-\textbf{Related Requirement(s):} P-C2
+\textbf{Related Requirement(s):} P-SE3
 
-\item{\textbf{NFRT-P14}}
+\item{\textbf{NFRT-P17}}
 
 \textbf{Name:} Code Peer Evaluation For Longevity
 
@@ -1156,73 +1602,9 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
   \item The finalized product will remain compatible with the promised operating systems and devices for at least 3 years
 \end{itemize}
 
-\textbf{How test will be performed:} The testers will hold a peer evaluation session for the other developers to inspect the source code and make sure it can operate and remain compatible with promised operating systems for a long time
+\textbf{How test will be performed:} The tester will hold a peer evaluation session for the other developers to inspect the source code and make sure it can operate and remain compatible with promised operating systems for a long time
 
 \textbf{Related Requirement(s):} P-L1, P-L2
-
-\item{\textbf{NFRT-P15}}
-
-\textbf{Name:} New Building Addition
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-
-\textbf{initial State:} The tester has developer permission
-
-\textbf{Input/Condition:} All information about the new building (location, name, image, etc.)
-
-\textbf{Output/Result:} A new building is added without huge drawbacks in performance
-
-\textbf{How test will be performed:} The tester will add a dummy new building and test if the all the time requirements mentioned in the Speed and Latency Requirements (P-SL1, P-SL2, P-SL3) are still fulfilled.
-
-\textbf{Related Requirement(s):} P-SE3
-
-\item{\textbf{NFRT-P16}}
-
-\textbf{Name:} Building Identification
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} The user has the product launched on their device
-
-\textbf{Input/Condition:} The product is scanning a building on campus
-
-\textbf{Output/Result:} The product identifies a building with a success rate of at least 80 percent
-
-\textbf{How test will be performed:} Testers will scan buildings with the product multiple times and calculate the percentage of successful scans
-
-\textbf{Related Requirement(s):} P-PA1
-
-\item{\textbf{NFRT-P17}}
-
-\textbf{Name:} Load Testing for Server Capacity
-
-\textbf{Type:} Non-functional, Dynamic, Automatic
-					
-\textbf{Initial State:} The server is online and ready to connect to
-
-\textbf{Input/Condition:} Load testing tool simulates there are MAX\_CAPACITY users simultaneously accessing the server
-
-\textbf{Output/Result:} The server is able to handle all the users connecting to the server at once
-
-\textbf{How test will be performed:} Testers use Apache JMeter for the load test simulation
-
-\textbf{Related Requirement(s):} P-C1, P-SE1
-
-\item{\textbf{NFRT-P18}}
-
-\textbf{Name:} Load Testing for Database Capacity
-
-\textbf{Type:} Non-functional, Dynamic, Automatic
-					
-\textbf{Initial State:} The database is online and ready to connect to
-
-\textbf{Input/Condition:} Load testing tool simulates there is information for MAX\_USER\_LOAD users stored in the database
-
-\textbf{Output/Result:} The database can handle all the data that it contains
-
-\textbf{How test will be performed:} Testers use Apache JMeter for the load test simulation
-
-\textbf{Related Requirement(s):} P-SE2
 \end{enumerate}
 
 \subsubsection{Operational and Environmental}
@@ -1243,7 +1625,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 \textbf{How test will be performed:} The testers will check the Google Play Store for the product, or find an APK file for the product.\
 The testers will then download and install the product onto the phone from the Google Play Store or the APK file.
 
-\textbf{Related Requirement(s):} OE-P1
+\textbf{Related Requirement(s):} OE-EPE1, OE-P1
 \end{enumerate}
 
 \subsubsection{Maintainability and Support}
@@ -1251,51 +1633,49 @@ The testers will then download and install the product onto the phone from the G
 \begin{enumerate}
 \item{\textbf{NFRT-MS1}}
 
-\textbf{Name:} Survey For Maintenance Time
+\textbf{Name:} Survey for maintenance time
 
 \textbf{Type:} Non-functional, Static, Manual
-					
-\textbf{Initial State:} NA
 
-\textbf{Input/Condition:} Ask at least 50 users when they are less likely to use the application and collect the feedback
+\textbf{Input/Condition:} User answers the question about ``Common periods of usage''
 
-\textbf{Output/Result:} Periods of reduced usage is shown to arrange updates
+\textbf{Output/Result:} The average individual score is over MIN\_SCORE for this question
 
-\textbf{How test will be performed:} Testers ask at least 50 users when is a reduced usage period for them, and schedule coming updates during these periods
+\textbf{How test will be performed:} A survey will be given to at least SURVEY\_SAMPLE\_SIZE users where they will tell if they are most likely to use the application at school time only
 
 \textbf{Related Requirement(s):} MS-M1
 
 \item{\textbf{NFRT-MS2}}
 
-\textbf{Name:} Peer Evaluation for Feature Request
+\textbf{Name:} Peer evaluation for feature request
 
 \textbf{Type:} Non-functional, Static, Manual
 					
-\textbf{Initial State:} A public Git repo for this application
+\textbf{Initial State:} A public GitHub repo for this application
 
 \textbf{Input/Condition:} An issue is created
 
 \textbf{Output/Result:} All functionalities of this repo work normally
 
-\textbf{How test will be performed:} Testers will ask for a peer evaluation on this application repo, and the other developers will verify there is a user manual and issues can be used for feature request or bug report
+\textbf{How test will be performed:} The tester will ask for a peer evaluation on this application, and the other developers will verify there is a user manual and issues can be used for feature request or bug report
 
 \textbf{Related Requirement(s):} MS-S1, MS-S2
 
 \item{\textbf{NFRT-MS3}}
 
-\textbf{Name:} Android Version Test
+\textbf{Name:} Android version test
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
 \textbf{Initial State:} The application is installed on devices with Android 11 and above version
 
-\textbf{Input/Condition:} The application is opened
+\textbf{Input/Condition:} NA
 
-\textbf{Output/Result:} The application works normally
+\textbf{Output/Result:} The application works without any error
 
-\textbf{How test will be performed:} Testers will install the application on different Android version (11 and above) and verify the application can start without errors, and the core features (Map, friend chatting and AR camera) have the same performance with different Android versions.
+\textbf{How test will be performed:} The tester will install the application on different Android version (11 and above) and verify the application can start without errors, and the core features (Map, friend chatting and AR camera) have the same performance over different Android versions.
 
-\textbf{Related Requirement(s):} OE-EPE1, OE-IAS1, MS-A1
+\textbf{Related Requirement(s):} MS-A1
 \end{enumerate}
 
 \subsubsection{Security}
@@ -1303,31 +1683,69 @@ The testers will then download and install the product onto the phone from the G
 \begin{enumerate}
 \item{\textbf{NFRT-S1}}
 
-\textbf{Name:} Access Test
+\textbf{Name:} Access test
   
 \textbf{Type:} Non-functional, Dynamic, Manual
             
-\textbf{Initial State:} The product is downloaded onto a supported device
+\textbf{Initial State:} Three accounts with different accesses is ready:
+\begin{itemize}
+\item Admin: campusconnections@gmail.com
+\item User: mtest@gmail.com
+\item Guest gtest@gmail.com
+\end{itemize}
   
-\textbf{Input/Condition:} The product is launched
+\textbf{Input/Condition:} The user starts the application with the three accounts
             
-\textbf{Output/Result:} At each level of access, the product constrains the possible actions to what is specified in requirement S-A1.
+\textbf{Output/Result:} At each level of access, the product constrains the possible actions to what is specified in requirement S-A1, S-A2, S-A3.
   
 \textbf{How test will be performed:}
 \begin{enumerate}
-  \item The tester will download the product to a supported device and launch the product.
-  \item The product will begin at the first level of access, which should only allow the user to view the login, account creation, and account recovery pages.
-  \item The tester will log in or create an account to move to the second level of access (McMaster student/faculty member).
-  \item The tester will test that actions only possible at the third level of access (adding/deleting/editing events, pull logs not accessible to users) are not possible to do at this level.
-  \item The tester will log out of the account and log in as an administrator, moving to the third level of access.
-  \item The tester will test that actions only possible at this level of access (adding/deleting/editing events, pull logs not accessible to users) are possible to do.
+  \item The tester will begin at the first level of access, which should only allow the user to view public events,  account recovery page, and single single-user map
+  \item The tester will then test with the second level of access which should allow the user to do everything except edit, adding, or deleting activities
+  \item The tester will test that actions only possible at the third level of access (adding/deleting/editing events, pull logs not accessible to users) are not possible to do at this level
 \end{enumerate}
 
-\textbf{Related Requirement(s):} S-A1
+\textbf{Related Requirement(s):} S-A1, S-A2, S-A3
+\end{enumerate}
+
+\subsubsection{Privacy}
+\begin{enumerate}
+\item{\textbf{NFRT-P1}}
+
+\textbf{Name:} Code inspection for legitimate use of personal data
+
+\textbf{Type:} Non-functional, Static, Manual
+
+\textbf{Input/Condition:} Source code
+
+\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\begin{itemize}
+\item The usage of a user's personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario's data protection laws
+\end{itemize}
+
+\textbf{How test will be performed:} A code inspection will be held with supervisor's attendance to show the usage of personal data is legitimate
+
+\textbf{Related Requirement(s):} S-P1
+
+\item{\textbf{NFRT-P2}}
+
+\textbf{Name:} Code inspection for removing unused accounts
+
+\textbf{Type:} Non-functional, Static, Manual
+
+\textbf{Input/Condition:} Source code
+
+\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\begin{itemize}
+\item Any accounts that are not active for a long time (a semester) will be removed from the system
+\end{itemize}
+
+\textbf{How test will be performed:} A code inspection will be held with supervisor's attendance to show the system is set to clean inactive users periodically
+
+\textbf{Related Requirement(s):} S-P2
 \end{enumerate}
 
 \subsubsection{Cultural}
-
 \begin{enumerate}
 \item{\textbf{NFRT-CUL1}}
 
@@ -1335,95 +1753,124 @@ The testers will then download and install the product onto the phone from the G
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 
-\textbf{Initial State:} User has an account
+\textbf{Initial State:} Use has an account:
+\begin{itemize}
+\item email: mtest@gmail.com
+\item password: mtesting
+\end{itemize}
 
-\textbf{Input/Condition:} User is logged into the homepage and pokes around the application
+\textbf{Input/Condition:} User follows the instructions and attempts to finish tasks in the survey
 
-\textbf{Output/Result:} Get feedback and verify layout is not culturally offensive. This\
-test is a pass if average individual score is over MIN SCORE in the\
-"Cultural Friendliness" categories of the User Experience Survey
+\textbf{Output/Result:} The average individual score is over MIN\_SCORE in the "Cultural Friendliness" category of the Usability Survey
 
 \textbf{How test will be performed:} A survey will be given to at least\
-SURVEY SAMPLE SIZE users where they will give feedback to different\
-elements of the interface. All of the survey takers are selected\
-randomly from McMaster University
+SURVEY\_SAMPLE\_SIZE users where they will give feedback to different\
+elements of the interface. All of the survey takers are McMaster students
 
-\textbf{Related Requirement(s):} CUL-C1, CUL-C2
-
+\textbf{Related Requirement(s):} CUL-C1
 \end{enumerate}
 
 \subsubsection{Compliance}
+\begin{enumerate}
+\item{\textbf{NFRT-COM1}}
 
-\quad \textbf{N/A}
+\textbf{Name:} Code walkthrough on compliance requirements
+
+\textbf{Type:} Non-functional, Static, Manual
+
+\textbf{Input/Condition:} Source code
+
+\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\begin{itemize}
+\item The data collected will be handled as per the same legal requirements for the university
+\item The application can abide by the guidelines set by university staff
+\end{itemize}
+
+\textbf{How test will be performed:} A code walkthrough will be held with the supervisor's attendance to show that the project fulfils the compliance requirements
+
+\textbf{Related Requirement(s):} COM-SC1, COM-SC2
+\end{enumerate}
 
 \newpage
 \begin{landscape}
 \subsection{Traceability Between Test Cases and Requirements}
 	\footnotesize
 	\begin{longtable}{|l|cccccccccccccccc|}
-	\caption{Traceability Between Functional Test Cases and Functional Requirements, FR-1 to FR-3}                                                                                                                                                                                                                           \\
+	\caption{Traceability Between Functional Test Cases and Functional Requirements, FR-1 to FR-3-5}                                                                                                                                                                                                                           \\
 		\hline
 		\textbf{Test IDs}   & \multicolumn{14}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                                 \\
 		\hline
-		~                   & \textbf{FR1-1}  & \textbf{FR2-1} & \textbf{FR2-2} & \textbf{FR2-3} & \textbf{FR2-4} & \textbf{FR2-5} & \textbf{FR2-6} & \textbf{FR2-7} & \textbf{FR2-8} & \textbf{FR3-1} & \textbf{FR3-2} & \textbf{FR3-3} & \textbf{FR3-4} & \textbf{FR3-5} \\
+		~                   & \textbf{FR1-1}  & \textbf{FR2-1} & \textbf{FR2-2} & \textbf{FR2-3} & \textbf{FR2-4} & \textbf{FR2-5} & \textbf{FR2-6} & \textbf{FR2-7} & \textbf{FR3-1} & \textbf{FR3-2} & \textbf{FR3-3} & \textbf{FR3-4} & \textbf{FR3-5} \\
 		\hline
-		\textbf{FRT-PG1} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-PG2} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-UA1} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-UA2} & ~                                                         & X             & ~ & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-UA3} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-UA4} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-UA5} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-UA6} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-UA7} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-UA8} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & X             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-UA9} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-SN1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             &X             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-SN2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-SN3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-SN4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             \\
-		\textbf{FRT-SN5} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & X             & ~             \\
-		\textbf{FRT-SN6} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             \\
+		\textbf{FRT-PR1} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-PR2} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA1} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA2} & ~                                                         & X             & ~ & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA3} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA4} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~              \\
+		\textbf{FRT-UA5} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA6} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~              \\
+		\textbf{FRT-UA7} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA8} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-UA9} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-SN1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~              & ~             & ~             & ~             \\
+		\textbf{FRT-SN2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-SN3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-SN4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             \\
+		\textbf{FRT-SN5} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             \\
+		\textbf{FRT-SN6} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             \\
+		\textbf{FRT-SN7} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             \\
 		\hline
 	\end{longtable}
 
 	\newpage
 
-	\begin{longtable}{|l|ccccccccccc|}
-		\caption{Traceability Between Functional Test Cases and Functional Requirements, FR-4 to FR-5}                                                                                                                                                                                                  \\
+	\begin{longtable}{|l|cccccccccccc|}
+		\caption{Traceability Between Functional Test Cases and Functional Requirements, FR-3-6 to FR-6}                                                                                                                                                                                                  \\
 		\hline
-		\textbf{Test IDs}   & \multicolumn{11}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                                 \\
+		\textbf{Test IDs}   & \multicolumn{12}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                                 \\
 		\hline
-		~                   & \textbf{FR4-1}  & \textbf{FR4-2} & \textbf{FR-4-3} & \textbf{FR5-1} & \textbf{FR5-2} & \textbf{FR5-3} & \textbf{FR5-4} & \textbf{FR5-5} & \textbf{FR5-6} & \textbf{FR5-7} & \textbf{FR5-8} \\
+		~                   & \textbf{FR3-6}  & \textbf{FR4-1}  & \textbf{FR4-2} & \textbf{FR-4-3} & \textbf{FR4-4} & \textbf{FR4-5} & \textbf{FR4-6} & \textbf{FR4-7} & \textbf{FR4-8} &  \textbf{FR5-1} & \textbf{FR5-2} & \textbf{FR6-1} \\
 		\hline
-		\textbf{FRT-AR1} & X                                                         & X             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
-		\textbf{FRT-AR2} & X                                                         & X             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
-		\textbf{FRT-LE1} & ~                                                         & ~             & ~             & X             & X             & ~             & ~             & ~             & ~             & X             & ~\\
-		\textbf{FRT-LE2} & ~                                                         & ~             & ~             & ~             & ~             & X             & X             & ~             & ~             & ~             & X\\
-		\textbf{FRT-LE3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~\\
-		\textbf{FRT-LE4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~\\
-		\textbf{FRT-LE5} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~\\
-		\textbf{FRT-LE6} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~\\
-		\textbf{FRT-LE7} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~\\
-		\textbf{FRT-LE8} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~\\
+		\textbf{FRT-SN2} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-SN3} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE1} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE2} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE3} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE4} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE5} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE6} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE7} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE8} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE9} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE10} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE11} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE12} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE13} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE14} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ &~\\
+		\textbf{FRT-AR1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ &~\\
+		\textbf{FRT-AR2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ &~\\
+		\textbf{FRT-AR3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X &~\\
+		\textbf{FRT-MAP1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &X\\
+		\textbf{FRT-MAP2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &X\\
 		\hline
 	\end{longtable}
 
 	\newpage
 	
-		\begin{longtable}{|l|cccccccccccc|}
+		\begin{longtable}{|l|cccccccc|}
 	\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, LF-A1 to UH-A1}                                                                                                                                                                                                                           \\
 		\hline
-		\textbf{Test IDs}   & \multicolumn{12}{c|}{\textbf{Nonfunctional Requirement IDs}}                                                                                                                                                                                                                 \\
+		\textbf{Test IDs}   & \multicolumn{8}{c|}{\textbf{Nonfunctional Requirement IDs}}                                                                                                                                                                                                                 \\
 		\hline
-		~                   & \textbf{LF-A1}  & \textbf{LF-A2} & \textbf{LF-A3} & \textbf{LF-S1} & \textbf{LF-S2} & \textbf{UH-EOU1} & \textbf{UH-PI1} & \textbf{UH-PI2} & \textbf{UH-L1} & \textbf{UH-L2} & \textbf{UH-UP1} & \textbf{UH-A1} \\
+		~                   & \textbf{LF-A1}  & \textbf{LF-A2} & \textbf{LF-S1} & \textbf{LF-S2} & \textbf{UH-EOU1} & \textbf{UH-L1} & \textbf{UH-UP1} & \textbf{UH-A1} \\
 		\hline
-		\textbf{NFRT-LF1} & X                                                         & X             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-LF2} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-LF3} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-UH1} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & X             & X             & ~ \\
-		\textbf{NFRT-UH2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & X             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-UH3} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ \\
+		\textbf{NFRT-LF1} & X                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-LF2} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-LF3} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-UH1} & ~                                                         & ~             & ~             & ~             & X             & ~             & X             & ~\\
+		\textbf{NFRT-UH2} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~\\
+		\textbf{NFRT-UH3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X\\
 		\hline
 	\end{longtable}
 
@@ -1434,64 +1881,58 @@ randomly from McMaster University
 		\hline
 		\textbf{Test IDs}   & \multicolumn{13}{c|}{\textbf{Nonfunctional Requirement IDs}}                                                                                                                                                                                                                 \\
 		\hline
-		~                   & \textbf{P-SL1}  & \textbf{P-SL2} & \textbf{P-SL3} & \textbf{P-SC1} & \textbf{P-SC2} & \textbf{P-SC3} & \textbf{P-SC4} & \textbf{P-PA1} & \textbf{P-PA2} & \textbf{P-RF1} & \textbf{P-RF2} & \textbf{P-RF3} & \textbf{P-RF4} \\
+		~                   & \textbf{P-SL1}  & \textbf{P-SL2} & \textbf{P-SC1} & \textbf{P-SC2} & \textbf{P-SC3} & \textbf{P-SC4} & \textbf{P-SC5} & \textbf{P-SC6} & \textbf{P-PA1} & \textbf{P-RF1} & \textbf{P-RF2} & \textbf{P-RF3} & \textbf{P-RF4} \\
 		\hline
-		\textbf{NFRT-P1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~\\
-		\textbf{NFRT-P2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ \\
-		\textbf{NFRT-P3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & X\\
-		\textbf{NFRT-P5} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-P6} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-P7} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-P8} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-P9} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ \\
-		\textbf{NFRT-P10} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-P11} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P12} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-P13} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
-		\textbf{NFRT-P14} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
-		\textbf{NFRT-P15} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-P16} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-P17} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
-		\textbf{NFRT-P18} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P1} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P2} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
+		\textbf{NFRT-P3} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P4} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P5} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P6} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P7} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P8} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P9} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P10} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ & ~ & ~ \\
+		\textbf{NFRT-P11} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X & ~ & ~ \\
+		\textbf{NFRT-P12} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & X & ~ \\
+		\textbf{NFRT-P13} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & X \\
 		\hline
 	\end{longtable}
 
 	\newpage
 	
-			\begin{longtable}{|l|cccccccccccc|}
-	\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, P-RF5 to OE-P1}                                                                                                                                                                                                                           \\
+			\begin{longtable}{|l|ccccccccccc|}
+	\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, P-SE1 to MS-A1}                                                                                                                                                                                                                           \\
 		\hline
-		\textbf{Test IDs}   & \multicolumn{12}{c|}{\textbf{Nonfunctional Requirement IDs}}                                                                                                                                                                                                                 \\
+		\textbf{Test IDs}   & \multicolumn{11}{c|}{\textbf{Nonfunctional Requirement IDs}}                                                                                                                                                                                                                 \\
 		\hline
-		~                   & \textbf{P-RF5}  & \textbf{P-RF6} & \textbf{P-C1} & \textbf{P-C2} & \textbf{P-SE1} & \textbf{P-SE2} & \textbf{P-SE3} & \textbf{P-L1} & \textbf{P-L2} & \textbf{OE-EPE1} & \textbf{OE-IAS1} & \textbf{OE-P1} \\
+		~                   & \textbf{P-SE1} & \textbf{P-SE2} & \textbf{P-SE3} & \textbf{P-L1} & \textbf{P-L2} & \textbf{OE-EPE1} & \textbf{OE-P1} & \textbf{MS-M1} & \textbf{MS-S1} & \textbf{MS-S2} & \textbf{MS-A1}  \\
 		\hline
-		\textbf{NFRT-P3} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-P5} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-P13} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-P14} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & X             & ~ & ~ & ~\\
-		\textbf{NFRT-P15} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-P17} & ~                                                         & ~             & X             & ~             & X             & ~             & ~             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-P18} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ & ~ & ~\\
-		\textbf{NFRT-OE1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & X\\
-		\textbf{NFRT-MS3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X & X & ~\\
+		\textbf{NFRT-P14} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-P15} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-P16} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-P17} & ~                                                         & ~             & ~             & X             & X             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-OE1} & ~                                                         & ~             & ~             & ~             & ~             & X             & X             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-MS1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ &~\\
+		\textbf{NFRT-MS2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             &X  &~\\
+		\textbf{NFRT-MS3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             &~  &X\\
 		\hline
 	\end{longtable}
 	
 	\newpage
 	
-			\begin{longtable}{|l|ccccccccccc|}
-	\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, MS-M1 to CUL-C2}                                                                                                                                                                                                                           \\
+			\begin{longtable}{|l|cccccccc|}
+	\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, S-A1 to COMP-SC1}                                                                                                                                                                                                                           \\
 		\hline
-		\textbf{Test IDs}   & \multicolumn{11}{c|}{\textbf{Nonfunctional Requirement IDs}}                                                                                                                                                                                                                 \\
+		\textbf{Test IDs}   & \multicolumn{8}{c|}{\textbf{Nonfunctional Requirement IDs}}                                                                                                                                                                                                                 \\
 		\hline
-		~                   & \textbf{MS-M1}  & \textbf{MS-S1} & \textbf{MS-S2} & \textbf{MS-A1} & \textbf{S-A1} & \textbf{S-IG1} & \textbf{S-P1} & \textbf{S-P2} & \textbf{S-P3} & \textbf{CUL-C1} & \textbf{CUL-C2}\\
+		~                   & \textbf{S-A1} & \textbf{S-A2} & \textbf{S-A3} & \textbf{S-P1} & \textbf{S-P2} & \textbf{CUL-C1} & \textbf{COMP-L1} & \textbf{COMP-SC1}\\
 		\hline
-		\textbf{NFRT-MS1} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-MS2} & ~                                                         & X             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
-		\textbf{NFRT-MS3} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
-		\textbf{NFRT-S1} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-CUL1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & X\\
+		\textbf{NFRT-S1} & X                                                         & X             & X             & ~             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P1} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-P2} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~\\
+		\textbf{NFRT-CUL1} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~\\
+		\textbf{NFRT-COM1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & X\\
 		\hline
 	\end{longtable}
 
@@ -1501,20 +1942,19 @@ randomly from McMaster University
 \section{Unit Test Description}
 \label{sec:unit}
 
-This section includes all unit tests for functional and non-functional requirements. Though most of the requirements will be tested manually, unit testing will still be utilized for some basic functionalities of all components. Since the team has not completed a detailed design document, this section cannot refer to all modules in \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}. Instead it will refer to a list of core modules to be implemented:
+This section includes all unit tests for functional and non-functional requirements. Though most of the requirements will be tested manually, unit testing will still be utilized for some basic functionalities of some low level components. According to the module hierarchy in \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/Design/SoftArchitecture/MG.pdf}{MG}, the following modules will be tested with unit tests:
 \begin{itemize}
 	\item \textbf{M1} User
-	\item \textbf{M2} Friend
-	\item \textbf{M3} Building
-	\item \textbf{M4} Event
-	\item \textbf{M5} Lecture
+	\item \textbf{M2} Event
+	\item \textbf{M3} Lecture
+	\item \textbf{M4} Pagination and Filter
+	\item \textbf{M5} Authentication
 	\item \textbf{M6} Database
 \end{itemize}
-It is the first draft of the implementation design, and a more detailed version of unit test will be added once the MIS is completed.
 
 \subsection{Unit Testing Scope}
 
-All modules defined above are within the testing scope.  The scope of unit testing was limited to the components that could be automatically tested. The AR module is out of the scope since it is largely composed of a third-parity library, Vuforia. It is a sophisticated AR software development kit, so we assumed that Vuforia’s logic is correct and therefore shall not be tested. Also, the database module is out of the scope of functional requirement tests because it is largely composed of third-party database. But there are some non-functional requirements that can be tested
+All modules defined above are within the testing scope.  The scope of unit testing was limited to the components that could be automatically tested. Third-party library modules like Vuforia and Mapbox are out of the scope of unit testing and we will trust they are bug-free. Also, high-level modules in the hierarchy are usually responsible for rendering UI and reacting to user actions (e.g. user profile module, lecture list module) therefore they are out of the scope of unit testing as well (in fact they are not quite testable with Unity test framework). Instead, they are tested with manual testing. Other than the modules mentioned, some utility functions will also be tested (but they will not be listed below).
 
 \subsection{Tests for Functional Requirements}
 
@@ -1523,294 +1963,524 @@ correctly given the requirements in the SRS.
 
 \subsubsection{User Module}
 
-This section will contain all unit tests for module ``User''. The tests are chosen based on common user flows and cover the most important methods of this module.
+This section will contain all unit tests for the module ``User''. The tests are chosen based on common user flows and cover the most important methods of this module. The getter and setter methods are part of the unit test as well, but they will not be included in the section because they are trivial.
 
 \begin{enumerate}
 
 \item{FRT-M1-1}
 
-\textbf{Name:} Password Setting
+\textbf{Name:} Successful default user creation
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\textbf{Initial State:} There is an old password for an account
+\textbf{Initial State:} NA
 					
-\textbf{Input:} New password
+\textbf{Input:} User identifier, email: unitTest@test.com
 					
-\textbf{Output:} The old password is replaced by the new one
+\textbf{Output:} A user is successfully created with following attributes:
+\begin{itemize}
+\item email: unitTest@test.com
+\item nickname: ''
+\item photoURI: null
+\item program: ''
+\item level: 0
+\item lectures: empty list of string
+\item event: empty list of string
+\item friends: empty list of string
+\item friendInvitation: empty list of string
+\end{itemize}
 
-\textbf{Test Case Derivation:} Verify the password reset functionality works well
+\textbf{Test Case Derivation:} Verify that a new user can be created by just specifying the email and the rest attributes will be filled automatically
 
-\textbf{How test will be performed:} Create a test case in UTF that sets a new password for a user and verify the password has been changed
+\textbf{How test will be performed:} Create a test case in UTF that creates a new user with all information provided, verify the user is created correctly
 
 \item{FRT-M1-2}
 
-\textbf{Name:} Search For Valid Username
+\textbf{Name:} Successful new user creation
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\textbf{Initial State:} There are some valid users during the test
+\textbf{Initial State:} NA
 					
-\textbf{Input:} One of the valid usernames
+\textbf{Input:} User:
+\begin{itemize}
+\item email: unitTest@test.com
+\item nickname: 'Mr. Unit Test'
+\item photoURI: http://example/com/photo.jpg
+\item program: 'software engineering'
+\item level: 1
+\item lectures: \{`Lecture 1', `Lecture 2'\}
+\item event: \{`Event 1', `Event 2'\}
+\item friends: \{`unitTest1@test.com', `unitTest2@test.com'\}
+\item friendInvitation: \{`unitTest3@test.com'\}
+\end{itemize}
 					
-\textbf{Output:} The user is found from the list by its username
+\textbf{Output:} A user is successfully created with attributes above
 
-\textbf{Test Case Derivation:} Verify that user can search for a user by username
 
-\textbf{How test will be performed:} Create a test case in UTF that searches for a existing username and verify the corresponding user is found
+\textbf{Test Case Derivation:} Verify that a new user can be created with all attributes specified
 
-\item{FRT-M1-3}
-
-\textbf{Name:} Search For Invalid Username
-
-\textbf{Type:} Functional, Dynamic, Automatic, Unit
-					
-\textbf{Initial State:} There are some valid users during the test
-					
-\textbf{Input:} Invalid usernames
-					
-\textbf{Output:} No user is found
-
-\textbf{Test Case Derivation:} Verify that user can search for a user by username
-
-\textbf{How test will be performed:} Create a test case in UTF that searches for a non-existing username and verify no user is found
-
-\item{FRT-M1-4}
-
-\textbf{Name:} Get Location
-
-\textbf{Type:} Functional, Dynamic, Automatic, Unit
-					
-\textbf{Initial State:} User agrees to share location
-					
-\textbf{Input:} User request
-					
-\textbf{Output:} Geographic position of the device with accuracy of GPS\_ACCURACY
-
-\textbf{Test Case Derivation:} Verify that user can share their location accurately
-
-\textbf{How test will be performed:} Create a test case in UTF that searches for a non-existing username and verify no user is found
-\end{enumerate}
-
-\subsubsection{Friend Module}
-
-This section will contain all unit tests for module ``Friend''. The tests are chosen based on common user flows and cover the most important methods of this module.
-
-\begin{enumerate}
-\item{FRT-M2-1}
-
-\textbf{Name:} Send new message
-
-\textbf{Type:} Functional, Dynamic, Automatic, Unit
-					
-\textbf{Initial State:} There are two accounts being friends
-					
-\textbf{Input:} A message sent friend to the friend
-					
-\textbf{Output:} The Message is added to chat history
-
-\textbf{Test Case Derivation:} Verify that messages can be sent and stored between friends
-
-\textbf{How test will be performed:} Create a test case in UTF that messages a friend and verify the message is added to chat history
-
-\item{FRT-M2-2}
-
-\textbf{Name:} Receive new message
-
-\textbf{Type:} Functional, Dynamic, Automatic, Unit
-					
-\textbf{Initial State:} There are two accounts being friends
-					
-\textbf{Input:} A message sent from the friend
-					
-\textbf{Output:} The Message is added to chat history
-
-\textbf{Test Case Derivation:} Verify that messages can be sent and stored between friends
-
-\textbf{How test will be performed:} Create a test case in UTF that receives a message from a friend and verify the message is added to chat history
-\end{enumerate}
-
-\subsubsection{Building Module}
-
-This section will contain all unit tests for module ``Building''. The tests are chosen based on common user flows and cover the most important methods of this module.
-
-\begin{enumerate}
-\item{FRT-M3-1}
-
-\textbf{Name:} List Events
-
-\textbf{Type:} Functional, Dynamic, Automatic, Unit
-					
-\textbf{Initial State:} There are some events for this target building
-					
-\textbf{Input:} User request
-					
-\textbf{Output:} All events in the building are listed
-
-\textbf{Test Case Derivation:} Verify that all events of the building are shown with nothing missing
-
-\textbf{How test will be performed:} Create a test case in UTF where a user shares the location, verify the location information retrieved matches the expected GPS coordinates
-
-\item{FRT-M3-2}
-
-\textbf{Name:} List Lectures
-
-\textbf{Type:} Functional, Dynamic, Automatic, Unit
-					
-\textbf{Initial State:} There are some lectures for this target building
-					
-\textbf{Input:} User request
-					
-\textbf{Output:} All lectures in the building are listed
-
-\textbf{Test Case Derivation:} Verify that all lectures of the building are shown with nothing missing
-
-\textbf{How test will be performed:} Create a test case in UTF that has a building with a list of lectures, verify all lectures are displayed once lecture information is requested
-
-\item{FRT-M3-3}
-
-\textbf{Name:} Check User Location in Bounds
-
-\textbf{Type:} Functional, Dynamic, Automatic, Unit
-
-\textbf{Initial State:} Building has a bounding box outlined by GPS coordinates
-
-\textbf{Input:} User location
-					
-\textbf{Output:} True if the user location is within the bounding box, False otherwise
-
-\textbf{Test Case Derivation:} Verify that the GPS building detection algorithm is correct
-
-\textbf{How test will be performed:} Create a test case in UTF that has a building object with a bounding box and a user object with a dummy location, verify that the algorithm identifies cases where the user is within the bounding box
-
+\textbf{How test will be performed:} Create a test case in UTF that creates a new user with all information provided, verify the user is created correctly
 \end{enumerate}
 
 \subsubsection{Event Module}
 
-This section will contain all unit tests for module ``Event''. The tests are chosen based on common user flows and cover the most important methods of this module.
+This section will contain all unit tests for the module ``Event''. The tests are chosen based on common user flows and cover the most important methods of this module. The getter and setter methods are part of the unit test as well, but they will not be included in the section because they are trivial.
 
 \begin{enumerate}
-\item{FRT-M4-1}
+\item{FRT-M2-1}
 
-\textbf{Name:} Successful New Event Creation
-
-\textbf{Type:} Functional, Dynamic, Automatic, Unit
-					
-\textbf{Initial State:} User is logged in as admin
-					
-\textbf{Input:} Event information including location, time and club/department
-					
-\textbf{Output:} Event is successfully added to the system
-
-\textbf{Test Case Derivation:} Verify that new event can be added by an administrator only if all information is provided
-
-\textbf{How test will be performed:} Create a test case in UTF that creates a new event with all information provided, verify the event is added to the event list
-
-\item{FRT-M4-2}
-
-\textbf{Name:} Unsuccessful New Event Creation
+\textbf{Name:} Successful default event creation
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\textbf{Initial State:} User is logged in as admin
+\textbf{Initial State:} NA
 					
-\textbf{Input:} Event information with one of the following missing: location, time or club/department
+\textbf{Input:} Event identifier, name: unit test event
 					
-\textbf{Output:} Event cannot be added to the system, an error pops up saying information missing
+\textbf{Output:} An event is successfully created with following attributes:
+\begin{itemize}
+\item name: unit test event
+\item description: PLACEHOLDER
+\item organizer: PLACEHOLDER
+\item duration: DEFAULT\_DURATION
+\item time: DEFAULT\_TIME
+\item isPulbic: false
+\item location: PLACEHOLDER
+\end{itemize}
 
-\textbf{Test Case Derivation:} Verify that new event can be added by an administrator only if all information is provided
+\textbf{Test Case Derivation:} Verify that a new event can be created by just specifying the name and the rest attributes will be filled automatically
 
-\textbf{How test will be performed:} Create a test case in UTF that creates a new event with some necessary information missing, verify the event fails to be added to the event list
+\textbf{How test will be performed:} Create a test case in UTF that creates a new event with all information provided, verify the event is created correctly
+
+\item{FRT-M2-2}
+
+\textbf{Name:} Successful new event creation
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} NA
+					
+\textbf{Input:} Event:
+\begin{itemize}
+\item name: unit test event2
+\item description: A unit test sample event
+\item organizer: Team 2
+\item duration: 30
+\item time: 1708922625
+\item isPulbic: true
+\item location: Online
+\end{itemize}
+					
+\textbf{Output:} An event is successfully created with attributes above
+
+\textbf{Test Case Derivation:} Verify that a new event can be created with all attributes specified
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new event with all information provided, verify the event is created correctly
 \end{enumerate}
 
 \subsubsection{Lecture Module}
 
-This section will contain all unit tests for module ``Lecture''. The tests are chosen based on common user flows and cover the most important methods of this module.
+This section will contain all unit tests for the module ``Lecture''. The tests are chosen based on common user flows and cover the most important methods of this module. The getter and setter methods are part of the unit test as well, but they will not be included in the section because they are trivial.
 
 \begin{enumerate}
-\item{FRT-M5-1}
+\item{FRT-M3-1}
 
-\textbf{Name:} Successful New Lecture Creation
-
-\textbf{Type:} Functional, Dynamic, Automatic, Unit
-					
-\textbf{Initial State:} User is logged in as admin
-					
-\textbf{Input:} Lecture information including location, time and instructor
-					
-\textbf{Output:} Lecture is successfully added to the system
-
-\textbf{Test Case Derivation:} Verify that new lecture can be added by an administrator only if all information is provided
-
-\textbf{How test will be performed:} Create a test case in UTF that creates a new lecture with all information provided, verify the lecture is added to the lecture list
-
-\item{FRT-M5-2}
-
-\textbf{Name:} Unsuccessful New Lecture Creation
+\textbf{Name:} Successful default lecture creation
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\textbf{Initial State:} User is logged in as admin
+\textbf{Initial State:} NA
 					
-\textbf{Input:} Lecture information with one of the following missing: location, time or instructor
+\textbf{Input:} Lecture identifier, code: UNIT TEST3
 					
-\textbf{Output:} Lecture cannot be added to the system, an error pops up saying information missing
+\textbf{Output:} A lecture is successfully created with following attributes:
+\begin{itemize}
+\item code: UNIT TEST3
+\item name: PLACEHOLDER
+\item instructor: PLACEHOLDER
+\item time: PLACEHOLDER
+\item location: PLACEHOLDER
+\end{itemize}
 
-\textbf{Test Case Derivation:} Verify that new lecture can be added by an administrator only if all information is provided
+\textbf{Test Case Derivation:} Verify that a new lecture can be created by just specifying the code and the rest attributes will be filled automatically
 
-\textbf{How test will be performed:} Create a test case in UTF that creates a new lecture with some necessary information missing, verify the lecture fails to be added to the lecture list
+\textbf{How test will be performed:} Create a test case in UTF that creates a new lecture with all information provided, verify the lecture is created correctly
+
+\item{FRT-M3-2}
+
+\textbf{Name:} Successful new lecture creation
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} NA
+					
+\textbf{Input:} Lecture:
+\begin{itemize}
+\item code: UNIT TEST3
+\item name: Unit test Lecture
+\item instructor: Team 2
+\item time: 12:30 - 13:30, Mon
+\item location: Online
+\end{itemize}
+					
+\textbf{Output:} A lecture is successfully created with attributes above
+
+\textbf{Test Case Derivation:} Verify that a new lecture can be created with all attributes specified
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new lecture with all information provided, verify the lecture is created correctly
 \end{enumerate}
 
-\subsection{Tests for Nonfunctional Requirements}
+\subsubsection{Pagination and Filter Module}
 
-This application does not many non-functional requirements to be tested with unit testing.  Most of non-functional requirements will be verified through system tests in section \ref{sec:nonfunctional}. The following section includes all non-functional requirements that are skipped in system test (like P-PA2, S-IG1, etc.).
+This section will contain all unit tests for the module ``Pagination and Filter''. The tests are chosen based on common user flows and cover the most important methods of this module. The getter and setter methods are part of the unit test as well, but they will not be included in the section because they are trivial. The Pagination module here has a type T = Pizza, which has two string attributes: toppings and size.
 
-\subsubsection{Database Module}
+\begin{enumerate}
+\item{FRT-M4-1}
 
-This section will contain all unit tests for module ``Database''.  No functional requirements will be tested here since it is a third party component and all the methods can be trusted. 
+\textbf{Name:} Successful pagination creation
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} NA
+					
+\textbf{Input:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\end{itemize}
+pageCount = 2, filterBy and filterString are null
+					
+\textbf{Output:} A pagination class is created with following attributes:
+\begin{itemize}
+\item entryList: List of pizza from input
+\item filteredList: same as entryList
+\item maxPage: 1
+\item currentPage: 1
+\item filterBy: null
+\item filterString: null
+\end{itemize}
+
+\textbf{Test Case Derivation:} Verify that a new pagination object can be created by just specifying a list of T, page count, filter content and filter type
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new pagination with all information provided, verify the pagination is created correctly with all the attributes expected
+
+\item{FRT-M4-2}
+
+textbf{Name:} Successful pagination creation with filter 
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} NA
+					
+\textbf{Input:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\item medium, pepperoni
+\end{itemize}
+pageCount = 2, filterBy = `size' and filterString = `medium'
+					
+\textbf{Output:} A pagination class is created with following attributes:
+\begin{itemize}
+\item entryList: List of pizza from input
+\item filteredList: List of medium pizza only
+\item maxPage: 1
+\item currentPage: 1
+\item filterBy: `size'
+\item filterString: `medium'
+\end{itemize}
+
+\textbf{Test Case Derivation:} Verify that a new pagination object can be created with a filter
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new pagination with all information provided, verify the pagination with filter is created correctly with all the attributes expected
+
+\item{FRT-M4-3}
+
+textbf{Name:} Successful pagination addition 
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\end{itemize}
+pageCount = 2, filterBy and filterString = null
+					
+\textbf{Input:} New pizza added to the list:
+\begin{itemize}
+\item medium, pepperoni
+\end{itemize}
+					
+\textbf{Output:} A pagination class is created with following attributes:
+\begin{itemize}
+\item entryList: List of all three pizza
+\item filteredList: same as entryList
+\item maxPage: 2
+\item currentPage: 1
+\item filterBy: null
+\item filterString: null
+\end{itemize}
+
+\textbf{Test Case Derivation:} Verify that a new object of type T can be added to a pagination object
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new pagination with all information provided and adds a new object to the class, verify the pagination attributes are updated correctly
+
+\item{FRT-M4-4}
+
+textbf{Name:} Successful pagination deletion 
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\item medium, pepperoni
+\end{itemize}
+pageCount = 2, filterBy and filterString = null
+					
+\textbf{Input:} New pizza to be deleted from the list:
+\begin{itemize}
+\item medium, pepperoni
+\end{itemize}
+					
+\textbf{Output:} A pagination class is created with following attributes:
+\begin{itemize}
+\item entryList: List of two pizza (cheese and veggie)
+\item filteredList: same as entryList
+\item maxPage: 1
+\item currentPage: 1
+\item filterBy: null
+\item filterString: null
+\end{itemize}
+
+\textbf{Test Case Derivation:} Verify that a new object of type T can be removed from a pagination object
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new pagination with all information provided and deletes an object from the class, verify the pagination attributes are updated correctly
+
+\item{FRT-M4-5}
+
+textbf{Name:} Next page
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\item medium, pepperoni
+\end{itemize}
+pageCount = 2, filterBy and filterString = null
+					
+\textbf{Input:} Call next page method twice
+					
+\textbf{Output:} Current page is updated only once:
+\begin{itemize}
+\item currentPage: 2
+\end{itemize}
+
+\textbf{Test Case Derivation:} Verify that the current page increases by one when next page method is called (if the page is not last page)
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new pagination with all information provided and calls next page twice verify the pagination current page is updated correctly
+
+\item{FRT-M4-6}
+
+textbf{Name:} Previous page
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\item medium, pepperoni
+\end{itemize}
+pageCount = 2, filterBy and filterString = null\\
+Call next page method first
+					
+\textbf{Input:} Call previous page method twice
+					
+\textbf{Output:} Current page is updated only once:
+\begin{itemize}
+\item currentPage: 1
+\end{itemize}
+
+\textbf{Test Case Derivation:} Verify that the current page reduces by one when previous page method is called (if the page is not first page)
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new pagination with all information provided and calls previous page twice verify the pagination current page is updated correctly
+
+\item{FRT-M4-7}
+
+textbf{Name:} Last page
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\item medium, pepperoni
+\end{itemize}
+pageCount = 2, filterBy and filterString = null
+					
+\textbf{Input:} Call last page method
+					
+\textbf{Output:} Current page is updated:
+\begin{itemize}
+\item currentPage: 2
+\end{itemize}
+
+\textbf{Test Case Derivation:} Verify that the current page is updated to be max page when last page method is called
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new pagination with all information provided and calls last page method, verify the pagination current page is updated correctly
+
+\item{FRT-M4-8}
+
+textbf{Name:} First page
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\item medium, pepperoni
+\end{itemize}
+pageCount = 2, filterBy and filterString = null\\
+Call next page method first
+					
+\textbf{Input:} Call first page method
+					
+\textbf{Output:} Current page is updated:
+\begin{itemize}
+\item currentPage: 1
+\end{itemize}
+
+\textbf{Test Case Derivation:} Verify that the current page is updated to be 1 when first page method is called
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a new pagination with all information provided and calls first page method, verify the pagination current page is updated correctly
+\end{enumerate}
+
+\subsubsection{Authentication Module}
+
+This section will contain all unit tests for the module ``Authentication''.  This module wraps some methods from third-party library Firebase Authentication, and these methods will be mocked in the unit tests.
 
 \begin{enumerate}
 \item{FRT-M6-1}
 
-\textbf{Name:} Unique keys
+\textbf{Name:} Get current user email
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\textbf{Initial State:} Some user exists in the module
+\textbf{Initial State:} Current user email: `unitTest@test.com'
 					
-\textbf{Input:} A new user to be added with same username
+\textbf{Input:} NA
 					
-\textbf{Output:} An error appears saying the username already exists
+\textbf{Output:} The email in the initial state
 
-\textbf{Test Case Derivation:} Verify that the system prevents creating account with sample username
+\textbf{Test Case Derivation:} Verify that the current user is available in the system
 
-\textbf{How test will be performed:} Create a test case in UTF that adds a new user to the database and verify the request is rejected
+\textbf{How test will be performed:} Create a test case in UTF that creates an authentication module and calls the get current user email method with a mock of Firebase Authentication current user
+
+\item{FRT-M5-2}
+
+\textbf{Name:} Is email verified
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} Current user is email verified: true
+					
+\textbf{Input:} NA
+					
+\textbf{Output:} The boolean value in initial state
+
+\textbf{Test Case Derivation:} Verify that the application can check email verification state
+
+\textbf{How test will be performed:} Create a test case in UTF that creates an authentication module and calls the get current email verified method with a mock of Firebase Authentication email verification value
+
+\item{FRT-M6-3}
+
+\textbf{Name:} Verify email
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} Current user email: `unitTest@test.com'
+					
+\textbf{Input:} Call verify email method
+					
+\textbf{Output:} An email is sent to the email address to verify the email
+
+\textbf{Test Case Derivation:} Verify that the application can send verification email if requested
+
+\textbf{How test will be performed:} Create a test case in UTF that creates an authentication module and calls the verify email method with a mock of Firebase Authentication email verifying method
 \end{enumerate}
 
 \subsubsection{Database Module}
 
-This section will contain a unit tests for module ``User''.  This test will verify the style test about color contrast. Since the module is mostly composed of a third party library, it is unnecessary to test all methods in functional requirement section.
+This section will contain all unit tests for the module ``Database''.  This module wraps some methods from third-party library Firebase Database, and these methods will be mocked in the unit tests.
 
 \begin{enumerate}
-\item{FRT-M1-5}
+\item{FRT-M6-1}
 
-\textbf{Name:} Color Contrast
+\textbf{Name:} Get value
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\textbf{Initial State:} User is logged in
+\textbf{Initial State:} NA
 					
-\textbf{Input:} The user change the page color
+\textbf{Input:} A valid path to a test node: `/events/public/EXPO/name'
 					
-\textbf{Output:} The colour contrast for each page is  calculated to be at least 4.5:1
+\textbf{Output:} The corresponding value of the node: EXPO
 
-\textbf{Test Case Derivation:} Verify that the page components are contrast enough for items on the screen to be more easily visible
+\textbf{Test Case Derivation:} Verify that the module can read from the database
 
-\textbf{How test will be performed:} Create a test case in UTF that takes all the possible color combinations on each page as an input and calculates the contrast, and checks if that contrast is at least 4.5:1
+\textbf{How test will be performed:} Create a test case in UTF that creates a database module and calls the read method with a mock of Firebase database read method
+
+\item{FRT-M6-2}
+
+\textbf{Name:} Set value
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} NA
+					
+\textbf{Input:} A valid path to a test node and a new value: 
+\begin{itemize}
+\item path: `/events/public/EXPO/description'
+\item value: `EXPO, yes!'
+\end{itemize}
+
+\textbf{Output:} The corresponding value changes to the new value
+
+\textbf{Test Case Derivation:} Verify that the module can edit the database
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a database module and calls the set method with a mock of Firebase database set method
+
+\item{FRT-M6-3}
+
+\textbf{Name:} Delete data
+
+\textbf{Type:} Functional, Dynamic, Automatic, Unit
+					
+\textbf{Initial State:} NA
+					
+\textbf{Input:} A valid path to a test node : `/events/public/EXPO'
+
+\textbf{Output:} The corresponding event is removed
+
+\textbf{Test Case Derivation:} Verify that the module can delete data from the database
+
+\textbf{How test will be performed:} Create a test case in UTF that creates a database module and calls the delete method with a mock of Firebase database delete method
 \end{enumerate}
 
-\subsection{Traceability Between Test Cases and Modules}
+\subsection{Tests for Nonfunctional Requirements}
 
+This application does not have non-functional requirements to be tested with unit testing.  
+
+\subsection{Traceability Between Test Cases and Modules}
+\newpage
 \begin{longtable}{|l|cccccc|}
 	\caption{Traceability Between Test Cases and Modules}                                                                                             \\
 	\hline
@@ -1820,19 +2490,24 @@ This section will contain a unit tests for module ``User''.  This test will veri
 	\hline
 	\textbf{FRT-M1-1}  & X                                        & ~           & ~           & ~           & ~ & ~ \\
 	\textbf{FRT-M1-2}  & X                                        & ~           & ~           & ~           & ~ & ~ \\
-	\textbf{FRT-M1-3}  & X                                        & ~           & ~           & ~           & ~  & ~\\
-	\textbf{FRT-M1-4}  & X                                        & ~           & ~           & ~           & ~  & ~ \\
-	\textbf{FRT-M1-5}  & X                                        & ~           & ~           & ~           & ~  & ~ \\
 	\textbf{FRT-M2-1}  & ~                                        & X           & ~           & ~           & ~  & ~ \\
 	\textbf{FRT-M2-2}  & ~                                        & X           & ~           & ~           & ~   & ~\\
 	\textbf{FRT-M3-1}  & ~                                        & ~           & X           & ~           & ~   & ~\\
 	\textbf{FRT-M3-2}  & ~                                        & ~           & X           & ~           & ~  & ~ \\
-	\textbf{FRT-M3-3}  & ~                                        & ~           & X           & ~           & ~  & ~ \\
-  \textbf{FRT-M4-1}  & ~                                        & ~           & ~           & X           & ~   & ~\\
+    \textbf{FRT-M4-1}  & ~                                        & ~           & ~           & X           & ~   & ~\\
 	\textbf{FRT-M4-2}  & ~                                        & ~           & ~           & X           & ~   & ~\\
+	\textbf{FRT-M4-3}  & ~                                        & ~           & ~           & X           & ~   & ~\\
+	\textbf{FRT-M4-4}  & ~                                        & ~           & ~           & X           & ~   & ~\\
+	\textbf{FRT-M4-5}  & ~                                        & ~           & ~           & X           & ~   & ~\\
+	\textbf{FRT-M4-6}  & ~                                        & ~           & ~           & X           & ~   & ~\\
+	\textbf{FRT-M4-7}  & ~                                        & ~           & ~           & X           & ~   & ~\\
+	\textbf{FRT-M4-8}  & ~                                        & ~           & ~           & X           & ~   & ~\\
 	\textbf{FRT-M5-1}  & ~                                        & ~           & ~           & ~           & X  & ~ \\
 	\textbf{FRT-M5-2}  & ~                                        & ~           & ~           & ~           & X  & ~ \\
+	\textbf{FRT-M5-4}  & ~                                        & ~           & ~           & ~           & X  & ~ \\
 	\textbf{FRT-M6-1}  & ~                                        & ~           & ~           & ~           & ~  & X \\
+	\textbf{FRT-M6-2}  & ~                                        & ~           & ~           & ~           & ~  & X \\
+	\textbf{FRT-M6-3}  & ~                                        & ~           & ~           & ~           & ~  & X \\
 	\hline
 \end{longtable}
 
@@ -1845,17 +2520,29 @@ This section summaries all the nondynamic test the team will conduct in section 
 \hline
 \multicolumn{1}{|l}{\bfseries Test Method} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Related Requirement(s)}\\
 \hline
-Code Inspection for user info & It will be held when the implementation is done with the attendance of the supervisor. It will convince people that the data collection is totally legitimate & P-SC3 \\
+Code Inspection for user data & It will be held when the implementation is done with the attendance of the supervisor. It will convince people that the data collection is totally legitimate and happens only with the user's permission & P-SC1, S-P1, COM-L1 \\
 \hline
-Database Walkthrough & A code walkthrough focusing on database connection and its storage. It will be held when the implementation is done and convince people that the database is reliable will not store information without user's permission & P-SC1, P-C2 \\
+Database Walkthrough & A code walkthrough focusing on database connection and its storage. It will be held when the database implementation is done and convince people that the database is capable of storing all user data and will clean unused data periodically & P-SE2, S-P2\\
 \hline
-Data Transmission Walkthrough & A code walkthrough focusing on data transmitting. It will be held when the implementation is done and convince people that the application transmit no data while no in use & P-SC4 \\
+Server \& Data Transmission Walkthrough & A code walkthrough focusing on the server structure. It will be held when the server implementation is done and convince people that the server encrypts data before transmitting and is robust against unexpected crash & P-SC2, P-RF3 \\
 \hline
 Longevity Peer Evaluation & A peer evaluation session to convince people that the produce can operate for a long time. It will be held when the implementation is done by another developers' team. Though it does not 100\% fulfill the requirements, it builds some confidence & P-L1, P-L2\\
 \hline
-Document Review & The peer evaluation happens after the deadline of all important documents. During the document review, the other team points out problems and improve document quality & All\\
+Code Walkthrough with Primary Reviewers & A code walkthrough focusing on Unity scripts and GitHub and AR implementation. It will be held after Revision 0 is done and convince our primary reviewers that our GitHub has a clear user guide and is open to suggestions (by creating issues). The structure of the AR feature is easy to understand with the user manual & UH-L1, MS-S1, MS-S2\\
 \hline
-Weekly Code Review & The developer will have weekly code review with the team for better code quality and formatting & All\\
+\end{tabular}
+\end{table}
+\begin{table}[H]
+\caption{Nondynamic Test Plan Cont}
+\begin{tabular}{|p{0.3\linewidth} | p{0.5\linewidth}| p{0.2\linewidth} |}
+\hline
+\multicolumn{1}{|l}{\bfseries Test Method} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Related Requirement(s)}\\
+\hline
+Document Review & The peer evaluation happens after the deadline for all important documents. During the document review, the other team points out problems and improves document quality & All\\
+\hline
+Weekly Code Review & The developer will have weekly code reviews with the team for better code quality and formatting & All\\
+\hline
+TA Review and Feedback & The developer will have meetings with the TA for every deliverable to get some feedback & All\\
 \hline
 \end{tabular}
 \end{table}
@@ -1871,44 +2558,113 @@ This is where you can place additional information.
 The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.
 
-\begin{table}[h]
+\begin{table}[H]
 \caption{\bf Symbolic Parameter Table}
 \begin{tabular}{|p{0.4\linewidth} | p{0.3\linewidth}| p{0.3\linewidth} |}
 \hline
 \multicolumn{1}{|l}{\bfseries Symbolic Parameter} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Value}\\
 \hline
-INITIAL\_USER\_STATE & The default user state with all default user information & All entries empty except username and password \\
+INITIAL\_USER\_STATE & The default user state with all default user information & All entries empty except email, nickname and password \\
 \hline
-INITIAL\_AVATAR & The default virtual avatar & An unisex virtual avatar with default settings \\
+DEFAULT\_AVATAR & The default virtual avatar & An unisex virtual avatar with default settings \\
 \hline
-MIN\_SCORE & The passing grade for a category in the survey & 7/10\\
+MIN\_SCORE & The passing grade for a category in the survey & 3.5/5\\
 \hline
-SURVEY\_SAMPLE\_SIZE & Size of the user experience survey & 50\\
+MAX\_CAPACITY & The max number of simultaneous users & 100\\
 \hline
-GPS\_ACCURACY & Accuracy of location sharing & 25 meter\\
+SURVEY\_SAMPLE\_SIZE & Sample size of the usability survey & 5\\
 \hline
 SCREEN\_VIEWPORTS & List of all popular mobile screen sizes & 360X740, 390X844, 820X1180\\
 \hline
-USER\_PROFILE & All information about the user & username, password, gender, age, email, area of study\\
+RECOGNITION\_TIME & Max time the system takes for image recognition & 3 second\\
+\hline
+LOCATION\_UPDATE\_TIME & Max time the system takes for location to update & 10 second\\
+\hline
+AR\_ACCURACY & The success rate of AR camera target recognition & 80\%\\
+\hline
+PLACEHOLDER & Default value of attributes of type string for data structures in unit testing & NA\\
+\hline
+DEFAULT\_TIME & Default unix time for events & 1708922625\\
+\hline
+DEFAULT\_DURATION & Default duration (in minutes) for events & 30\\
 \hline
 \end{tabular}
 \end{table}
 
-\subsection{Usability Survey Questions}
+\subsection{Usability Survey}
 \label{sec:survey}
-\textbf{Please rate each of the following questions on a rating scale of 1-10 where 10 represents the most positive experience, and 0 illustrates the most negative experience.}
+Usability testing holds particular significance, especially for a social networking application such as this one. We intend to conduct a usability survey among a select group of students to gather feedback. Initially, we will start with a sample size of 5 to 10 participants. If we consistently receive repetitive suggestions, signalling that we've addressed the majority of issues, we will maintain this sample size. However, if new issues arise or further insights are needed, we will consider conducting another survey with a larger sample size in the future.\\
+The survey will be composed of following three session and take about 30 minutes to complete:
+\subsubsection{Tasks}
+\textbf{The participant will be completing the following tasks. They will use the project as a guest or user or administrator. Each role will have unique tasks and the role is assigned randomly at the start of a test. A task fails if the tester asks for help or spends more than 1 minute to complete a single subtask. This section is to test if the UI and layout is user-friendly and easy-to-understand.}
 \begin{enumerate}
-	\item \textbf{User-friendly Layout:} Do you think that the layout of this product is user-friendly?
-	\item \textbf{Intuitive icons:} Do you feel comfortable running different features without needing assistance or a tutorial?
-	\item \textbf{Immediate Visual Response when Clicking:} Does the application provide visual feedback when using different features/switching betewen pages?
-	\item \textbf{Appealing Colour Scheme:} Do you think that the colour scheme chosen for the interface is appealing?
-	\item \textbf{Easy to Navigate:} Do you feel that the user interface is easy to navigate?
-	\item \textbf{Helpful Tutorial:} After viewing the tutorial, do you feel that you have a better understanding of the product's features?
-	\item \textbf{No Technical or Software-specific Language:} Do you believe that the product avoids the use of technical/software-specific language unless necessary?
-	\item \textbf{Common periods of usage:} At what times of the day/week do you find yourself using the product?
-	\item \textbf{Cultural Friendliness:} Do you agree that the product does not display any offensive language/symbols?
+\item Lecture
+\begin{enumerate}
+\item Direct from menu page to lecture page
+\item Search for a lecture the tester asked for
+\item Check the location of the lecture
+\item Pin and then unpin the lecture
 \end{enumerate}
-
+\item Event
+\begin{enumerate}
+\item Direct from map page to event page
+\item Search for an event the tester asked for
+\item Check the location of the event
+\item Pin and then unpin the event
+\end{enumerate}
+\item Activity Management
+\begin{enumerate}
+\item Direct from menu page to event/lecture page (tester decide which page they will test)
+\item Add a new activity, where the tester will provide details
+\end{enumerate}
+\item Map
+\begin{enumerate}
+\item Direct from menu page to map page
+\item Zoom in and center the map to show the current location
+\end{enumerate}
+\item AR Camera
+\begin{enumerate}
+\item Direct from menu page to AR page
+\item Walk around and check if there exist AR object or watch the recording if the participant is not in a target building
+\end{enumerate}
+\item User Profile
+\begin{enumerate}
+\item Direct from map page to user profile page
+\item Check the program and level of the user
+\item Edit any part of the profiles
+\item Check the lectures and events that are pinned
+\end{enumerate}
+\item Friend and Chat
+\begin{enumerate}
+\item Direct from menu page to friend page
+\item \textit{option 1:} Send a request to tester's account
+\item \textit{option 2:} Accept a request from tester
+\item Open a chat with tester and send a message
+\end{enumerate}
+\end{enumerate}
+\textbf{Reminder: A participant will not do all of the tasks. They will be given a random role at the start of the test and the tasks they will have depend on the role. Administrator will perform task 3, 4, 5, 6, 7; User will perform task 1, 4, 5, 6, 7; Guest will perform task 2, 4, 6.}
+\subsubsection{Rating}
+\textbf{This section covers tests for some non-functional requirements. The participant will answer the following agree/disagree questions on a rating scale of 5. Here is a breakdown:}
+\begin{itemize}
+\item 1: Strongly Disagree
+\item 2: Disagree
+\item 3: Neutral
+\item 4: Agree
+\item 5: Strongly Agree
+\end{itemize}
+\begin{enumerate}
+	\item \textbf{Immediate Visual Response when Clicking:}  The application provides visual feedback when using different features or switching between pages.
+	\item \textbf{Appealing Colour Scheme:} The colour scheme chosen for the interface is similar to McMaster official application.
+	\item \textbf{No Technical or Software-specific Language:} The product does not use technical/software-specific language unless necessary.
+	\item \textbf{Common periods of usage:} You will be using the application mostly during school time (from 8:30 AM to 6:30 PM).
+	\item \textbf{Cultural Friendliness:} The application does not have any words or symbols that are offensive to you.
+\end{enumerate}
+\subsubsection{Open-ended Questions}
+\textbf{In this section we invite participants to provide their thoughts on the pros and cons of the project. They should feel free to share any feedback or insights.}
+\begin{itemize}
+\item What do you think is the most difficult to use feature and why?
+\item Which feature will you use the most in your daily live and why?
+\end{itemize}
 \newpage{}
 \section*{Appendix --- Reflection}
 
