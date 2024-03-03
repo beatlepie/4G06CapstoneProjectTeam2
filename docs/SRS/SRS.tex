@@ -58,6 +58,9 @@ Oct 6 & All & Finish Revision 0\\
 Oct 28 & Zihao Du & Divide functional requirements to subcategories\\
 Oct 29 & Zihao Du & Add new non functional requirements from hazard analysis\\
 Jan 10th & Zihao Du, Matthew Miller & Revision 1: Add new requirements form Hazard Analysis, remove out-of-date requirements\\
+Feb 22 & Zihao Du & Revision 1: Revision 1: Update section 6 - 8, section 20 - 21 to date\\
+Feb 27 & Matthew Miller & Revision 1: Add traceability tables\\
+Mar 3 & Zihao Du & Revision 1: Update functional requirements and rationales\\
 \bottomrule
 \end{tabularx}
 
@@ -218,6 +221,7 @@ involved in the Project}
     \begin{tabular}{|p{0.3\linewidth} | p{0.7\linewidth}| }
     \hline
     \textbf{Term} & \textbf{Definition}\\
+    \hline
     Amazon Web Services (AWS) & Amazon Web Services is a cloud computing provider\\
     \hline
     ASP.NET & A server-side web application framework\\
@@ -755,10 +759,10 @@ The use case diagram depicted below identifies the boundaries between the users 
 \textbf{Postcondition:} The user is connected to the server.\\
 \textbf{Postcondition 2:} The user fails to connect due to some issues on the server side.\\
 \section{Functional Requirements}
-\subsection{Pre-Login Settings}
-    \textbf{FR-1-1:} The system shall ask all users to sign a consent form disclosure of personal information.\\
+\subsection{Pre-Registration Settings}
+    \textbf{FR-1-1:} The system shall ask all users to sign a consent form disclosure of personal information when creating a new account.\\
     \textbf{Rationale:} It is a must to ask for users' permission before making use of their personal information.\\
-    \textbf{Fit Criterion:} Users must be able to sign or reject a consent form when they first log in.\\\\
+    \textbf{Fit Criterion:} Users must be able to accept or reject a consent form when they register an account.\\\\
     
 \subsection{User Profile}
     \textbf{FR-2-1:} The system shall allow users to create accounts with an email that does not exist in the database.\\
@@ -793,12 +797,12 @@ The use case diagram depicted below identifies the boundaries between the users 
     \textbf{FR-3-3:} The system shall allow users to send text messages to their friends.\\
     \textbf{Rationale:} This will make the app more interactive and encourage and enhance socialization between users.\\
     \textbf{Fit Criterion:} Users must be able to send messages and view received messages.\\\\
-    \textbf{FR-3-4:} The system shall allow users to share events conveniently with friends.\\
+    \textbf{FR-3-4:} The system shall allow users to share events when chatting with friends.\\
     \textbf{Rationale:} This encourages onsite socialization and allows users to make better use of resources provided by the application.\\
-    \textbf{Fit Criterion:} Users shall be able to share a link that can be redirected to an event in the chat.\\\\
-    \textbf{FR-3-5:} The system shall allow users to share their location with friends.\\
-    \textbf{Rationale:} To expand social networking and meet friends in person, users shall be able to share their current location on campus with friends.\\
-    \textbf{Fit Criterion:} Users should be able to share their real-time location with friends as long as they agree on the corresponding terms.\\\\
+    \textbf{Fit Criterion:} Users shall be able to share a link that can redirects to an event from the chat.\\\\
+    \textbf{FR-3-5:} The system shall allow users to share lectures when chatting with friends.\\
+    \textbf{Rationale:} his encourages onsite socialization and allows users to make better use of resources provided by the application.\\
+    \textbf{Fit Criterion:} Users should be able to share a link that can redirects to a lecture from the chat.\\\\
     \textbf{FR-3-6:} The system shall allow users to manage friend requests.\\
     \textbf{Rationale:} Managing friend requests is a significant functionality to make new friends.\\
     \textbf{Fit Criterion:} Users can either accept or ignore any friend requests.\\\\
@@ -806,16 +810,10 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Lectures and Events}
     \textbf{FR-4-1:} The system shall allow users to manage events they are interested in.\\
     \textbf{Rationale:} It will be much easier for users to find events they are interested in and willing to join again. So that they do not have to browse the event list again and again. While their friends can see what events they are likely to join.\\
-    \textbf{Fit Criterion:} Users should be able to pin and unpin an event from the event list, this event will be displayed or removed on the user profile page.\\\\
-    % \textbf{FR-4-2:} The system shall allow users to unpin events.\\
-    % \textbf{Rationale:} In case users are no longer interested in the event or they pinned the event by mistake.\\
-    % \textbf{Fit Criterion:} Users shall be able to unpin an event they pinned before.\\\\
-    \textbf{FR-4-2:} The system shall allow users to manage lectures they are attending.\\
-    \textbf{Rationale:} Sharing schedules with friends can strengthen friendship. Users can join lectures with friends and know their classmates better. So the system needs to have the functionality to display lectures a user is taking.\\
-    \textbf{Fit Criterion:} Users should be able to pin and unpin a lecture from the list as attended lecture, this lecture will be displayed or removed on the user profile page.\\\\
-    % \textbf{FR-4-4:} The system shall allow users to unpin lectures.\\
-    % \textbf{Rationale:} In case users are no longer taking the lecture or they added the lecture by mistake.\\
-    % \textbf{Fit Criterion:} Users shall be able to unpin a lecture they pinned before.\\\\
+    \textbf{Fit Criterion:} Users should be able to save and unsave an event from the event list, this event will be displayed or removed on the user profile page.\\\\
+    \textbf{FR-4-2:} The system shall allow users to manage lectures they are interested in.\\
+    \textbf{Rationale:} Sharing schedules with friends can strengthen friendship. Users can join lectures with friends and know their classmates better. So the system needs to have the functionality to save lectures.\\
+    \textbf{Fit Criterion:} Users should be able to save and unsave a lecture from the list, this lecture will be displayed or removed on the user profile page.\\\\
     \textbf{FR-4-3:} The system shall allow users with an administrator account to add, edit, and remove events.\\
     \textbf{Rationale:} The event information must be up-to-date and accurate. The administrator account will maintain all events so that there is a singular source of information. Additionally, this reduces the chances of errors being introduced to the system.\\
     \textbf{Fit Criterion:} A new event can be created only by a user who is logged in as an administrator. The information for those events can be changed only by administrators. Events can be deleted only by administrators.\\\\
@@ -831,7 +829,7 @@ The use case diagram depicted below identifies the boundaries between the users 
     \textbf{FR-4-7:} User should be able to filter specific lectures out from the list by course code.\\
     \textbf{Rationale:} It is necessary to allow users to filter out lectures they are interested in from a long list.\\
     \textbf{Fit Criterion:} Users shall be able to input some keywords to filter the lecture list.\\\\
-    \textbf{FR-4-8:} User should be able to filter specific events out from the list by the organizer.\\
+    \textbf{FR-4-8:} User should be able to filter specific events out from the list by name.\\
     \textbf{Rationale:} It is necessary to allow users to filter out events they are interested in from a long list.\\
     \textbf{Fit Criterion:} Users shall be able to input some keywords to filter the event list.\\\\
 
