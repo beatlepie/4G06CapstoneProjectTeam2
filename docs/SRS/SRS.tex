@@ -1,132 +1,35 @@
-% THIS DOCUMENT IS TAILORED TO REQUIREMENTS FOR SCIENTIFIC COMPUTING.  IT SHOULDN'T
-% BE USED FOR NON-SCIENTIFIC COMPUTING PROJECTS
+% THIS DOCUMENT IS FOLLOWS THE VOLERE TEMPLATE BY Suzanne Robertson and James Robertson
+% ONLY THE SECTION HEADINGS ARE PROVIDED
+%
+% Initial draft from https://github.com/Dieblich/volere
+%
+% Risks are removed because they are covered by the Hazard Analysis
 \documentclass[12pt]{article}
 
-\usepackage{amsmath, mathtools}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{colortbl}
-\usepackage{xr}
-\usepackage{hyperref}
-\usepackage{longtable}
-\usepackage{xfrac}
-\usepackage{tabularx}
-\usepackage{float}
-\usepackage{siunitx}
 \usepackage{booktabs}
-\usepackage{caption}
-\usepackage{pdflscape}
-\usepackage{afterpage}
-
-\usepackage[round]{natbib}
-
-%\usepackage{refcheck}
-
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{enumerate}
+\usepackage{changepage}
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
-      colorlinks=true,       % false: boxed links; true: colored links
+      colorlinks=true,      % false: boxed links; true: colored links
     linkcolor=red,          % color of internal links (change box color with linkbordercolor)
     citecolor=green,        % color of links to bibliography
     filecolor=magenta,      % color of file links
     urlcolor=cyan           % color of external links
 }
 
+\newcommand{\lips}{\textit{Insert your content here.}}
+
 \input{../Comments}
 \input{../Common}
 
-% For easy change of table widths
-\newcommand{\colZwidth}{1.0\textwidth}
-\newcommand{\colAwidth}{0.13\textwidth}
-\newcommand{\colBwidth}{0.82\textwidth}
-\newcommand{\colCwidth}{0.1\textwidth}
-\newcommand{\colDwidth}{0.05\textwidth}
-\newcommand{\colEwidth}{0.8\textwidth}
-\newcommand{\colFwidth}{0.17\textwidth}
-\newcommand{\colGwidth}{0.5\textwidth}
-\newcommand{\colHwidth}{0.28\textwidth}
-
-% Used so that cross-references have a meaningful prefix
-\newcounter{defnum} %Definition Number
-\newcommand{\dthedefnum}{GD\thedefnum}
-\newcommand{\dref}[1]{GD\ref{#1}}
-\newcounter{datadefnum} %Datadefinition Number
-\newcommand{\ddthedatadefnum}{DD\thedatadefnum}
-\newcommand{\ddref}[1]{DD\ref{#1}}
-\newcounter{theorynum} %Theory Number
-\newcommand{\tthetheorynum}{TM\thetheorynum}
-\newcommand{\tref}[1]{TM\ref{#1}}
-\newcounter{tablenum} %Table Number
-\newcommand{\tbthetablenum}{TB\thetablenum}
-\newcommand{\tbref}[1]{TB\ref{#1}}
-\newcounter{assumpnum} %Assumption Number
-\newcommand{\atheassumpnum}{A\theassumpnum}
-\newcommand{\aref}[1]{A\ref{#1}}
-\newcounter{goalnum} %Goal Number
-\newcommand{\gthegoalnum}{GS\thegoalnum}
-\newcommand{\gsref}[1]{GS\ref{#1}}
-\newcounter{instnum} %Instance Number
-\newcommand{\itheinstnum}{IM\theinstnum}
-\newcommand{\iref}[1]{IM\ref{#1}}
-\newcounter{reqnum} %Requirement Number
-\newcommand{\rthereqnum}{R\thereqnum}
-\newcommand{\rref}[1]{R\ref{#1}}
-\newcounter{nfrnum} %NFR Number
-\newcommand{\rthenfrnum}{NFR\thenfrnum}
-\newcommand{\nfrref}[1]{NFR\ref{#1}}
-\newcounter{lcnum} %Likely change number
-\newcommand{\lthelcnum}{LC\thelcnum}
-\newcommand{\lcref}[1]{LC\ref{#1}}
-
-\usepackage{fullpage}
-
-\newcommand{\deftheory}[9][Not Applicable]
-{
-\newpage
-\noindent \rule{\textwidth}{0.5mm}
-
-\paragraph{RefName: } \textbf{#2} \phantomsection 
-\label{#2}
-
-\paragraph{Label:} #3
-
-\noindent \rule{\textwidth}{0.5mm}
-
-\paragraph{Equation:}
-
-#4
-
-\paragraph{Description:}
-
-#5
-
-\paragraph{Notes:}
-
-#6
-
-\paragraph{Source:}
-
-#7
-
-\paragraph{Ref.\ By:}
-
-#8
-
-\paragraph{Preconditions for \hyperref[#2]{#2}:}
-\label{#2_precond}
-
-#9
-
-\paragraph{Derivation for \hyperref[#2]{#2}:}
-\label{#2_deriv}
-
-#1
-
-\noindent \rule{\textwidth}{0.5mm}
-
-}
-
 \begin{document}
+\pagenumbering{arabic}
 
 \title{Software Requirements Specification for \progname: subtitle describing software} 
 \author{\authname}
@@ -136,7 +39,6 @@
 
 ~\newpage
 
-\pagenumbering{roman}
 
 \tableofcontents
 
@@ -144,1184 +46,1339 @@
 
 \section*{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\begin{tabularx}{\textwidth}{p{3cm}p{3cm}X}
+\toprule {\textbf{Date}} & {\textbf{Developer(s)}} & {\textbf{Change}}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+Oct 2 & Zihao Du & Add Section 6, 7, 8 Revision 0\\
+Oct 2 & Matthew Miller & Add Section 1, 5, 13, 16 Revision 0\\
+Oct 2 & Michael Kim & Add Section 15 Revision 0\\
+Oct 2 & Waseef Nayeem & Add Section 3, 19 Revision 0\\
+Oct 4 & All & Add Functional Requirements\\
+Oct 6 & All & Finish Revision 0\\
+Oct 28 & Zihao Du & Divide functional requirements to subcategories\\
+Oct 29 & Zihao Du & Add new non functional requirements from hazard analysis\\
+Jan 10th & Zihao Du, Matthew Miller & Revision 1: Add new requirements form Hazard Analysis, remove out-of-date requirements\\
+Feb 22 & Zihao Du & Revision 1: Revision 1: Update section 6 - 8, section 20 - 21 to date\\
+Feb 27 & Matthew Miller & Revision 1: Add traceability tables\\
+Mar 3 & Zihao Du & Revision 1: Update functional requirements and rationales\\
 \bottomrule
 \end{tabularx}
 
 ~\\
-\plt{This template is intended for use by CAS 741.  For CAS 741 the template
-should be used exactly as given, except the Reflection Appendix can be deleted.
-For the capstone course it is a source of ideas, but shouldn't be followed
-exactly.  The exception is the reflection appendix.  All capstone SRS documents
-should have a refelection appendix.}
 
 ~\newpage
+\section{Purpose of the Project}
+\subsection{User Business}
+\quad The project being outlined in this document is an social media application with location-specific features for \
+McMaster University to allow the university's students to connect with each other. The project will allow for interaction \
+between users, in addition to allowing users to find information on different parts of the main campus of McMaster \
+University, including on-campus events and room availability in buildings.
 
-\section{Reference Material}
-
-This section records information for easy reference.
-
-\subsection{Table of Units}
-
-Throughout this document SI (Syst\`{e}me International d'Unit\'{e}s) is employed
-as the unit system.  In addition to the basic units, several derived units are
-used as described below.  For each unit, the symbol is given followed by a
-description of the unit and the SI name.
-~\newline
-
-\renewcommand{\arraystretch}{1.2}
-%\begin{table}[ht]
-  \noindent \begin{tabular}{l l l} 
-    \toprule		
-    \textbf{symbol} & \textbf{unit} & \textbf{SI}\\
-    \midrule 
-    \si{\metre} & length & metre\\
-    \si{\kilogram} & mass	& kilogram\\
-    \si{\second} & time & second\\
-    \si{\celsius} & temperature & centigrade\\
-    \si{\joule} & energy & joule\\
-    \si{\watt} & power & watt (W = \si{\joule\per\second})\\
-    \bottomrule
-  \end{tabular}
-  %	\caption{Provide a caption}
-%\end{table}
-
-\plt{Only include the units that your SRS actually uses.}
-
-\plt{Derived units, like newtons, pascal, etc, should show their derivation
-    (the units they are derived from) if their constituent units are in the
-    table of units (that is, if the units they are derived from are used in the
-    document).  For instance, the derivation of pascals as
-    $\si{\pascal}=\si{\newton\per\square\meter}$ is shown if newtons and m are
-    both in the table.  The derivations of newtons would not be shown if kg and
-    s are not both in the table.}
-
-\plt{The symbol for units named after people use capital letters, but the name
-  of the unit itself uses lower case.  For instance, pascals use the symbol Pa,
-  watts use the symbol W, teslas use the symbol T, newtons use the symbol N,
-  etc.  The one exception to this is degree Celsius.  Details on writing metric
-  units can be found on the 
-  \href{https://www.nist.gov/pml/weights-and-measures/writing-metric-units}
-  {NIST} web-page.}
-
-\subsection{Table of Symbols}
-
-The table that follows summarizes the symbols used in this document along with
-their units.  The choice of symbols was made to be consistent with the heat
-transfer literature and with existing documentation for solar water heating
-systems.  The symbols are listed in alphabetical order.
-
-\renewcommand{\arraystretch}{1.2}
-%\noindent \begin{tabularx}{1.0\textwidth}{l l X}
-\noindent \begin{longtable*}{l l p{12cm}} \toprule
-\textbf{symbol} & \textbf{unit} & \textbf{description}\\
-\midrule 
-$A_C$ & \si[per-mode=symbol] {\square\metre} & coil surface area
-\\
-$A_\text{in}$ & \si[per-mode=symbol] {\square\metre} & surface area over 
-which heat is transferred in
-\\ 
-\bottomrule
-\end{longtable*}
-\plt{Use your problems actual symbols.  The si package is a good idea to use for
-  units.}
-
-\subsection{Abbreviations and Acronyms}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
-  \textbf{symbol} & \textbf{description}\\
-  \midrule 
-  A & Assumption\\
-  DD & Data Definition\\
-  GD & General Definition\\
-  GS & Goal Statement\\
-  IM & Instance Model\\
-  LC & Likely Change\\
-  PS & Physical System Description\\
-  R & Requirement\\
-  SRS & Software Requirements Specification\\
-  \progname{} & \plt{put an expanded version of your program name here (as appropriate)}\\
-  TM & Theoretical Model\\
-  \bottomrule
-\end{tabular}\\
-
-\plt{Add any other abbreviations or acronyms that you add}
-
-\subsection{Mathematical Notation}
-
-\plt{This section is optional, but should be included for projects that make use
-  of notation to convey mathematical information.  For instance, if typographic
-  conventions (like bold face font) are used to distinguish matrices, this
-  should be stated here.  If symbols are used to show mathematical operations,
-  these should be summarized here.  In some cases the easiest way to summarize
-  the notation is to point to a text or other source that explains the
-  notation.}
-
-\plt{This section was added to the template because some students use very
-  domain specific notation.  This notation will not be readily understandable to
-  people outside of your domain.  It should be explained.}
-
-\newpage
-
-\pagenumbering{arabic}
-
-\plt{This SRS template is based on \citet{SmithAndLai2005, SmithEtAl2007,
-  SmithAndKoothoor2016}.  It will get you started.  You should not modify the
-  section headings, without first discussing the change with the course
-  instructor.  Modification means you are not following the template, which
-  loses some of the advantage of a template, especially standardization.
-  Although the bits shown below do not include type information, you may need to
-  add this information for your problem.  If you are unsure, please can ask the
-  instructor.}
-
-\plt{Feel free to change the appearance of the report by modifying the LaTeX
-  commands.}
-
-\plt{This template document assumes that a single program is being documented.
-  If you are documenting a family of models, you should start with a commonality
-  analysis.  A separate template is provided for this.  For program
-  families you should look at \cite{Smith2006, SmithMcCutchanAndCarette2017}.
-  Single family member programs are often programs based on a single physical
-  model.  General purpose tools are usually documented as a family.  Families of
-  physical models also come up.}
-
-\plt{The SRS is not generally written, or read, sequentially.  The SRS is a
-  reference document.  It is generally read in an ad hoc order, as the need
-  arises.  For writing an SRS, and for reading one for the first time, the
-  suggested order of sections is:
+\subsection{Goals of the Project}
 \begin{itemize}
-\item Goal Statement
-\item Instance Models
-\item Requirements
-\item Introduction
-\item Specific System Description
-\end{itemize}
-}
+  \item[1.2.1] \textbf{Accurate Data Collection}
+  The product must collect location and directional data to accurately ascertain the position of the user in the building \
+  and campus. This will allow the user to interact with the system and other users of the product to enhance social \
+  interactions. The error of data must be less than 5\%.
 
-\plt{Guiding principles for the SRS document:
-\begin{itemize}
-\item Do not repeat the same information at the same abstraction level.  If
-  information is repeated, the repetition should be at a different abstraction
-  level.  For instance, there will be overlap between the scope section and the
-  assumptions, but the scope section will not go into as much detail as the
-  assumptions section.
-\end{itemize}
-}
+  \item[1.2.2] \textbf{Ease of Use}
+  The product must be user friendly and convenient to use, as many university applications are not used or underused due to \
+  the complexity and difficult operation. The end user must be able to easily download and learn the application without \
+  external guidance. At least 90\% of users should feel comfortable about the product when conducting the user survey.
 
-\plt{The template description comments should be disabled before submitting this
-  document for grading.}
+  \item[1.2.3] \textbf{Availability}
+  The product must be able to support its users unless there is a planned maintenance or external failures. This is important \
+  as the product is using real-time data and significant delays or down-times will impact the accuracy and usability of the \
+  product.
 
-\plt{You can borrow any wording from the text given in the template.  It is part
-  of the template, and not considered an instance of academic integrity.  Of
-  course, you need to cite the source of the template.}
+  \item[1.2.4] \textbf{Reliable Data Communication}
+  The product must have good and secure data communication to support the real-time nature of the product. This is important \
+  as the product is using real-time data and significant delays will impact the accuracy and usability of the product. The \
+  product must be able to provide the desired output within 5 seconds with good university WiFi connection.
 
-\plt{When the documentation is done, it should be possible to trace back to the
-  source of every piece of information.  Some information will come from
-  external sources, like terminology.  Other information will be derived, like
-  General Definitions.}
+  \item[1.2.5] \textbf{Protection of Personal Information}
+  The product must keep all personal data provided by users secure in the database. Personal data will be collected securely \
+  and only used for product functions. The application must support the removal of user data upon request. This is important \
+  because users will complete a consent form that acknowledges their privacy.
 
-\plt{An SRS document should have the following qualities: unambiguous,
-  consistent, complete, validatable, abstract and traceable.}
+  \item[1.2.6] \textbf{User Communication}
+  The product must be able to support user-to-user communication. It should provide a friend system for users to add new \
+  friends, send messages and emojis to friends and share current location and status (in lecture/event or free) with their \
+  friends. This is important because the main purpose of the project is to allow users to connect with peers effectively.
 
-\plt{The overall goal of the SRS is that someone that meets the Characteristics
-  of the Intended Reader (Section~\ref{sec_IntendedReader}) can learn,
-  understand and verify the captured domain knowledge.  They should not have to
-  trust the authors of the SRS on any statements.  They should be able to
-  independently verify/derive every statement made.}
+  \item[1.2.7] \textbf{Interactable Campus Buildings}
+  The product must be able to provide interactions between users and campus buildings. It must show the availability of the \
+  lecture halls and information about ongoing events in a building since one of the purposes of the project is to help users \
+  utilize campus resources effectively.
 
-\section{Introduction}
-
-\plt{The introduction section is written to introduce the problem.  It starts
-  general and focuses on the problem domain. The general advice is to start with
-a paragraph or two that describes the problem, followed by a ``roadmap''
-paragraph.  A roadmap orients the reader by telling them what sub-sections to
-expect in the Introduction section.}
-
-\subsection{Purpose of Document}
-
-\plt{This section summarizes the purpose of the SRS document.  It does not focus
-  on the problem itself.  The problem is described in the ``Problem
-  Description'' section (Section~\ref{Sec_pd}).  The purpose is for the document
-  in the context of the project itself, not in the context of this course.
-  Although the ``purpose'' of the document is to get a grade, you should not
-  mention this.  Instead, ``fake it'' as if this is a real project.  The purpose
-  section will be similar between projects.  The purpose of the document is the
-  purpose of the SRS, including communication, planning for the design stage,
-  etc.}
-
-\subsection{Scope of Requirements} 
-
-\plt{Modelling the real world requires simplification.  The full complexity of
-  the actual physics, chemistry, biology is too much for existing models, and
-  for existing computational solution techniques.  Rather than say what is in
-  the scope, it is usually easier to say what is not.  You can think of it as
-  the scope is initially everything, and then it is constrained to create the
-  actual scope.  For instance, the problem can be restricted to 2 dimensions, or
-  it can ignore the effect of temperature (or pressure) on the material
-  properties, etc.}  
-
-\plt{The scope section is related to the assumptions section
-  (Section~\ref{sec_assumpt}).  However, the scope and the assumptions are not
-  at the same level of abstraction.  The scope is at a high level.  The focus is
-  on the ``big picture'' assumptions.  The assumptions section lists, and
-  describes, all of the assumptions.}
-
-\subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
-
-\plt{This section summarizes the skills and knowledge of the readers of the
-  SRS.  It does NOT have the same purpose as the ``User Characteristics''
-  section (Section~\ref{SecUserCharacteristics}).  The intended readers are the
-  people that will read, review and maintain the SRS.  They are the people that
-  will conceivably design the software that is intended to meet the
-  requirements.  The user, on the other hand, is the person that uses the
-  software that is built.  They may never read this SRS document.  Of course,
-  the same person could be a ``user'' and an ``intended reader.''}
-
-\plt{The intended reader characteristics should be written as unambiguously and
-  as specifically as possible.  Rather than say, the user should have an
-  understanding of physics, say what kind of physics and at what level.  For
-  instance, is high school physics adequate, or should the reader have had a
-  graduate course on advanced quantum mechanics?}
-
-\subsection{Organization of Document}
-
-\plt{This section provides a roadmap of the SRS document.  It will help the
-  reader orient themselves.  It will provide direction that will help them
-  select which sections they want to read, and in what order.  This section will
-  be similar between project.}
-
-\section{General System Description}
-
-This section provides general information about the system.  It identifies the
-interfaces between the system and its environment, describes the user
-characteristics and lists the system constraints.  \plt{This text can likely be
-  borrowed verbatim.}
-
-\plt{The purpose of this section is to provide general information about the
-  system so the specific requirements in the next section will be easier to
-  understand. The general system description section is designed to be
-  changeable independent of changes to the functional requirements documented in
-  the specific system description. The general system description provides a
-  context for a family of related models.  The general description can stay the
-  same, while specific details are changed between family members.}
-
-\subsection{System Context}
-
-\plt{Your system context will include a figure that shows the abstract view of
-  the software.  Often in a scientific context, the program can be viewed
-  abstractly following the design pattern of Inputs $\rightarrow$ Calculations
-  $\rightarrow$ Outputs.  The system context will therefore often follow this
-  pattern.  The user provides inputs, the system does the calculations, and then
-  provides the outputs to the user.  The figure should not show all of the
-  inputs, just an abstract view of the main categories of inputs (like material
-  properties, geometry, etc.).  Likewise, the outputs should be presented from
-  an abstract point of view.  In some cases the diagram will show other external
-  entities, besides the user.  For instance, when the software product is a
-  library, the user will be another software program, not an actual end user.
-  If there are system constraints that the software must work with external
-  libraries, these libraries can also be shown on the System Context diagram.
-  They should only be named with a specific library name if this is required by
-  the system constraint.}
-
-\begin{figure}[h!]
-\begin{center}
- \includegraphics[width=0.6\textwidth]{SystemContextFigure}
-\caption{System Context}
-\label{Fig_SystemContext} 
-\end{center}
-\end{figure}
-
-\plt{For each of the entities in the system context diagram its responsibilities
-  should be listed.  Whenever possible the system should check for data quality,
-  but for some cases the user will need to assume that responsibility.  The list
-  of responsibilites should be about the inputs and outputs only, and they
-  should be abstract.  Details should not be presented here.  However, the
-  information should not be so abstract as to just say ``inputs'' and
-  ``outputs''.  A summarizing phrase can be used to characterize the inputs.
-  For instance, saying ``material properties'' provides some information, but it
-  stays away from the detail of listing every required properties.}
-
-\begin{itemize}
-\item User Responsibilities:
-\begin{itemize}
-\item 
-\end{itemize}
-\item \progname{} Responsibilities:
-\begin{itemize}
-\item Detect data type mismatch, such as a string of characters instead of a
-  floating point number
-\item 
-\end{itemize}
-\end{itemize}
-
-\subsection{User Characteristics} \label{SecUserCharacteristics}
-
-\plt{This section summarizes the knowledge/skills expected of the user.
-  Measuring usability, which is often a required non-function requirement,
-  requires knowledge of a typical user.  As mentioned above, the user is a
-  different role from the ``intended reader,'' as given in
-  Section~\ref{sec_IntendedReader}.  As in Section~\ref{sec_IntendedReader}, the
-  user characteristics should be specific an unambiguous.  For instance, ``The
-  end user of \progname{} should have an understanding of undergraduate Level 1
-  Calculus and Physics.''}
-
-\subsection{System Constraints}
-
-\plt{System constraints differ from other type of requirements because they
-  limit the developers' options in the system design and they identify how the
-  eventual system must fit into the world. This is the only place in the SRS
-  where design decisions can be specified.  That is, the quality requirement for
-  abstraction is relaxed here.  However, system constraints should only be
-  included if they are truly required.}
-
-\section{Specific System Description}
-
-This section first presents the problem description, which gives a high-level
-view of the problem to be solved.  This is followed by the solution characteristics
-specification, which presents the assumptions, theories, definitions and finally
-the instance models.  \plt{Add any project specific details that are relevant
-  for the section overview.}
-
-\subsection{Problem Description} \label{Sec_pd}
-
-\progname{} is intended to solve ... \plt{What problem does your program solve?
-The description here should be in the problem space, not the solution space.}
-
-\subsubsection{Terminology and  Definitions}
-
-\plt{This section is expressed in words, not with equations.  It provide the
-  meaning of the different words and phrases used in the domain of the problem.
-The terminology is used to introduce concepts from the world outside of the
-mathematical model  The terminology provides a real world connection to give the
-mathematical model meaning.}
-
-This subsection provides a list of terms that are used in the subsequent
-sections and their meaning, with the purpose of reducing ambiguity and making it
-easier to correctly understand the requirements:
-
-\begin{itemize}
-
-\item 
+  \item[1.2.8] \textbf{Immersive User Experience}
+  The product should provide an immersive user experience to the users with some XR technologies. At least 90\% of the users \
+  should find the product much more attractive and immersive than other university applications when conducting the user \
+  survey. An immersive user experience is one of the unique selling points of our product.
 
 \end{itemize}
 
-\subsubsection{Physical System Description} \label{sec_phySystDescrip}
+\section{Stakeholders}
+\subsection{Client}
 
-\plt{The purpose of this section is to clearly and unambiguously state the
-  physical system that is to be modelled. Effective problem solving requires a
-  logical and organized approach. The statements on the physical system to be
-  studied should cover enough information to solve the problem. The physical
-  description involves element identification, where elements are defined as
-  independent and separable items of the physical system. Some example elements
-  include acceleration due to gravity, the mass of an object, and the size and
-  shape of an object. Each element should be identified and labelled, with their
-  interesting properties specified clearly. The physical description can also
-  include interactions of the elements, such as the following: i) the
-  interactions between the elements and their physical environment; ii) the
-  interactions between elements; and, iii) the initial or boundary conditions.}
+The client for this project is the university administration and the related departments who will be approving our project as well as the users.
 
-The physical system of \progname{}, as shown in Figure~?,
-includes the following elements:
+\subsection{Customer}
+
+The primary customers are the students and department staff members who will be directly using the mobile application to connect with others and discover events.
+
+\subsection{Other Stakeholders}
 
 \begin{itemize}
-
-\item[PS1:] 
-
-\item[PS2:] ...
-
+\item Legal experts – Could be consulted for legal advice regarding privacy laws
+\item Subject Matter Experts – Experts in the field of AR development we might consult for guidance
+\item Usability testers – UI/UX designers / testers we might get recommendations from the design
 \end{itemize}
 
-\plt{A figure here makes sense for most SRS documents}
+\subsection{Hands-On Users of the Project}
+\begin{itemize}
+ \item \textbf{User Category: Students}
+\begin{itemize}
+\item User Role: Regular users of the app, including students from various faculties.
 
-% \begin{figure}[h!]
-% \begin{center}
-% %\rotatebox{-90}
-% {
-%  \includegraphics[width=0.5\textwidth]{<FigureName>}
-% }
-% \caption{\label{<Label>} <Caption>}
-% \end{center}
-% \end{figure}
+\item Subject Matter Experience: Varied levels of experience with the app's features
 
-\subsubsection{Goal Statements}
+\item Technological Experience: Varied levels of experience with mobile technology depending on technical background
 
-\plt{The goal statements refine the ``Problem Description''
-  (Section~\ref{Sec_pd}).  A goal is a functional objective the system under
-  consideration should achieve. Goals provide criteria for sufficient
-  completeness of a requirements specification and for requirements
-  pertinence. Goals will be refined in Section “Instanced Models”
-  (Section~\ref{sec_instance}). Large and complex goals should be decomposed
-  into smaller sub-goals.  The goals are written abstractly, with a minimal
-  amount of technical language.  They should be understandable by non-domain
-  experts.}
+\item Other User Characteristics: Diverse age groups, ethnicities, interests, and majors
+\end{itemize}
 
-\noindent Given the \plt{inputs}, the goal statements are:
+
+\item \textbf{User Category: Administrators}
+\begin{itemize}
+\item User Role: Department members or Club representatives using the app for announcements, events, and communication.
+
+\item Subject Matter Experience: Familiarity with campus events and announcements.
+
+\item Technological Experience: Varied levels of experience with mobile technology depending on technical background
+
+\item Other User Characteristics: Different departments, clubs, roles, responsibilities, older age demographic
+\end{itemize}
+\end{itemize}
+
+\subsection{Personas}
+N/A
+\subsection{Priorities Assigned to Users}
 
 \begin{itemize}
+\item Key Users (Maximum priority): Students, club representatives and department members who are the most directly involved with the app and are critical to the continued success of the product.
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] \plt{One
-    sentence description of the goal.  There may be more than one.  Each Goal
-    should have a meaningful label.}
+\item Secondary Users: Campus visitors and occasional users such as high school students on a university tour learning about the campus.
 
+\item Unimportant Users: Users with no association with McMaster university and no authorization looking to misuse the product
 \end{itemize}
 
-\subsection{Solution Characteristics Specification}
+\subsection{User Participation}
 
-\plt{This section specifies the information in the solution domain of the system
-  to be developed. This section is intended to express what is required in
-  such a way that analysts and stakeholders get a clear picture, and the
-  latter will accept it. The purpose of this section is to reduce the problem
-  into one expressed in mathematical terms. Mathematical expertise is used to
-  extract the essentials from the underlying physical description of the
-  problem, and to collect and substantiate all physical data pertinent to the
-  problem.}
+\quad Students, club representatives and contributing department members are expected to actively participate in providing feedback, usability testing, and suggesting new features during the development phase. Specifically:
 
-\plt{This section presents the solution characteristics by successively refining
-  models.  It starts with the abstract/general Theoretical Models (TMs) and
-  refines them to the concrete/specific Instance Models (IMs).  If necessary
-  there are intermediate refinements to General Definitions (GDs).  All of these
-  refinements can potentially use Assumptions (A) and Data Definitions (DD).
-  TMs are refined to create new models, that are called GMs or IMs. DDs are not
-  refined; they are just used. GDs and IMs are derived, or refined, from other
-  models. DDs are not derived; they are just given. TMs are also just given, but
-  they are refined, not used.  If a potential DD includes a derivation, then
-  that means it is refining other models, which would make it a GD or an IM.}
 
-\plt{The above makes a distinction between ``refined'' and ``used.'' A model is
-  refined to another model if it is changed by the refinement. When we change a
-  general 3D equation to a 2D equation, we are making a refinement, by applying
-  the assumption that the third dimension does not matter. If we use a
-  definition, like the definition of density, we aren't refining, or changing
-  that definition, we are just using it.}
+Students can be expected to focus more on the immersion, navigation and the interaction improvements within the app by spending about 2-4 hours a week on the application and providing feedback.
 
-\plt{The same information can be a TM in one problem and a DD in another.  It is
-  about how the information is used.  In one problem the definition of
-  acceleration can be a TM, in another it would be a DD.}
 
-\plt{There is repetition between the information given in the different chunks
-  (TM, GDs etc) with other information in the document.  For instance, the
-  meaning of the symbols, the units etc are repeated.  This is so that the
-  chunks can stand on their own when being read by a reviewer/user.  It also
-  facilitates reuse of the models in a different context.}
+Club/department representatives can be expected to focus more on feedback regarding event related features by spending about 1-3 hours a week on the application and providing feedback.
 
-\noindent \plt{The relationships between the parts of the document are show in
-  the following figure.  In this diagram ``may ref'' has the same role as
-  ``uses'' above.  The figure adds ``Likely Changes,'' which are able to
-  reference (use) Assumptions.}
 
+This method will ensure maximum efficiency in collecting useful feedback from the relevant user groups.
+
+\subsection{Maintenance Users and Service Technicians}
+
+The finalized version of the product will be regularly serviced and maintained by trained IT support staff and administrators on campus to ensure performance requirements such as reliability, robustness etc. are consistently met. This role will be assumed by the developers in the release build.
+
+\section{Mandated Constraints}
+\subsection{Solution Constraints}
+There are no mandated constraints regarding how the problem must be solved.
+\subsection{Implementation Environment of the Current System}
+There are no mandated constraints regarding the implementation environment.
+\subsection{Partner or Collaborative Applications}
+There are no mandated constraints regarding interoperation with other applications.
+\subsection{Off-the-Shelf Software}
+There are no mandated constraints regarding external software that must be used.
+\subsection{Anticipated Workplace Environment}
+There are no mandated constraints regarding anticipated workplace environment.
+\subsection{Schedule Constraints}
+\begin{itemize}
+  \item The proof-of-concept shall be ready to demonstrate by Nov. 13-24, 2023.
+  \item Revision 0 shall be complete and demonstrated by Feb. 5-16, 2024.
+  \item The final product shall be complete and demonstrated by Mar 18-29, 2024.
+\end{itemize}
+\subsection{Budget Constraints}
+\begin{itemize}
+  \item The project budget must not exceed \$750 CAD. The sole source of any funding shall be the team itself. 
+\end{itemize}
+\subsection{Enterprise Constraints}
+There are no mandated enterprise constraints.
+\section{Naming Conventions and Terminology}
+\subsection{Glossary of All Terms, Including Acronyms, Used by Stakeholders
+involved in the Project}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.3\linewidth} | p{0.7\linewidth}| }
+    \hline
+    \textbf{Term} & \textbf{Definition}\\
+    \hline
+    Amazon Web Services (AWS) & Amazon Web Services is a cloud computing provider\\
+    \hline
+    ASP.NET & A server-side web application framework\\
+    \hline
+    Augmented reality (AR) & Technology that adds computer-generated components and images to a user’s view of the real-world, allowing for an experience that combines virtual and physical components.\\
+    \hline
+    API & Application Programming Interface is a way for two or more components to communicate with each other.\\
+    \hline
+    Campus Connections & Campus Connections is the name of the company the capstone project team runs and the name of the application\\
+    \hline
+    Charles Proxy & A cross-platform HTTP debugging proxy server application for networking monitoring\\
+    \hline
+    Extended reality (XR) & AR technology combines the physical world with a ``digital twin world'' able to interact with it\\
+    \hline
+    Global Positioning System (GPS) & An utility that provides users with positioning, navigation, and timing services\\
+    \hline
+    ID & identifier of a user, in this application it refers to user email.\\
+    \hline
+    OSCARplus & OSCARplus is is an appointment, registration and job posting system for McMaster students and alumni\\
+    \hline
+    Personal Identification Information (PII) & Personal data that could potentially identify a specific individual\\
+    \hline
+    User experience (UX) & The way a user interacts with the system, and the quality of those interactions.\\
+    \hline 
+    User interface (UI) & The section of the overall system where interactions between the user and the system take place.\\
+    \hline
+    Unified Model Language (UML) diagram & UML diagram is a graphical notation used to construct and visualize object oriented system\\
+    \hline
+    Unity & Unity is a cross-platform game engine developed by Unity Technologies\\
+    \hline
+    \end{tabular}
+    \caption{Naming Conventions and Terminology}
+    \label{TblNaming}
+\end{table}
+
+\section{Relevant Facts And Assumptions}
+\subsection{Relevant Facts}
+\begin{itemize}
+  \item Due to McMaster University regulations, we cannot collect information on course schedules \cite{FIPPA}.
+\end{itemize}
+
+\subsection{Business Rules}
+\begin{itemize}
+  \item Software should follow industry standard security protocols
+\end{itemize}
+
+\subsection{Assumptions}
+\begin{itemize}
+ \item Administrators are experienced users and they will not intend to hack into the application.
+  \item The app is not expected to function outside the campus of McMaster University.
+  \item The backend server host has high availability and stable performance.
+\end{itemize}
+
+\section{The Scope of the Work}
+\subsection{The Current Situation}
+Currently, students do not have effective ways to connect with peers of same interest and resources available on campus.  One of the most accessible tools for students to utilize campus resources is OSCARplus. However the website only allow user to see the event calendar and register, -- it doesn't support interactions between users or advacned interactions between events and users -- users cannot get a list of registered events or ask organizers more details of the event.\\
+As for lecture room information,  McMaster allows student to get a calendar of the course they enrolled, but not any other courses they are interested in. New students always get lost because of the poor description of lecture rooms.  Students are expecting an advanced lecture management system and a more detailed campus map in their daily life.
 \begin{figure}[H]
-  \includegraphics[scale=0.9]{RelationsBetweenTM_GD_IM_DD_A.pdf}
+\begin{center}
+\includegraphics[scale=0.5]{Current_Situation.png}
+\end{center}
+\caption{Context Diagram}
 \end{figure}
 
-The instance models that govern \progname{} are presented in
-Subsection~\ref{sec_instance}.  The information to understand the meaning of the
-instance models and their derivation is also presented, so that the instance
-models can be verified.
+\subsection{The Context of the Work}
 
-\subsubsection{Assumptions} \label{sec_assumpt}
+The context diagram depicted below illustrates the interactions of the system with adjacent external systems and services.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.7]{Context_Diagram.png}
+\end{center}
+\caption{Current Situation}
+\end{figure}
 
-\plt{The assumptions are a refinement of the scope.  The scope is general, where
-  the assumptions are specific.  All assumptions should be listed, even those
-  that domain experts know so well that they are rarely (if ever) written down.}
-\plt{The document should not take for granted that the reader knows which
-  assumptions have been made. In the case of unusual assumptions, it is
-  recommended that the documentation either include, or point to, an explanation
-  and justification for the assumption.}
+\subsection{Work Partitioning}
 
-This section simplifies the original problem and helps in developing the
-theoretical model by filling in the missing information for the physical system.
-The numbers given in the square brackets refer to the theoretical model [TM],
-general definition [GD], data definition [DD], instance model [IM], or likely
-change [LC], in which the respective assumption is used.
-
-\begin{itemize}
-
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:]
-  \plt{Short description of each assumption.  Each assumption
-    should have a meaningful label.  Use cross-references to identify the
-    appropriate traceability to TM, GD, DD etc., using commands like dref, ddref
-    etc.  Each assumption should be atomic - that is, there should not be an
-    explicit (or implicit) ``and'' in the text of an assumption.}
-
-\end{itemize}
-
-\subsubsection{Theoretical Models}\label{sec_theoretical}
-
-\plt{Theoretical models are sets of abstract mathematical equations or axioms
-  for solving the problem described in Section ``Physical System Description''
-  (Section~\ref{sec_phySystDescrip}). Examples of theoretical models are
-  physical laws, constitutive equations, relevant conversion factors, etc.}
-
-This section focuses on the general equations and laws that \progname{} is based
-on.  \plt{Modify the examples below for your problem, and add additional models
-  as appropriate.}
-
-~\newline
-
-\noindent
-\deftheory
-% #2 refname of theory
-{TM:COE}
-% #3 label
-{Conservation of thermal energy}
-% #4 equation
-{
-  $-{\bf \nabla \cdot q} + g$ = $\rho C \frac{\partial T}{\partial t}$
-}
-% #5 description
-{
-  The above equation gives the conservation of energy for transient heat transfer in a material
-  of specific heat capacity $C$ (\si{\joule\per\kilogram\per\celsius}) and density $\rho$ 
-  (\si{\kilogram\per\cubic\metre}), where $\bf q$ is the thermal flux vector (\si{\watt\per\square\metre}),
-  $g$ is the volumetric heat generation
-  (\si{\watt\per\cubic\metre}), $T$ is the temperature
-  (\si{\celsius}),  $t$ is time (\si{\second}), and $\nabla$ is
-  the gradient operator.  For this equation to apply, other forms
-  of energy, such as mechanical energy, are assumed to be negligible in the
-  system (\aref{A_OnlyThermalEnergy}).  In general, the material properties ($\rho$ and $C$) depend on temperature.
-}
-% #6 Notes
-{
-None.
-}
-% #7 Source
-{
-  \url{http://www.efunda.com/formulae/heat_transfer/conduction/overview_cond.cfm}
-}
-% #8 Referenced by
-{
-  \dref{ROCT}
-}
-% #9 Preconditions
-{
-None
-}
-% #1 derivation - not applicable by default
-{}
-
-\plt{``Ref.\ By'' is used repeatedly with the different types of information.
-  This stands for Referenced By.  It means that the models, definitions and
-  assumptions listed reference the current model, definition or assumption.
-  This information is given for traceability.  Ref. By provides a pointer in the
-  opposite direction to what we commonly do.  You still need to have a reference
-  in the other direction pointing to the current model, definition or
-  assumption.  As an example, if TM1 is referenced by GD2, that means that GD2 will
-  explicitly include a reference to TM1.}
-
-~\newline
-
-\subsubsection{General Definitions}\label{sec_gendef}
-
-\plt{General Definitions (GDs) are a refinement of one or more TMs, and/or of
-  other GDs.  The GDs are less abstract than the TMs.  Generally the reduction
-  in abstraction is possible through invoking (using/referencing) Assumptions.
-  For instance, the TM could be Newton's Law of Cooling stated abstracting.  The
-  GD could take the general law and apply it to get a 1D equation.}
-
-This section collects the laws and equations that will be used in building the
-instance models.
-
-\plt{Some projects may not have any content for this section, but the section
-  heading should be kept.}  \plt{Modify the examples below for your problem, and
-  add additional definitions as appropriate.}
-
-~\newline
-
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-\hline
-\rowcolor[gray]{0.9}
-Number& GD\refstepcounter{defnum}\thedefnum \label{NL}\\
-\hline
-Label &\bf Newton's law of cooling \\
-\hline
-% Units&$MLt^{-3}T^0$\\
-% \hline
-SI Units&\si{\watt\per\square\metre}\\
-\hline
-Equation&$ q(t) = h \Delta T(t)$  \\
-\hline
-Description &
-Newton's law of cooling describes convective cooling from a surface.  The law is
-stated as: the rate of heat loss from a body is proportional to the difference
-in temperatures between the body and its surroundings.
-\\
-& $q(t)$ is the thermal flux (\si{\watt\per\square\metre}).\\
-& $h$ is the heat transfer coefficient, assumed independent of $T$ (\aref{A_hcoeff})
-	(\si{\watt\per\square\metre\per\celsius}).\\
-&$\Delta T(t)$= $T(t) - T_{\text{env}}(t)$ is the time-dependent thermal gradient
-between the environment and the object (\si{\celsius}).
-\\
-\hline
-  Source & Citation here \\
-  \hline
-  Ref.\ By & \ddref{FluxCoil}, \ddref{FluxPCM}\\
-  \hline
-\end{tabular}
-\end{minipage}\\
-
-\subsubsection*{Detailed derivation of simplified rate of change of temperature}
-
-\plt{This may be necessary when the necessary information does not fit in the
-  description field.}
-\plt{Derivations are important for justifying a given GD.  You want it to be
-  clear where the equation came from.}
-
-\subsubsection{Data Definitions}\label{sec_datadef}
-
-\plt{The Data Definitions are definitions of symbols and equations that are
-  given for the problem.  They are not derived; they are simply used by other
-  models.  For instance, if a problem depends on density, there may be a data
-  definition for the equation defining density.  The DDs are given information
-  that you can use in your other modules.}
-
-\plt{All Data Definitions should be used (referenced) by at least one other
-  model.}
-
-This section collects and defines all the data needed to build the instance
-models. The dimension of each quantity is also given.  \plt{Modify the examples
-  below for your problem, and add additional definitions as appropriate.}
-
-~\newline
-
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-\hline
-\rowcolor[gray]{0.9}
-Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{FluxCoil}\\
-\hline
-Label& \bf Heat flux out of coil\\
-\hline
-Symbol &$q_C$\\
-\hline
-% Units& $Mt^{-3}$\\
-% \hline
-  SI Units & \si{\watt\per\square\metre}\\
-  \hline
-  Equation&$q_C(t) = h_C (T_C - T_W(t))$, over area $A_C$\\
-  \hline
-  Description & 
-                $T_C$ is the temperature of the coil (\si{\celsius}).  $T_W$ is the temperature of the water (\si{\celsius}).  
-                The heat flux out of the coil, $q_C$ (\si{\watt\per\square\metre}), is found by
-                assuming that Newton's Law 
-                of Cooling applies (\aref{A_Newt_coil}).  This law (\dref{NL}) is used on the surface of
-                the coil, which has area $A_C$ (\si{\square\metre}) and heat 
-                transfer coefficient $h_C$
-                (\si{\watt\per\square\metre\per\celsius}).  This equation
-                assumes that the temperature of the coil is constant over time (\aref{A_tcoil}) and that it does not vary along the length
-                of the coil (\aref{A_tlcoil}).
-  \\
-  \hline
-  Sources& Citation here \\
-  \hline
-  Ref.\ By & \iref{ewat}\\
-  \hline
-\end{tabular}
-\end{minipage}\\
-
-\subsubsection{Data Types}\label{sec_datatypes}
-
-\plt{This section is optional.  In many scientific computing programs it isn't
-  necessary, since the inputs and outpus are straightforward types, like reals,
-  integers, and sequences of reals and integers.  However, for some problems it
-  is very helpful to capture the type information.}
-
-\plt{The data types are not derived; they are simply stated and used by other
-  models.}
-
-\plt{All data types must be used by at least one of the models.}
-
-\plt{For the mathematical notation for expressing types, the recommendation is
-  to use the notation of~\citet{HoffmanAndStrooper1995}.}
-
-This section collects and defines all the data types needed to document the
-models. \plt{Modify the examples below for your problem, and add additional
-  definitions as appropriate.}
-
-~\newline
-
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-  \hline
-  \rowcolor[gray]{0.9}
-  Type Name & Name for Type\\
-  \hline
-  Type Def & mathematical definition of the type\\
-  \hline
-  Description & description here
-  \\
-  \hline
-  Sources & Citation here, if the type is borrowed from another source\\
-  \hline
-\end{tabular}
-\end{minipage}\\
-
-\subsubsection{Instance Models} \label{sec_instance}    
-
-\plt{The motivation for this section is to reduce the problem defined in
-  ``Physical System Description'' (Section~\ref{sec_phySystDescrip}) to one
-  expressed in mathematical terms. The IMs are built by refining the TMs and/or
-  GDs.  This section should remain abstract.  The SRS should specify the
-  requirements without considering the implementation.}
-
-This section transforms the problem defined in Section~\ref{Sec_pd} into 
-one which is expressed in mathematical terms. It uses concrete symbols defined 
-in Section~\ref{sec_datadef} to replace the abstract symbols in the models 
-identified in Sections~\ref{sec_theoretical} and~\ref{sec_gendef}.
-
-The goals \plt{reference your goals} are solved by \plt{reference your instance
-  models}.  \plt{other details, with cross-references where appropriate.}
-\plt{Modify the examples below for your problem, and add additional models as
-  appropriate.}
-
-~\newline
-
-%Instance Model 1
-
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-  \hline
-  \rowcolor[gray]{0.9}
-  Number& IM\refstepcounter{instnum}\theinstnum \label{ewat}\\
-  \hline
-  Label& \bf Energy balance on water to find $T_W$\\
-  \hline
-  Input&$m_W$, $C_W$, $h_C$, $A_C$, $h_P$, $A_P$, $t_\text{final}$, $T_C$, 
-  $T_\text{init}$, $T_P(t)$ from \iref{epcm}\\
-  & The input is constrained so that $T_\text{init} \leq T_C$ (\aref{A_charge})\\
-  \hline
-  Output&$T_W(t)$, $0\leq t \leq t_\text{final}$, such that\\
-  &$\frac{dT_W}{dt} = \frac{1}{\tau_W}[(T_C - T_W(t)) + {\eta}(T_P(t) - T_W(t))]$,\\
-  &$T_W(0) = T_P(0) = T_\text{init}$ (\aref{A_InitTemp}) and $T_P(t)$ from \iref{epcm} \\
-  \hline
-  Description&$T_W$ is the water temperature (\si{\celsius}).\\
-  &$T_P$ is the PCM temperature (\si{\celsius}).\\
-  &$T_C$ is the coil temperature (\si{\celsius}).\\
-  &$\tau_W = \frac{m_W C_W}{h_C A_C}$ is a constant (\si{\second}).\\
-  &$\eta = \frac{h_P A_P}{h_C A_C}$ is a constant (dimensionless).\\
-  & The above equation applies as long as the water is in liquid form,
-  $0<T_W<100^o\text{C}$, where $0^o\text{C}$ and $100^o\text{C}$ are the melting
-  and boiling points of water, respectively (\aref{A_OpRange}, \aref{A_Pressure}).
-  \\
-  \hline
-  Sources& Citation here \\
-  \hline
-  Ref.\ By & \iref{epcm}\\
-  \hline
-\end{tabular}
-\end{minipage}\\
-
-%~\newline
-
-\subsubsection*{Derivation of ...}
-
-\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
-  where the derivation cannot be described under the Description field, it will
-  be necessary to include this subsection.}
-
-\subsubsection{Input Data Constraints} \label{sec_DataConstraints}    
-
-Table~\ref{TblInputVar} shows the data constraints on the input output
-variables.  The column for physical constraints gives the physical limitations
-on the range of values that can be taken by the variable.  The column for
-software constraints restricts the range of inputs to reasonable values.  The
-software constraints will be helpful in the design stage for picking suitable
-algorithms.  The constraints are conservative, to give the user of the model the
-flexibility to experiment with unusual situations.  The column of typical values
-is intended to provide a feel for a common scenario.  The uncertainty column
-provides an estimate of the confidence with which the physical quantities can be
-measured.  This information would be part of the input if one were performing an
-uncertainty quantification exercise.
-
-The specification parameters in Table~\ref{TblInputVar} are listed in
-Table~\ref{TblSpecParams}.
-
-\begin{table}[!h]
-  \caption{Input Variables} \label{TblInputVar}
-  \renewcommand{\arraystretch}{1.2}
-\noindent \begin{longtable*}{l l l l c} 
+\begin{table}[H]
+  \begin{tabular}{p{0.33\textwidth} | p{0.33\textwidth} | p{0.33\textwidth}}
   \toprule
-  \textbf{Var} & \textbf{Physical Constraints} & \textbf{Software Constraints} &
-                             \textbf{Typical Value} & \textbf{Uncertainty}\\
-  \midrule 
-  $L$ & $L > 0$ & $L_{\text{min}} \leq L \leq L_{\text{max}}$ & 1.5 \si[per-mode=symbol] {\metre} & 10\%
-  \\
-  \bottomrule
-\end{longtable*}
+  \textbf{Event Name} & \textbf{Input/Output} & \textbf{Summary}\\
+  \midrule
+  Provide lectures list & IN: Lecture schedules & Give a list of lectures when there is an update and after every semester\\
+  \midrule
+  Provide events list & IN: Event schedules & Give a list of campus events periodically and when there is an update\\
+  \midrule
+  Record user data & OUT: User data & Record user related data, including user profile, user friends and interested lectures and events\\
+  \midrule
+  Record lecture data & OUT: Event data & Record lecture data, including lecture name,  time, duration and location\\
+  \midrule
+    Record event data & OUT: Event data & Record event data, including event name,  time,  duration and location\\
+  \midrule
+  Display events & IN: event data, OUT: event data filtered by location & Display events that are going to be held in in a given building\\
+  \midrule
+  Display lectures & IN: lecture data, OUT: lecture data filtered by location & Display lectures that are going to be held in in a given building\\
+    \bottomrule
+\end{tabular}
+ \caption{Business Event List} 
+ \label{TblEventList}
 \end{table}
-
-\noindent 
-\begin{description}
-\item[(*)] \plt{you might need to add some notes or clarifications}
-\end{description}
-
-\begin{table}[!h]
-\caption{Specification Parameter Values} \label{TblSpecParams}
-\renewcommand{\arraystretch}{1.2}
-\noindent \begin{longtable*}{l l} 
+\begin{table}[H]
+  \begin{tabular}{p{0.33\textwidth} | p{0.33\textwidth} | p{0.33\textwidth}}
   \toprule
-  \textbf{Var} & \textbf{Value} \\
-  \midrule 
-  $L_\text{min}$ & 0.1 \si{\metre}\\
+    \textbf{Event Name} & \textbf{Input/Output} & \textbf{Summary}\\
+  \midrule
+  Display user profile & OUT: User profile & Display user profile including user program and level, interested lectures and events\\
+    \midrule
+  Display map view & OUT: Users' locations & Display the locations of the user and all friends on campus map\\
+    \midrule
+  Display map view & OUT: Users' locations & Display the locations of the user and all friends on campus map\\
+    \midrule
+  Display AR view & IN: Target building scene, OUT: AR objects & Display the information and activities of the target building in an AR way\\
   \bottomrule
-\end{longtable*}
+\end{tabular}
+ \caption{Business Event List Cont} 
+ \label{TblEventListCont}
 \end{table}
 
-\subsubsection{Properties of a Correct Solution} \label{sec_CorrectSolution}
+\subsection{Specifying a Business Use Case (BUC)}
 
-\noindent
-A correct solution must exhibit \plt{fill in the details}.  \plt{These
-  properties are in addition to the stated requirements.  There is no need to
-  repeat the requirements here.  These additional properties may not exist for
-  every problem.  Examples include conservation laws (like conservation of
-  energy or mass) and known constraints on outputs, which are usually summarized
-  in tabular form.  A sample table is shown in Table~\ref{TblOutputVar}}
+The following is an activity diagram for the Display event schedule process. The trigger of this business user case will be user interaction, and input will be campus event data from database. What will be displayed is a schedule of events held inside a specific building with detailed event information.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{BUC_Activity_Diagram.png}
+\end{center}
+\caption{Activity diagram for Display Events List Process}
+\end{figure}
 
-\begin{table}[!h]
-\caption{Output Variables} \label{TblOutputVar}
-\renewcommand{\arraystretch}{1.2}
-\noindent \begin{longtable*}{l l} 
+\section{Business Data Model and Data Dictionary}
+\subsection{Business Data Model}
+
+The following UML class diagram shows all types of business data that will be used in this project.\\
+All the classes represent corresponding business data, all these entries and their attributes will be defined and explained in the data dictionary.
+class are defined in the data dictionary.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Business_Data_Model.png}
+\end{center}
+\caption{UML class model}
+\end{figure}
+
+\subsection{Data Dictionary}
+This section will include definition of all classes in UML class model and their attributes. Some self-explanatory attributes like name will be ignored.
+\begin{longtable}
+ {p{0.3\textwidth} | p{0.4\textwidth} | p{0.3\textwidth}}
   \toprule
-  \textbf{Var} & \textbf{Physical Constraints} \\
-  \midrule 
-  $T_W$ & $T_\text{init} \leq T_W \leq T_C$ (by~\aref{A_charge})
-  \\
+  \textbf{Name} & \textbf{Content} & \textbf{Type}\\
+  \midrule
+  Lecture & McMaster course data & Class\\
+  \midrule
+  Lecture.Instructor & Course instructor & Attribute\\
+  \midrule
+  Lecture.Time & Course schedule & Attribute\\
+  \midrule
+  Lecture.Location & Course location & Room\\
+  \midrule
+  Event & McMaster on-campus event data & Class\\
+  \midrule
+    Event.Description & More information of this event & Attribute\\
+  \midrule
+  Event.Time & Event time & *HH/MM/SS
+24 hour clock*\\
+  \midrule
+  Event.Location & Event location & Room\\
+  \midrule
+  Event.Organizer & Held by which department & Attribute\\
+  \midrule
+  Event.isPublic & Is this event open for non students? & True or False\\
+  \midrule
+  User & User account data, friends data, location,  event \& lecture attendance & Class\\
+  \midrule
+  User.Email & email of the user & Attribute\\
+  \midrule
+  User.Nickname & name displayed in the application & Attribute\\
+  \midrule
+  User.Password & password of the account & Attribute\\
+  \midrule
+  User.Location & Geographic location & Attribute\\
+  \midrule
+  User.InterestedEvents & List of event & Event, Attribute\\
+  \midrule
+  User.InterestedLectures & List of lecture & Lecture, Attribute\\
+  \midrule
+  User.Friends & List of friends & User , Attribute\\
+  \midrule
+  \textbf{Name} & \textbf{Content} & \textbf{Type}\\
+  \midrule
+  User.FriendRequests & List of users who want to be your friends & User , Attribute\\
+  \midrule
+  Building & McMaster main campus building & Class\\
+  \midrule
+  Building.Abbreviation & Abbreviation of building name & Attribute\\
+  \midrule
+  Building.Location & Geographic location & Attribute\\
+  \midrule
+  Room & Room inside a building & Class\\
+  \midrule
+  Room.Name & Room number & Attribute\\
   \bottomrule
-\end{longtable*}
+  \caption{Data Dictionary} \label{TblDataDict}\\
+\end{longtable}
+
+\section{The Scope of the Product}
+\subsection{Product Boundary}
+
+The use case diagram depicted below identifies the boundaries between the users and the product.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{Use_Case_Diagram.png}
+\end{center}
+\caption{Use Case Diagram}
+\end{figure}
+
+\subsection{Product Use Case Table}
+
+\begin{longtable}
+ {p{0.1\textwidth} | p{0.4\textwidth} | p{0.2\textwidth} | p{0.3\textwidth}}
+  \toprule
+  \textbf{PUC No} & \textbf{PUC Name} & \textbf{Actor/s} & \textbf{Input \& Output}\\
+  \midrule
+  1 & Create Account & User & Email \& Password (in)\\
+  \midrule
+  \textbf{PUC No} & \textbf{PUC Name} & \textbf{Actor/s} & \textbf{Input \& Output}\\
+  \midrule
+  2 & Update Password & User & Email \& New Password (in)\\
+  \midrule
+  3 & Update User Profile & User & New Profile (in)\\
+  \midrule
+  4 & Login & User & Email \& Password (in),  Response Message (out)\\
+   \midrule
+  5 & Accept/Ignore Request & User & Friend Email (in), Accept or Ignore message (out)\\
+  \midrule
+  6 & Add New Friend & User & Friend Email (in), Friend Request (out)\\
+  \midrule
+  7 & Delete Friend & User & Friend Email (in), Confirmation Message (out)\\
+  \midrule
+  8 & Message Friend & User & Message Content (in), Message Sent Notification (out)\\
+  \midrule
+   9 & View AR Objects & User & User Interaction \& target building (in), AR Objects (out)\\
+  \midrule
+  10 & View Event Details & User & User Interaction (in), Event Details (out)\\
+  \midrule
+  11 & View Lecture Details & User & User Interaction (in), Lecture Details (out)\\
+  \midrule
+  12 & Interest/Disinterest Event & User & User Interaction \& Event Name (in)\\
+  \midrule
+  13 & Add/Remove Lecture & User & User Interaction \& Lecture Name (in)\\
+  \midrule
+  14 & View User locations on Map & User & User Interaction \& User Locations (out)\\
+  \midrule
+  \textbf{PUC No} & \textbf{PUC Name} & \textbf{Actor/s} & \textbf{Input \& Output}\\
+  \midrule
+  15 & Retrieve Event Schedule & System & New Schedule (out)\\
+  \midrule
+  16 & Retrieve Lecture Schedule & System & New Schedule (out)\\
+  \midrule
+  17 & Load Building Information & System & Location \& Sensor Data (in),  Building Name (out)\\
+  \midrule
+  18 & Request friend messages from server & System & Target Email (in),  Messages (out)\\
+  \midrule
+  19 & Request friend locations from server & System & Target Email (in),  Locations (out)\\
+  \midrule
+  20 & Connect to server & System & Email (in),  Confirm Message (out)\\
+  \bottomrule
+  \caption{Product Use Case} \label{TblPUC}\\
+\end{longtable}
+
+\subsection{Individual Product Use Cases (PUC's)}
+\textbf{Use case \#1:} Create Account\\
+\textbf{Precondition:} None\\
+\textbf{Trigger:} The user clicks on create account button\\
+\textbf{Outcome}
+\begin{enumerate}
+    \item User provides the required information (email, nick name and password)
+    \item System verifies all required information has been provided
+    \item System securely registers user information
+    \item User is redirected back to the Home page
+\end{enumerate}
+\textbf{Postcondition:} The user has successfully created an account and account information is stored and secured in a database.
+
+
+\noindent\\
+\textbf{Use case \#2:} Update Password\\
+\textbf{Precondition:} The user has already created an account\\
+\textbf{Trigger:} The user clicks on change password button\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User navigates to change password page
+    \item User provides old password
+    \item User provides new password
+    \item System verifies old password is correct and new password is valid
+    \item System updates password of current user in the database
+    \item User is redirected back to the Home page
+\end{enumerate}
+\textbf{Postcondition:} The user has successfully changed the password.
+
+
+\noindent\\
+\textbf{Use case \#3:} Update User Profile\\
+\textbf{Precondition:} The user has already created an account\\
+\textbf{Trigger:} The user clicks on edit profile button\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User navigates to edit profile page
+    \item User updates the profile to a new one and saves the changes
+    \item System updates user information and redirects back to the Home page
+\end{enumerate}
+\textbf{Postcondition:} The user profile has been changed successfully.
+
+
+\noindent\\
+\textbf{Use case \#4:} Login\\
+\textbf{Precondition:} The user has already created an account\\
+\textbf{Trigger:} The user clicks on login button on the home page\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User navigates to login page and enters email and password
+    \item System verifies all required information has been provided and matches the database record
+    \item User is redirected to the home page as a logged-in user
+\end{enumerate}
+\textbf{Postcondition:} The user has successfully logged in to the created account with all settings and connections loaded from the database.
+
+
+\noindent\\
+\textbf{Use case \#5:} Accept/Ignore Request\\
+\textbf{Precondition:} The user has already logged in\\
+\textbf{Trigger:} The user directs to request management page\\
+\textbf{Outcome}
+\begin{enumerate}
+    \item User checked the requester email
+    \item Destined user accepts/rejects the request
+    \item User receives a notification
+\end{enumerate}
+\textbf{Postcondition:} The user gets a new connection in their friends list.\\
+\textbf{Postcondition 2:} The user is rejected and gets a notification about that.
+
+
+\noindent\\
+\textbf{Use case \#6:} Add New Friend\\
+\textbf{Precondition:} The user has already logged in\\
+\textbf{Trigger:} The user searches for another user and sends a friend request\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User searches for another user
+    \item User sends a friend request
+    \item System sends the request with requester email to the destined user
+    \item User receives a notification
+\end{enumerate}
+\textbf{Postcondition:} A new request is added to the target user's request list.\\
+
+
+\noindent\\
+\textbf{Use case \#7:} Delete Friend\\
+\textbf{Precondition:} The user has already logged in and has at lease one friend\\
+\textbf{Trigger:} The user clicks delete button on friend page\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User searches for a friend
+    \item User deletes the friend
+    \item System sends a confirmation prompt
+    \item User continues to delete
+    \item User receives a notification
+\end{enumerate}
+\textbf{Postcondition:} The friend is deleted from user's friends list.\\
+
+
+\noindent\\
+\textbf{Use case \#8:} Message Friend\\
+\textbf{Precondition:} The user has already logged in and has at lease one friend\\
+\textbf{Trigger:} The user texts a friend on friend page\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User clicks on a friend in the list
+    \item User start to text the friend
+    \item System sends message to the destined friend
+\end{enumerate}
+\textbf{Postcondition:} The friend receives a message from the user.\\
+
+
+\noindent\\
+\textbf{Use case \#9:} View AR Object\\
+\textbf{Precondition:} The user has already logged in and gets into a target building\\
+\textbf{Trigger:} The user turns on the AR camera\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User directs to AR Camera page and turns on the camera
+    \item User scans the surroundings with AR Camera
+\end{enumerate}
+\textbf{Postcondition:} The user sees corresponding AR objects in target areas.\\
+
+
+\noindent\\
+\textbf{Use case \#10:} View Event Details\\
+\textbf{Precondition:} The user has already logged in and there exists some events in the system\\
+\textbf{Trigger:} The user clicks on an event from the list\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User directs to Event List Page
+    \item User finds a list of events
+    \item User clicks on one of the event
+    \item System displays more information about the event
+\end{enumerate}
+\textbf{Postcondition:} The name, description,  organizer, duration, time and location of the event are displayed.\\
+
+
+\noindent\\
+\textbf{Use case \#11:} View Lecture Details\\
+\textbf{Precondition:} The user has already logged in and there exists some letures in the system\\
+\textbf{Trigger:} The user clicks on a lecture from the list\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User directs to Lecture List Page
+    \item User finds a list of lectures
+    \item User clicks on one of the lecture
+    \item System displays more information about the lecture
+\end{enumerate}
+\textbf{Postcondition:} The name, code,  instructor, time and location of the lecture are displayed.\\
+
+
+\noindent\\
+\textbf{Use case \#12:} Interest/Disinterest Event\\
+\textbf{Precondition:} The user has already logged in and clicks on an event in the list\\
+\textbf{Trigger:} The user clicks on pin/unpin button\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User browses the event list
+	\item User navigates to an event detail page with a specific name
+	\item User clicks on the corresponding button
+    \item System sends the request to the database
+    \item System displays the new state of the event
+\end{enumerate}
+\textbf{Postcondition:} The event is added to/delete from the user correspondingly in the database and the UI changes as well.\\
+
+
+\noindent\\
+\textbf{Use case \#13:} Add/Remove lecture\\
+\textbf{Precondition:} The user has already logged in and clicks on a lecture in the list\\
+\textbf{Trigger:} The user clicks on pin/unpin button\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User browses the lecture list of the target
+	\item User navigates to a lecture detail page with a specific course code
+	\item User clicks on the corresponding button
+    \item System sends the request to the database
+    \item System displays the new state of the lecture
+\end{enumerate}
+\textbf{Postcondition:} The lecture is added to/removed from the user correspondingly in the database is updated and the UI changes correspondingly.\\
+
+
+\noindent\\
+\textbf{Use case \#14:} View User Locations on Map\\
+\textbf{Precondition:} The user has already logged and has at least a friend\\
+\textbf{Trigger:} The user directs to campus map page\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item User navigates to campus map page
+    \item System displays real time locations of the user and friends who are willing to share locations
+\end{enumerate}
+\textbf{Postcondition:} The user sees real time locations of friends on campus
+
+
+\noindent\\
+\textbf{Use case \#15:} Retrieve Event Schedule\\
+\textbf{Precondition:} None\\
+\textbf{Trigger:} A request to update schedule is sent or trigger by the system timer\\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item System sends a request to the on-campus schedule interface
+    \item System gets the up-to-date schedule
+    \item System stores the new schedule to the database or the administrator adds the new schedule to the database
+\end{enumerate}
+\textbf{Postcondition:} The new schedule is stored in the database and will be utilized later.\\
+
+
+\noindent\\
+\textbf{Use case \#16:} Retrieve Lecture Schedule\\
+\textbf{Precondition:} None\\
+\textbf{Trigger:} A request to update schedule is sent or trigger by the system timer\\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item System sends a request to lecture schedule interface
+    \item System gets the up-to-date schedule
+    \item System stores the new schedule to the database or the administrator adds the new schedule to the database
+\end{enumerate}
+\textbf{Postcondition:} The new schedule is stored in the database and will be utilized later.\\
+
+
+\noindent\\
+\textbf{Use case \#17:} Load Building Information\\
+\textbf{Precondition:} Location share is allowed and sensors are set properly\\
+\textbf{Trigger:} A request for event/lecture schedule is sent by the user\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item System gets geographic location and sensor data from the device
+    \item System finds the most likely building on campus
+    \item System displays building information
+\end{enumerate}
+\textbf{Postcondition:} The system provides information of the building the user locates now.\\
+
+
+\noindent\\
+\textbf{Use case \#18:} Request friend messages from server\\
+\textbf{Precondition:} User is connected to the server and has a friend\\
+\textbf{Trigger:} The user opens a chat with friend\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item System sends a request to the server to establish a session for message transfer between the user and the friend
+    \item System sends a message from the user to the friend
+    \item System request a message from the friend to the user
+\end{enumerate}
+\textbf{Postcondition:} The user can send and receive to any friends.\\
+
+
+\noindent\\
+\textbf{Use case \#19:} Request friend locations from server\\
+\textbf{Precondition:} User is connected to the server and has a friend\\
+\textbf{Trigger:} The user directs to campus map page\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item System sends a request to the server to establish a session for sending and receiving real time locations
+    \item System sends current location of the user
+    \item System request current locations of friends
+\end{enumerate}
+\textbf{Postcondition:} The user can see everyone's real time locations on the map.\\
+
+
+\noindent\\
+\textbf{Use case \#20:} Connect to server\\
+\textbf{Precondition:} User is logged in\\
+\textbf{Trigger:} The user wants to send or receive any real time data\\
+\textbf{Outcome}
+\begin{enumerate}
+	\item System sends the user email as ID to the server
+    \item Server responds with a confirmation message
+\end{enumerate}
+\textbf{Postcondition:} The user is connected to the server.\\
+\textbf{Postcondition 2:} The user fails to connect due to some issues on the server side.\\
+\section{Functional Requirements}
+\subsection{Pre-Registration Settings}
+    \textbf{FR-1-1:} The system shall ask all users to sign a consent form disclosure of personal information when creating a new account.\\
+    \textbf{Rationale:} It is a must to ask for users' permission before making use of their personal information.\\
+    \textbf{Fit Criterion:} Users must be able to accept or reject a consent form when they register an account.\\\\
+    
+\subsection{User Profile}
+    \textbf{FR-2-1:} The system shall allow users to create accounts with an email that does not exist in the database.\\
+    \textbf{Rationale:} Users must be associated with accounts to identify themselves and expand their social networking.\\
+    \textbf{Fit Criterion:} Users must be able to create an account with an email that does not exist in the database and a password.\\\\
+    \textbf{FR-2-2:} The system shall allow users to delete their accounts with all associated data.\\
+    \textbf{Rationale:} Users shall be able to quit whenever they want with all their data handled properly.\\
+    \textbf{Fit Criterion:} Users must be able to delete their account once they log into the application.\\\\
+    \textbf{FR-2-3:} The system shall allow users to log in with their email and the corresponding password.\\
+    \textbf{Rationale:} Users must be able to log into their account to expand social networking and enjoy all functionalities.\\
+    \textbf{Fit Criterion:} Users must be able to log in once they created an account successfully.\\\\
+    \textbf{FR-2-4:} The system shall allow users to change their password.\\
+    \textbf{Rationale:} This will allow users to improve the security of their account and recover the account if they forget their password.\\
+    \textbf{Fit Criterion:} Users may request a password reset on the login page. The user shall receive an email to reset the password later.\\\\
+     \textbf{FR-2-5:} The system shall allow users to create and change a virtual avatar.\\
+    \textbf{Rationale:} A customizable avatar gives users a much stronger feeling of personalization. \\
+    \textbf{Fit Criterion:} Users shall be able to upload images as their avatar on the user profile page.\\\\
+    \textbf{FR-2-6:} The system shall allow users to verify their school email.\\
+    \textbf{Rationale:} Users shall be identified as McMaster students to have full access to all the resources. Therefore identifying McMaster email is necessary. \\
+    \textbf{Fit Criterion:} The user shall be able to add McMaster email to their profile and verify the email after receiving an email from the system.\\\\
+    \textbf{FR-2-7:} Users shall be able to edit their profile.\\
+    \textbf{Rationale:} Users shall always be able to update their displayed information for better socializing.\\
+    \textbf{Fit Criterion:} Users shall be able to edit their user profile (e.g. nickname program and level) on the user profile page.\\\\
+
+\subsection{Friend System}
+    \textbf{FR-3-1:} The system shall allow users to send a friend request.\\
+    \textbf{Rationale:} One of the main purposes of this application is to make students connect with peers easily. For this to happen, they should be able to make new friends on this social media platform.\\
+    \textbf{Fit Criterion:} Users can search for other users through username and send a friend request, added friends can be removed from the friend list.\\\\
+    \textbf{FR-3-2:} The system shall allow users to delete friends.\\
+    \textbf{Rationale:} When users add users as friends by accident or they no longer connect, they should be able to remove them from the friend list.\\
+    \textbf{Fit Criterion:} Users can remove any friends from their friend list.\\\\
+    \textbf{FR-3-3:} The system shall allow users to send text messages to their friends.\\
+    \textbf{Rationale:} This will make the app more interactive and encourage and enhance socialization between users.\\
+    \textbf{Fit Criterion:} Users must be able to send messages and view received messages.\\\\
+    \textbf{FR-3-4:} The system shall allow users to share events when chatting with friends.\\
+    \textbf{Rationale:} This encourages onsite socialization and allows users to make better use of resources provided by the application.\\
+    \textbf{Fit Criterion:} Users shall be able to share a link that can redirects to an event from the chat.\\\\
+    \textbf{FR-3-5:} The system shall allow users to share lectures when chatting with friends.\\
+    \textbf{Rationale:} his encourages onsite socialization and allows users to make better use of resources provided by the application.\\
+    \textbf{Fit Criterion:} Users should be able to share a link that can redirects to a lecture from the chat.\\\\
+    \textbf{FR-3-6:} The system shall allow users to manage friend requests.\\
+    \textbf{Rationale:} Managing friend requests is a significant functionality to make new friends.\\
+    \textbf{Fit Criterion:} Users can either accept or ignore any friend requests.\\\\
+
+\subsection{Lectures and Events}
+    \textbf{FR-4-1:} The system shall allow users to manage events they are interested in.\\
+    \textbf{Rationale:} It will be much easier for users to find events they are interested in and willing to join again. So that they do not have to browse the event list again and again. While their friends can see what events they are likely to join.\\
+    \textbf{Fit Criterion:} Users should be able to save and unsave an event from the event list, this event will be displayed or removed on the user profile page.\\\\
+    \textbf{FR-4-2:} The system shall allow users to manage lectures they are interested in.\\
+    \textbf{Rationale:} Sharing schedules with friends can strengthen friendship. Users can join lectures with friends and know their classmates better. So the system needs to have the functionality to save lectures.\\
+    \textbf{Fit Criterion:} Users should be able to save and unsave a lecture from the list, this lecture will be displayed or removed on the user profile page.\\\\
+    \textbf{FR-4-3:} The system shall allow users with an administrator account to add, edit, and remove events.\\
+    \textbf{Rationale:} The event information must be up-to-date and accurate. The administrator account will maintain all events so that there is a singular source of information. Additionally, this reduces the chances of errors being introduced to the system.\\
+    \textbf{Fit Criterion:} A new event can be created only by a user who is logged in as an administrator. The information for those events can be changed only by administrators. Events can be deleted only by administrators.\\\\
+    \textbf{FR-4-4:} The system shall allow users with an administrator account to add, edit, and remove lectures from the schedule.\\
+    \textbf{Rationale:} The lecture information must be up-to-date and accurate as well. Administrators are needed to manage the schedule.\\
+    \textbf{Fit Criterion:} A lecture on the schedule can be created, deleted, or updated by a user who logged in as an administrator.\\\\
+    \textbf{FR-4-5:} Each event shall be associated with an organizer (club/department), location, time and duration.\\
+    \textbf{Rationale:} For the application to schedule events for the users to see and interact with, all specific details about the event should be provided to the system\\
+    \textbf{Fit Criterion:} When a department/club requests for an event to be posted on the application, they have to provide details about the building and room number it will be held in, along with the date and time the event will take place at.\\\\
+    \textbf{FR-4-6:} Each lecture shall be associated with an instructor, location, course code and time.\\
+    \textbf{Rationale:} To find empty rooms and help users who want to attend specific lectures, all details about the lectures should be provided to the system.\\
+    \textbf{Fit Criterion:} When a lecture is added or modified, all the details mentioned above must be set as mandatory fields.\\\\
+    \textbf{FR-4-7:} User should be able to filter specific lectures out from the list by course code.\\
+    \textbf{Rationale:} It is necessary to allow users to filter out lectures they are interested in from a long list.\\
+    \textbf{Fit Criterion:} Users shall be able to input some keywords to filter the lecture list.\\\\
+    \textbf{FR-4-8:} User should be able to filter specific events out from the list by name.\\
+    \textbf{Rationale:} It is necessary to allow users to filter out events they are interested in from a long list.\\
+    \textbf{Fit Criterion:} Users shall be able to input some keywords to filter the event list.\\\\
+
+\subsection{AR Camera}
+    \textbf{FR-5-1:} The system shall recognize specific buildings on campus.\\
+    \textbf{Rationale:} AR camera will give users an immersive user experience interacting with campus buildings.\\
+    \textbf{Fit Criterion:} The system shall recognize proper camera input as buildings in the database.\\\\
+    \textbf{FR-5-2:} The system shall display corresponding event/lecture information as AR objects when a target is recognized.\\
+    \textbf{Rationale:} AR camera will give users an immersive user experience interacting with campus buildings.\\
+    \textbf{Fit Criterion:} User must see corresponding information about the target (e.g. events and lectures) in the format of AR objects once a target is recognized.\\\\
+
+\subsection{Map and Location}
+    \textbf{FR-6-1:} The system shall allow users to see their own real-time locations on campus and the locations of friends who are willing to share.\\
+    \textbf{Rationale:} Sharing locations with connections can make it easier for friends to sync up in person on campus, which provides more opportunities for users to network\\
+    \textbf{Fit Criterion:} Users shall be able to see their avatar on the map showing their real-time positions, and also other users' avatars and locations on campus.\\\\
+
+\section{Look and Feel Requirements}
+\subsection{Appearance Requirements}
+  \textbf{LF-A1:} The product shall respond with visual (and auditory, if applicable) feedback once the user interacts with an interactive component.\\
+  \textbf{Fit criterion:} Each component must respond as designed in RESPONSE\_TIME when they are triggered.\\\\
+  \textbf{LF-A2:} The product shall adapt to most of the common mobile screen sizes with screen components not being congested.\\
+  \textbf{Fit criterion:} Visual elements must not exceed the borders of the screen for all screens in SCREEN\_VIEWPORTS list. If a user experience survey is taken among them, the application layout will get at least MIN\_SCORE.\\
+\subsection{Style Requirements}
+  \textbf{LF-S1:} The colors and themes shall be consistent across different pages.\\
+  \textbf{Fit criterion:} Consistency checks show the same color scheme being used on all pages.\\\\
+  \textbf{LF-S2:} The color scheme used shall be appealing and not cause eye strain.\\
+  \textbf{Fit criterion:} MOST\_USERS agree with the statement that the screen does not cause strain during a user experience survey.\\
+
+\section{Usability and Humanity Requirements}
+\subsection{Ease of Use Requirements}
+  \textbf{UH-EOU1:} The product shall have a user interface that is clear and easy to navigate.\\
+  \textbf{Fit criterion:} MOST\_USERS in the testing stage shall be able to find their way to specific pages and access all different core features including messaging friend, lecture and event management and building scanning without needing to try again more than 3 times.\\
+\subsection{Personalization and Internationalization Requirements}
+  \textbf{N/A}\\
+\subsection{Learning Requirements}
+  \textbf{UH-L1:} The product shall include a user guide about its features available on GitHub repo.\\
+  \textbf{Fit criterion:} Users shall be able to access user guide in GitHub and MOST\_USERS shall give positive feedback on that document.\\\\
+\subsection{Understandability and Politeness Requirements}
+  \textbf{UH-UP1:} The product shall abstain from using technical and software-specific language.\\
+  \textbf{Fit criterion:} MOST\_USERS shall hardly find technical and software-specific language among all text displayed by the application.\\
+\subsection{Accessibility Requirements}
+  \textbf{UH-A1:} The colors used by the different components of the product shall contrast enough for items on the screen to be more easily visible.\\
+  \textbf{Fit criterion:} The color contrast is at least 4.5:1 per the Web Content Accessibility Guidelines’ AA standards for accessibility\cite{WCAG}.\\
+
+\section{Performance Requirements}
+\subsection{Speed and Latency Requirements}
+  \textbf{P-SL1:} The product shall display the correct AR objects shortly after successful AR target recognition.\\
+  \textbf{Fit criterion:} The time from recognition to the appearance of the AR object is at most RECOGNITION\_TIME.\\\\
+  \textbf{P-SL2:} The product shall periodically update the user’s location on the real-time location map.\\
+  \textbf{Fit criterion:} A user’s location must be updated on the map session within LOCATION\_UPDATE\_TIME.\\
+\subsection{Safety-Critical Requirements}
+  \textbf{P-SC1:} The application will not collect or share any user’s location or personal data without getting permission from the user.\\
+  \textbf{Fit criterion:} User’s personal information does not appear in the database if the user did not grant permissions.\\\\
+  \textbf{P-SC2:} User data such as messages and location information will be securely encrypted to protect user’s privacy.\\
+  \textbf{Fit criterion:} Contents of data packets being transmitted are nonsense when inspected with MONITORING\_TOOL.\\\\
+  \textbf{P-SC3:} The product shall display a message upon map startup warning the user to be aware of their surroundings.\\
+  \textbf{Rationale:} The gameplay of real-time location map may lead to distracted walking, therefore we need to warn the user for their safety.\\
+  \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon map startup.\\\\
+  \textbf{P-SC4:} The product shall hide user's location if the user leaves campus.\\
+  \textbf{Rationale:} Users may stay connected and share their location even when they leave the campus. To prevent personal information leakage, we need to hide that information and disconnect the user.\\
+  \textbf{Fit Criterion:} A user's information shall not be shared once he or she leaves campus.\\\\
+  \textbf{P-SC5:} The product shall prevent the user from entering special characters in all text input fields.\\
+  \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.\\
+  \textbf{Fit Criterion:} Any text input with special characters will give the user an error.\\\\
+  \textbf{P-SC6:} The product shall validate the email format when creating an account.\\
+  \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.\\
+  \textbf{Fit Criterion:} An input in the email field that's not in the format of an email will give the user an error when creating a new account.\\\\
+\subsection{Precision or Accuracy Requirements}
+  \textbf{P-PA1:} The product shall accurately identify buildings scanned by the user.\\
+  \textbf{Fit criterion:} The application shall identify a building on campus with a success rate of at least 80\%.\\\\
+\subsection{Robustness or Fault-Tolerance Requirements}
+  \textbf{P-RF1:} The product shall display an error message when there is no internet connection.\\
+  \textbf{Rational:} When there is no internet connection, the user should be made aware.\\
+  \textbf{Fit criterion:} An error message stating that there is no internet connection is displayed when the product fails to connect to the internet.\\\\
+  \textbf{P-RF2:} There must be a fail-safe for the product to function if the server or internet connection takes too long or fails.\\
+  \textbf{Rational:} This will allow the product to function to some degree even during high traffic or bad internet connection situations.\\
+  \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities without connecting to the internet or server.\\\\
+  \textbf{P-RF3:} The server shall attempt to restart when it crashes.\\
+  \textbf{Rationale:} This requirement enhances the robustness of the backend server and prevents it from going down for a long time because of some intermittent minor errors.\\
+  \textbf{Fit Criterion:} The server should try to restart after it crashes due to unknown errors.\\\\
+  \textbf{P-RF4:} AR Camera should have a notification available in the UI telling users possible reasons the target is not recognized.\\
+  \textbf{Rational:} The user should get a notification telling them that the AR camera may have a bad performance in some cases, and they should be able to report that to the developer if they want the problem to be solved.\\
+  \textbf{Fit Criterion:} The product should show the user a list of possible reasons that the camera does not work and the contact information of maintainers once they have trouble using the AR camera and click the help button.\\\\
+\subsection{Capacity Requirements}
+  \textbf{N/A}\\
+\subsection{Scalability or Extensibility Requirements}
+  \textbf{P-SE1:} This product server will be capable of processing about at most MAX\_CAPACITY people concurrently in the release build with a plan of expanding it to support all students on campus (about 40,000 people) in the future.\\\\
+  \textbf{P-SE2:} This product database will be capable of storing the account and personal information of about MAX\_USER\_STORED users in the release build with a plan of expanding it to support all students on campus (about 40,000 people) in the future.\\\\
+  \textbf{P-SE3:} The application architecture will allow for the addition of new campus buildings and clubs without considerable drawbacks in performance.\\\\
+\subsection{Longevity Requirements}
+  \textbf{P-L1:} This application will be expected to operate without major malfunctions in release build for a minimum of 1 year while undergoing further development.\\\\
+  \textbf{P-L2:} The finalized product will remain compatible with the promised operating systems and devices for a minimum of 3 years.\\
+
+\section{Operational and Environmental Requirements}
+\subsection{Expected Physical Environment}
+  \textbf{OE-EPE1:} The product will be installed on the user's smartphone (Android).\\\\
+\subsection{Wider Environment Requirements}
+  \textbf{N/A}\\
+\subsection{Requirements for Interfacing with Adjacent Systems}
+  \textbf{N/A}\\
+\subsection{Productization Requirements}
+  \textbf{OE-P1:} The product shall be downloadable for Android devices.\\
+  \textbf{Fit criterion:} The product can be downloaded onto an Android device by downloading the APK file directly.\\
+\subsection{Release Requirements}
+  \textbf{N/A}\\
+
+\section{Maintainability and Support Requirements}
+\subsection{Maintenance Requirements}
+  \textbf{MS-M1:} Major updates could be rolled out during periods of reduced usage such as Reading Week, after exams, or Spring semester.\\
+  %This will allow significant time to stablize the update and test them before the updates are applied to the users.
+  %Additionally, the administrator can perfrom maintenance on the database and server to check the correct operation of the product.
+  %This will maximize the availability of the product.
+\subsection{Supportability Requirements}
+  \textbf{MS-S1:} Feature requests or issues can be sent to the product GitHub.\\\\
+  %These opened issues will be discussed by the maintainers and communicated through the issue on how they will be dealt with.
+  \textbf{MS-S2:} A user manual will be complied and stored in the GitHub, this manual will be updated with Frequently Asked Questions and other entries as additional features are introduced.\\
+  %The application will direct users to this manual in the menu.
+\subsection{Adaptability Requirements}
+  \textbf{MS-A1:} The product shall be accessible on Android 11 and above for Android devices, as these operating systems are still supported and receive security updates.\\
+  %This product may be ported to other universities in Ontario, Canada, or other countries.
+  %Although the product is designed to work for university, this can be porte to other large events and buildings to help users navigate and coordinate better.
+
+\section{Security Requirements}
+\subsection{Access Requirements}
+  \textbf{S-A1:} User with first level access is treated as a guest.\\
+\textbf{Rational:} User persona: a grade 12 student on a university tour.\\
+\textbf{Fit Criterion:} Guest must not have access to anything beyond the login, account creation, public events, map without other users' locations and account recovery pages. \\\\
+\textbf{S-A2:} User with second level access is treated as an actual user.\\
+\textbf{Rational:} User persona: a software engineer undergrad student.\\
+\textbf{Fit Criterion:} User will have full access to all features except writing access to the database, which means a user cannot edit or create new lectures or events. \\\\
+\textbf{S-A3:} User with thrid level access is treated as an administrator.\\
+\textbf{Rational:} Full access of the system should be given to administrators who works as a maintainer.\\
+\textbf{Fit Criterion:} Administrator will have all the access users have and the power to add, delete and edit official events, lectures and all users profiles.\\\\
+\subsection{Integrity Requirements}
+  \textbf{N/A}\\
+\subsection{Privacy Requirements}
+  \textbf{S-P1:} The application will comply with all relevant privacy laws and guidelines.\\
+  \textbf{Rational:} The application will respect the privacy of all the users.\\
+  \textbf{Fit Criterion:} The usage of a user’s personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws \cite{Legislative Services} \cite{CFLC}.\\\\
+  \textbf{S-P2:} Accounts that are inactive for a certain period shall be deleted after notice to prevent unnecessary data from being held.\\
+  \textbf{Rational:} It prevents personal information from being stored in the database unintentionally for a long time.\\
+  \textbf{Fit Criterion:} Accounts that are not logged in for a semester will be cleaned from the authentication system and database.
+
+\subsection{Audit Requirements}
+  \textbf{N/A} (This currently does not apply, once the product is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
+\subsection{Immunity Requirements}
+  \textbf{N/A} (This currently does not apply, once the product is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
+
+\section{Cultural Requirements}
+\subsection{Cultural Requirements}
+  \textbf{CUL-C1:} The product shall not be offensive to any marginalized groups.\\
+  \textbf{Fit Criterion:} The product shall not use any language or symbols deemed offensive by any marginalized group.\\\\
+
+\section{Compliance Requirements}
+\subsection{Legal Requirements}
+  \textbf{COM-L1:} The data collected from users will be handled as per the same legal requirements for the university.\\\\
+  %As this application will be used in university, it is subject to the same regulations that the university is beholden to.
+  %In the future, different functions can be developed to match specific university or state/country requirements, but this is currently not in scope.
+\subsection{Standards Compliance Requirements}
+  %This ensures that the application is safe and can be scaled and expanded to other universities or interested parties when needed.
+  \textbf{COM-SC1:} The application will abide by the guidelines set by the university and club managers, adding options to accommodate their requests.\\\\
+
+\section{Traceability Matrix}
+\begin{table}[H]
+  \scalebox{0.7}{
+  \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+  \cline{2-21}
+  \multicolumn{1}{r|}{\textbf{PUC No}}   & \textbf{1}   & \textbf{2}   & \textbf{3}   & \textbf{4}   & \textbf{5}   & \textbf{6}   & \textbf{7}   & \textbf{8}   & \textbf{9}   & \textbf{10}  & \textbf{11}  & \textbf{12}  & \textbf{13}  & \textbf{14}  & \textbf{15}  & \textbf{16}  & \textbf{17}  & \textbf{18}  & \textbf{19}  & \textbf{20}  \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-1-1}}  &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &       X      &       X      &       X      &       X      &       X      &              &       X      &       X      &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-2-1}}  &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-2-2}}  &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-2-3}}  &              &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-2-4}}  &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-2-5}}  &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-2-6}}  &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-2-7}}  &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-3-1}}  &              &              &              &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-3-2}}  &              &              &              &              &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-3-3}}  &              &              &              &              &              &              &              &       X      &              &              &              &              &              &              &              &              &              &       X      &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-3-4}}  &              &              &              &              &              &              &              &       X      &              &              &              &              &              &              &              &              &              &       X      &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-3-5}}  &              &              &              &              &              &              &              &       X      &              &              &              &              &              &       X      &              &              &              &              &       X      &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-3-6}}  &              &              &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-4-1}}  &              &              &              &              &              &              &              &              &              &       X      &              &       X      &              &              &       X      &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-4-2}}  &              &              &              &              &              &              &              &              &              &              &       X      &              &       X      &              &              &       X      &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-4-3}}  &              &              &              &              &              &              &              &              &              &       X      &              &              &              &              &       X      &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-4-4}}  &              &              &              &              &              &              &              &              &              &              &       X      &              &              &              &              &       X      &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-4-5}}  &              &              &              &              &              &              &              &              &              &       X      &              &              &              &              &       X      &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-4-6}}  &              &              &              &              &              &              &              &              &              &              &       X      &              &              &              &              &       X      &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-4-7}}  &              &              &              &              &              &              &              &              &              &       X      &              &              &              &              &       X      &              &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-4-8}}  &              &              &              &              &              &              &              &              &              &              &       X      &              &              &              &              &       X      &              &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-5-1}}  &              &              &              &              &              &              &              &              &       X      &              &              &              &              &              &              &              &       X      &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-5-2}}  &              &              &              &              &              &              &              &              &       X      &              &              &              &              &              &              &              &       X      &              &              &       X      \\ \hline
+  \multicolumn{1}{|l|}{\textbf{FR-6-1}}  &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      &              &              &              &              &              &       X      \\ \hline
+  \end{tabular}
+  }
+\caption{Traceability Matrix for PUCs and FRs}
+    \label{tab:matrix-puc-fr}
 \end{table}
 
-\plt{This section is not for test cases or techniques for verification and
-  validation.  Those topics will be addressed in the Verification and Validation
-  plan.}
+\begin{table}[H]
+  \begin{adjustwidth}{-1.4in}{-1in}
+  \scalebox{0.7}{
+  \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+  \cline{2-26}
+  \multicolumn{1}{r|}{\textbf{FR}}       & \textbf{1-1} & \textbf{2-1} & \textbf{2-2} & \textbf{2-3} & \textbf{2-4} & \textbf{2-5} & \textbf{2-6} & \textbf{2-7} & \textbf{3-1} & \textbf{3-2} & \textbf{3-3} & \textbf{3-4} & \textbf{3-5} & \textbf{3-6} & \textbf{4-1} & \textbf{4-2} & \textbf{4-3} & \textbf{4-4} & \textbf{4-5} & \textbf{4-6} & \textbf{4-7} & \textbf{4-8} & \textbf{5-1} & \textbf{5-2} & \textbf{6-1}  \\ \hline
+  \multicolumn{1}{|l|}{\textbf{LF-A1}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &       X      &       X      &              &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{LF-A2}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &       X      &       X      &              &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{LF-S1}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &       X      &       X      &              &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{LF-S2}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &       X      &       X      &              &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{UH-EOU1}} &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &       X      &       X      &              &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{UH-L1}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{UH-UP1}}  &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &       X      &       X      &              &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{UH-A1}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &       X      &       X      &              &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-SL1}}   &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      &       X      &               \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-SL2}}   &              &              &              &              &              &              &              &              &              &              &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-SC1}}   &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &               \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-SC2}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &              &              &              &              &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-SC3}}   &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-SC4}}   &              &              &              &              &              &              &              &              &              &              &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-SC5}}   &              &       X      &              &       X      &       X      &              &       X      &       X      &       X      &              &       X      &              &              &              &              &              &       X      &       X      &       X      &       X      &       X      &       X      &              &              &               \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-SC6}}   &              &       X      &              &       X      &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &               \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-PA1}}   &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      &       X      &               \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-RF1}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-RF2}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-RF3}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-RF4}}   &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      &       X      &               \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-SE1}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-SE2}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &       X      &       X      &       X      &              &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-SE3}}   &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      &       X      &              &              &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-L1}}    &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{P-L2}}    &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{OE-EPE1}} &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{OE-P1}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{MS-M1}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{MS-S1}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{MS-S2}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{MS-A1}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{S-A1}}    &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &              &              &              &              &       X      &              &              &              &              &              &              &       X      &              &              &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{S-A2}}    &       X      &       X      &       X      &       X      &       X      &       X      &              &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &              &              &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{S-A3}}    &       X      &       X      &       X      &       X      &       X      &       X      &              &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{S-P1}}    &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &              &              &              &              &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{S-P2}}    &       X      &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &               \\ \hline
+  \multicolumn{1}{|l|}{\textbf{CUL-C1}}  &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &       X      &       X      &              &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{COM-L1}}  &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &              &              &              &              &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{COM-SC1}} &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \end{tabular}
+  }
+\caption{Traceability Matrix for FRs and NFRs}
+    \label{tab:matrix-fr-nfr}
+\end{adjustwidth}
+\end{table}
 
-\section{Requirements}
-
-\plt{The requirements refine the goal statement.  They will make heavy use of
-  references to the instance models.}
-
-This section provides the functional requirements, the business tasks that the
-software is expected to complete, and the nonfunctional requirements, the
-qualities that the software is expected to exhibit.
-
-\subsection{Functional Requirements}
-
-\noindent \begin{itemize}
-
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] \plt{Requirements
-    for the inputs that are supplied by the user.  This information has to be
-    explicit.}
-
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] \plt{It isn't
-    always required, but often echoing the inputs as part of the output is a
-    good idea.}
-
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] \plt{Calculation
-    related requirements.}
-
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:]
-  \plt{Verification related requirements.}
-
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] \plt{Output related
-    requirements.}
-
+\section{Open Issues}
+\begin{itemize}
+  \item To target iOS devices, a device capable of building iOS apps is required.
 \end{itemize}
 
-\plt{Every IM should map to at least one requirement, but not every requirement
-  has to map to a corresponding IM.}
+\section{Off-the-Shelf Solutions}
+\subsection{Ready-Made Products}
+\begin{itemize}
+  \item \textbf{Snapchat:} Snapchat is an existing social media platform that makes use of AR technology through its Lenses feature which provides various filters and effects that users can apply to their content.
+  \item \textbf{Instagram:} Instagram is another platform that incorporates AR in the form of filters and effects.
+  \item \textbf{TikTok:} TikTok similarly uses AR for visual effects and filters.
+  \item \textbf{Facebook:} Many clubs at McMaster use Facebook Groups to coordinate events.
+  \item \textbf{Meetup:} Meetup is another platform designed for organizing and finding events and other social gatherings.
+  \item \textbf{CampusGroups:} CampusGroups is a platform that focuses specifically on university student groups. It allows universities to create private communities for various events and other student engagement activities.
+\end{itemize}
+\subsection{Reusable Components}
+\begin{itemize}
+  \item Models and art assets can be obtained from the Unity Asset Store or similar sources.
+  \item Existing database solutions such as MongoDB.
+  \item Vuforia is another AR toolkit. It also provides an API for Unity.
+\end{itemize}
+\subsection{Products That Can Be Copied}
+\begin{itemize}
+  \item Groups, events and a friend system similar to other popular social media apps. (Facebook, Instagram, \dots)
+  \item AR camera modes or filters similar to TikTok or Snapchat.
+  \item Text and voice messaging as is common in other social media apps. (Facebook, Instagram, \dots)
+\end{itemize}
+\section{New Problems}
+\subsection{Effects on the Current Environment}
 
-\subsection{Nonfunctional Requirements}
+This application will not take place of any existing official tools. It intends to improve certain social networking processes students are following and provide a platform for users to connect with each other better. The following are some changes that will impact users.\\
+\noindent\\
+\textbf{Expand Networking}\\
+Students will be able to expand networking when attending events lectures on this social media platform. Users may lose connection with peers when there is a failure in the system. 
+\noindent\\
+\textbf{Event Registration}\\
+Students and alumni will be able to login with their McMaster email and customize a list of activities and even post their program and level, which means there will be a risk of personal identification information (PII) leakage if the data is not stored securely.
+\noindent\\
+\textbf{Lectures and Events Management}\\
+This application can be utilized to get information about lecture and lecture time and location which should not be displayed publicly. Therefore insecure data storage may lead to data breaches.
 
-\plt{List your nonfunctional requirements.  You may consider using a fit
-  criterion to make them verifiable.}
-\plt{The goal is for the nonfunctional requirements to be unambiguous, abstract
-  and verifiable.  This isn't easy to show succinctly, so a good strategy may be
-to give a ``high level'' view of the requirement, but allow for the details to
-be covered in the Verification and Validation document.}
-\plt{An absolute requirement on a quality of the system is rarely needed.  For
-  instance, an accuracy of 0.0101 \% is likely fine, even if the requirement is
-  for 0.01 \% accuracy.  Therefore, the emphasis will often be more on
-  describing now well the quality is achieved, through experimentation, and
-  possibly theory, rather than meeting some bar that was defined a priori.}
-\plt{You do not need an entry for correctness in your NFRs.  The purpose of the
-  SRS is to record the requirements that need to be satisfied for correctness.
-  Any statement of correctness would just be redundant. Rather than discuss
-  correctness, you can characterize how far away from the correct (true)
-  solution you are allowed to be.  This is discussed under accuracy.}
+\subsection{Effects on the Installed Systems}
 
-\noindent \begin{itemize}
+The application will be completely stand alone and will not be interfacing with any existing systems.  As described in the previous section, this application should not affect or replace any existing systems.
 
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Accuracy}:]
-  \textbf{Accuracy} \plt{Characterize the accuracy by giving the context/use for
-    the software.  Maybe something like, ``The accuracy of the computed
-    solutions should meet the level needed for $<$engineering or scientific
-    application$>$.  The level of accuracy achieved by \progname{} shall be
-    described following the procedure given in Section~X of the Verification and
-    Validation Plan.''  A link to the VnV plan would be a nice extra.}
+\subsection{Potential User Problems}
 
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Usability}:] \textbf{Usability}
-  \plt{Characterize the usability by giving the context/use for the software.
-    You should likely reference the user characteristics section.  The level of
-    usability achieved by the software shall be described following the
-    procedure given in Section~X of the Verification and Validation Plan.  A
-    link to the VnV plan would be a nice extra.}
+Any potential adverse reactions related to using the device in which application is being launched on (mobile device or tablet) would extend to the use of this application.  Any adverse reactions of Virtual Reality and Augment Reality, like nausea, dizziness and disorientation would be introduced to the use of the application as well.
 
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Maintainability}:]
-  \textbf{Maintainability} \plt{The effort required to make any of the likely
-    changes listed for \progname{} should be less than FRACTION of the original
-    development time.  FRACTION is then a symbolic constant that can be defined
-    at the end of the report.}
+\subsection{Limitations in the Anticipated Implementation Environment That May
+Inhibit the New Product}
 
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Portability}:]
-  \textbf{Portability} \plt{This NFR is easier to write than the others.  The
-    systems that \progname{} should run on should be listed here.  When possible
-    the specific versions of the potential operating environments should be
-    given.  To make the NFR verifiable a statement could be made that the tests
-    from a given section of the VnV plan can be successfully run on all of the
-    possible operating environments.}
-
-\item Other NFRs that might be discussed include verifiability,
-  understandability and reusability.
-
+\begin{itemize}
+\item The database free plan is not able to cope with our projected user growth pattern.
+\item Low quality internet connection will lead to latency between user inputs and in-app reactions or even failures of loading some assets.
+\item The accuracy of input data totally depends on device sensor. Low accuracy data may cause bad user experience.
 \end{itemize}
 
-\section{Likely Changes}    
+\subsection{Follow-Up Problems}
 
-\noindent \begin{itemize}
+Any failures or downtime on the server or the database may affect the availability of this application. In-app schedules may get out of date when the two external systems cannot provide new data or the administrator cannot update the schedule on time. There will also be a risk of violating privacy laws in the future since the application is collection personal information and there may be new laws prohibit this kind of information collection.
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{Give
-    the likely changes, with a reference to the related assumption (aref), as appropriate.}
+\section{Tasks}
+\subsection{Project Planning}
+
+The project schedule will follow the deadline for the deliverables outlined in the SFWRENG
+4G06 course outline.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.2\linewidth} | p{0.5\linewidth}| p{0.3\linewidth} |}
+    \hline
+    \textbf{Phase} & \textbf{Task} & \textbf{Deadline}\\
+    \hline
+    Revision 0 & Hazard Analysis & Oct 20, 2023 \\
+     \cline{2-3} & Verification and Validation Plan & Nov 3, 2023 \\
+     \cline{2-3} & Proof of Concept Demo & Nov 13-24, 2023\\
+     \cline{2-3} & Design Document & Jan 17, 2024\\
+     \cline{2-3} & Demonstration & Feb 5-16, 2024\\
+     \cline{2-3} & Verification and Validation Report & Mar 6, 2024\\
+     \hline
+     Revision 1 & Final Demonstration & Mar 18-29, 2024\\
+     \cline{2-3} & EXPO Demonstration & April 2024\\
+     \cline{2-3} & Final Documentation & Apr 4, 2024\\
+    \hline
+    \end{tabular}
+    \caption{Project Plan}
+    \label{TblProjectTasks}
+\end{table}
+
+\subsection{Planning of the Development Phases}
+The development of the project will be divided into two phases
+\begin{itemize}
+    \item Revision 0, initial development
+    \item Revision 1, refinement of the project and documents
+\end{itemize}
+Revision 0 starts now and ends with the Verification and Validation Report. In this phase, the team will work on some design-related documents and specify the scope of the project, what skills the team will be using, and how the interaction of different components be. Then the team will start implementation as proof of concept and demonstrate their product to stakeholders. After that, the team will write a V\&V report based on the demonstration and stakeholder feedback.  As for implementation, the following table show what should be done by end of the first round:\\
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.5\linewidth} | p{0.2\linewidth}| p{0.3\linewidth} |}
+    \hline
+    \textbf{Task} & \textbf{Priority} & \textbf{Deadline}\\
+    \hline
+    Database Set up & High & Nov 1, 2023 \\
+    \hline
+    Server Set up & High & Nov 1 2023 \\
+    \hline
+    Data structures & High & Nov 1, 2023 \\
+    \hline
+    Migrate Mapbox to the project & High & Nov 15, 2023 \\
+    \hline
+    Migrate Vuforia, the AR library to the project & High & Nov 15, 2023 \\
+    \hline
+    Login system & Medium & Dec 1, 2023 \\
+    \hline
+    List view of activities & Medium & Dec 15, 2023 \\
+    \hline
+    Friend and request management & Medium & Dec 15, 2023 \\
+    \hline
+    Baisc UI & Low & Jan 8, 2024 \\
+    \hline
+    Chatting & Low & Jan 8, 2024 \\
+    \hline
+    Filter and search activities & Low & Jan 8, 2024 \\
+    \hline
+	CI \& CD & Low & Jan 20, 2024\\
+	\hline
+	More consistent UI & Medium & Feb 12, 2024\\
+	\hline
+	AR camera with lectures and events details & High & Feb 12, 2024\\
+	\hline
+	User profile management & High & Feb 12, 2024\\
+    \hline
+    \end{tabular}
+    \caption{Development Plan Rev 0}
+    \label{DevelopmentPlan0}
+\end{table}
+Revision 1 will focus on the refinement of the application and documents. In the previous phase, the team finished a bunch of drafted documents, and in this phase, the team should put all effort into incorporating feedback into these documents and the application itself. There will not be any major new features added in Revision 1. The following is the implementation plan for revision 1:\\
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.5\linewidth} | p{0.2\linewidth}| p{0.3\linewidth} |}
+    \hline
+    \textbf{Task} & \textbf{Priority} & \textbf{Deadline}\\
+    \hline
+    Access control & High & Feb 26, 2024 \\
+    \hline
+    Usability survey & High & Feb 29,  2024 \\
+    \hline
+    Unit testing & Medium & March 6, 2024 \\
+	\hline
+    Notification & Medium & March 8, 2024 \\
+    \hline
+    Multi-user map front end & High & March 15, 2024 \\
+    \hline
+    Sending event or lecture in chat & Low & March 15, 2024 \\
+    \hline
+    Error Handling & Medium & March 20, 2024 \\
+    \hline
+    Resolve feedback & High & April 4, 2024\\
+    \hline
+	Code refinement & Medium & April 4, 2024\\
+    \hline
+    \end{tabular}
+    \caption{Development Plan Rev 1}
+    \label{DevelopmentPlan1}
+\end{table}
+
+\section{Migration to the New Product}
+\subsection{Requirements for Migration to the New Product}
+
+\qquad There are no requirements to migrate to this product besides recruiting sufficient number of users.
+With the the starting users, there may not be enough engagement for this application to be widely used.
+
+\subsection{Data That Has to be Modified or Translated for the New System}
+
+\qquad Currently, all data we need are in OSCARplus and club management part of the university administration.
+These data will be requested via API or a new web based or internal input system will be made to move all the data over to our product.
+
+As this product handles real time data, there is no need to migrate outdated data to the product.
+
+\section{Costs}
+
+In the initial release build of our application, we will be keeping costs at an absolute minimum. We will be utilizing free technologies such as Vuforia for image recognition features and MongoDB as our database solution, our development expenses will remain at \$0. Additionally, we plan on using GitHub's free hosting service for the deployment of our application, further eliminating any hosting-related expenses. We plan to scale our infrastructure with time where we may explore more premium options, such as AWS S3 bucket and MongoDB Atlas, to ensure the continued seamless operation and performance of our application while serving all McMaster students.
+
+\section{User Documentation and Training}
+\subsection{User Documentation Requirements}
+
+\begin{itemize}
+
+\item Digital User Manual:
+
+The purpose of the document will be to outline the main functions the product serves such as navigation and event discovery and how the user can make use of them. This will also highlight some common possible errors / mistakes that can occur and how the user should interact with the system to avoid them in the first place or handle them in a sensible manner if they occur.
+
+ 
+
+\item Event Posting Guideline:
+
+The purpose of this document will be to streamline and outline the process for clubs and departments to post events in the proper manner
+
+\item Privacy Policy:
+
+This document will display the data handling and user privacy rights clearly.
+
+ 
+
+\item Terms of Service:
+
+This document will outline terms of service and all user responsibilities.
 
 \end{itemize}
+Motivation:
 
-\section{Unlikely Changes}    
+User documentation will be created by the developers and will improve the on-app experience of the users.
 
-\noindent \begin{itemize}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{Give
-    the unlikely changes.  The design can assume that the changes listed will
-    not occur.}
+\subsection{Training Requirements}
 
+\begin{itemize}
+\item Admin training: 
+
+Training provided to authorized club and department representatives on additional features associated with admin accounts such event posting / management and handling user issues.
+\end{itemize}
+Motivation: 
+
+To provide a better experience for administrators and avoid overwhelming them with the additional features presented to them. The training plan and the physical training will be carried out by different developers.
+
+\section{Waiting Room}
+\begin{itemize}
+  \item User generated content such as text or image posts.
+  \item ``Gamification'' features (i.e. collectibles, achievements, stickers, \dots) to increase or incentivize social engagement.
+\end{itemize}
+\section{Ideas for Solution}
+Implementation ideas for solutions
+\begin{itemize}
+\item AR feature
+	\begin{itemize}
+	\item Vuforia supports some AR functionalities and works as a library of Unity
+	\item gather.town might be a good design approach to follow after from the campus navigation and interaction perspective
+	\end{itemize}
+\item Server
+	\begin{itemize}
+	\item AWS might be a purchasable and reliable option for the back-end
+	\item SignalR is a real-time communication library used by lots of other projects, it is based on C\#, so it should work with ASP.NET as our back-end server
+	\end{itemize}
+\item Map
+\begin{itemize}
+	\item The library Mapbox can be useful for outdoor positioning and it is compatible with Unity.
+	\end{itemize}
 \end{itemize}
 
-\section{Traceability Matrices and Graphs}
+\newpage{}
 
-The purpose of the traceability matrices is to provide easy references on what
-has to be additionally modified if a certain component is changed.  Every time a
-component is changed, the items in the column of that component that are marked
-with an ``X'' may have to be modified as well.  Table~\ref{Table:trace} shows the
-dependencies of theoretical models, general definitions, data definitions, and
-instance models with each other. Table~\ref{Table:R_trace} shows the
-dependencies of instance models, requirements, and data constraints on each
-other. Table~\ref{Table:A_trace} shows the dependencies of theoretical models,
-general definitions, data definitions, instance models, and likely changes on
-the assumptions.
+\section{Appendix}
+\subsection{Symbolic Parameters}
+The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
+Their values are defined in this section for easy maintenance.
 
-\plt{You will have to modify these tables for your problem.}
-
-\plt{The traceability matrix is not generally symmetric.  If GD1 uses A1, that
-  means that GD1's derivation or presentation requires invocation of A1.  A1
-  does not use GD1.  A1 is ``used by'' GD1.}
-
-\plt{The traceability matrix is challenging to maintain manually.  Please do
-  your best.  In the future tools (like Drasil) will make this much easier.}
-
-\afterpage{
-\begin{landscape}
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\begin{table}[H]
+\caption{\bf Symbolic Parameter Table}
+\begin{tabular}{|p{0.4\linewidth} | p{0.3\linewidth}| p{0.3\linewidth} |}
 \hline
-	& \aref{A_OnlyThermalEnergy}& \aref{A_hcoeff}& \aref{A_mixed}& \aref{A_tpcm}& \aref{A_const_density}& \aref{A_const_C}& \aref{A_Newt_coil}& \aref{A_tcoil}& \aref{A_tlcoil}& \aref{A_Newt_pcm}& \aref{A_charge}& \aref{A_InitTemp}& \aref{A_OpRangePCM}& \aref{A_OpRange}& \aref{A_htank}& \aref{A_int_heat}& \aref{A_vpcm}& \aref{A_PCM_state}& \aref{A_Pressure} \\
+\multicolumn{1}{|l}{\bfseries Symbolic Parameter} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Value}\\
 \hline
-\tref{T_COE}        & X& & & & & & & & & & & & & & & & & & \\ \hline
-\tref{T_SHE}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\tref{T_LHE}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\dref{NL}           & & X& & & & & & & & & & & & & & & & & \\ \hline
-\dref{ROCT}         & & & X& X& X& X& & & & & & & & & & & & & \\ \hline
-\ddref{FluxCoil}    & & & & & & & X& X& X& & & & & & & & & & \\ \hline
-\ddref{FluxPCM}     & & & X& X& & & & & & X& & & & & & & & & \\ \hline
-\ddref{D_HOF}       & & & & & & & & & & & & & & & & & & & \\ \hline
-\ddref{D_MF}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\iref{ewat}         & & & & & & & & & & & X& X& & X& X& X& & & X \\ \hline
-\iref{epcm}         & & & & & & & & & & & & X& X& & & X& X& X& \\ \hline
-\iref{I_HWAT}       & & & & & & & & & & & & & & X& & & & & X \\ \hline
-\iref{I_HPCM}       & & & & & & & & & & & & & X& & & & & X & \\ \hline
-\lcref{LC_tpcm}     & & & & X& & & & & & & & & & & & & & & \\ \hline
-\lcref{LC_tcoil}    & & & & & & & & X& & & & & & & & & & & \\ \hline
-\lcref{LC_tlcoil}   & & & & & & & & & X& & & & & & & & & & \\ \hline
-\lcref{LC_charge}   & & & & & & & & & & & X& & & & & & & & \\ \hline
-\lcref{LC_InitTemp} & & & & & & & & & & & & X& & & & & & & \\ \hline
-\lcref{LC_htank}    & & & & & & & & & & & & & & & X& & & & \\
+MOST\_USER & Majority of the users & 80\% users \\
+\hline
+MIN\_SCORE & The passing grade for a category in the survey & 7/10\\
+\hline
+RESPONSE\_TIME & Max time the system takes for visual response & 1 second\\
+\hline
+SCREEN\_VIEWPORTS & List of all popular mobile screen sizes & 360X740, 390X844, 820X1180\\
+\hline
+USER\_PROFILE & All information about the user & username, password, gender, age, email, area of study\\
+\hline
+RECOGNITION\_TIME & Max time the system takes for image recognition & 3 second\\
+\hline
+MESSAGE\_TIME & Max time the system takes to send user message & 2 second\\
+\hline
+LOCATION\_UPDATE\_TIME & Max time the system takes for location update & 10 second\\
+\hline
+MONITORING\_TOOL & Tool to use when monitoring network & Charles Proxy\\
+\hline
+GPS\_ACCURACY & Accuracy of location sharing & 25 meter\\
+\hline
+MAX\_CAPACITY & max number of simultaneous users & 200\\
+\hline
+MAX\_USER\_STORED & max number of user account stored & 500\\
 \hline
 \end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
-\label{Table:A_trace}
-\end{table}
-\end{landscape}
-}
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline        
-	& \tref{T_COE}& \tref{T_SHE}& \tref{T_LHE}& \dref{NL}& \dref{ROCT} & \ddref{FluxCoil}& \ddref{FluxPCM} & \ddref{D_HOF}& \ddref{D_MF}& \iref{ewat}& \iref{epcm}& \iref{I_HWAT}& \iref{I_HPCM} \\
-\hline
-\tref{T_COE}     & & & & & & & & & & & & & \\ \hline
-\tref{T_SHE}     & & & X& & & & & & & & & & \\ \hline
-\tref{T_LHE}     & & & & & & & & & & & & & \\ \hline
-\dref{NL}        & & & & & & & & & & & & & \\ \hline
-\dref{ROCT}      & X& & & & & & & & & & & & \\ \hline
-\ddref{FluxCoil} & & & & X& & & & & & & & & \\ \hline
-\ddref{FluxPCM}  & & & & X& & & & & & & & & \\ \hline
-\ddref{D_HOF}    & & & & & & & & & & & & & \\ \hline
-\ddref{D_MF}     & & & & & & & & X& & & & & \\ \hline
-\iref{ewat}      & & & & & X& X& X& & & & X& & \\ \hline
-\iref{epcm}      & & & & & X& & X& & X& X& & & X \\ \hline
-\iref{I_HWAT}    & & X& & & & & & & & & & & \\ \hline
-\iref{I_HPCM}    & & X& X& & & & X& X& X& & X& & \\
-\hline
-\end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
-\label{Table:trace}
 \end{table}
 
-\begin{table}[h!]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
-\hline
-	& \iref{ewat}& \iref{epcm}& \iref{I_HWAT}& \iref{I_HPCM}& \ref{sec_DataConstraints}& \rref{R_RawInputs}& \rref{R_MassInputs} \\
-\hline
-\iref{ewat}            & & X& & & & X& X \\ \hline
-\iref{epcm}            & X& & & X& & X& X \\ \hline
-\iref{I_HWAT}          & & & & & & X& X \\ \hline
-\iref{I_HPCM}          & & X& & & & X& X \\ \hline
-\rref{R_RawInputs}     & & & & & & & \\ \hline
-\rref{R_MassInputs}    & & & & & & X& \\ \hline
-\rref{R_CheckInputs}   & & & & & X& & \\ \hline
-\rref{R_OutputInputs}  & X& X& & & & X& X \\ \hline
-\rref{R_TempWater}     & X& & & & & & \\ \hline 
-\rref{R_TempPCM}       & & X& & & & & \\ \hline
-\rref{R_EnergyWater}   & & & X& & & & \\ \hline
-\rref{R_EnergyPCM}     & & & & X& & & \\ \hline
-\rref{R_VerifyOutput}  & & & X& X& & & \\ \hline
-\rref{R_timeMeltBegin} & & X& & & & & \\ \hline
-\rref{R_timeMeltEnd}   & & X& & & & & \\ 
-\hline
-\end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
-\label{Table:R_trace}
-\end{table}
-
-The purpose of the traceability graphs is also to provide easy references on
-what has to be additionally modified if a certain component is changed.  The
-arrows in the graphs represent dependencies. The component at the tail of an
-arrow is depended on by the component at the head of that arrow. Therefore, if a
-component is changed, the components that it points to should also be
-changed. Figure~\ref{Fig_ATrace} shows the dependencies of theoretical models,
-general definitions, data definitions, instance models, likely changes, and
-assumptions on each other. Figure~\ref{Fig_RTrace} shows the dependencies of
-instance models, requirements, and data constraints on each other.
-
-% \begin{figure}[h!]
-% 	\begin{center}
-% 		%\rotatebox{-90}
-% 		{
-% 			\includegraphics[width=\textwidth]{ATrace.png}
-% 		}
-% 		\caption{\label{Fig_ATrace} Traceability Matrix Showing the Connections Between Items of Different Sections}
-% 	\end{center}
-% \end{figure}
-
-
-% \begin{figure}[h!]
-% 	\begin{center}
-% 		%\rotatebox{-90}
-% 		{
-% 			\includegraphics[width=0.7\textwidth]{RTrace.png}
-% 		}
-% 		\caption{\label{Fig_RTrace} Traceability Matrix Showing the Connections Between Requirements, Instance Models, and Data Constraints}
-% 	\end{center}
-% \end{figure}
-
-\section{Development Plan}
-
-\plt{This section is optional.  It is used to explain the plan for developing
-  the software.  In particular, this section gives a list of the order in which
-  the requirements will be implemented.  In the context of a course  this is
-  where you can indicate which requirements will be implemented as part of the
-  course, and which will be ``faked'' as future work.  This section can be
-  organized as a prioritized list of requirements, or it could should the
-  requirements that will be implemented for ``phase 1'', ``phase 2'', etc.}
-
-\section{Values of Auxiliary Constants}
-
-\plt{Show the values of the symbolic parameters introduced in the report.}
-
-\plt{The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.}
-
-\plt{The value of FRACTION, for the Maintainability NFR would be given here.}
-
-\newpage
-
-\bibliographystyle {plainnat}
-\bibliography {../../refs/References}
-
-\newpage
-
-\noindent \plt{The following is not part of the template, just some things to consider
-  when filing in the template.}
-
-\noindent \plt{Grammar, flow and \LaTeX advice:
-\begin{itemize}
-\item For Mac users \texttt{*.DS\_Store} should be in \texttt{.gitignore}
-\item \LaTeX{} and formatting rules
-\begin{itemize}
-\item Variables are italic, everything else not, includes subscripts (link to
-  document)
-\begin{itemize}
-\item \href{https://physics.nist.gov/cuu/pdf/typefaces.pdf}{Conventions}
-\item Watch out for implied multiplication
-\end{itemize}
-\item Use BibTeX
-\item Use cross-referencing
-\end{itemize}
-\item Grammar and writing rules
-\begin{itemize}
-\item Acronyms expanded on first usage (not just in table of acronyms)
-\item ``In order to'' should be ``to''
-\end{itemize}
-\end{itemize}}
-
-\noindent \plt{Advice on using the template:
-\begin{itemize}
-\item Difference between physical and software constraints
-\item Properties of a correct solution means \emph{additional} properties, not
-  a restating of the requirements (may be ``not applicable'' for your problem).
-  If you have a table of output constraints, then these are properties of a
-  correct solution.
-\item Assumptions have to be invoked somewhere
-\item ``Referenced by'' implies that there is an explicit reference
-\item Think of traceability matrix, list of assumption invocations and list of
-  reference by fields as automatically generatable
-\item If you say the format of the output (plot, table etc), then your
-  requirement could be more abstract
-\end{itemize}
-}
+\subsection{References}
+\begin{thebibliography}{9}
+  \bibitem{FIPPA} Freedom of Information and Protection of Privacy Act (FIPPA), McMaster University; University Secretariat, \url{https://secretariat.mcmaster.ca/privacy/notice-of-collection-use-and-disclosure/}
+  \bibitem{WCAG} Web Content Accessibility Guidelines (WCAG) 2, Web Accessibility Initiative, \url{www.w3.org/WAI/WCAG21/quickref/#contrast-minimum}. Accessed 13 Oct. 2023. 
+  \bibitem{Legislative Services} Legislative Services.``Personal Information Protection and Electronic Documents Act.'' Personal Information Protection and Electronic Documents Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/acts/p-8.6/}. 
+  \bibitem{CFLC} ``Consolidated Federal Laws of Canada, Privacy Act.'' Privacy Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/ACTS/P-21/page-1.html#h-397177}. 
+\end{thebibliography}
 
 \newpage{}
 \section*{Appendix --- Reflection}
@@ -1330,8 +1387,6 @@ The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.  Please answer the following questions:
 
 \begin{enumerate}
-  \item Which of the courses you have taken, or are currently taking, will help
-  your team to be successful with your capstone project.
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete this capstone project?  Examples of possible knowledge
   to acquire include domain specific knowledge from the domain of your
@@ -1339,10 +1394,69 @@ graduate attribute of Lifelong Learning.  Please answer the following questions:
   computer science knowledge.  Skills may be related to technology, or writing,
   or presentation, or team management, etc.  You should look to identify at
   least one item for each team member.
+  
+  
+\quad The team members will need to collectively acquire some technical and non-technical skills and knowledge in order to succeed in this capstone project. The following is a list of skills that are critical to the project and course deliverables.
+  \begin{enumerate}[1]
+      \item Presentation skills for demonstrations and capstone EXPO
+      \item Documentation skills
+      \item Team management skills including time management and work distribution
+      \item Skills of Unity game development
+      \item Skills of Unity AR development
+      \item Integrating external backend systems into a Unity project
+      \item Skills of git
+      \item Front-end development skills
+      \item Back-end development skills including server deployment and database
+      \item Organizational skills to lead meetings and discussions on unclear topics in the project
+  \end{enumerate}
+  
   \item For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
   mastering the skill?  Of the identified approaches, which will each team
   member pursue, and why did they make this choice?
-\end{enumerate}
+  
+  
+\quad For non-technical skills, team members can develop those skills by practicing and attending courses/workshops. Members can leverage LinkedIn Learning and McMaster workshops to develop management and organizational skills. For documentation and presentation skills, team members can also join related events hosted by the university or refer to past documents and presentations.\\
+  There are even more resources available for developing technical skills. Online learning platforms like Udemy will be used for the team to learn new technology-specific domain knowledge and skills. Other online resources like YouTube tutorials and official documentation can help the team master those technical skills as well.\\
+  Listed below under each team member's name is a list of skills that the team member will focus on and why they decide to work on them.\\
+\begin{itemize}
+      \item \textbf{Zihao Du}
+      \begin{itemize}
+          \item Skills: 1, 2, 3, 4, 8
+      \end{itemize}
+      Soft skills are quite important for a team and an engineer. And that's why I'd like to focus on soft skills like presentation skills and documentation skills. It will be not only critical to succeed in this capstone project but also beneficial to software engineering careers. Communication plays a very important role in software engineer's daily work and I will take this opportunity to further improve my skills.\\
+      I'll also focus on Unity game development and front-end development because that attracts me the most and what I have the most experience in and I'd like to strengthen my skills and learn more about game development during this project.
+    \item \textbf{Michael (Minsung) Kim}
+        \begin{itemize}
+          \item Skills: 3, 7, 9, 10
+        \end{itemize}
+        All documentation and work progress will be tracked on git and meetings. Additionally, the work done will always be added to git to keep track of all work records. This will improve my skills in git and allow me to resolve merge conflicts better and manage any issues from the CI/CD pipeline. As the liaison, I need to ensure that the team is on the right track and no misunderstandings are left. We will have meetings regarding work done to keep everyone updated and let everyone know which tasks may be difficult or require further clarification. There will be discussions before the supervisor meeting so that we know what we need to ask and what subjects we could use their advice in. \\
+        I will focus on the back-end of the project so that data communication is secure and efficient. I am very interested in the database architecture and encryption that goes into on disk and in transit communication. I will learn more about different databases such as SQL and MongoDB, their benefits and security. As I have the advanced databases course, this will help me with the database skills. The information security course will help with the data encryption part of the back-end development as well. Further research and looking into open source libraries that support back-end will help significantly as well.
+      \item \textbf{Firas Elayan}
+        \begin{itemize}
+        \item Skills: 4, 5, 6, 7, 9
+        \end{itemize}
+        Unity and other general platforms for developing products such as the one in our capstone project are a new field to me that I do not have a lot of experience in. I'd like to acquire a near-advanced level of technical skills in relation to those platforms so that I'm able to build an array of good products of a very useful type that function properly and meet all requirements.\\
+        Git is an extremely beneficial tool if used correctly. I'd like to improve my skills in git to ensure this project and future projects I participate in building have a smooth development life, especially with how expensive errors and issues can become the more complex the project gets.
+      \item \textbf{Matthew Miller}
+        \begin{itemize}
+            \item Skills: 1, 2, 4, 8, 9
+        \end{itemize}
+        I want to work on my presentation skills and documentation skills so that I can focus on improving my oral and written communication skills. Since I have autism, communication has always been a challenge, so I would like to take the opportunity to work on those skills.
+        I also chose to focus on Unity game development skills, front-end development skills, and back-end development skills so that I can gain experience with a variety of different coding skills.
 
+      \item \textbf{Waseef Nayeem}
+        \begin{itemize}
+            \item Skills: 2, 4, 5, 6, 10
+        \end{itemize}
+        I have chosen to focus on a combination of skills that I am experienced in as well ones that are more difficult or new to me. Game development is one of my passions and main hobbies and I always want to learn new techniques to improve my skills. This is why I want to focus on the Unity game and AR development tasks. Since most of my experience is with 2D games, 3D will pose some challenges that I am excited to tackle. I am also interested in learning how to integrate external systems and services into game engines such as Unity as I believe the experience will benefit my future projects. My work on prior projects has taught me the importance of proper documentation. I could improve my documentations skills by practicing technical writing or documentation prior projects. I could also learn new documentation tools and techniques such as using GitHub's wiki features or making a ReadTheDocs page. Lastly, I would like to improve my organization and participation in team settings. To accomplish this I could prepare a personal agenda of items ahead of time or log a to-do list of action items.
+        
+      \item \textbf{Abhiram Neelamraju}
+        \begin{itemize}
+            \item Skills: 3, 4, 5, 6
+        \end{itemize}
+        The skills I plan on acquiring and focusing on have been chosen based on where I feel like I want to improve the most and where I feel like I can contribute the most. I want to be a good team member and possess good team management skills so that I can do well in the future as well in team oriented- environments. I can do so by taking an active role in group discussions and doing my fair share of work on time. I’m also extremely interested in learning about the Unity engine as a whole (4,5,6). Starting from learning basic skills related to Unity game development and Unity AR development. These skills can be acquired through looking through the detailed and comprehensive documentation available online and well as free video tutorials on websites such as YouTube. The specific skills for Integrating external backend systems into a Unity project is more specific and will be learned more through reading documentation, but there are still video tutorials that teach these skills which I will be following. I also plan on exploring paid options for digital courses on websites such as coursera and Udemy.
+
+\end{itemize}
+\end{enumerate}
 \end{document}
