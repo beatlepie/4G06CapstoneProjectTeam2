@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<QCARInfo>
+    <TargetSet version="3.4">
+        <AreaTarget version="5.1" bbox="-26.7301 -7.7488 -21.7354 17.0403 2.7254 23.6990" targetId="68771b2c08d3418592ff2f5512f0a723" name="JHElobby" pathAuthoring="68771b2c08d3418592ff2f5512f0a723_authoring.glb" pathOcclusion="68771b2c08d3418592ff2f5512f0a723_occlusion.3dt" pathNavMesh="68771b2c08d3418592ff2f5512f0a723_navmesh.glb" cloudTarget="false" />
+    </TargetSet>
+</QCARInfo>

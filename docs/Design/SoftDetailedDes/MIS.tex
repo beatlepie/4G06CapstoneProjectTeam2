@@ -53,8 +53,8 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+Jan 15 & 1.0 & Add introduction and module decomposition\\
+Jan 17 & 1.0 & Revision 0\\
 \bottomrule
 \end{tabularx}
 
@@ -62,9 +62,20 @@ Date 2 & 1.1 & Notes\\
 
 \section{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
+See SRS Documentation at \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}
+\subsection{Abbreviations and Acronyms}
 
-\wss{Also add any additional symbols, abbreviations or acronyms}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l l} 
+  \toprule		
+  \textbf{symbol} & \textbf{description}\\
+  \midrule 
+  MIS & Module Interface Specification \\
+  MG & Module Guide \\
+  SRS & Software Requirement Specification\\
+  AR & Augmented Reality\\
+  \bottomrule
+\end{tabular}\\
 
 \newpage
 
@@ -76,18 +87,13 @@ See SRS Documentation at \wss{give url}
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
+The following document details the Module Interface Specifications for CampusConnections. CampusConnections is a social media application with impressive AR camera and real time location map features that allows McMaster University students and visitors have an immersive user experience and expand their social networking. This application allows users to make new friends online and also encourage users to strengthen the friendship by in-person meet-ups with a on-campus location-sharing feature. It also provides heat maps of events and users, which allows students to join the most popular activities on campus. Besides, the application maintainers will share up-to-date events and lectures information for the community. The MIS will detail specifications for the project described above.
 
-Complementary documents include the System Requirement Specifications
-and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+Complementary documents include the System Requirement Specifications (SRS)
+and Module Guide. (MG)  The full documentation and implementation can be
+found at \url{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf} and \url{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/Design/SoftArchitecture/MG.pdf}
 
 \section{Notation}
-
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
-
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
 \cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
@@ -108,6 +114,19 @@ character & char & a single symbol or digit\\
 integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
 natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
 real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+boolean & $\mathbb{B}$ & True or False\\
+sequence of T & $<$T$>$ & a list of object with type T\\
+asynchronous step T & Task$<$T$>$ & an asynchronous result of T\\
+activity & Activity & generic class with $<$T$>$ that can be instantiated with type Lecture or Event\\
+lecture & Lecture & see MIS of Lecture Module \\
+event & Event & see MIS of Lecture Module \\
+uniform resource identifier & Uri & C\# Class that provides easy access to a link (URI) \\
+date and time & DateTime & provides a specific date and time \\
+user & User & see MIS of User Module \\
+scene & Scene & a user interface created in Unity \\
+database reference & DatabaseReference & reference to the root location of a database \\
+
+
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -134,18 +153,33 @@ The following table is taken directly from the Module Guide document for this pr
 {Hardware-Hiding} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding}
+& AR Interface Module\\
+& Map Interface Module\\
+& User Module\\
+& Lecture Module\\
+& Event Module\\
+& Account Module\\
+& Permission Module\\
+& User Profile Module\\
+& User Login Module\\
+& Friend Manager Module\\ 
+& Friend Request Module\\
+& Friend Chat Module\\
+& Lecture Detail View Module\\
+& Event Detail View Module\\
+& Lecture List Manager Module\\
+& Event List Manager Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
+\multirow{3}{0.3\textwidth}{Software Decision}
+& Database Module\\
+& Server Module\\
+& Authentication Module\\
+& AR Camera Module\\
+& Mapbox Module\\
+& Activity Detail View Module\\
+& Pagination and Filter Module\\
 \bottomrule
 
 \end{tabular}
@@ -154,34 +188,41 @@ The following table is taken directly from the Module Guide document for this pr
 \end{table}
 
 \newpage
-~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\section{MIS of User Module} \label{mUser}
 
 \subsection{Module}
 
-\wss{Short name for the module}
+User
 
 \subsection{Uses}
 
+Lecture Module, Event Module
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None
 
 \subsubsection{Exported Access Programs}
-
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+User & String, String, Uri, String, $\mathbb{R}$, $<$User$>$, $<$User$>$, $<$Lecture$>$, $<$Event$>$ & User & -\\
+SetNickName & String & - & -\\
+SetPhotoUri & Uri & - & -\\
+SetProgram & String & - & -\\
+SetLevel & $\mathbb{R}$ & - & -\\
+AddFriend & User & - & -\\
+RemoveFriend & User & - & IndexOutofBound Exception\\
+AddRequester & User & - & -\\
+RemoveRequester & User & - & IndexOutofBound Exception\\
+AddLecture & Lecture & - & -\\
+RemoveLecture & Lecture & - & IndexOutofBound Exception\\
+AddEvent & Event & - & -\\
+RemoveEvent & Event & - & IndexOutofBound Exception\\
 \hline
 \end{tabular}
 \end{center}
@@ -190,52 +231,2237 @@ The following table is taken directly from the Module Guide document for this pr
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+\begin{itemize}
+\item email: String, User email
+\item nickName: String, User nickName
+\item photoUri: Uri, User avatar
+\item program: String, User program
+\item level: $\mathbb{R}$, User program level
+\item friends: $<$User$>$, List of friends
+\item requesters: $<$User$>$, List of friend requester
+\item lectures: $<$Lecture$>$, Pinned lecture
+\item events: $<$Event$>$, Pinned event
+\end{itemize}
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+None
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+Strings passed as input are of valid format, all the state variables of the object are directly accessible so getter is not needed.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent User(email, nickName, photoUri, program, level, friends, requesters, lectures,events):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: $email, nickName, photoUri, program, level, friends, requesters, lectures, events := \\ email, nickName, photoUri, program, level, friends, requesters, lectures, events$
+\item output: $out := self$
+\item exception: none
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
+\noindent SetNickName(newName):
+\begin{itemize}
+\item transition: $nickName := newName$
+\item output: none
+\item exception: none
+\end{itemize}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
+\noindent SetPhotot(newUri):
+\begin{itemize}
+\item transition: $photoUri := newUri$
+\item output: none
+\item exception: none
+\end{itemize}
 
+\noindent SetProgram(newProgram):
+\begin{itemize}
+\item transition: $program := newProgram$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetLevel(newLevel):
+\begin{itemize}
+\item transition: $level := newLevel$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AddFriend(newFriend):
+\begin{itemize}
+\item transition: $friends := friends + \{newFriend\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent RemoveFriend(targetFriend):
+\begin{itemize}
+\item transition: $friends := friends - \{targetFriend\}$
+\item output: none
+\item exception: $exc := targetFriend \notin friends \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent AddRequester(newRequester):
+\begin{itemize}
+\item transition: $requesters := requesters + \{newRequester\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent RemoveRequester(targetRequester):
+\begin{itemize}
+\item transition: $requesters := requesters - \{targetRequester\}$
+\item output: none
+\item exception: $exc := targetRequester \notin requesters \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent AddLecture(newLec):
+\begin{itemize}
+\item transition: $lectures := lectures + \{newLec\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent RemoveLecture(targetLecture):
+\begin{itemize}
+\item transition: $lectures := lectures - \{targetLecture\}$
+\item output: none
+\item exception: $exc := targetLecture \notin lectures \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent AddEvent(newEvent):
+\begin{itemize}
+\item transition: $events := events + \{newEvent\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent RemoveEvent(targetEvent):
+\begin{itemize}
+\item transition: $events := events - \{targetEvent\}$
+\item output: none
+\item exception: $exc := targetEvent \notin events \Rightarrow IndexOutofBound Exception$
+\end{itemize}
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+None
 
 \newpage
 
-\bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
+\section{MIS of Lecture Module} \label{mLec}
+
+\subsection{Module}
+
+Lecture
+
+\subsection{Uses}
+
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Lecture & String, String, String, String, String & Lecture & -\\
+SetName & String & - & -\\
+SetInstructor & String & - & -\\
+SetTime & String & - & -\\
+SetLocation & String & - & -\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item code: String, Lecture code
+\item name: String, Lecture name
+\item instructor: String, Lecture instructor
+\item time: String, Lecture time
+\item location: String, Lecture location
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+Strings passed as input are of valid format, all the state variables of the object are directly accessible so getter is not needed.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Lecture(lecCode, lecName, lecInstructor, lecTime, lecLocation):
+\begin{itemize}
+\item transition: $code, name, instructor, time, location := \\ lecCode, lecName, lecInstructor, lecTime, lecLocation$
+\item output: $out := self$
+\item exception: none
+\end{itemize}
+
+\noindent SetName(newName):
+\begin{itemize}
+\item transition: $name := newName$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetInstructor(newInstructor):
+\begin{itemize}
+\item transition: $instructor := newInstructor$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetTime(newTime):
+\begin{itemize}
+\item transition: $time := newTime$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetLocation(newLocation):
+\begin{itemize}
+\item transition: $location := newLocation$
+\item output: none
+\item exception: none
+\end{itemize}
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of Event Module} \label{mEvent}
+
+\subsection{Module}
+
+Event
+
+\subsection{Uses}
+
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Event & String, String, String,DateTime, $\mathbb{R}$, String, $\mathbb{B}$ & Event & -\\
+SetDescription & String & - & -\\
+SetOrganizer & String & - & -\\
+SetStartTime & DateTime & - & -\\
+SetDuration & $\mathbb{R}$ & - & -\\
+SetLocation & String & - & -\\
+SetPublic & $\mathbb{B}$ & - & -\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item name: String, Event name
+\item description: String, Event description
+\item organizer: String, Event hosted by
+\item startTime: DateTime, Event start date and time
+\item duration: $\mathbb{R}$, Event duration (in minutes)
+\item location: String,Event location (room and building)
+\item public : $\mathbb{B}$, is event public
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+Strings passed as input are of valid format, all the state variables of the object are directly accessible so getter is not needed.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Event(name, description, organizer, startTime, duration, location, public):
+\begin{itemize}
+\item transition: $name, description, organizer, startTime, duration, location, public := \\ name, description, organizer, startTime, duration, location, public$
+\item output: $out := self$
+\item exception: none
+\end{itemize}
+
+\noindent SetDescription(newDescription):
+\begin{itemize}
+\item transition: $description := newDescription$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetOrganizer(newOrganizer):
+\begin{itemize}
+\item transition: $organizer := newOrganizer$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetStartTime(newTime):
+\begin{itemize}
+\item transition: $startTime := newTime$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetDuration(newDuration):
+\begin{itemize}
+\item transition: $duration := newDuration$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetLocation(newLocation):
+\begin{itemize}
+\item transition: $location := newLocation$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SetPublic(newPublicity):
+\begin{itemize}
+\item transition: $public := newPublicity$
+\item output: none
+\item exception: none
+\end{itemize}
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of Account Module} \label{mAccount}
+
+\subsection{Module}
+
+Account
+
+\subsection{Uses}
+
+Database Module, User Module, Authentication Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+UpdateNickName & String & - & -\\
+UpdateProgram & String & - & -\\
+UpdateLevel & $\mathbb{N}$ & - & -\\
+AddFriend & User & - & -\\
+DeleteFriend & User & - & IndexOutofBound Exception\\
+AddRequest & User & - & -\\
+DeleteRequest & User & - & IndexOutofBound Exception\\
+PinLecture & Lecture & - & -\\
+UnPinLecture & Lecture & - & IndexOutofBound Exception\\
+PinEvent & Event & - & -\\
+UnPinEvent & Event & - & IndexOutofBound Exception\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item User: User
+User of the account
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+All the sate variables of User is accessible directly so there is no getters in the module.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent UpdateNickName(newName):
+\begin{itemize}
+\item transition: $User.SetNickName(newName)$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent UpdateProgram(newProgram):
+\begin{itemize}
+\item transition: $User.SetProgram(newProgram)$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent UpdateLevel(newLevel):
+\begin{itemize}
+\item transition: $User.SetLevel(newLevel)$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AddFriend(newFriend):
+\begin{itemize}
+\item transition: $User.AddFriend(newFriend)$ 
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DeleteFriend(targetFriend):
+\begin{itemize}
+\item transition: $User.RemoveFriend(targetFriend)$ 
+\item output: none
+\item exception: $exc := targetFriend \notin User.friends \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent AddRequest(newFriend):
+\begin{itemize}
+\item transition: $User.AddRequester(newFriend)$ 
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DeleteRequest(targetFriend):
+\begin{itemize}
+\item transition: $User.RemoveRequester(targetFriend)$ 
+\item output: none
+\item exception: $exc := targetFriend \notin User.friendRequests \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent PinLecture(newLec):
+\begin{itemize}
+\item transition: $User.AddLecture(newLec)$ 
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent UnpinLecture(targetLec):
+\begin{itemize}
+\item transition: $User.RemoveLecture(targetLec)$ 
+\item output: none
+\item exception: $exc := targetLec \notin User.lectures \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent PinEvent(newEvent):
+\begin{itemize}
+\item transition: $User.AddEvent(newEvent)$ 
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent UnpinLecture(targetEvent):
+\begin{itemize}
+\item transition: $User.RemoveEvent(targetEvent)$ 
+\item output: none
+\item exception: $exc := targetEvent \notin User.events \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of Friend Manager Module} \label{mFM}
+
+\subsection{Module}
+
+FriendManager
+
+\subsection{Uses}
+
+Account Module, Chat Module, Unity Transform Type
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+DisplayFriendList & - & $<$Tranform$>$ & - \\
+onClickDeleteFriend & User & - & IndexOutofBound Exception\\
+onClickViewFriend & User & - & IndexOutofBound Exception\\
+onClickMessageFriend & User & 2D seq of pixels & IndexOutofBound Exception\\
+onClickSendRequest & User & $\mathbb{B}$ & -\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+Assume the singleton Account is accessible from this module.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent DisplayFriendList():
+\begin{itemize}
+\item transition: none
+\item output: $out := friendContainer\ where\ (\forall x : \mathbb{Z} | 0 \leq x \leq Account.friends.length:\\ friendsContainer[i].position, friendsContainer[i].content =\\ (0, i*HEIGHT), Account.friends[i])$,
+\item exception: none
+\end{itemize}
+
+\noindent onClickDeleteFriend(targetUser):
+\begin{itemize}
+\item transition: Account.DeleteFriend(targetUser)
+\item output: none
+\item exception: $exc := targetUser.email \notin Account.User.friends \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent onClickViewFriend(targetUser):
+\begin{itemize}
+\item transition: Switch scene to user profile where User = targetUser
+\item output: none
+\item exception: $exc := targetUser.email \notin Account.User.friends \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent onClickMessageFriend(targetUser):
+\begin{itemize}
+\item transition: Call Chat Module to establish a connection
+\item output: UI of friend chat between Account.User and targetUser
+\item exception: $exc := targetUser.email \notin Account.User.friends \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\noindent onClickSendRequest(targetUser):
+\begin{itemize}
+\item transition: targetUser.AddRequest(Account1.User.email) if the current user has not send a request yet
+\item output: $Account1.User.email \notin targetUser.friendRequest$
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+HEIGHT = 300 px
+
+\newpage
+
+\section{MIS of Friend Request Module} \label{mFR}
+
+\subsection{Module}
+
+FriendRequest
+
+\subsection{Uses}
+
+Account Module, Unity Transform Type
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+DisplayRequestList & - & $<$Transform$>$ & -\\
+onClickAcceptRequest & User & - & IllegalArgument Exception \\
+onClickIgnoreRequest & User & - & IllegalArgument Exception\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+Assume the singleton Account is accessible from this module.
+
+\subsubsection{Access Routine Semantics}
+\noindent DisplayRequestList():
+\begin{itemize}
+\item transition: none
+\item output: $out := requestContainer\ where\ (\forall x : \mathbb{Z} | 0 \leq x \leq Account.friendRequests.length:\\ requestContainer[i].position, requestContainer[i].content =\\(0, i*HEIGHT), Account.friendRequests[i])$,
+\item exception: none
+\end{itemize}
+
+\noindent onClickAcceptRequest(targetUser):
+\begin{itemize}
+\item transition: targetUser.friends := targetUser.friends + {Account.User.email}\\Account.User.AddFriend(targetUser)\\$Account.User.DeleteRequest(targetUser)$
+\item output: none
+\item exception: $exc := targetUser \notin Account.User.friendRequests \Rightarrow\\ IllegalArgument Exception$
+\end{itemize}
+
+\noindent onClickIgnoreRequest(targetUser):
+\begin{itemize}
+\item transition: $Account.User.DeleteRequest(targetUser)$
+\item output: none
+\item exception: $exc := targetUser \notin Account.User.friendRequests \Rightarrow\\ IllegalArgument Exception$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent UpdateBadge(): String\\
+It returns the content of friend request badge given the request number
+\begin{itemize}
+\item transition: none
+\item output: $out := requestNum = 0 \Rightarrow empty string \\ 0 < requestNum < 100 \Rightarrow requestNum\\ 100 \leq requestNum \Rightarrow 99+$
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Constants}
+HEIGHT = 150 px
+
+\newpage
+
+\section{MIS of Activity Detail View Module} \label{mADV}
+
+\subsection{Module}
+
+ActivityDetailView
+
+\subsection{Uses}
+
+Database Module, Permission Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+ViewActivities & - & - & - \\
+AddActivity & Activity & - & InvalidPermission Exception \\
+EditActivity & Activity, Activity & - & IndexOutofBound Exception, InvalidPermission Exception \\
+DeleteActivity & Activity & - & IndexOutofBound Exception, InvalidPermission Exception \\
+PinActivity & Activity & - & - \\
+UnpinActivity & Activity & - & IndexOutofBound Exception \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item activities: set of Activity
+  \item pinnedActivities: set of Activity
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The singleton module Permission is accessible from this module.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent ViewActivities():
+\begin{itemize}
+\item transition: Display activities
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AddActivity(newActivity):
+\begin{itemize}
+\item transition: $activities := activities + \{newActivity\}$
+\item output: none
+\item exception: $exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent EditActivity(targetActivity, editedActivity):
+\begin{itemize}
+\item transition: $activities := activities - \{targetActivity\} + \{editedActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\ 
+                  exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent DeleteActivity(targetActivity):
+\begin{itemize}
+\item transition: $activities := activities - \{targetActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\
+                  exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent PinActivity(newActivity):
+\begin{itemize}
+\item transition: $pinnedActivities := pinnedActivities + \{newActivity\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent UnpinActivity(targetActivity):
+\begin{itemize}
+\item transition: $pinnedActivities := pinnedActivities - \{targetActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin pinnedActivities \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+
+None
+
+\newpage
+
+\section{MIS of Lecture Detail View Module} \label{mLDV}
+
+\subsection{Module}
+
+LectureDetailView\\
+Inherit Activity Detail View Module (Activity Detail View $<$Lecture$>$)
+\subsection{Uses}
+
+Activity Detail View Module, Lecture Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+ViewActivities & - & - & - \\
+AddActivity & Lecture & - & InvalidPermission Exception \\
+EditActivity & Lecture, Lecture & - & IndexOutofBound Exception, InvalidPermission Exception \\
+DeleteActivity & Lecture & - & IndexOutofBound Exception, InvalidPermission Exception \\
+PinActivity & Lecture & - & - \\
+UnpinActivity & Lecture & - & IndexOutofBound Exception \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item activities: set of Lecture
+  \item pinnedActivities: set of Lecture
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The singleton module Permission is accessible from this module.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent ViewActivities():
+\begin{itemize}
+\item transition: Display lectures
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AddActivity(newActivity):
+\begin{itemize}
+\item transition: $activities := activities + \{newActivity\}$
+\item output: none
+\item exception: $exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent EditActivity(targetActivity, editedActivity):
+\begin{itemize}
+\item transition: $activities := activities - \{targetActivity\} + \{editedActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\ 
+                  exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent DeleteActivity(targetActivity):
+\begin{itemize}
+\item transition: $activities := activities - \{targetActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\
+                  exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent PinActivity(newActivity):
+\begin{itemize}
+\item transition: $pinnedActivities := pinnedActivities + \{newActivity\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent UnpinActivity(targetActivity):
+\begin{itemize}
+\item transition: $pinnedActivities := pinnedActivities - \{targetActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin pinnedActivities \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+
+None
+
+\newpage
+
+\section{MIS of Event Detail View Module} \label{mEDV}
+
+\subsection{Module}
+
+EventDetailView\\
+Inherit Activity Detail View Module (Activity Detail View $<$Event$>$)
+\subsection{Uses}
+
+Activity Detail View Module, Event Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+ViewActivities & - & - & - \\
+AddActivity & Event & - & InvalidPermission Exception \\
+EditActivity & Event, Event & - & IndexOutofBound Exception, InvalidPermission Exception \\
+DeleteActivity & Event & - & IndexOutofBound Exception, InvalidPermission Exception \\
+PinActivity & Event & - & - \\
+UnpinActivity & Event & - & IndexOutofBound Exception \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item activities: set of Event
+  \item pinnedActivities: set of Event
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The singleton module Permission is accessible from this module.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent ViewActivities():
+\begin{itemize}
+\item transition: Display events
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AddActivity(newActivity):
+\begin{itemize}
+\item transition: $activities := activities + \{newActivity\}$
+\item output: none
+\item exception: $exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent EditActivity(targetActivity, editedActivity):
+\begin{itemize}
+\item transition: $activities := activities - \{targetActivity\} + \{editedActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\ 
+                  exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent DeleteActivity(targetActivity):
+\begin{itemize}
+\item transition: $activities := activities - \{targetActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\
+                  exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
+\end{itemize}
+
+\noindent PinActivity(newActivity):
+\begin{itemize}
+\item transition: $pinnedActivities := pinnedActivities + \{newActivity\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent UnpinActivity(targetActivity):
+\begin{itemize}
+\item transition: $pinnedActivities := pinnedActivities - \{targetActivity\}$
+\item output: none
+\item exception: $exc := targetActivity \notin pinnedActivities \Rightarrow IndexOutofBound Exception$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+
+None
+
+\newpage
+
+\section{MIS of Authentication Module} \label{mAuth}
+
+\subsection{Module}
+
+Authentication
+
+\subsection{Uses}
+
+Database Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+	\hline
+	\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+	\hline
+	User & - & FirebaseUser & TokenExpiredException \\
+	\hline
+	\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item User: FirebaseUser
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The user will have a unique account and only has access to that account.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent User():
+\begin{itemize}
+\item transition: $(Auth.CurrentUser.valid = true) \rightarrow User = Auth.CurrentUser$ 
+\item output: $User := Auth.CurrentUser$
+\item exception: $(Auth.CurrentUser.valid = false) \rightarrow TokenExpiredException$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent Login(\_email, \_password):
+\begin{itemize}
+\item transition: $\exists <\_email, \_password> \in FirebaseAuth \Rightarrow Login$
+\item output: $User = AuthResult.CurrentUser$
+\item exception: $exc:= \lnot(\exists <\_email, \_password> \in FirebaseAuth) \Rightarrow AuthFailedException$
+\end{itemize}
+
+\noindent Register():
+\begin{itemize}
+\item transition: $\lnot(\exists \_email \in FirebaseAuth) \rightarrow FirebaseAuth.add(User) \land FirebaseDatabase.add(User)$ 
+\item output: $User \in FirebaseAuth \land User \in FirebaseDatabase$
+\item exception: $\exists \_email \in FirebaseAuth \rightarrow IllegalDatabaseOperationException$
+\end{itemize}
+
+\subsubsection{Local Constants}
+
+\begin{itemize}
+  \item auth: FirebaseAuth
+  \item DatabaseReference: DatabaseReference
+\end{itemize}
+
+\newpage
+
+\section{MIS of Permission Module} \label{mPerm}
+
+\subsection{Module}
+
+Permission
+
+\subsection{Uses}
+
+Authentication Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+	\hline
+	\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+	\hline
+	isAdmin & - & Boolean & - \\
+	ChangePermission & User & - & InvalidPermissionException \\
+	\hline
+	\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item User: FirebaseUser
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The user is logged in already.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent isAdmin():
+\begin{itemize}
+\item transition: $(Auth.CurrentUser.valid = true) \rightarrow User = Auth.CurrentUser$ 
+\item output: $(Auth.CurrentUser.admin = true \rightarrow true) \lor (Auth.CurrentUser.admin = false \rightarrow false)$
+\item exception: $(Auth.CurrentUser.valid = false) \rightarrow TokenExpiredException$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent RefreshToken(user):
+\begin{itemize}
+\item transition: $\exists <\_email, \_password> \in FirebaseAuth \Rightarrow Login$
+\item output: $User = AuthResult.CurrentUser$
+\item exception: $exc:= \lnot(\exists <\_email, \_password> \in FirebaseAuth) \Rightarrow AuthFailedException$
+\end{itemize}
+
+\subsubsection{Local Constants}
+
+None
+
+\newpage
+
+\section{MIS of User Profile Module} \label{mUP}
+
+\subsection{Module}
+
+User Profile
+
+\subsection{Uses}
+
+Authentication Module, Database Module, User Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+None
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item User: FirebaseUser
+\item CurrentUser: Boolean
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The user exists and the current user is logged in already.
+
+\subsubsection{Access Routine Semantics}
+
+\begin{center}
+	\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+	\hline
+	\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+	\hline
+	UpdateDisplay & String & Scene & - \\
+	\hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Local Functions}
+
+\noindent UpdateDisplay(Message):
+\begin{itemize}
+\item transition: $StatusMessage = Message$ 
+\item output: Scene
+\item exception: $(Auth.LoginResult = false) \rightarrow InvalidLoginException$
+\end{itemize}
+
+\noindent GetUserData(user):
+\begin{itemize}
+\item transition: $\exists \_email \in Database \Rightarrow Database.UserData$
+\item output: $User = UserData$
+\item exception: None
+\end{itemize}
+
+\subsubsection{Local Constants}
+
+\begin{itemize}
+	\item Placeholder: set of Strings
+	\item Scene: Unity Scene that contains the default UI page
+\end{itemize}
+
+\newpage
+
+\section{MIS of User Login Module} \label{mLogin}
+
+\subsection{Module}
+
+User Login
+
+\subsection{Uses}
+
+Authentication Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+	\hline
+	\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+	\hline
+	UpdateDisplay & String & Scene & - \\
+	\hline
+	\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item User: FirebaseUser
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+The user is logged in already.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent UpdateDisplay(Message):
+\begin{itemize}
+\item transition: $StatusMessage = Message$ 
+\item output: Scene
+\item exception: $(Auth.LoginResult = false) \rightarrow InvalidLoginException$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent Login(\_email, \_password):
+\begin{itemize}
+\item transition: $\exists <\_email, \_password> \in Authentication \rightarrow User = Auth.LoginResult$ 
+\item output: true if the credential is correct, false otherwise
+\item exception: $(Auth.LoginResult = false) \rightarrow InvalidLoginException$
+\end{itemize}
+
+\subsubsection{Local Constants}
+
+Scene: Unity Scene that contains the default UI page
+
+\newpage
+
+\section{MIS of Lecture List Manager Module} \label{mLL}
+
+\subsection{Module}
+
+Lecture List Manager
+
+\subsection{Uses}
+
+Lecture Module, Pagination and Filter Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+LectureList & - & - & -\\
+Display & - & - & - \\
+OnClickLecture & Lecture & - & IllegalArgument Exception\\ 
+nextPage & - & - &  -\\
+prevPage & - & - &  -\\
+firstPage & - & - &  -\\
+lastPage & - & - &  -\\
+filter & String & - & -\\
+AddLecture & Lecture & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item lecList: $<$Lecture$>$, displayed lectures
+\item pageNum: $\mathbb{N}$, current page
+\item keyword: String, filter keyword
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent LectureList():
+\begin{itemize}
+\item transition: $lecList, pageNum, keyword := $all lectures in the database, 1, null
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent Display():
+\begin{itemize}
+\item transition: Display a list of lecture displayedLecs, where $displayedLecs := \\lecList.filter(keyword)[(pageNum-1) * PAGECOUNT, pageNum * PAGECOUNT]$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent OnClickLecture(targetLec):
+\begin{itemize}
+\item transition: Switch to Lecture Detail view with targetLec
+\item output: none
+\item exception: $exc := targetLec \notin lecList \Rightarrow IllegalArgument Exception$
+\end{itemize}
+
+\noindent nextPage():
+\begin{itemize}
+\item transition: $pageNum * PAGECOUNT < lecList.legnth \Rightarrow pageNum := pageNum + 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent prevPage():
+\begin{itemize}
+\item transition: $pageNum > 1 \Rightarrow pageNum := pageNum - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent firstPage():
+\begin{itemize}
+\item transition: $pageNum := 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent lastPage():
+\begin{itemize}
+\item transition: $pageNum := int(lecList/PAGECOUNT) + 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AddLecture(newLec):
+\begin{itemize}
+\item transition: $lecList := PagniationandFilter.Add(lecList, newLec)$
+\item output: none
+\item exception: none
+\end{itemize}
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+
+PAGECOUNT = 10
+
+\newpage
+
+\section{MIS of Event List Manager Module} \label{mEL}
+
+\subsection{Module}
+
+Event List Manager
+
+\subsection{Uses}
+
+Event Module, Pagination and Filter Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+EventList & - & - & -\\
+Display & - & - & - \\
+OnClickEvent & Lecture & - & IllegalArgument Exception\\ 
+nextPage & - & - &  -\\
+prevPage & - & - &  -\\
+firstPage & - & - &  -\\
+lastPage & - & - &  -\\
+filter & String & - & -\\
+AddEvent & Event & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item eventList: $<$Event$>$, displayed events
+\item pageNum: $\mathbb{N}$, current page
+\item keyword: String, filter keyword
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent EventList():
+\begin{itemize}
+\item transition: $eventList, pageNum, keyword := $all events in the database, 1, null
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent Display():
+\begin{itemize}
+\item transition: Display a list of event displayedEvents, where $displayedEvents := \\eventList.filter(keyword)[(pageNum-1) * PAGECOUNT, pageNum * PAGECOUNT]$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent OnClickEvent(targetEvent):
+\begin{itemize}
+\item transition: Switch to Event Detail view with targetEvent
+\item output: none
+\item exception: $exc := targetEvent \notin eventList \Rightarrow IllegalArgument Exception$
+\end{itemize}
+
+\noindent nextPage():
+\begin{itemize}
+\item transition: $pageNum * PAGECOUNT < eventList.legnth \Rightarrow pageNum := pageNum + 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent prevPage():
+\begin{itemize}
+\item transition: $pageNum > 1 \Rightarrow pageNum := pageNum - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent firstPage():
+\begin{itemize}
+\item transition: $pageNum := 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent lastPage():
+\begin{itemize}
+\item transition: $pageNum := int(eventList/PAGECOUNT) + 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent AddEvent(newEvent):
+\begin{itemize}
+\item transition: $eventList := PagniationandFilter.Add(eventList, newEvent)$
+\item output: none
+\item exception: none
+\end{itemize}
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+
+PAGECOUNT = 10
+
+\newpage
+
+\section{MIS of Pagination and Filter Module} \label{mPF}
+
+\subsection{Module}
+
+Pagination and Filter
+
+\subsection{Uses}
+
+Database Module, Permission Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Initialize & - & - & -\\
+Display & - & - & - \\
+nextPage & - & - &  -\\
+prevPage & - & - &  -\\
+firstPage & - & - &  -\\
+lastPage & - & - &  -\\
+filter & String & - & -\\
+Add & $<$T$>$, Activity & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item list: $<$T$>$, displayed entries
+\item pageNum: $\mathbb{N}$, current page
+\item keyword: String, filter keyword
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+Activity is a generic type $<$T$>$ and it can be instantiated with type Lecture and Event.\\
+The singleton module Permission is accessible from this module.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Initialize():
+\begin{itemize}
+\item transition: $list, pageNum, keyword := $all type T entries in the database, 1, null
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent Display():
+\begin{itemize}
+\item transition: Display a list of event T, where $T := \\list.filter(keyword)[(pageNum-1) * PAGECOUNT, pageNum * PAGECOUNT]$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent nextPage():
+\begin{itemize}
+\item transition: $pageNum * PAGECOUNT < list.legnth \Rightarrow pageNum := pageNum + 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent prevPage():
+\begin{itemize}
+\item transition: $pageNum > 1 \Rightarrow pageNum := pageNum - 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent firstPage():
+\begin{itemize}
+\item transition: $pageNum := 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent lastPage():
+\begin{itemize}
+\item transition: $pageNum := int(list/PAGECOUNT) + 1$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent Add(list, T):
+\begin{itemize}
+\item transition: none
+\item output: $out := Permission.isAdmin \Rightarrow list := list + \{T\}$ and update database
+\item exception: none
+\end{itemize}
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+
+PAGECOUNT: number of entries shown in one page
+
+\newpage
+
+\section{MIS of Database Module} \label{mDB}
+
+\subsection{Module}
+
+FirebaseDatabase
+
+\noindent This module uses Firebase Realtime Database library. For details of all syntax and semantics of exported constants and access programs, see \href{https://firebase.google.com/docs/reference/unity/namespace/firebase/database}{Firebase database documentation}.
+documentation
+\subsection{Uses}
+
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+See \href{https://firebase.google.com/docs/reference/unity/namespace/firebase/database}{Firebase database documentation}.
+\subsubsection{Exported Access Programs}
+The following table will show some functions the application uses most frequently, for more details, see \href{https://firebase.google.com/docs/reference/unity/namespace/firebase/database}{Firebase database documentation}.
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Child & String & DatabaseReference & PermissionDenied, NetworkError, ExpiredToken \\
+HasChild & String & $\mathbb{B}$ & PermissionDenied, NetworkError, ExpiredToken \\
+RemoveValueAsync & String & Task$<\mathbb{B}>$ & PermissionDenied,  NetworkError,  ExpiredToken \\
+SetValueAsync & String , String & Task$<\mathbb{B}>$ & PermissionDenied,  NetworkError,  ExpiredToken \\
+GetValueAsync & String & Task$<$DataSnapshot$>$ & PermissionDenied, NetworkError,  ExpiredToken \\
+GoOffline & - & - & PermissionDenied, NetworkError,  ExpiredToken \\
+GoOnline & - & - & PermissionDenied, NetworkError,  ExpiredToken \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item DBreference: Firebase.Database.DatabaseReference\\
+A reference to the root location of this database
+\item User: Firebase.Auth.FirebaseUser\\
+The current user that operates this database
+\item PermittedUsers: set of String\\
+The list of user emails that are allowed to read the database content
+\item Admins: set of String\\
+The list of user emails that are allowed to edit the database content
+\end{itemize}
+
+
+\subsubsection{Assumptions}
+
+Assume the database connection is stable and it will not disconnect unless the user disconnect it manually.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Child(pathString):
+\begin{itemize}
+\item transition: none 
+\item output: $out :=$ DatabaseReference to pathString relative to the root
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin PermittedUsers \Rightarrow PermissionDenied$
+\end{itemize}
+
+\noindent HasChild(pathString):
+\begin{itemize}
+\item transition: none 
+\item output: $out := DBreference.Child(pathString) = \text{null}$
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin PermittedUsers \Rightarrow PermissionDenied$
+\end{itemize}
+
+\noindent RemoveValueAsync(pathString):
+\begin{itemize}
+\item transition: $DBreference.Child(pathString) := \text{null}$
+\item output: $out := DBreference.HasChild(pathString)$
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin Admins \Rightarrow PermissionDenied$
+\end{itemize}
+
+\noindent SetValueAsync(pathString, value):
+\begin{itemize}
+\item transition: $DBreference.Child(pathString) := value$
+\item output: $out := DBreference.Child(pathString) = value$
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin Admins \Rightarrow PermissionDenied$
+\end{itemize}
+
+\noindent GetValueAsync(pathString):
+\begin{itemize}
+\item transition: none
+\item output: $out :=$ Snapshot of $DBreference.Child(pathString)$
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin PermittedUsers \Rightarrow PermissionDenied$
+\end{itemize}
+
+\noindent GoOffline():
+\begin{itemize}
+\item transition: Manually disconnect the FirebaseDatabase client from the server and disable automatic reconnection.
+\item output: none
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin Admins \Rightarrow PermissionDenied$
+\end{itemize}
+
+\noindent GoOnline():
+\begin{itemize}
+\item transition: Manually reestablish a connection to the FirebaseDatabase server and enable automatic reconnection.
+\item output: none
+\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin Admins \Rightarrow PermissionDenied$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of Server Module} \label{mServer}
+
+\subsection{Module}
+
+RTCServer
+
+\subsection{Uses}
+
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+SendMessage & User, String & Task & - \\
+SendLocation & Group, $\mathbb{R}$, $\mathbb{R}$ & Task & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+User identifiers are unique.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent SendMessage(recipient, msg):
+\begin{itemize}
+\item transition: none
+\item output: $out :=$ Task; $out$.IsCompleted $:= True$
+\item exception: none
+\end{itemize}
+
+\noindent SendLocation(friendGroup, lat, lon):
+\begin{itemize}
+\item transition: none
+\item output: $out :=$ Task; $out$.IsCompleted $:= True$
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of AR Camera} \label{mARCamera}
+
+\subsection{Module}
+
+AR Camera
+
+\subsection{Uses}
+
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+DetectTarget & - & - & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item cameraFeed: 2D array of pixels
+\item sceneCamera: Camera
+\item imageTargets: list of Target
+\item scanTargets: list of Target
+\end{itemize}
+
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent DetectTarget():
+\begin{itemize}
+\item transition: Implicitly invokes the AR Interface when a valid target is detected.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of AR Interface} \label{mARInterface}
+
+\subsection{Module}
+
+AR Interface
+
+\subsection{Uses}
+
+AR Camera
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Initialize & (String, $<$3D Objects$>$) & - & IllegalArgument Exception\\
+Display & String & - & llegalArgument Exception \\
+
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item dictionary: Dictionary$<$String, $<$3D Objects$>$$>$, the dictionary of target name and corresponding AR objects
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Initialize(target, objects):
+\begin{itemize}
+\item transition: $dictionary[target] := objects$
+\item output: none
+\item exception: $target \notin dictionary.keys \Rightarrow IllegalArgument Exception$
+\end{itemize}
+
+\noindent Display(target):
+\begin{itemize}
+\item transition: Displays $dictionary[target]$ objects in Unity scene
+\item output: none
+\item exception: $target \notin dictionary.keys \Rightarrow IllegalArgument Exception$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of MapBox} \label{mMap}
+
+\subsection{Module}
+
+MapBox\\
+Third party library Mapbox
+
+\subsection{Uses}
+
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+Map & - & - & IllegalArgument Exception\\
+Display & - & - & - \\
+ChangeStyle & String & - & IllegalArgument Exception\\
+Pan & ($\mathbb{R}$, $\mathbb{R}$) & -\\
+Zoom &  $\mathbb{N}$ & -\\
+
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item MapStyle: String
+\item MapCenter: ($\mathbb{R}$, $\mathbb{R}$)
+\item Zoom: $\mathbb{N}$
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item APIKey: String
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent Map():
+\begin{itemize}
+\item transition: Check APIKey and initialize the map
+\item output: none
+\item exception: $exc := APIKey expires \Rightarrow IllegalArgument Exception$
+\end{itemize}
+
+\noindent Display():
+\begin{itemize}
+\item transition: Displays a map with default state variables
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent ChangeStyle(style):
+\begin{itemize}
+\item transition: $MapStyle := style$
+\item output: none
+\item exception: $exc := style \notin MAPSTYLES \Rightarrow IllegalArgument Exception$
+\end{itemize}
+
+\noindent Pan((long, lat)):
+\begin{itemize}
+\item transition: $MapCenter := (long, lat)$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent Zoom(scale):
+\begin{itemize}
+\item transition: $Zoom := scale$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+
+MAPSTYLES = a sequences of map styles with type String
+ 
+\newpage
+
+\section{MIS of Map Interface} \label{mMapInterface}
+
+\subsection{Module}
+
+Map Interface
+
+\subsection{Uses}
+
+Map Module, Server Module, Database Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{3cm} p{3cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+HandleInputBuilding & - & - & - \\
+DisplayAvatar & Uri, ($\mathbb{R}$, $\mathbb{R}$) & - & -\\
+DisplayUserHeatMap & - & -\\
+DisplayEventHeatMap & - & -\\
+
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item building: list of BuildingLocation
+%\item userMarkers: list of GameObject
+\end{itemize}
+
+\subsubsection{Environment Variables}
+\begin{itemize}
+\item camera: Camera
+\end{itemize}
+  
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent HandleInputBuilding():
+\begin{itemize}
+\item transition: Opens user interface when a building marker is tapped
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DisplayAvatar(photoUri, (long, lat)):
+\begin{itemize}
+\item transition: Displays the corresponding avatar on the map at (long, lat)
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DisplayUserHeatMap():
+\begin{itemize}
+\item transition: Retrieves collected user location data from the database and plot them on the map
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DisplayEventHeatMap():
+\begin{itemize}
+\item transition: Retrieves collected event location data from the database and plot them on the map
+\item output: none
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of Friend Chat} \label{mFC}
+
+\subsection{Module}
+
+Friend Chat
+
+\subsection{Uses}
+
+Server Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{3cm} p{3cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+StartConnection & String, String & - & - \\
+SendMessage & User, String & - & - \\
+ReceiveMessage & User, String & - & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item connection: HubConnection
+\item onMessageReceived: Action
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent StartConnection(url, handler):
+\begin{itemize}
+\item transition: Creates a new HubConnection and stores it in connection. Connects the given handler to the server endpoint.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SendMessage(recipient, message):
+\begin{itemize}
+\item transition: Sends a message to the recipient through the server hub connection.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent ReceiveMessage(sender, message):
+\begin{itemize}
+\item transition: Receives a message from the server hub connection. The sender's id is received as well.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
 
 \newpage
 
 \section{Appendix} \label{Appendix}
+\subsection{Database Tables}
 
-\wss{Extra information if required}
+\quad \textbf{User}
+\begin{table}[H]
+	\begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|p{0.40\textwidth}|}
+		\hline
+		\textbf{Column Name} & \textbf{Type}  & \textbf{Description}                  \\
+		\hline
+		email                   & String                & ID of a user                        \\
+		\hline
+		nickName           & (Optional) String                & Nickname/display name of a user      \\
+		\hline
+		photoUri           & (Optional) Uri                & Visual Avatar       \\
+		\hline
+		program            & (Optional) String                & Study field                \\
+		\hline
+		level             & (Optional) int                & Level of program                 \\
+		\hline
+		friends          &  (Optional) $<$User$>$                & List of friends \\
+		\hline
+		friendRequests          &  (Optional) $<$User$>$                & List of requesters              \\
+		\hline
+		lectures                & (Optional) $<$Lecture$>$                & List of pinned lecture                     \\
+		\hline
+		events                & (Optional) $<$Event$>$                & List of pinned event                     \\			
+		\hline
+\end{tabular}
+\end{table}
 
+\textbf{Lecture}
+\begin{table}[H]
+	\begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|p{0.40\textwidth}|}
+		\hline
+		\textbf{Column Name} & \textbf{Type}  & \textbf{Description}                  \\
+		\hline
+		code                   & String                & ID of a course, course code\\
+		\hline
+		name           & (Optional) String     & formal name of a course      \\
+		\hline
+		instructor           & (Optional) String      & name of the instructor       \\
+		\hline
+		time            & (Optional) String                & Includes start and end time in a weekly schedule  \\
+		\hline
+		location             & (Optional) String                & Building and room                 \\
+		\hline
+\end{tabular}
+\end{table}
+
+\textbf{Event}
+\begin{table}[H]
+	\begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|p{0.40\textwidth}|}
+		\hline
+		\textbf{Column Name} & \textbf{Type}  & \textbf{Description}                  \\
+		\hline
+		name                   & String                & ID of an event\\
+		\hline
+		description           & (Optional) String     & event description \\
+		\hline
+		organizer           & (Optional) String      & organizer of the event       \\
+		\hline
+		startTime            & (Optional) DateTime               & when it starts  \\
+		\hline
+		duration            & (Optional) int               & how long is the event (in minutes)  \\
+		\hline
+		location             & (Optional) String                & Building and room                 \\
+		\hline
+		isPublic             & $\mathbb{B}$                & If it is a public event                \\
+		\hline
+\end{tabular}
+\end{table}
+\newpage
+\bibliographystyle {plainnat}
+\bibliography{../../../refs/References}
 \end{document}

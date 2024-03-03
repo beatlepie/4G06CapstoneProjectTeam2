@@ -68,4 +68,36 @@ public class Utilities
         }
         return result;
     }
+    public static Event FormalizeDBEventData(DataSnapshot e)
+    {
+        Event result = new Event("InvalidEvent");
+        foreach (var x in e.Children)
+        {
+            switch(x.Key.ToString())
+            {
+                case "name":
+                result.name = x.Value.ToString();
+                break;
+                case "description":
+                result.description = x.Value.ToString();
+                break;
+                case "location":
+                result.location = x.Value.ToString();
+                break;
+                case "duration":
+                result.duration = int.Parse(x.Value.ToString());
+                break;
+                case "isPublic":
+                result.isPublic = (bool)x.Value;
+                break;
+                case "organizer":
+                result.organizer = x.Value.ToString();
+                break;
+                case "time":
+                result.time = (long)x.Value;
+                break;
+            }
+        }
+        return result;
+    }
 }

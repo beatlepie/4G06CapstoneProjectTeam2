@@ -6,6 +6,8 @@ using Firebase.Database;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class FriendManager : MonoBehaviour
 {
@@ -44,20 +46,20 @@ public class FriendManager : MonoBehaviour
 
     void Update()
     {
-        if (invitationCount == 0)
-        {
-            badge.SetActive(false);
-        }
-        else if (invitationCount < 100)
-        {
-            badge.SetActive(true);
-            badge.GetComponentInChildren<TMP_Text>().text = invitationCount.ToString();
-        }
-        else
-        {
-            badge.SetActive(true);
-            badge.GetComponentInChildren<TMP_Text>().text = "99+";
-        }
+        // if (invitationCount == 0)
+        // {
+        //     badge.SetActive(false);
+        // }
+        // else if (invitationCount < 100)
+        // {
+        //     badge.SetActive(true);
+        //     badge.GetComponentInChildren<TMP_Text>().text = invitationCount.ToString();
+        // }
+        // else
+        // {
+        //     badge.SetActive(true);
+        //     badge.GetComponentInChildren<TMP_Text>().text = "99+";
+        // }
     }
 
     IEnumerator GetFriends(Action<List<User>> onCallBack)
@@ -161,6 +163,20 @@ public class FriendManager : MonoBehaviour
         databaseReference.Child("users/" + userEmailWithoutDot + "/friends/" + targetEmailWithoutDot).SetValueAsync(null);
         // Remove target user from current user list in database
         databaseReference.Child("users/" + targetEmailWithoutDot + "/friends/" + userEmailWithoutDot).SetValueAsync(null);
+    }
+
+    public void OnFriendViewclick()
+    {
+        GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+        string targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
+        SettingsManager.queryEmail = targetEmail;
+        SettingsManager.currentUser = false;
+        SceneManager.LoadScene("SettingsScene");
+    }
+
+    public void OnFriendNameClick()
+    {
+        SceneManager.LoadScene("ChatScene");
     }
 
     private void refreshRequestList()
@@ -269,7 +285,6 @@ public class FriendManager : MonoBehaviour
         entryRectTransform.anchoredPosition = new Vector2(0, -friendEntryHeight * friendEntryTransformList.Count);
         entryTransform.gameObject.SetActive(true);
         entryTransform.Find("Email").GetComponent<TMP_Text>().text = targetUser.email;
-        entryTransform.Find("Name").GetComponent<TMP_Text>().text = targetUser.nickName;
         friendEntryTransformList.Add(entryTransform); 
         refreshFriendList();
     }
@@ -288,5 +303,20 @@ public class FriendManager : MonoBehaviour
         refreshRequestList();
         // Remove invitation from database
         databaseReference.Child("users/" + userEmailWithoutDot + "/invitations/" + requesterEmailWithoutDot).SetValueAsync(null);     
+    }
+
+    public void SwitchToFriends()
+    {
+        SceneManager.LoadScene("FriendScene");
+    }
+
+    public void SwitchToRequests()
+    {
+        SceneManager.LoadScene("FriendRequestScene");
+    }
+
+    public void GoBack()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 }

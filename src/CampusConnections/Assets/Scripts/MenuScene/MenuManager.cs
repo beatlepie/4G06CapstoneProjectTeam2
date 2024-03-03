@@ -8,6 +8,11 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("LectureScene");
     }
 
+    public void Events()
+    {
+        SceneManager.LoadScene("EventScene");
+    }
+
     public void Map()
     {
         SceneManager.LoadScene("MapScene");
@@ -18,9 +23,15 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("FriendScene");
     }
 
+    public void AR()
+    {
+        SceneManager.LoadScene("ARCameraScene");
+    }
+
     public void Settings()
     {
         SceneManager.LoadScene("SettingsScene");
+        SettingsManager.currentUser = true;
     }
 
     public void Quit()

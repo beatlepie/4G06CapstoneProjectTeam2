@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="JHE2" size="1.000000 1.332813" />
+    <ImageTarget name="JHE1" size="1.000000 1.332813" />
+  </Tracking>
+</QCARConfig>

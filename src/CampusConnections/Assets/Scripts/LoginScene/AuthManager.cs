@@ -22,6 +22,7 @@ public class AuthManager : MonoBehaviour
     public TMP_InputField passwordLoginField;
     public TMP_Text warningLoginText;
     public TMP_Text confirmLoginText;
+    public TMP_InputField forgetEmailField;
 
     //Register variables
     [Header("Register")]
@@ -33,6 +34,8 @@ public class AuthManager : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("Firebase!");
+
         //Check that all of the necessary dependencies for Firebase are present on the system
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
@@ -68,6 +71,15 @@ public class AuthManager : MonoBehaviour
     {
         //Call the register coroutine passing the email, password, and username
         StartCoroutine(Register(emailRegisterField.text, passwordRegisterField.text, usernameRegisterField.text));
+    }
+
+    public void ForgetPasswordButton()
+    {
+        forgetEmailField.text = "";
+    }
+    public void ForgetPasswordSubmitButton()
+    {
+        StartCoroutine(ForgetPassword(forgetEmailField.text));
     }
 
     private IEnumerator Login(string _email, string _password)
@@ -110,6 +122,11 @@ public class AuthManager : MonoBehaviour
             //User is now logged in
             //Now get the result
             User = LoginTask.Result.User;
+            if (!User.IsEmailVerified)
+            {
+                Task verification = User.SendEmailVerificationAsync();
+                yield return new WaitUntil(predicate: () => verification.IsCompleted);
+            }
             Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
@@ -195,9 +212,43 @@ public class AuthManager : MonoBehaviour
                         string emailWithoutDot = Utilities.removeDot(User.Email);
                         databaseReference.Child("users").Child(emailWithoutDot).SetRawJsonValueAsync(JsonUtility.ToJson(user));
                         warningRegisterText.text = "";
+
+                        // Since the registration was success, the email verification can be sent
+                        Task verification = User.SendEmailVerificationAsync();
+                        yield return new WaitUntil(predicate: () => verification.IsCompleted);
+
+                        // If it fails, will attempt at login instead!
+                        if (verification.IsCompletedSuccessfully)
+                        {
+                            confirmLoginText.text = "Email verification sent!";
+                        }
+                        else
+                        {
+                            confirmLoginText.text = "Email verification will be sent on login!";
+                        }
                     }
                 }
             }
+        }
+    }
+
+    private IEnumerator ForgetPassword(string _email)
+    {
+        Task ResetPwdTask = auth.SendPasswordResetEmailAsync(_email);
+        yield return new WaitUntil(predicate: () => ResetPwdTask.IsCompleted);
+        if(ResetPwdTask.IsFaulted)
+        {
+            Debug.LogError("SendPasswordResetEmailAsync encountered an error: " + ResetPwdTask.Exception);
+            warningRegisterText.text = "SendPasswordResetEmailAsync encountered an error:" + ResetPwdTask.Exception;            
+        }
+        else if (ResetPwdTask.IsCanceled)
+        {
+            Debug.LogError("SendPasswordResetEmailAsync was canceled.");
+            warningRegisterText.text = "SendPasswordResetEmailAsync was canceled.";
+        }
+        else
+        {
+            confirmLoginText.text = "Password reset email sent successfully.";
         }
     }
 }
