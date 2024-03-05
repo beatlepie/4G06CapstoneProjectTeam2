@@ -78,11 +78,27 @@ This section covers all tests related to functional requirements about pre-regis
 
 \textbf{Name:} Agree To Consent Form
 
+\textbf{Initial State:} The user does not have an account, and they starts to register an account. A consent form appears asking for access to the device and permission to collect user data
+
+\textbf{Input:} The user agrees to all the terms and conditions and clicks `Agree' and continues to complete the registration process
+					
+\textbf{Expected Output:} A notification shows the registration succeeds and the user is redirected to the login screen
+
+\textbf{Actual Output:} A notification shows the registration succeeds and the user is redirected to the login screen
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-PR2}
 
 \textbf{Name:} Disagree To Consent Form
+
+\textbf{Initial State:} The user does not have an account, and they starts to register an account. A consent form appears asking for access to the device and permission to collect user data
+					
+\textbf{Input:} The user rejects the terms and conditions and clicks `Disagree' and continues to complete the registration process
+					
+\textbf{Expected Output:} The registration fails and a warning will show up notifying the user that they cannot create an account unless they agree to the consent form
+
+\textbf{Actual Output:} The registration fails and a warning will show up notifying the user that they cannot create an account unless they agree to the consent form
 
 \textbf{Results:} Pass
 \end{enumerate}
@@ -93,11 +109,37 @@ This section covers all tests related to functional requirements about the accou
 
 \textbf{Name:} Successful Account Creation
 
+\textbf{Initial State:} The user does not have an account and is not logged in to the application
+
+\textbf{Input:} All information needed to create an account:
+\begin{itemize}
+\item Email: testUA1@gmail.com
+\item password: FRT-UA1
+\item nickname: UA1
+\end{itemize}
+					
+\textbf{Expected Output:} An Account with corresponding information is created in the database with the account initialized to INITIAL\_USER\_STATE
+
+\textbf{Actual Output:} An Account with corresponding information is created in the database with the account initialized to INITIAL\_USER\_STATE
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-UA2}
 
 \textbf{Name:} Unsuccessful Account Creation
+
+\textbf{Initial State:} The user does not have an account and is not logged in to the application
+
+\textbf{Input:} All information needed to create an account:
+\begin{itemize}
+\item Email: qtest@gmail.com (this is an existing test account)
+\item password: FRT-UA1
+\item nickname: UA1
+\end{itemize}
+					
+\textbf{Expected Output:} Account creation fails with a warning telling the user the email has already been used
+
+\textbf{Actual Output:} Account creation fails with a warning telling the user the email has already been used
 
 \textbf{Results:} Pass
 
@@ -105,11 +147,35 @@ This section covers all tests related to functional requirements about the accou
 
 \textbf{Name:} Successful Account Login
 
+\textbf{Initial State:} The user has an account and is not logged in to the application
+
+\textbf{Input:} All information needed to login:
+\begin{itemize}
+\item Email: FRT-UA3@test.com (this account exists in the system already)
+\item password: FRT-UA3
+\end{itemize}
+					
+\textbf{Expected Output:} User successfully logs into the application and goes to the menu page
+
+\textbf{Actual Output:} User successfully logs into the application and goes to the menu page
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-UA4}
 
 \textbf{Name:} Unsuccessful Account Login
+
+\textbf{Initial State:} The user has an account and is not logged in to the application
+
+\textbf{Input:} All information needed to login:
+\begin{itemize}
+\item Email: FRT-UA3@test.com (this account exists in the system already)
+\item password: FRT321 (wrong password)
+\end{itemize}
+					
+\textbf{Expected Output:} Login fails with a warning telling the user the password is wrong
+
+\textbf{Actual Output:} Login fails with a warning telling the user the password is wrong
 
 \textbf{Results:} Pass
 
@@ -117,11 +183,39 @@ This section covers all tests related to functional requirements about the accou
 
 \textbf{Name:} Account Deletion
 
+\textbf{Initial State:} The user has an account and is logged into the application
+\begin{itemize}
+\item Email: FRT-UA5@gmail.com (this is an existing test account)
+\item password: FRT-UA5
+\item nickname: UA5
+\end{itemize}
+
+\textbf{Input:} User clicks on the delete account button on the profile page and confirms the deletion
+					
+\textbf{Expected Output:} The user is redirected to the login page and the account cannot be logged in any more
+
+\textbf{Actual Output:} The user is redirected to the login page and the account cannot be logged in any more
+
 \textbf{Results:} Pass
 
-\item \textbf{FRT-UA5}
+\item \textbf{FRT-UA6}
 
 \textbf{Name:} Reset Password
+
+\textbf{Initial State:} The user has an account:
+\begin{itemize}
+\item Email: campusconnections@gmail.com (this is an existing test account)
+\item password: qtesting
+\end{itemize}
+
+\textbf{Input:} Email address and new password
+\begin{itemize}
+\item new nickname: QTesting
+\end{itemize}
+					
+\textbf{Expected Output:} Password is successfully reset
+
+\textbf{Actual Output:} Password is successfully reset
 
 \textbf{Results:} Pass
 
@@ -129,17 +223,57 @@ This section covers all tests related to functional requirements about the accou
 
 \textbf{Name:} Avatar Creation and Modification
 
+\textbf{Initial State:} The user has an account with DEFAULT\_AVATAR
+
+\textbf{Input:} URI represents the new avatar:
+\begin{itemize}
+\item URI: https://upload.wikimedia.org/wikipedia/commons/2/2f/Google\_2015\_logo.svg
+\end{itemize}
+					
+\textbf{Expected Output:} The user changes the avatar to a Google logo
+
+\textbf{Actual Output:} The user changes the avatar to a Google logo
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-UA8}
 
 \textbf{Name:} Email Verification
 
+\textbf{Initial State:} The user has an account whose email has not been verified yet
+\begin{itemize}
+\item Email: fuz15@mcmaster.ca (this is an existing test account)
+\item password: password
+\end{itemize}
+
+\textbf{Input:} User clicks on `Verify Email` button on user profile page and follows instructions on the email sent from the system
+					
+\textbf{Expected Output:} That email above is verified as a valid email address
+
+\textbf{Actual Output:} That email above is verified as a valid email address
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-UA9}
 
 \textbf{Name:} Edit Profile
+
+\textbf{Initial State:} The user has an account 
+\begin{itemize}
+\item Email: qtest@gmail.com (this is an existing test account)
+\item password: qtesting
+\item newProgram: Computer Science
+\end{itemize}
+
+\textbf{Input:} New Profile:
+\begin{itemize}
+\item newProgram: Computer Science
+\item newLevel: 4
+\end{itemize}
+					
+\textbf{Expected Output:} The program and level are updated
+
+\textbf{Actual Output:} The program and level are updated
 
 \textbf{Results:} Pass
 \end{enumerate}
@@ -150,11 +284,38 @@ This section covers all tests related to functional requirements about interacti
 
 \textbf{Name:} Successful Friend Request
 
+\textbf{Initial State:} The user is logged in with the following account:
+\begin{itemize}
+\item Semail: FRT-SN1@test.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} A valid email to send the request:
+\begin{itemize}
+\item Temail: FRT-SN1-F@test.com
+\end{itemize}
+					
+\textbf{Expected Output:} A Request is sent to the target user
+
+\textbf{Actual Output:} A Request is sent to the target user
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-SN2}
 
 \textbf{Name:} Friend Request Acceptance
+
+\textbf{Initial State:} A friend request was sent from an account (Semail) to the target account (Temail):
+\begin{itemize}
+\item Semail: FRT-SN1@test.com
+\item Temail: FRT-SN1-F@test.com
+\end{itemize}
+
+\textbf{Input:} The request is accepted
+					
+\textbf{Expected Output:} Two users are added to each other's friend lists
+
+\textbf{Actual Output:} Two users are added to each other's friend lists
 
 \textbf{Results:} Pass
 
@@ -162,11 +323,35 @@ This section covers all tests related to functional requirements about interacti
 
 \textbf{Name:} Successful Friend Rejection
 
+\textbf{Initial State:} A friend request was sent from an account (Semail) to the target account (Temail):
+\begin{itemize}
+\item Semail: FRT-SN1@test.com
+\item Temail: FRT-SN1-F@test.com
+\end{itemize}
+
+\textbf{Input:} The request is rejected
+					
+\textbf{Expected Output:} The request is declined and no friend is added for both accounts
+
+\textbf{Actual Output:} The request is declined and no friend is added for both accounts
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-SN4}
 
 \textbf{Name:} Friend Deletion
+
+\textbf{Initial State:} A friend (Femail) exist in the friend list of the test account (Temail):
+\begin{itemize}
+\item Temail: FRT-SN4@test.com
+\item Femail: FRT-SN4-F@test.com
+\end{itemize}
+
+\textbf{Input:} User deletes the chosen friend
+					
+\textbf{Expected Output:} The corresponding friend is deleted from the list
+
+\textbf{Actual Output:} The corresponding friend is deleted from the list
 
 \textbf{Results:} Pass
 
@@ -174,17 +359,55 @@ This section covers all tests related to functional requirements about interacti
 
 \textbf{Name:} Friend Messaging
 
+\textbf{Initial State:} A friend (Femail) exist in the friend list of the test account (Temail):
+\begin{itemize}
+\item Temail: FRT-SN5@test.com
+\item Femail: FRT-SN5-F@test.com
+\end{itemize}
+
+\textbf{Input:} Message: `Hello World'
+					
+\textbf{Expected Output:} The corresponding message is sent to the friend
+
+\textbf{Actual Output:} The corresponding message is sent to the friend
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-SN6}
 
 \textbf{Name:} Friend Sharing Event
 
+\textbf{Initial State:} A friend (Femail) exist in the friend list of the test account (Temail):
+\begin{itemize}
+\item Temail: FRT-SN6@test.com
+\item Femail: FRT-SN6-F@test.com
+\end{itemize}
+
+\textbf{Input:} Message that contains event name and follows some specific pattern:
+Hey, check this event: \textunderscore E\textunderscore[EXPO]
+					
+\textbf{Expected Output:} User is redirected to the event page with that event once they click on the message
+
+\textbf{Actual Output:} User is redirected to the event page with that event once they click on the message
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-SN7}
 
 \textbf{Name:} Friend Sharing Lecture
+
+\textbf{Initial State:} A friend (Femail) exist in the friend list of the test account (Temail):
+\begin{itemize}
+\item Temail: FRT-SN7@test.com
+\item Femail: FRT-SN7-F@test.com
+\end{itemize}
+
+\textbf{Input:} Message that contains lecture code and follows some specific pattern:
+`Hey, are you in this lecture: \textunderscore L\textunderscore[SFRWENG 4G06]'
+					
+\textbf{Expected Output:} User is redirected to the lecture page with that lecture once they click on the message
+
+\textbf{Actual Output:} User is redirected to the lecture page with that lecture once they click on the message
 
 \textbf{Results:} Pass
 \end{enumerate}
@@ -195,11 +418,33 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Name:} Save Event
 
+\textbf{Initial State:} A sample event:
+\begin{itemize}
+\item Name: EXPO
+\end{itemize}
+
+\textbf{Input:} On the event page, user clicks on the save button on the pop-up window with details of the sample event
+					
+\textbf{Expected Output:} The event is saved to the user's event list
+
+\textbf{Actual Output:} The event is saved to the user's event list
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-LE2}
 
 \textbf{Name:} Unsave Event
+
+\textbf{Initial State:} A sample event that is already been saved:
+\begin{itemize}
+\item Name: EXPO
+\end{itemize}
+
+\textbf{Input:} On the event page, user clicks on the unsave button on the pop-up window with details of the sample event
+					
+\textbf{Expected Output:} The event is removed from the user's event list
+
+\textbf{Actual Output:} The event is removed from the user's event list
 
 \textbf{Results:} Pass
 
@@ -207,11 +452,33 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Name:} Save Lecture
 
+\textbf{Initial State:} A sample lecture:
+\begin{itemize}
+\item Code: SFWRENG 4G06
+\end{itemize}
+
+\textbf{Input:} On the lecture page, user clicks on the save button on the pop-up window with details of the sample lecture
+					
+\textbf{Expected Output:} The lecture is saved to the user's lecture list
+
+\textbf{Actual Output:} The lecture is saved to the user's lecture list
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-LE4}
 
 \textbf{Name:} Unsave Lecture
+
+\textbf{Initial State:} A sample lecture that is already been saved:
+\begin{itemize}
+\item Code: SFWRENG 4G06
+\end{itemize}
+
+\textbf{Input:} On the lecture page, user clicks on the unsave button on the pop-up window with details of the sample lecture
+					
+\textbf{Expected Output:} The lecture is removed from the user's lecture list
+
+\textbf{Actual Output:} The lecture is removed from the user's lecture list
 
 \textbf{Results:} Pass
 
@@ -219,11 +486,48 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Name:} Administrator Add Event
 
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} Sample event:
+\begin{itemize}
+\item name: Test event
+\item description: Sample event for system test
+\item time: 0
+\item duration: 0
+\item location: Online
+\item isPublic: true
+\item organizer: Team 2
+\end{itemize}
+					
+\textbf{Expcted Output:} The event is added to the event list
+
+\textbf{Actual Output:} The event is added to the event list
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-LE6}
 
 \textbf{Name:} Administrator Edit Event
+
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} Sample event name and new location:
+\begin{itemize}
+\item name: Test event
+\item location: ITB AB102
+\end{itemize}
+					
+\textbf{Expected Output:} The test event location is updated to the new one
+
+\textbf{Actual Output:} The test event location is updated to the new one
 
 \textbf{Results:} Pass
 
@@ -231,11 +535,45 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Name:} Administrator Delete Event
 
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} Sample event (already in the system) name:
+\begin{itemize}
+\item name: Test event
+\end{itemize}
+					
+\textbf{Expected Output:} The event is deleted and disappears from the list
+
+\textbf{Actual Output:} The event is deleted and disappears from the list
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-LE8}
 
 \textbf{Name:} Administrator Add Lecture
+
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} Sample lecture:
+\begin{itemize}
+\item code: TEST 1T03
+\item name: Test lecture
+\item time: 12:00 - 13:00, Mon
+\item location: Online
+\item instructor: NA
+\end{itemize}
+					
+\textbf{Expected Output:} The lecture is added to the lecture list
+
+\textbf{Actual Output:} The lecture is added to the lecture list
 
 \textbf{Results:} Pass
 
@@ -243,11 +581,42 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Name:} Administrator Edit Lecture
 
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} Sample lecture name and new location:
+\begin{itemize}
+\item code: TEST 1T03
+\item location: ITB AB102
+\end{itemize}
+					
+\textbf{Expected Output:} The test lecture location is updated to the new one
+
+\textbf{Actual Output:} The test lecture location is updated to the new one
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-LE10}
 
 \textbf{Name:} Administrator Delete Lecture
+
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+\textbf{Input:} Sample lecture (already in the system) name:
+\begin{itemize}
+\item code: TEST 1T03
+\end{itemize}
+					
+\textbf{Expected Output:} The lecture is deleted and disappears from the list
+
+\textbf{Actual Output:} The lecture is deleted and disappears from the list
 
 \textbf{Results:} Pass
 
@@ -255,11 +624,33 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Name:} Event Information
 
+\textbf{Initial State:} A sample event exists:
+\begin{itemize}
+\item name: EXPO
+\end{itemize}
+
+\textbf{Input:} User clicks on the sample event
+					
+\textbf{Expected Output:} All event information is shown in a pop-up window
+
+\textbf{Actual Output:} All event information is shown in a pop-up window
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-LE12}
 
 \textbf{Name:} Lecture Information
+
+\textbf{Initial State:} A sample lecture exists:
+\begin{itemize}
+\item code: SFWRENG 4G06
+\end{itemize}
+
+\textbf{Input:} User clicks on the sample lecture
+					
+\textbf{Expected Output:} All lecture information is shown in a pop-up window
+
+\textbf{Actual Output:} All lecture information is shown in a pop-up window
 
 \textbf{Results:} Pass
 
@@ -267,11 +658,41 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Name:} Lecture Filter by Code
 
+\textbf{Initial State:} Some software engineering lecture exists:
+\begin{itemize}
+\item SFWRENG 4G06
+\item SFWRENG 4E03
+\end{itemize}
+
+\textbf{Input:} Filter:
+\begin{itemize}
+\item FilterString: SFWRENG
+\end{itemize}
+					
+\textbf{Expected Output:} All lectures which do not contain the FilterString in the code are removed from the list
+
+\textbf{Actual Output:} All lectures which do not contain the FilterString in the code are removed from the list
+
 \textbf{Results:} Pass
 
-\item \textbf{FRT-LE13}
+\item \textbf{FRT-LE14}
 
 \textbf{Name:} Event Filter by Name
+
+\textbf{Initial State:} Some job fair event exists:
+\begin{itemize}
+\item Job Fair: March 4
+\item Job Fair: March 10
+\end{itemize}
+
+\textbf{Input:} Filter:
+\begin{itemize}
+\item FilterString: Job Fair
+\end{itemize}
+					
+\textbf{Expected Output:} All events which do not contain the FilterString in the name are removed from the list
+
+\textbf{Actual Output:} All events which do not contain the FilterString in the name are removed from the list
 
 \textbf{Results:} Pass
 \end{enumerate}
@@ -282,17 +703,41 @@ This section covers all tests related to functional requirements about AR camera
 
 \textbf{Name:} Successful Building Recognition
 
+\textbf{Initial State:} User is at the front door of JHE
+
+\textbf{Input:} Clear camera view
+					
+\textbf{Expected Output:} The building is recognized with name and description shown as an AR object
+
+\textbf{Actual Output:} The building is recognized with name and description shown as an AR object
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-AR2}
 
 \textbf{Name:} Unsuccessful Building Recognition
 
+\textbf{Initial State:} User is out of campus
+
+\textbf{Input:} Clear camera view
+					
+\textbf{Expected Output:} No AR objects are shown
+
+\textbf{Actual Output:} No AR objects are shown
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-AR3}
 
 \textbf{Name:} Building Lectures/Events
+
+\textbf{Initial State:} User is in JHE lobby
+
+\textbf{Input:} Clear camera view
+					
+\textbf{Expected Output:} Event and lecture information separated by room number at the corresponding locations of the building
+
+\textbf{Actual Output:} Event and lecture information separated by room number at the corresponding locations of the building
 
 \textbf{Results:} Pass
 \end{enumerate}
@@ -303,11 +748,31 @@ This section covers all tests related to functional requirements about the map a
 
 \textbf{Name:} User Location
 
+\textbf{Initial State:} User allows the user to use their real-time location
+
+\textbf{Input:} User enters the map page
+					
+\textbf{Expected Output:} A model representing the user shows up on the map and moves correspondingly when the user moves
+
+\textbf{Actual Output:} A model representing the user shows up on the map and moves correspondingly when the user moves
+
 \textbf{Results:} Pass
 
 \item \textbf{FRT-MAP2}
 
 \textbf{Name:} Friend Locations
+
+\textbf{Initial State:} User has some friends who are willing to share locations:
+\begin{itemize}
+\item email1: MAP2-1@test.com
+\item email2: MAP2-2@test.com
+\end{itemize}
+
+\textbf{Input:} User enters the map page
+					
+\textbf{Expected Output:} Additional models representing friends show up on the map and move correspondingly when friends move
+
+\textbf{Actual Output:} Additional models representing friends show up on the map and move correspondingly when friends move
 
 \textbf{Results:} Pass
 \end{enumerate}
