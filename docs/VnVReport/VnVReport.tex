@@ -30,8 +30,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+Mar 4 & 1.0 & Add functional requirements evaluation\\
 \bottomrule
 \end{tabularx}
 
@@ -44,11 +43,15 @@ Date 2 & 1.1 & Notes\\
   \toprule		
   \textbf{symbol} & \textbf{description}\\
   \midrule 
-  T & Test\\
+  JMeter & Load testing tool for analyzing and measuring the performance\\
+  \midrule 
+  SRS & Software Requirements Specification\\
+  \midrule 
+  UI & User Interface\\
+  \midrule 
+  VnV & Verification and Validation\\
   \bottomrule
 \end{tabular}\\
-
-\wss{symbols, abbreviations or acronyms -- you can reference the SRS tables if needed}
 
 \newpage
 
@@ -62,12 +65,255 @@ Date 2 & 1.1 & Notes\\
 
 \pagenumbering{arabic}
 
-This document ...
+This document describes the test results of the verification and validation (VnV) plan for CampusConnections. The VnV plan was continuously updated as the project evolved. The following document records the results of the current version of the VnV plan. It provides results of functional and non-functional requirements tests, unit tests, changes that will be implemented in the system as a result of the tests, and various traceability tables.
+
 
 \section{Functional Requirements Evaluation}
+The following section outlines the results of functional requirements testing. The process and test performed follow the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}. To summarize, all the tests are tested manually and passed, indicating that all the functional requirements in the Software Requirements Specification (SRS) document are covered.
+
+\subsection{Pre-Registration Settings}
+This section covers all tests related to functional requirements about pre-registration settings.
+\begin{enumerate}
+\item \textbf{FRT-PR1}
+
+\textbf{Name:} Agree To Consent Form
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-PR2}
+
+\textbf{Name:} Disagree To Consent Form
+
+\textbf{Results:} Pass
+\end{enumerate}
+\subsection{User Account}
+This section covers all tests related to functional requirements about the account and user profile.
+\begin{enumerate}
+\item \textbf{FRT-UA1}
+
+\textbf{Name:} Successful Account Creation
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-UA2}
+
+\textbf{Name:} Unsuccessful Account Creation
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-UA3}
+
+\textbf{Name:} Successful Account Login
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-UA4}
+
+\textbf{Name:} Unsuccessful Account Login
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-UA5}
+
+\textbf{Name:} Account Deletion
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-UA5}
+
+\textbf{Name:} Reset Password
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-UA7}
+
+\textbf{Name:} Avatar Creation and Modification
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-UA8}
+
+\textbf{Name:} Email Verification
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-UA9}
+
+\textbf{Name:} Edit Profile
+
+\textbf{Results:} Pass
+\end{enumerate}
+\subsection{Social Networking System}
+This section covers all tests related to functional requirements about interactions between friends.
+\begin{enumerate}
+\item \textbf{FRT-SN1}
+
+\textbf{Name:} Successful Friend Request
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-SN2}
+
+\textbf{Name:} Friend Request Acceptance
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-SN3}
+
+\textbf{Name:} Successful Friend Rejection
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-SN4}
+
+\textbf{Name:} Friend Deletion
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-SN5}
+
+\textbf{Name:} Friend Messaging
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-SN6}
+
+\textbf{Name:} Friend Sharing Event
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-SN7}
+
+\textbf{Name:} Friend Sharing Lecture
+
+\textbf{Results:} Pass
+\end{enumerate}
+\subsection{Lectures and Events}
+This section covers all tests related to functional requirements about lectures and events and how users can interact with them.
+\begin{enumerate}
+\item \textbf{FRT-LE1}
+
+\textbf{Name:} Save Event
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE2}
+
+\textbf{Name:} Unsave Event
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE3}
+
+\textbf{Name:} Save Lecture
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE4}
+
+\textbf{Name:} Unsave Lecture
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE5}
+
+\textbf{Name:} Administrator Add Event
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE6}
+
+\textbf{Name:} Administrator Edit Event
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE7}
+
+\textbf{Name:} Administrator Delete Event
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE8}
+
+\textbf{Name:} Administrator Add Lecture
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE9}
+
+\textbf{Name:} Administrator Edit Lecture
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE10}
+
+\textbf{Name:} Administrator Delete Lecture
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE11}
+
+\textbf{Name:} Event Information
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE12}
+
+\textbf{Name:} Lecture Information
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE13}
+
+\textbf{Name:} Lecture Filter by Code
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE13}
+
+\textbf{Name:} Event Filter by Name
+
+\textbf{Results:} Pass
+\end{enumerate}
+\subsection{AR Camera}
+This section covers all tests related to functional requirements about AR camera.
+\begin{enumerate}
+\item \textbf{FRT-AR1}
+
+\textbf{Name:} Successful Building Recognition
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-AR2}
+
+\textbf{Name:} Unsuccessful Building Recognition
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-AR3}
+
+\textbf{Name:} Building Lectures/Events
+
+\textbf{Results:} Pass
+\end{enumerate}
+\subsection{Map and Location}
+This section covers all tests related to functional requirements about the map and location tracking in the system.
+\begin{enumerate}
+\item \textbf{FRT-MAP1}
+
+\textbf{Name:} User Location
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-MAP2}
+
+\textbf{Name:} Friend Locations
+
+\textbf{Results:} Pass
+\end{enumerate}
 
 \section{Nonfunctional Requirements Evaluation}
-
+The following section outlines the results of non-functional requirements testing. The process and test performed follow the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}. Most of the tests are tested manually while some of them are tested in another way, for instance, load testing is tested with JMeter while some UI requirements are tested by conducting a survey, etc. \textcolor{red}{Some of the tests fail because their related requirements are removed due to the change of the project's scope, these tests will be marked in red.} In general, most of the tests in the plan succeed, indicating that non-functional requirements in the Software Requirements Specification (SRS) document are covered.
 \subsection{Usability}
 		
 \subsection{Performance}
