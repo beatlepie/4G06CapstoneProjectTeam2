@@ -904,9 +904,9 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{P-RF1:} The product shall display an error message when there is no internet connection.\\
   \textbf{Rational:} When there is no internet connection, the user should be made aware.\\
   \textbf{Fit criterion:} An error message stating that there is no internet connection is displayed when the product fails to connect to the internet.\\\\
-  \textbf{P-RF2:} There must be a fail-safe for the product to function if the server or internet connection takes too long or fails.\\
-  \textbf{Rational:} This will allow the product to function to some degree even during high traffic or bad internet connection situations.\\
-  \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities without connecting to the internet or server.\\\\
+  \textbf{P-RF2:} There must be a fail-safe for the product to function if the server connection takes too long or fails.\\
+  \textbf{Rational:} This will allow the product to function to some degree even during high traffic or bad server connection situations.\\
+  \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities without connecting to the server.\\\\
   \textbf{P-RF3:} The server shall attempt to restart when it crashes.\\
   \textbf{Rationale:} This requirement enhances the robustness of the backend server and prevents it from going down for a long time because of some intermittent minor errors.\\
   \textbf{Fit Criterion:} The server should try to restart after it crashes due to unknown errors.\\\\
@@ -943,10 +943,9 @@ The use case diagram depicted below identifies the boundaries between the users 
   %Additionally, the administrator can perfrom maintenance on the database and server to check the correct operation of the product.
   %This will maximize the availability of the product.
 \subsection{Supportability Requirements}
-  \textbf{MS-S1:} Feature requests or issues can be sent to the product GitHub.\\\\
+  \textbf{MS-S1:} Feature requests or issues can be sent to the application's GitHub.\\\\
   %These opened issues will be discussed by the maintainers and communicated through the issue on how they will be dealt with.
-  \textbf{MS-S2:} A user manual will be complied and stored in the GitHub, this manual will be updated with Frequently Asked Questions and other entries as additional features are introduced.\\
-  %The application will direct users to this manual in the menu.
+  \textbf{MS-S2:} All feature issues with implementation details and user manual should be open to any visitor to the application's GitHub.\\
 \subsection{Adaptability Requirements}
   \textbf{MS-A1:} The product shall be accessible on Android 11 and above for Android devices, as these operating systems are still supported and receive security updates.\\
   %This product may be ported to other universities in Ontario, Canada, or other countries.
