@@ -15,6 +15,7 @@
 \usepackage[round]{natbib}
 \usepackage{pdflscape}
 \usepackage{longtable}
+\usepackage{graphicx}
 
 \input{../Comments}
 \input{../Common}
@@ -1387,6 +1388,10 @@ Testing was performed using Apache JMeter to simulate multiple concurrent users 
 We discovered that it is rather difficult to crash a server being hosted on a cloud platform as there are several safeguards that prevent that.
 Instead, we noticed that if too many connections are being made too quickly, then the server will just reject the most recently requested connections.
 
+\newpage
+
+We tested with various amounts of simulated users and observed how the server behaved. The results are plotted in the chart below.
+
 \begin{table}[!htbp]
   \centering
   \begin{tabular}{|c|c|c|}
@@ -1402,6 +1407,17 @@ Instead, we noticed that if too many connections are being made too quickly, the
   \end{tabular}
   \caption{Load Testing Results}
 \end{table}
+
+We also observed analytics data from Microsoft Azure concerning the average response time of the server in relation to the number of requests.
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=\textwidth,keepaspectratio]{chart1.png}
+  \caption{Requests vs. Response Time}
+\end{figure}
+
+There does not appear to be an observable trend. We believe this is because the test was limited by the amount of connections that could be made from one device.
+Given a sufficient testing setup it should be possible to show a trend bewteen the amount of requests and the response time.
 
 \section{Non dynamic Tests Result}\label{static}
 The weekly meetings in VnV Plan like weekly code review and TA feedback will not be included in this section, their meeting minutes are available in our GitHub.
@@ -1462,7 +1478,8 @@ GitHub Walkthrough with Reviewers &
 Not applicable to this project since there is no existing implementation.
 
 \section{Unit Testing}
-The following section outlines the results of unit testing. The process and test performed follow the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}. \textcolor{red}{Due to the time constraint, we skipped the unit tests for Database and Authentication modules, but we will add unit tests for them in Revision 1.}
+The following section outlines the results of unit testing. The process and test performed follow the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}. \textcolor{red}{Due to the time constraint, we skipped the unit tests for Database and Authentication modules, but we will add unit tests for them in Revision 1.} Other than the two modules, all the tests pass, which indicates the low level modules of the system is implemented correctly and robustly.\\
+\includegraphics[scale=1]{Unit Test.png}
 \subsection{User}
 This section contains tests related to the module: User in module hierarchy.
 \begin{enumerate}
