@@ -1342,13 +1342,13 @@ This section corresponds to the Operational and Environmental tests in VnV Plan 
 
 \section{Usability Survey Result}\label{survey}
 We first conduct the survey on 5 students, and it seems that we are getting repetitive feedback, so we assume this is already a good sample size. The result of the survey is the following:
-\subsubsection{Tasks:}
+\subsection{Tasks:}
 \begin{itemize}
 \item Administrator: 1 tester - all tasks are completed successfully 
 \item User: 3 testers - all tasks are completed successfully
 \item Guest: 1 tester - all tasks are completed successfully
 \end{itemize}
-\subsubsection{Rating}
+\subsection{Rating}
 \begin{itemize}
 \item Immediate Visual Response when Clicking: \textbf{3.8}\\
 \includegraphics[scale=0.4]{Q1.png}
@@ -1361,7 +1361,7 @@ We first conduct the survey on 5 students, and it seems that we are getting repe
 \item Cultural Friendliness: \textbf{4.8}\\
 \includegraphics[scale=0.4]{Q5.png}
 \end{itemize}
-\subsubsection{Open-ended Question}
+\subsection{Open-ended Question}
 \begin{itemize}
 \item Most difficult to use feature: \textbf{AR camera, pin, chatting}
 \begin{enumerate}
@@ -1487,9 +1487,22 @@ This section contains tests related to the module: User in module hierarchy.
 
 \textbf{Name:} Successful default user creation
 
-\textbf{Input:} 
+\textbf{Initial State:} NA
 
-\textbf{Expected Output:} 
+\textbf{Input:} User identifier, email: unitTest@test.com
+					
+\textbf{Expected Output:} A user is successfully created with following attributes:
+\begin{itemize}
+\item email: unitTest@test.com
+\item nickname: `'
+\item photoURI: null
+\item program: `'
+\item level: 0
+\item lectures: empty list of string
+\item event: empty list of string
+\item friends: empty list of string
+\item friendInvitation: empty list of string
+\end{itemize}
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1499,9 +1512,22 @@ This section contains tests related to the module: User in module hierarchy.
 
 \textbf{Name:} Successful new user creation
 
-\textbf{Input:} 
+\textbf{Initial State:} NA
 
-\textbf{Expected Output:} 
+\textbf{Input:} User:
+\begin{itemize}
+\item email: unitTest@test.com
+\item nickname: `Mr. Unit Test'
+\item photoURI: http://example/com/photo.jpg
+\item program: `software engineering'
+\item level: 1
+\item lectures: \{`Lecture 1', `Lecture 2'\}
+\item event: \{`Event 1', `Event 2'\}
+\item friends: \{`unitTest1@test.com', `unitTest2@test.com'\}
+\item friendInvitation: \{`unitTest3@test.com'\}
+\end{itemize}
+
+\textbf{Expected Output:} A user is successfully created with attributes above
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1515,9 +1541,20 @@ This section contains tests related to the module: Event in module hierarchy.
 
 \textbf{Name:} Successful default event creation
 
-\textbf{Input:} 
+\textbf{Initial State:} NA
 
-\textbf{Expected Output:} 
+\textbf{Input:} Event identifier, name: unit test event
+
+\textbf{Expected Output:} An event is successfully created with following attributes:
+\begin{itemize}
+\item name: unit test event
+\item description: PLACEHOLDER
+\item organizer: PLACEHOLDER
+\item duration: DEFAULT\_DURATION
+\item time: DEFAULT\_TIME
+\item isPulbic: false
+\item location: PLACEHOLDER
+\end{itemize}
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1527,9 +1564,20 @@ This section contains tests related to the module: Event in module hierarchy.
 
 \textbf{Name:} Successful new event creation
 
-\textbf{Input:} 
+\textbf{Initial State:} NA
 
-\textbf{Expected Output:} 
+\textbf{Input:} Event:
+\begin{itemize}
+\item name: unit test event2
+\item description: A unit test sample event
+\item organizer: Team 2
+\item duration: 30
+\item time: 1708922625
+\item isPulbic: true
+\item location: Online
+\end{itemize}
+					
+\textbf{Expected Output:} An event is successfully created with attributes above
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1543,9 +1591,18 @@ This section contains tests related to the module: Lecture in module hierarchy.
 
 \textbf{Name:} Successful default lecture creation
 
-\textbf{Input:} 
+\textbf{Initial State:} NA
 
-\textbf{Expected Output:} 
+\textbf{Input:} Lecture identifier, code: UNIT TEST3
+
+\textbf{Expected Output:} A lecture is successfully created with following attributes:
+\begin{itemize}
+\item code: UNIT TEST3
+\item name: PLACEHOLDER
+\item instructor: PLACEHOLDER
+\item time: PLACEHOLDER
+\item location: PLACEHOLDER
+\end{itemize}
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1555,9 +1612,18 @@ This section contains tests related to the module: Lecture in module hierarchy.
 
 \textbf{Name:} Successful new lecture creation
 
-\textbf{Input:} 
+\textbf{Initial State:} NA
 
-\textbf{Expected Output:} 
+\textbf{Input:} Lecture:
+\begin{itemize}
+\item code: UNIT TEST3
+\item name: Unit test Lecture
+\item instructor: Team 2
+\item time: 12:30 - 13:30, Mon
+\item location: Online
+\end{itemize}
+
+\textbf{Expected Output:} A lecture is successfully created with attributes above
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1571,9 +1637,24 @@ This section contains tests related to the module: Pagination and Filter in modu
 
 \textbf{Name:} Successful pagination creation
 
-\textbf{Input:} 
+\textbf{Initial State:} NA
 
-\textbf{Expected Output:} 
+\textbf{Input:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\end{itemize}
+pageCount = 2, filterBy and filterString are null
+
+\textbf{Expected Output:} A pagination class is created with following attributes:
+\begin{itemize}
+\item entryList: List of pizza from input
+\item filteredList: same as entryList
+\item maxPage: 1
+\item currentPage: 1
+\item filterBy: null
+\item filterString: null
+\end{itemize}
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1583,9 +1664,25 @@ This section contains tests related to the module: Pagination and Filter in modu
 
 \textbf{Name:} Successful pagination creation with filter
 
-\textbf{Input:} 
+\textbf{Initial State:} NA
 
-\textbf{Expected Output:} 
+\textbf{Input:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\item medium, pepperoni
+\end{itemize}
+pageCount = 2, filterBy = `size' and filterString = `medium'
+
+\textbf{Expected Output:} A pagination class is created with following attributes:
+\begin{itemize}
+\item entryList: List of pizza from input
+\item filteredList: List of medium pizza only
+\item maxPage: 1
+\item currentPage: 1
+\item filterBy: `size'
+\item filterString: `medium'
+\end{itemize}
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1595,9 +1692,27 @@ This section contains tests related to the module: Pagination and Filter in modu
 
 \textbf{Name:} Successful pagination addition
 
-\textbf{Input:} 
+\textbf{Initial State:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\end{itemize}
+pageCount = 2, filterBy and filterString = null
 
-\textbf{Expected Output:} 
+\textbf{Input:} New pizza added to the list:
+\begin{itemize}
+\item medium, pepperoni
+\end{itemize}
+
+\textbf{Expected Output:} A pagination class is created with following attributes:
+\begin{itemize}
+\item entryList: List of all three pizza
+\item filteredList: same as entryList
+\item maxPage: 2
+\item currentPage: 1
+\item filterBy: null
+\item filterString: null
+\end{itemize}
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1607,9 +1722,28 @@ This section contains tests related to the module: Pagination and Filter in modu
 
 \textbf{Name:} Successful pagination deletion
 
-\textbf{Input:} 
+\textbf{Initial State:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\item medium, pepperoni
+\end{itemize}
+pageCount = 2, filterBy and filterString = null
+					
+\textbf{Input:} New pizza to be deleted from the list:
+\begin{itemize}
+\item medium, pepperoni
+\end{itemize}
 
-\textbf{Expected Output:} 
+\textbf{Expected Output:} A pagination class is created with following attributes:
+\begin{itemize}
+\item entryList: List of two pizza (cheese and veggie)
+\item filteredList: same as entryList
+\item maxPage: 1
+\item currentPage: 1
+\item filterBy: null
+\item filterString: null
+\end{itemize}
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1619,9 +1753,20 @@ This section contains tests related to the module: Pagination and Filter in modu
 
 \textbf{Name:} Next Page
 
-\textbf{Input:} 
-
-\textbf{Expected Output:} 
+\textbf{Initial State:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\item medium, pepperoni
+\end{itemize}
+pageCount = 2, filterBy and filterString = null
+					
+\textbf{Input:} Call next page method twice
+					
+\textbf{Expected Output:} Current page is updated only once:
+\begin{itemize}
+\item currentPage: 2
+\end{itemize}
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1631,9 +1776,21 @@ This section contains tests related to the module: Pagination and Filter in modu
 
 \textbf{Name:} Previous Page
 
-\textbf{Input:} 
-
-\textbf{Expected Output:} 
+\textbf{Initial State:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\item medium, pepperoni
+\end{itemize}
+pageCount = 2, filterBy and filterString = null\\
+Call next page method first
+					
+\textbf{Input:} Call previous page method twice
+					
+\textbf{Expected Output:} Current page is updated only once:
+\begin{itemize}
+\item currentPage: 1
+\end{itemize}
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1643,9 +1800,20 @@ This section contains tests related to the module: Pagination and Filter in modu
 
 \textbf{Name:} Last Page
 
-\textbf{Input:} 
-
-\textbf{Expected Output:} 
+\textbf{Initial State:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\item medium, pepperoni
+\end{itemize}
+pageCount = 2, filterBy and filterString = null
+					
+\textbf{Input:} Call last page method
+					
+\textbf{Expected Output:} Current page is updated:
+\begin{itemize}
+\item currentPage: 2
+\end{itemize}
 
 \textbf{Actual Output:} Same as expected output
 
@@ -1655,25 +1823,39 @@ This section contains tests related to the module: Pagination and Filter in modu
 
 \textbf{Name:} First Page
 
-\textbf{Input:} 
-
-\textbf{Expected Output:} 
+\textbf{Initial State:} List of Pizza:
+\begin{itemize}
+\item medium, cheese
+\item large, veggie
+\item medium, pepperoni
+\end{itemize}
+pageCount = 2, filterBy and filterString = null\\
+Call next page method first
+					
+\textbf{Input:} Call first page method
+					
+\textbf{Expected Output:} Current page is updated:
+\begin{itemize}
+\item currentPage: 1
+\end{itemize} 
 
 \textbf{Actual Output:} Same as expected output
 
 \textbf{Result:} Pass
 \end{enumerate}
 
-\subsubsection{Authentication}
+\subsection{Authentication}
 This section contains tests related to the module: Authentication in module hierarchy. \textcolor{red}{Due to the time constraint, we will finish unit tests for this module in Revision 1 following the same pattern}
 \begin{enumerate}
 \item \textbf{FRT-M5-1}
 
 \textbf{Name:} Get current user email
 
-\textbf{Input:} 
-
-\textbf{Expected Output:} 
+\textbf{Initial State:} Current user email: `unitTest@test.com'
+					
+\textbf{Input:} NA
+					
+\textbf{Expected Output:} The email in the initial state
 
 \textbf{Actual Output:} \textcolor{red}{TBD}
 
@@ -1683,9 +1865,11 @@ This section contains tests related to the module: Authentication in module hier
 
 \textbf{Name:} Is email verified
 
-\textbf{Input:} 
-
-\textbf{Expected Output:} 
+\textbf{Initial State:} Current user is email verified: true
+					
+\textbf{Input:} NA
+					
+\textbf{Expected Output:} The boolean value in initial state 
 
 \textbf{Actual Output:} \textcolor{red}{TBD}
 
@@ -1695,49 +1879,61 @@ This section contains tests related to the module: Authentication in module hier
 
 \textbf{Name:} Verify email
 
-\textbf{Input:} 
-
-\textbf{Expected Output:} 
+\textbf{Initial State:} Current user email: `unitTest@test.com'
+					
+\textbf{Input:} Call verify email method
+					
+\textbf{Expected Output:} An email is sent to the email address to verify the email
 
 \textbf{Actual Output:} \textcolor{red}{TBD}
 
 \textbf{Result:} \textcolor{red}{TBD}
 \end{enumerate}
 
-\subsubsection{Database}
+\subsection{Database}
 This section contains tests related to the module: Database in module hierarchy. \textcolor{red}{Due to the time constraint, we will finish unit tests for this module in Revision 1 following the same pattern}
 \begin{enumerate}
 \item \textbf{FRT-M6-1}
 
 \textbf{Name:} Get value
 
-\textbf{Input:} 
-
-\textbf{Expected Output:} 
+\textbf{Initial State:} NA
+					
+\textbf{Input:} A valid path to a test node: `/events/public/EXPO/name'
+					
+\textbf{Expected Output:} The corresponding value of the node: EXPO
 
 \textbf{Actual Output:} \textcolor{red}{TBD}
 
 \textbf{Result:} \textcolor{red}{TBD}
 
-\item \textbf{FRT-M5-2}
+\item \textbf{FRT-M6-2}
 
 \textbf{Name:} Set value
 
-\textbf{Input:} 
+\textbf{Initial State:} NA
+					
+\textbf{Input:} A valid path to a test node and a new value: 
+\begin{itemize}
+\item path: `/events/public/EXPO/description'
+\item value: `EXPO, yes!'
+\end{itemize}
 
-\textbf{Expected Output:} 
+\textbf{Expected Output:} The corresponding value changes to the new value
 
 \textbf{Actual Output:} \textcolor{red}{TBD}
 
 \textbf{Result:} \textcolor{red}{TBD}
 
-\item \textbf{FRT-M5-3}
+\item \textbf{FRT-M6-3}
 
 \textbf{Name:} Delete data
 
-\textbf{Input:} 
+\textbf{Initial State:} NA
+					
+\textbf{Input:} A valid path to a test node : `/events/public/EXPO'
 
-\textbf{Expected Output:} 
+\textbf{Expected Output:} The corresponding event is removed
 
 \textbf{Actual Output:} \textcolor{red}{TBD}
 
