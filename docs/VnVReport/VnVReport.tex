@@ -1339,6 +1339,27 @@ This section corresponds to the Operational and Environmental tests in VnV Plan 
 
 \section{Load Test}\label{load}
 
+This section covers results load testing of the backend server in details.
+Testing was performed using Apache JMeter to simulate multiple concurrent users accessing the backend chat server. The objective of the test was to find the upper bound of concurrent users that can access the server without it crashing.
+We discovered that it is rather difficult to crash a server being hosted on a cloud platform as there are several safeguards that prevent that.
+Instead, we noticed that if too many connections are being made too quickly, then the server will just reject the most recently requested connections.
+
+\begin{table}[!htbp]
+  \centering
+  \begin{tabular}{|c|c|c|}
+  \hline
+  No. of Users & Server Rejected Connections? & Server Crashed? \\ \hline
+  1 & No & No \\ \hline
+  10 & No & No \\ \hline
+  100 & No & No \\ \hline
+  500 & No & No \\ \hline
+  1000 & No & No \\ \hline
+  5000 & Yes & No \\ \hline
+  10000 & Yes & No \\ \hline
+  \end{tabular}
+  \caption{Load Testing Results}
+\end{table}
+
 \section{Non dynamic Tests Result}\label{static}
 
 \section{Comparison to Existing Implementation}	
