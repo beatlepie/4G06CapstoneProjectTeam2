@@ -1960,7 +1960,7 @@ This section includes all unit tests for functional and non-functional requireme
 
 \subsection{Unit Testing Scope}
 
-All modules defined above are within the testing scope.  The scope of unit testing was limited to the components that could be automatically tested. Third-party library modules like Vuforia and Mapbox are out of the scope of unit testing and we will trust they are bug-free. Also, high-level modules in the hierarchy are usually responsible for rendering UI and reacting to user actions (e.g. user profile module, lecture list module) therefore they are out of the scope of unit testing as well (in fact they are not quite testable with Unity test framework). Instead, they are tested with manual testing. Other than the modules mentioned, some utility functions will also be tested (but they will not be listed below).
+All modules defined above are within the testing scope.  The scope of unit testing was limited to the components that could be automatically tested. Third-party library modules like Vuforia and Mapbox are out of the scope of unit testing and we will trust they are bug-free. Also, high-level modules in the hierarchy are usually responsible for rendering UI and reacting to user actions (e.g. user profile module, lecture list module) therefore they are out of the scope of unit testing as well (in fact they are not quite testable with Unity test framework). Instead, they are tested with manual testing.
 
 \subsection{Tests for Functional Requirements}
 
@@ -1986,9 +1986,9 @@ This section will contain all unit tests for the module ``User''. The tests are 
 \textbf{Output:} A user is successfully created with following attributes:
 \begin{itemize}
 \item email: unitTest@test.com
-\item nickname: ''
+\item nickname: `'
 \item photoURI: null
-\item program: ''
+\item program: `'
 \item level: 0
 \item lectures: empty list of string
 \item event: empty list of string
@@ -2011,9 +2011,9 @@ This section will contain all unit tests for the module ``User''. The tests are 
 \textbf{Input:} User:
 \begin{itemize}
 \item email: unitTest@test.com
-\item nickname: 'Mr. Unit Test'
+\item nickname: `Mr. Unit Test'
 \item photoURI: http://example/com/photo.jpg
-\item program: 'software engineering'
+\item program: `software engineering'
 \item level: 1
 \item lectures: \{`Lecture 1', `Lecture 2'\}
 \item event: \{`Event 1', `Event 2'\}
@@ -2173,7 +2173,7 @@ pageCount = 2, filterBy and filterString are null
 
 \item{FRT-M4-2}
 
-textbf{Name:} Successful pagination creation with filter 
+\textbf{Name:} Successful pagination creation with filter 
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
@@ -2374,7 +2374,7 @@ Call next page method first
 This section will contain all unit tests for the module ``Authentication''.  This module wraps some methods from third-party library Firebase Authentication, and these methods will be mocked in the unit tests.
 
 \begin{enumerate}
-\item{FRT-M6-1}
+\item{FRT-M5-1}
 
 \textbf{Name:} Get current user email
 
@@ -2406,7 +2406,7 @@ This section will contain all unit tests for the module ``Authentication''.  Thi
 
 \textbf{How test will be performed:} Create a test case in UTF that creates an authentication module and calls the get current email verified method with a mock of Firebase Authentication email verification value
 
-\item{FRT-M6-3}
+\item{FRT-M5-3}
 
 \textbf{Name:} Verify email
 

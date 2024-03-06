@@ -35,6 +35,8 @@
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 Mar 4 & 1.0 & Add functional requirements evaluation\\
+Mar 6 & 1.0 & Add non-functional requirements evaluation\\
+Mar 6 & 1.0 & Load test, Usability test, unit test results\\
 \bottomrule
 \end{tabularx}
 
@@ -1460,6 +1462,270 @@ GitHub Walkthrough with Reviewers &
 Not applicable to this project since there is no existing implementation.
 
 \section{Unit Testing}
+The following section outlines the results of unit testing. The process and test performed follow the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}. \textcolor{red}{Due to the time constraint, we skipped the unit tests for Database and Authentication modules, but we will add unit tests for them in Revision 1.}
+\subsection{User}
+This section contains tests related to the module: User in module hierarchy.
+\begin{enumerate}
+\item \textbf{FRT-M1-1}
+
+\textbf{Name:} Successful default user creation
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+
+\item \textbf{FRT-M1-2}
+
+\textbf{Name:} Successful new user creation
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+\end{enumerate}
+
+\subsection{Event}
+This section contains tests related to the module: Event in module hierarchy.
+\begin{enumerate}
+\item \textbf{FRT-M2-1}
+
+\textbf{Name:} Successful default event creation
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+
+\item \textbf{FRT-M2-2}
+
+\textbf{Name:} Successful new event creation
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+\end{enumerate}
+
+\subsection{Lecture}
+This section contains tests related to the module: Lecture in module hierarchy.
+\begin{enumerate}
+\item \textbf{FRT-M3-1}
+
+\textbf{Name:} Successful default lecture creation
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+
+\item \textbf{FRT-M3-2}
+
+\textbf{Name:} Successful new lecture creation
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+\end{enumerate}
+
+\subsection{Pagination}
+This section contains tests related to the module: Pagination and Filter in module hierarchy.
+\begin{enumerate}
+\item \textbf{FRT-M4-1}
+
+\textbf{Name:} Successful pagination creation
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+
+\item \textbf{FRT-M4-2}
+
+\textbf{Name:} Successful pagination creation with filter
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+
+\item \textbf{FRT-M4-3}
+
+\textbf{Name:} Successful pagination addition
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+
+\item \textbf{FRT-M4-4}
+
+\textbf{Name:} Successful pagination deletion
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+
+\item \textbf{FRT-M4-5}
+
+\textbf{Name:} Next Page
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+
+\item \textbf{FRT-M4-6}
+
+\textbf{Name:} Previous Page
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+
+\item \textbf{FRT-M4-7}
+
+\textbf{Name:} Last Page
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+
+\item \textbf{FRT-M4-8}
+
+\textbf{Name:} First Page
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} Same as expected output
+
+\textbf{Result:} Pass
+\end{enumerate}
+
+\subsubsection{Authentication}
+This section contains tests related to the module: Authentication in module hierarchy. \textcolor{red}{Due to the time constraint, we will finish unit tests for this module in Revision 1 following the same pattern}
+\begin{enumerate}
+\item \textbf{FRT-M5-1}
+
+\textbf{Name:} Get current user email
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} \textcolor{red}{TBD}
+
+\textbf{Result:} \textcolor{red}{TBD}
+
+\item \textbf{FRT-M5-2}
+
+\textbf{Name:} Is email verified
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} \textcolor{red}{TBD}
+
+\textbf{Result:} \textcolor{red}{TBD}
+
+\item \textbf{FRT-M5-3}
+
+\textbf{Name:} Verify email
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} \textcolor{red}{TBD}
+
+\textbf{Result:} \textcolor{red}{TBD}
+\end{enumerate}
+
+\subsubsection{Database}
+This section contains tests related to the module: Database in module hierarchy. \textcolor{red}{Due to the time constraint, we will finish unit tests for this module in Revision 1 following the same pattern}
+\begin{enumerate}
+\item \textbf{FRT-M6-1}
+
+\textbf{Name:} Get value
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} \textcolor{red}{TBD}
+
+\textbf{Result:} \textcolor{red}{TBD}
+
+\item \textbf{FRT-M5-2}
+
+\textbf{Name:} Set value
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} \textcolor{red}{TBD}
+
+\textbf{Result:} \textcolor{red}{TBD}
+
+\item \textbf{FRT-M5-3}
+
+\textbf{Name:} Delete data
+
+\textbf{Input:} 
+
+\textbf{Expected Output:} 
+
+\textbf{Actual Output:} \textcolor{red}{TBD}
+
+\textbf{Result:} \textcolor{red}{TBD}
+\end{enumerate}
 
 \section{Changes Due to Testing}
 
@@ -1470,78 +1736,10 @@ should be highlighted.}
 
 \section{Automated Testing}
 		
-\newpage
-\begin{landscape}
 \section{Trace to Requirements}
-
-\footnotesize
-\begin{longtable}{|l|cccccccccccccccc|}
-  \hline
-  \textbf{Test IDs} & \multicolumn{14}{c|}{\textbf{Functional Requirement IDs}} \\
-  \hline
-  ~                 & \textbf{FR1-1} & \textbf{FR2-1} & \textbf{FR2-2} & \textbf{FR2-3} & \textbf{FR2-4} & \textbf{FR2-5} & \textbf{FR2-6} & \textbf{FR2-7} & \textbf{FR3-1} & \textbf{FR3-2} & \textbf{FR3-3} & \textbf{FR3-4} & \textbf{FR3-5} \\
-  \hline
-  \textbf{FRT-PR1}  & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-PR2}  & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-UA1}  & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-UA2}  & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-UA3}  & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-UA4}  & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-UA5}  & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-UA6}  & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-UA7}  & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-UA8}  & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-UA9}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-SN1}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-SN2}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-SN3}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              \\
-  \textbf{FRT-SN4}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              \\
-  \textbf{FRT-SN5}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              \\
-  \textbf{FRT-SN6}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              \\
-  \textbf{FRT-SN7}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              \\
-  \hline
-  \caption{Traceability Between Functional Test Cases and Functional Requirements, FR-1 to FR-3-5} \\
-\end{longtable}
-
-\newpage
-
-\begin{longtable}{|l|cccccccccccc|}
-  \hline
-  \textbf{Test IDs} & \multicolumn{12}{c|}{\textbf{Functional Requirement IDs}} \\
-  \hline
-  ~                 & \textbf{FR3-6} & \textbf{FR4-1} & \textbf{FR4-2} & \textbf{FR4-3} & \textbf{FR4-4} & \textbf{FR4-5} & \textbf{FR4-6} & \textbf{FR4-7} & \textbf{FR4-8} &  \textbf{FR5-1} & \textbf{FR5-2} & \textbf{FR6-1} \\
-  \hline
-  \textbf{FRT-SN2}  & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-SN3}  & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE1}  & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE2}  & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE3}  & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE4}  & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE5}  & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE6}  & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE7}  & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE8}  & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE9}  & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE10} & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE11} & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE12} & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE13} & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~               & ~              \\
-  \textbf{FRT-LE14} & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~               & ~              \\
-  \textbf{FRT-AR1}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~               & ~              \\
-  \textbf{FRT-AR2}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~               & ~              \\
-  \textbf{FRT-AR3}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X               & ~              \\
-  \textbf{FRT-MAP1} & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~               & X              \\
-  \textbf{FRT-MAP2} & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~               & X              \\
-  \hline
-  \caption{Traceability Between Functional Test Cases and Functional Requirements, FR-3-6 to FR-6} \\
-\end{longtable}
-
-\newpage
-		
+See Traceability tables between Test Cases and Requirements in \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}
 \section{Trace to Modules}		
-
-\newpage
-\end{landscape}
+See Traceability tables between Test Cases and Modules in \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}, notice that M5 and M6 are not completed yet in this iteration.
 
 \section{Code Coverage Metrics}
 
