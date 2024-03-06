@@ -1,8 +1,10 @@
 \documentclass[12pt, titlepage]{article}
 
 \usepackage{booktabs}
+\usepackage{float}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{graphicx}
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -815,7 +817,7 @@ This section corresponds to the Look and feel tests in VnV Plan and Look and Fee
 \item password: mtesting
 \end{itemize}
 
-\textbf{Input/Condition:} Usability Survey in section \ref{survey}
+\textbf{Input:} Usability Survey in section \ref{survey}
 
 \textbf{Expected Output:} Tasks are completed successfully and ``Immediate Visual Response when Clicking'' and ``Appealing Colour Scheme'' questions get average scores that are great than MIN\_SCORE
 
@@ -1336,6 +1338,45 @@ This section corresponds to the Operational and Environmental tests in VnV Plan 
 \end{enumerate}
 
 \section{Usability Survey Result}\label{survey}
+We first conduct the survey on 5 students, and it seems that we are getting repetitive feedback, so we assume this is already a good sample size. The result of the survey is the following:
+\subsubsection{Tasks:}
+\begin{itemize}
+\item Administrator: 1 tester - all tasks are completed successfully 
+\item User: 3 testers - all tasks are completed successfully
+\item Guest: 1 tester - all tasks are completed successfully
+\end{itemize}
+\subsubsection{Rating}
+\begin{itemize}
+\item Immediate Visual Response when Clicking: \textbf{3.8}\\
+\includegraphics[scale=0.4]{Q1.png}
+\item Appealing Colour Scheme: \textbf{4.8}\\
+\includegraphics[scale=0.4]{Q2.png}
+\item No Technical or Software-specific Language: \textbf{4}\\
+\includegraphics[scale=0.4]{Q3.png}
+\item Common periods of usage: \textbf{3.2, \textcolor{red}{Fail}}\\
+\includegraphics[scale=0.4]{Q4.png}
+\item Cultural Friendliness: \textbf{4.8}\\
+\includegraphics[scale=0.4]{Q5.png}
+\end{itemize}
+\subsubsection{Open-ended Question}
+\begin{itemize}
+\item Most difficult to use feature: \textbf{AR camera, pin, chatting}
+\begin{enumerate}
+\item The most difficult to use feature is probably the AR camera feature as it requires the user to use look through their phone camera while in buildings on campus. Additionally, it is also probably the most cool aspect of the app.
+\item The lecture list isn't intuitive, there should be some calendar feature to show what days each lecture is running instead of just clicking on them, and maybe some more filters for building/location/course content.
+\item The "pin" feature being hidden in the settings and the "AR Camera" not providing any feedback as to why we weren't seeing any were both confusing
+\item The pinned/bookmarked events and lectures show up in a location (in settings) that is somewhat difficult to find. You also can't tap them to see more information about them on the pinned screen which is inconvenient.
+\item Friend and chatting is unintuitive, don't know who I'm chatting with.
+\end{enumerate}
+\item Most likely to use feature: \textbf{Lecture/Event, AR camera}
+\begin{enumerate}
+\item Probably also the feature for looking up lecture events and times. This is useful as I can just open the app and view where specific lectures are located and choose to attend them or not.
+\item I would use the AR camera feature to see interesting building history in between classes.
+\item The feature that provided a schedule of all of the events was very nice
+\item I could see the list of events at different locations being pretty useful, would be a good way to keep track of what's going on at Mac all in one place.
+\item Events can be useful to see what is going on on campus and save events we want to go to
+\end{enumerate}
+\end{itemize}
 
 \section{Load Test}\label{load}
 
@@ -1361,6 +1402,58 @@ Instead, we noticed that if too many connections are being made too quickly, the
 \end{table}
 
 \section{Non dynamic Tests Result}\label{static}
+The weekly meetings in VnV Plan like weekly code review and TA feedback will not be included in this section, their meeting minutes are available in our GitHub.
+\begin{table}[H]
+\caption{Nondynamic Test Result}
+\begin{tabular}{|p{0.3\linewidth} | p{0.5\linewidth}| p{0.2\linewidth} |}
+\hline
+\multicolumn{1}{|l}{\bfseries Test Method} & \multicolumn{1}{|l|}{\bfseries Result} & \multicolumn{1}{l|}{\bfseries Related Test(s)}\\
+\hline
+Code Inspection for user data & 
+\begin{itemize}
+\item User permission: Pass, the application forces to user to sign a consent form when they register
+\item Legitimate use of data: Pass, the supervisor points out that data are not used out of the application for any business purpose
+\item Compliance: Pass, nothing violates McMaster privacy polices
+\end{itemize} & NFRT-P3, NFRT-PRV1, NFRT-COM1 \\
+\hline
+Database Walkthrough & 
+\begin{itemize}
+\item Capacity: Pass, the free plan has a storage of 1GB data, which is enough for our users at this stage
+\item Clean: Pass, Firebase Authentication support some clould functions to clean inactive users
+\end{itemize}& NFRT-P15, NFRT-PRV2\\
+\hline
+Server \& Data Transmission Walkthrough & 
+\begin{itemize}
+\item Restart: Pass, the server is set to restart when it crashes
+\item Encryption: pass, the data is encrypted in https
+\end{itemize} & NFRT-P4, NFRT-P12 \\
+\hline
+Longevity Peer Evaluation & 
+\begin{itemize}
+\item Longevity: Pass, nothing in the code is dependent on the version of the device
+\end{itemize} & NFRT-P17\\
+\hline
+\end{tabular}
+\end{table}
+\begin{table}[H]
+\caption{Nondynamic Test Result Cont}
+\begin{tabular}{|p{0.3\linewidth} | p{0.5\linewidth}| p{0.2\linewidth} |}
+\hline
+\multicolumn{1}{|l}{\bfseries Test Method} & \multicolumn{1}{|l|}{\bfseries Result} & \multicolumn{1}{l|}{\bfseries Related Test(s)}\\
+\hline
+Code Walkthrough with Primary Reviewers & 
+\begin{itemize}
+\item Issues: Pass, ia new building can be added like a game object in the project
+\end{itemize} & NFTR-P16\\
+\hline
+GitHub Walkthrough with Reviewers & 
+\begin{itemize}
+\item Issues: Pass, issues are public to read and write in the repo
+\item Instructions: Pass, there are instructions for developers and users in the repo
+\end{itemize} & NFRT-UH2, NFRT-MS2\\
+\hline
+\end{tabular}
+\end{table}
 
 \section{Comparison to Existing Implementation}	
 
