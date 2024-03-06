@@ -1444,11 +1444,119 @@ should be highlighted.}
 \end{longtable}
 
 \newpage
-		
-\section{Trace to Modules}		
+
+\begin{longtable}{|l|cccccccc|}
+  \hline
+  \textbf{Test IDs} & \multicolumn{8}{c|}{\textbf{Nonfunctional Requirement IDs}} \\
+  \hline
+  ~                 & \textbf{LF-A1} & \textbf{LF-A2} & \textbf{LF-S1} & \textbf{LF-S2} & \textbf{UH-EOU1} & \textbf{UH-L1} & \textbf{UH-UP1} & \textbf{UH-A1} \\
+  \hline
+  \textbf{NFRT-LF1} & X              & ~              & ~              & X              & ~                & ~              & ~               & ~              \\
+  \textbf{NFRT-LF2} & ~              & X              & ~              & ~              & ~                & ~              & ~               & ~              \\
+  \textbf{NFRT-LF3} & ~              & ~              & X              & ~              & ~                & ~              & ~               & ~              \\
+  \textbf{NFRT-UH1} & ~              & ~              & ~              & ~              & X                & ~              & X               & ~              \\
+  \textbf{NFRT-UH2} & ~              & ~              & ~              & ~              & ~                & X              & ~               & ~              \\
+  \textbf{NFRT-UH3} & ~              & ~              & ~              & ~              & ~                & ~              & ~               & X              \\
+  \hline
+\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, LF-A1 to UH-A1} \\
+\end{longtable}
+
+\newpage
+
+\begin{longtable}{|l|ccccccccccccc|}
+  \hline
+  \textbf{Test IDs} & \multicolumn{13}{c|}{\textbf{Nonfunctional Requirement IDs}} \\
+  \hline
+  ~                 & \textbf{P-SL1} & \textbf{P-SL2} & \textbf{P-SC1} & \textbf{P-SC2} & \textbf{P-SC3} & \textbf{P-SC4} & \textbf{P-SC5} & \textbf{P-SC6} & \textbf{P-PA1} & \textbf{P-RF1} & \textbf{P-RF2} & \textbf{P-RF3} & \textbf{P-RF4} \\
+  \hline
+  \textbf{NFRT-P1}  & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
+  \textbf{NFRT-P2}  & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
+  \textbf{NFRT-P3}  & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
+  \textbf{NFRT-P4}  & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
+  \textbf{NFRT-P5}  & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
+  \textbf{NFRT-P6}  & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              & ~              \\
+  \textbf{NFRT-P7}  & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              & ~              \\
+  \textbf{NFRT-P8}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              & ~              \\
+  \textbf{NFRT-P9}  & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              & ~              \\
+  \textbf{NFRT-P10} & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              & ~              \\
+  \textbf{NFRT-P11} & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              & ~              \\
+  \textbf{NFRT-P12} & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              & ~              \\
+  \textbf{NFRT-P13} & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & ~              & X              \\
+  \hline
+\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, P-SL1 to P-RF4} \\
+\end{longtable}
+
+\newpage
+
+\begin{longtable}{|l|ccccccccccc|}
+  \hline
+  \textbf{Test IDs} & \multicolumn{11}{c|}{\textbf{Nonfunctional Requirement IDs}} \\
+  \hline
+  ~                 & \textbf{P-SE1} & \textbf{P-SE2} & \textbf{P-SE3} & \textbf{P-L1} & \textbf{P-L2} & \textbf{OE-EPE1} & \textbf{OE-P1} & \textbf{MS-M1} & \textbf{MS-S1} & \textbf{MS-S2} & \textbf{MS-A1} \\
+  \hline
+  \textbf{NFRT-P14} & X              & ~              & ~              & ~             & ~             & ~                & ~              & ~              & ~              & ~              &~               \\
+  \textbf{NFRT-P15} & ~              & X              & ~              & ~             & ~             & ~                & ~              & ~              & ~              & ~              &~               \\
+  \textbf{NFRT-P16} & ~              & ~              & X              & ~             & ~             & ~                & ~              & ~              & ~              & ~              &~               \\
+  \textbf{NFRT-P17} & ~              & ~              & ~              & X             & X             & ~                & ~              & ~              & ~              & ~              &~               \\
+  \textbf{NFRT-OE1} & ~              & ~              & ~              & ~             & ~             & X                & X              & ~              & ~              & ~              &~               \\
+  \textbf{NFRT-MS1} & ~              & ~              & ~              & ~             & ~             & ~                & ~              & X              & ~              & ~              &~               \\
+  \textbf{NFRT-MS2} & ~              & ~              & ~              & ~             & ~             & ~                & ~              & ~              & X              &X               &~               \\
+  \textbf{NFRT-MS3} & ~              & ~              & ~              & ~             & ~             & ~                & ~              & ~              & ~              &~               &X               \\
+  \hline
+\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, P-SE1 to MS-A1} \\
+\end{longtable}
+
+\begin{longtable}{|l|cccccccc|}
+  \hline
+  \textbf{Test IDs}  & \multicolumn{8}{c|}{\textbf{Nonfunctional Requirement IDs}} \\
+  \hline
+  ~                  & \textbf{S-A1} & \textbf{S-A2} & \textbf{S-A3} & \textbf{S-P1} & \textbf{S-P2} & \textbf{CUL-C1} & \textbf{COMP-L1} & \textbf{COMP-SC1} \\
+  \hline
+  \textbf{NFRT-S1}   & X             & X             & X             & ~             & ~             & ~               & ~                & ~                 \\
+  \textbf{NFRT-PRV1} & ~             & ~             & ~             & X             & ~             & ~               & ~                & ~                 \\
+  \textbf{NFRT-PRV2} & ~             & ~             & ~             & ~             & X             & ~               & ~                & ~                 \\
+  \textbf{NFRT-CUL1} & ~             & ~             & ~             & ~             & ~             & X               & ~                & ~                 \\
+  \textbf{NFRT-COM1} & ~             & ~             & ~             & ~             & ~             & ~               & X                & X                 \\
+  \hline
+\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements, S-A1 to COMP-SC1} \\
+\end{longtable}
 
 \newpage
 \end{landscape}
+		
+\section{Trace to Modules}		
+
+\begin{longtable}{|l|cccccc|}
+	\hline
+	\textbf{Test IDs} & \multicolumn{6}{c|}{\textbf{Module IDs}} \\
+	\hline
+	~                 & \textbf{M1} & \textbf{M2} & \textbf{M3} & \textbf{M4} & \textbf{M5} & \textbf{M6} \\
+	\hline
+	\textbf{FRT-M1-1} & X           & ~           & ~           & ~           & ~           & ~           \\
+	\textbf{FRT-M1-2} & X           & ~           & ~           & ~           & ~           & ~           \\
+	\textbf{FRT-M2-1} & ~           & X           & ~           & ~           & ~           & ~           \\
+	\textbf{FRT-M2-2} & ~           & X           & ~           & ~           & ~           & ~           \\
+	\textbf{FRT-M3-1} & ~           & ~           & X           & ~           & ~           & ~           \\
+	\textbf{FRT-M3-2} & ~           & ~           & X           & ~           & ~           & ~           \\
+  \textbf{FRT-M4-1} & ~           & ~           & ~           & X           & ~           & ~           \\
+	\textbf{FRT-M4-2} & ~           & ~           & ~           & X           & ~           & ~           \\
+	\textbf{FRT-M4-3} & ~           & ~           & ~           & X           & ~           & ~           \\
+	\textbf{FRT-M4-4} & ~           & ~           & ~           & X           & ~           & ~           \\
+	\textbf{FRT-M4-5} & ~           & ~           & ~           & X           & ~           & ~           \\
+	\textbf{FRT-M4-6} & ~           & ~           & ~           & X           & ~           & ~           \\
+	\textbf{FRT-M4-7} & ~           & ~           & ~           & X           & ~           & ~           \\
+	\textbf{FRT-M4-8} & ~           & ~           & ~           & X           & ~           & ~           \\
+	\textbf{FRT-M5-1} & ~           & ~           & ~           & ~           & X           & ~           \\
+	\textbf{FRT-M5-2} & ~           & ~           & ~           & ~           & X           & ~           \\
+	\textbf{FRT-M5-4} & ~           & ~           & ~           & ~           & X           & ~           \\
+	\textbf{FRT-M6-1} & ~           & ~           & ~           & ~           & ~           & X           \\
+	\textbf{FRT-M6-2} & ~           & ~           & ~           & ~           & ~           & X           \\
+	\textbf{FRT-M6-3} & ~           & ~           & ~           & ~           & ~           & X           \\
+	\hline
+\caption{Traceability Between Test Cases and Modules}
+\end{longtable}
+
+\newpage
 
 \section{Code Coverage Metrics}
 
