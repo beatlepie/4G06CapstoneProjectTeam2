@@ -2040,4 +2040,21 @@ graduate attribute of Reflection.  Please answer the following question:
   teams will have had to deviate from their original VnV Plan.)
 \end{enumerate}
 
+The execution of our testing plan was very different from how we initially envisioned in our VnV Plan. The VnV plan was written before any implementation had been done.
+This resulted in us making several assumptions about how the final product would work. Of course, as our project evolved over time, many of our assumptions would need to be changed.\\
+
+One of the main ways our actual VnV testing effort varied was the scope of what was tested. Due to time constraints, some of our planned features needed to be cut.
+This resulted in some proposed test cases no longer being applicable. While it is natural for requirements and scope to change over the course of a project's life, the invalidation of these tests
+could potentially have been mitigated by creating the VnV Plan when structure of the project is more concrete. In future VnV planning, we would either do our VnV planning after completing some of the
+implementation, or by iterating on the previous VnV by making amendments and revisions.\\
+
+Another thing that impacted our VnV testing effort was our level of familiarity with the testing tools available and how they interacted with our technology stack.
+For example, we initially wanted to test our database-facing frontend code using the Unity Test Framework (UTF). Due to our lack of experience with UTF and Firebase, we made the assumption that
+it would be possible to test Firebase code using UTF. This ended up not being the case and the tests were planned were scrapped or pushed to our feature waiting list. In future VnV planning, we would
+put more effot into learning the tools and technology needed to test our project before coming up with test plans.\\
+
+Comparing how our testing efforts went with how we planned them taught us that it is best to be conservative with the scope of features as some development time must
+be allocated to testing those features. We also learned to value iterative improvement through keeping the documentation "alive" with revisions along with the project.
+Lastly, we gained experience with a wide variety of testing tools and techniques that will be valuable in future VnV planning and execution.
+
 \end{document}
