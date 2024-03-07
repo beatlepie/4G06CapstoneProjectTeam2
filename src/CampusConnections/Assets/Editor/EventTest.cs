@@ -30,13 +30,7 @@ public class EventTest
     [Test]
     public void EventTestGetterAndSetter()
     {
-        Event e = new Event(name);
-        e.description = description;
-        e.organizer = organizer;
-        e.location = location;
-        e.time = time;
-        e.duration = duration;
-        e.isPublic = isPublic;
+        Event e = new Event(name, time, duration, organizer, description, location, isPublic);
         Assert.AreEqual(e.name, name);
         Assert.AreEqual(e.description, description);
         Assert.AreEqual(e.organizer, organizer);
