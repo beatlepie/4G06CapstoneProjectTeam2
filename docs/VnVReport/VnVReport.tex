@@ -38,6 +38,7 @@
 Mar 4 & 1.0 & Add functional requirements evaluation\\
 Mar 6 & 1.0 & Add non-functional requirements evaluation\\
 Mar 6 & 1.0 & Load test, Usability test, unit test results\\
+Mar 6 & 1.0 & Add Automated test, non-dynamic test result and changes due to testing\\
 \bottomrule
 \end{tabularx}
 
@@ -50,9 +51,21 @@ Mar 6 & 1.0 & Load test, Usability test, unit test results\\
   \toprule		
   \textbf{symbol} & \textbf{description}\\
   \midrule 
+  APK & Android Application Package\\
+  \midrule 
+  AR & Augmented reality\\
+  \midrule 
+  Azure & A cloud computing platform run by Microsoft\\
+  \midrule 
+  CI & Continuous integration\\
+  \midrule 
+  JHE & John Hodgins Engineering Building\\
+  \midrule 
   JMeter & Load testing tool for analyzing and measuring the performance\\
   \midrule 
   SRS & Software Requirements Specification\\
+  \midrule
+  TA & Teaching Assistant\\
   \midrule 
   UI & User Interface\\
   \midrule 
@@ -1941,11 +1954,20 @@ This section contains tests related to the module: Database in module hierarchy.
 \end{enumerate}
 
 \section{Changes Due to Testing}
+\subsection{Changes due to Rev 0 demo feedback}
+In Revision 0 of the demonstration, our instructor, Dr. Smith, pointed out that certain features, such as access control and the event list page, had not yet been implemented. These aspects were accorded higher priority in the development plan and have been successfully completed.
 
-\wss{This section should highlight how feedback from the users and from 
-the supervisor (when one exists) shaped the final product.  In particular 
-the feedback from the Rev 0 demo to the supervisor (or to potential users) 
-should be highlighted.}
+\subsection{Changes due to supervisor's feedback}
+During the weekly meeting, our supervisor, Dr. Yuan, emphasized the necessity of reducing the sample size for the usability survey at this stage, which had previously been set at 50. Additionally, Dr. Yuan suggested incorporating tasks into the survey to facilitate thorough testing of the application by users. Consequently, the team collectively decided to integrate tasks and open-ended questions into the usability survey. This adjustment aims to gather more insightful feedback, discerning which aspects users like most and pinpointing features requiring improvement from a usability perspective.
+\subsection{Changes due to usability test result}
+The only test fails is the ``Common periods of usage'' rating question. It has come to light that survey participants express a preference for utilizing the application after school so that they won't miss any events happen in the evening. This observation is directly linked to maintenance requirement MS-M1. The team will change that major update time in that requirement to be summer break or weekend midnight to affect fewer users.\\
+The absence of instructions for the AR camera has been repeatedly highlighted in the feedback. Consequently, the team will resolve this issue by adding instructions when user clicks on the help button. \\
+Participants have noted that saved lectures and events are not readily accessible, as they are currently hidden within the settings. In response to this feedback, the team will create a link to the saved lectures and events page directly from the list pages. \\
+Each of the aforementioned changes will be documented as a separate issue in the GitHub repo for future discussion.\\
+\subsection{Changes due to load test result}
+The load test in section \ref{load} shows that NFRT-P16 passes without any issues -- with fewer than 1000 users connecting to the application, the server handles the load effectively, as indicated by the nearly negligible response time observed in the figure. However, it is crucial to note that upon scaling up to accommodate approximately 40,000 concurrent requests after Revision 1, the server begins to reject connections and getting a significant increase in response time.Therefore, this is a good warning for the team regarding the need to scale the server infrastructure adequately to support a larger user base.
+\subsection{Changes due to failing tests}
+NFRT-P10 fails due to a change of the scope. The team will update SRS and VnV Plan so that internet connection lost warning is no longer a requirement.\\
 
 \section{Automated Testing}
 The tests are run from local machine as there were difficulties in implementing GitHub Action for it.
@@ -1980,8 +2002,11 @@ See Traceability tables between Test Cases and Modules in \href{https://github.c
 \bibliography{../../refs/References}
 
 \newpage{}
-\section*{Appendix --- Reflection}
+\section*{Appendix}
+\subsection{Symbolic Parameters}
+Check the Symbolic Parameter Table in \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan} for more details.
 
+\subsection{Reflection}
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Reflection.  Please answer the following question:
 
