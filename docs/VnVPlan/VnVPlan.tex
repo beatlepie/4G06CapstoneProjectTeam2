@@ -497,7 +497,7 @@ This section includes all test cases related to user accounts. This will include
 
 \textbf{Input:} Email address and new password
 \begin{itemize}
-\item new nickname: QTesting
+\item new password: QTesting
 \end{itemize}
 					
 \textbf{Output:} Password is successfully reset
@@ -531,7 +531,7 @@ This section includes all test cases related to user accounts. This will include
 
 \item{\textbf{FRT-UA8}}
 
-\textbf{Name:} Email verification
+\textbf{Name:} Email Verification
 
 \textbf{Control:} Manual
 					
@@ -553,7 +553,7 @@ This section includes all test cases related to user accounts. This will include
 
 \item{\textbf{FRT-UA9}}
 
-\textbf{Name:} Edit profile
+\textbf{Name:} Edit Profile
 
 \textbf{Control:} Manual
 					
@@ -835,7 +835,7 @@ This section includes all test cases related to events and lectures happening on
 
 \item{\textbf{FRT-LE5}}
 
-\textbf{Name:} Administrator Add Events
+\textbf{Name:} Administrator Add Event
 
 \textbf{Control:} Manual
 					
@@ -866,7 +866,7 @@ This section includes all test cases related to events and lectures happening on
 
 \item{\textbf{FRT-LE6}}
 
-\textbf{Name:} Administrator Edit Events
+\textbf{Name:} Administrator Edit Event
 
 \textbf{Control:} Manual
 					
@@ -892,7 +892,7 @@ This section includes all test cases related to events and lectures happening on
 
 \item{\textbf{FRT-LE7}}
 
-\textbf{Name:} Administrator Delete Events
+\textbf{Name:} Administrator Delete Event
 
 \textbf{Control:} Manual
 					
@@ -917,7 +917,7 @@ This section includes all test cases related to events and lectures happening on
 
 \item{\textbf{FRT-LE8}}
 
-\textbf{Name:} Administrator Add Lectures
+\textbf{Name:} Administrator Add Lecture
 
 \textbf{Control:} Manual
 					
@@ -946,7 +946,7 @@ This section includes all test cases related to events and lectures happening on
 
 \item{\textbf{FRT-LE9}}
 
-\textbf{Name:} Administrator Edit Lectures
+\textbf{Name:} Administrator Edit Lecture
 
 \textbf{Control:} Manual
 					
@@ -972,7 +972,7 @@ This section includes all test cases related to events and lectures happening on
 
 \item{\textbf{FRT-LE10}}
 
-\textbf{Name:} Administrator Delete Lectures
+\textbf{Name:} Administrator Delete Lecture
 
 \textbf{Control:} Manual
 					
@@ -1076,7 +1076,7 @@ This section includes all test cases related to events and lectures happening on
 
 \item{\textbf{FRT-LE14}}
 
-\textbf{Name:} Event Filter by name
+\textbf{Name:} Event Filter by Name
 
 \textbf{Control:} Manual
 					
@@ -1160,11 +1160,11 @@ This section includes all test cases related to campus navigation with AR techno
 \textbf{Related Requirement(s):} FR-5-2
 \end{enumerate}
 
-\subsection{Map and Location}
+\subsubsection{Map and Location}
 \begin{enumerate}
 \item{\textbf{FRT-MAP1}}
 
-\textbf{Name:} User Position
+\textbf{Name:} User Location
 
 \textbf{Control:} Manual
 					
@@ -1182,7 +1182,7 @@ This section includes all test cases related to campus navigation with AR techno
 
 \item{\textbf{FRT-MAP2}}
 
-\textbf{Name:} Friend Positions
+\textbf{Name:} Friend Locations
 
 \textbf{Control:} Manual
 					
@@ -1219,7 +1219,7 @@ Usability requirements will be tested by asking users to do a survey, whose cont
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
-\textbf{Initial State:} User has an account:
+\textbf{Initial State:} Survey taker is given an account:
 \begin{itemize}
 \item email: mtest@gmail.com
 \item password: mtesting
@@ -1227,7 +1227,7 @@ Usability requirements will be tested by asking users to do a survey, whose cont
 
 \textbf{Input/Condition:} User follows the instructions and attempts to finish tasks in the survey 
 					
-\textbf{Output/Result:} The users should be able to complete tasks without any help and the average individual score is over MIN\_SCORE in the``Immediate Visual Response when Clicking'' and ``Appealing Colour Scheme'' categories of the Usability Survey
+\textbf{Output/Result:} The users should be able to complete tasks without any help and the average individual score is over MIN\_SCORE in the``Immediate Visual Response when Clicking'' and ``Appealing Colour Scheme'' categories of the survey
 					
 \textbf{How test will be performed:} A survey will be given to at least
 SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements of the interface. All of the survey takers are McMaster students
@@ -1259,7 +1259,7 @@ The testers will visually inspect each page and each screen to make sure that al
 					
 \textbf{Initial State:} NA
 					
-\textbf{Input/Condition:} User opens the application on their phone
+\textbf{Input/Condition:} User opens the application on the phone
 					
 \textbf{Output/Result:} For all different pages the colour scheme is the same
 
@@ -1273,11 +1273,11 @@ The testers will visually inspect each page and each screen to make sure that al
 \begin{enumerate}
 \item{\textbf{NFRT-UH1}}
 
-\textbf{Name:} Survey for feedback on application layout
+\textbf{Name:} Survey for feedback on understandability and easy of use
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
-\textbf{Initial State:} User has an account:
+\textbf{Initial State:} Survey taker is given an account:
 \begin{itemize}
 \item email: mtest@gmail.com
 \item password: mtesting
@@ -1285,7 +1285,7 @@ The testers will visually inspect each page and each screen to make sure that al
 
 \textbf{Input/Condition:} User follows the instructions and attempts to finish tasks in the survey 
 					
-\textbf{Output/Result:} The user can finish tasks without help and the average individual score is over MIN\_SCORE in the ``No Technical or Software-Specific Language'' category of the Usability Survey
+\textbf{Output/Result:} The user can finish tasks without help and the average individual score is over MIN\_SCORE in the ``No Technical or Software-Specific Language'' category of the survey
 					
 \textbf{How test will be performed:} A survey will be given to at least
 SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements of the interface. All of the survey takers are McMaster students
@@ -1300,7 +1300,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 					
 \textbf{Input/Condition:} GitHub web page
 					
-\textbf{Output/Result:} The main features are explained in the GitHub repo
+\textbf{Output/Result:} Convinced the participants that the main features are explained in the GitHub repo
 
 \textbf{How test will be performed:} The tester will use a guest GitHub account and navigate to the GitHub page and verify there exists explanation of application features
 
@@ -1314,9 +1314,9 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 					
 \textbf{Initial State:} NA
 					
-\textbf{Input/Condition:} User checks the color contrast statically
+\textbf{Input/Condition:} User opens the application checks the color contrast statically
 					
-\textbf{Output/Result:} The color contrast value is given
+\textbf{Output/Result:} The color contrast is greater than 4.5:1,  the Web Content Accessibility Guidelines' AA standards for accessibility
 
 \textbf{How test will be performed:} The tester will statically check if the color contrast is enough for items to be easily visible. (Contrast between background color and text)
 
@@ -1366,7 +1366,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\textbf{Output/Result:} Successfully convinced the participants the following:
 \begin{itemize}
   \item User's personal information does not appear in the database if the user did not grant permission
 \end{itemize}
@@ -1383,7 +1383,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\textbf{Output/Result:} Successfully convinced the participants the following:
 \begin{itemize}
   \item The product only transmits encrypted data from server to user
 \end{itemize}
@@ -1402,7 +1402,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 					
 \textbf{Input/Condition:} User turns on the AR camera
 					
-\textbf{Output/Result:} A warning telling the user to be aware of their surroundings is displayed upon start-up.
+\textbf{Output/Result:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
 
 \textbf{How test will be performed:} The testers will open the AR camera on one device and visually inspect if the message is shown
 
@@ -1491,17 +1491,17 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \item{\textbf{NFRT-P11}}
 
-\textbf{Name:} Rudimentary functions when internet/server connection is lost
+\textbf{Name:} Rudimentary functions when the server connection is lost
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
-\textbf{Initial State:} User has no internet connection
+\textbf{Initial State:} Server is turned down
 					
 \textbf{Input/Condition:} User opens the application
 					
 \textbf{Output/Result:} The application still works with limited functionalities
 
-\textbf{How test will be performed:} The tester will open the application with offline mode and check the map can still show the user location, the saved events and lectures and other user profile information can be viewed and changed
+\textbf{How test will be performed:} The tester will open the application without an available server and check the map can still show the user location, the saved events and lectures and other user profile information can be viewed and changed
 
 \textbf{Related Requirement(s):} P-RF2
 
@@ -1562,9 +1562,9 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Input/Condition:} Database documentation
 
-\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\textbf{Output/Result:} Successfully convinced the participants the following:
 \begin{itemize}
-\item The database is able to store all the information
+\item The database has enough space to store all the user, lecture and event information
 \end{itemize}
 
 \textbf{How test will be performed:} A code inspection will be held with superior's attendance to show that the Firebase database official document states there will be enough capacity with the current plan
@@ -1579,7 +1579,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\textbf{Output/Result:} Successfully convinced the participants the following:
 \begin{itemize}
 \item A new target building can be added without causing the application running any slower
 \end{itemize}
@@ -1596,7 +1596,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\textbf{Output/Result:} Successfully convinced the participants the following:
 \begin{itemize} 
   \item The product is able to operate without major malfunctions in release build for at least 1 year
   \item The finalized product will remain compatible with the promised operating systems and devices for at least 3 years
@@ -1618,7 +1618,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Initial State:} User has a phone that uses Android 11 or above
 
-\textbf{Input/Condition:} User's phone is turned on and unlocked
+\textbf{Input/Condition:} User wants to download the application
 
 \textbf{Output/Result:} The product can be downloaded onto the phone from the Google Play Store, or by downloading the APK file directly
 
@@ -1637,6 +1637,12 @@ The testers will then download and install the product onto the phone from the G
 
 \textbf{Type:} Non-functional, Static, Manual
 
+\textbf{Initial State:} Survey taker is given an account:
+\begin{itemize}
+\item email: mtest@gmail.com
+\item password: mtesting
+\end{itemize}
+
 \textbf{Input/Condition:} User answers the question about ``Common periods of usage''
 
 \textbf{Output/Result:} The average individual score is over MIN\_SCORE for this question
@@ -1647,17 +1653,17 @@ The testers will then download and install the product onto the phone from the G
 
 \item{\textbf{NFRT-MS2}}
 
-\textbf{Name:} Peer evaluation for feature request
+\textbf{Name:} Check for feature request
 
-\textbf{Type:} Non-functional, Static, Manual
+\textbf{Type:} Non-functional, Dynamic, Manual
 					
-\textbf{Initial State:} A public GitHub repo for this application
+\textbf{Initial State:} A public GitHub repo exists for this application
 
-\textbf{Input/Condition:} An issue is created
+\textbf{Input/Condition:} User goes to the GitHub repo
 
-\textbf{Output/Result:} All functionalities of this repo work normally
+\textbf{Output/Result:} User can read issues created by the team and also create new issues
 
-\textbf{How test will be performed:} The tester will ask for a peer evaluation on this application, and the other developers will verify there is a user manual and issues can be used for feature request or bug report
+\textbf{How test will be performed:} The tester will verify the team's feature issues are open to view and new issues can be raised for feature request or bug report
 
 \textbf{Related Requirement(s):} MS-S1, MS-S2
 
@@ -1667,11 +1673,11 @@ The testers will then download and install the product onto the phone from the G
 
 \textbf{Type:} Non-functional, Dynamic, Manual
 					
-\textbf{Initial State:} The application is installed on devices with Android 11 and above version
+\textbf{Initial State:} NA
 
-\textbf{Input/Condition:} NA
+\textbf{Input/Condition:} The application is installed on devices with Android 11 and above version
 
-\textbf{Output/Result:} The application works without any error
+\textbf{Output/Result:} The application works without any error about compatibility
 
 \textbf{How test will be performed:} The tester will install the application on different Android version (11 and above) and verify the application can start without errors, and the core features (Map, friend chatting and AR camera) have the same performance over different Android versions.
 
@@ -1696,7 +1702,7 @@ The testers will then download and install the product onto the phone from the G
   
 \textbf{Input/Condition:} The user starts the application with the three accounts
             
-\textbf{Output/Result:} At each level of access, the product constrains the possible actions to what is specified in requirement S-A1, S-A2, S-A3.
+\textbf{Output/Result:} At each level of access, the application constrains the possible actions to what is specified in requirement S-A1, S-A2, S-A3.
   
 \textbf{How test will be performed:}
 \begin{enumerate}
@@ -1710,7 +1716,7 @@ The testers will then download and install the product onto the phone from the G
 
 \subsubsection{Privacy}
 \begin{enumerate}
-\item{\textbf{NFRT-P1}}
+\item{\textbf{NFRT-PVC1}}
 
 \textbf{Name:} Code inspection for legitimate use of personal data
 
@@ -1718,7 +1724,7 @@ The testers will then download and install the product onto the phone from the G
 
 \textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\textbf{Output/Result:} Successfully convinced the participants the following:
 \begin{itemize}
 \item The usage of a user's personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario's data protection laws
 \end{itemize}
@@ -1727,7 +1733,7 @@ The testers will then download and install the product onto the phone from the G
 
 \textbf{Related Requirement(s):} S-P1
 
-\item{\textbf{NFRT-P2}}
+\item{\textbf{NFRT-PVC2}}
 
 \textbf{Name:} Code inspection for removing unused accounts
 
@@ -1735,7 +1741,7 @@ The testers will then download and install the product onto the phone from the G
 
 \textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\textbf{Output/Result:} Successfully convinced the participants the following:
 \begin{itemize}
 \item Any accounts that are not active for a long time (a semester) will be removed from the system
 \end{itemize}
@@ -1780,7 +1786,7 @@ elements of the interface. All of the survey takers are McMaster students
 
 \textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\textbf{Output/Result:} Successfully convinced the participants the following:
 \begin{itemize}
 \item The data collected will be handled as per the same legal requirements for the university
 \item The application can abide by the guidelines set by university staff
@@ -1929,8 +1935,8 @@ elements of the interface. All of the survey takers are McMaster students
 		~                   & \textbf{S-A1} & \textbf{S-A2} & \textbf{S-A3} & \textbf{S-P1} & \textbf{S-P2} & \textbf{CUL-C1} & \textbf{COMP-L1} & \textbf{COMP-SC1}\\
 		\hline
 		\textbf{NFRT-S1} & X                                                         & X             & X             & ~             & ~             & ~             & ~             & ~\\
-		\textbf{NFRT-P1} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~\\
-		\textbf{NFRT-P2} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~\\
+		\textbf{NFRT-PVC1} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~\\
+		\textbf{NFRT-PVC2} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~\\
 		\textbf{NFRT-CUL1} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~\\
 		\textbf{NFRT-COM1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & X\\
 		\hline
@@ -1954,7 +1960,7 @@ This section includes all unit tests for functional and non-functional requireme
 
 \subsection{Unit Testing Scope}
 
-All modules defined above are within the testing scope.  The scope of unit testing was limited to the components that could be automatically tested. Third-party library modules like Vuforia and Mapbox are out of the scope of unit testing and we will trust they are bug-free. Also, high-level modules in the hierarchy are usually responsible for rendering UI and reacting to user actions (e.g. user profile module, lecture list module) therefore they are out of the scope of unit testing as well (in fact they are not quite testable with Unity test framework). Instead, they are tested with manual testing. Other than the modules mentioned, some utility functions will also be tested (but they will not be listed below).
+All modules defined above are within the testing scope.  The scope of unit testing was limited to the components that could be automatically tested. Third-party library modules like Vuforia and Mapbox are out of the scope of unit testing and we will trust they are bug-free. Also, high-level modules in the hierarchy are usually responsible for rendering UI and reacting to user actions (e.g. user profile module, lecture list module) therefore they are out of the scope of unit testing as well (in fact they are not quite testable with Unity test framework). Instead, they are tested with manual testing.
 
 \subsection{Tests for Functional Requirements}
 
@@ -1980,9 +1986,9 @@ This section will contain all unit tests for the module ``User''. The tests are 
 \textbf{Output:} A user is successfully created with following attributes:
 \begin{itemize}
 \item email: unitTest@test.com
-\item nickname: ''
+\item nickname: `'
 \item photoURI: null
-\item program: ''
+\item program: `'
 \item level: 0
 \item lectures: empty list of string
 \item event: empty list of string
@@ -2005,9 +2011,9 @@ This section will contain all unit tests for the module ``User''. The tests are 
 \textbf{Input:} User:
 \begin{itemize}
 \item email: unitTest@test.com
-\item nickname: 'Mr. Unit Test'
+\item nickname: `Mr. Unit Test'
 \item photoURI: http://example/com/photo.jpg
-\item program: 'software engineering'
+\item program: `software engineering'
 \item level: 1
 \item lectures: \{`Lecture 1', `Lecture 2'\}
 \item event: \{`Event 1', `Event 2'\}
@@ -2167,7 +2173,7 @@ pageCount = 2, filterBy and filterString are null
 
 \item{FRT-M4-2}
 
-textbf{Name:} Successful pagination creation with filter 
+\textbf{Name:} Successful pagination creation with filter 
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
@@ -2368,7 +2374,7 @@ Call next page method first
 This section will contain all unit tests for the module ``Authentication''.  This module wraps some methods from third-party library Firebase Authentication, and these methods will be mocked in the unit tests.
 
 \begin{enumerate}
-\item{FRT-M6-1}
+\item{FRT-M5-1}
 
 \textbf{Name:} Get current user email
 
@@ -2400,7 +2406,7 @@ This section will contain all unit tests for the module ``Authentication''.  Thi
 
 \textbf{How test will be performed:} Create a test case in UTF that creates an authentication module and calls the get current email verified method with a mock of Firebase Authentication email verification value
 
-\item{FRT-M6-3}
+\item{FRT-M5-3}
 
 \textbf{Name:} Verify email
 
@@ -2528,7 +2534,7 @@ Server \& Data Transmission Walkthrough & A code walkthrough focusing on the ser
 \hline
 Longevity Peer Evaluation & A peer evaluation session to convince people that the produce can operate for a long time. It will be held when the implementation is done by another developers' team. Though it does not 100\% fulfill the requirements, it builds some confidence & P-L1, P-L2\\
 \hline
-Code Walkthrough with Primary Reviewers & A code walkthrough focusing on Unity scripts and GitHub and AR implementation. It will be held after Revision 0 is done and convince our primary reviewers that our GitHub has a clear user guide and is open to suggestions (by creating issues). The structure of the AR feature is easy to understand with the user manual & UH-L1, MS-S1, MS-S2\\
+Code Walkthrough with Primary Reviewers & A code walkthrough focusing on Unity scripts and AR implementation. It will be held after Revision 0 is done and convince our primary reviewers that the a new target building can be added easily with our AR feature & P-SE3\\
 \hline
 \end{tabular}
 \end{table}
@@ -2537,6 +2543,8 @@ Code Walkthrough with Primary Reviewers & A code walkthrough focusing on Unity s
 \begin{tabular}{|p{0.3\linewidth} | p{0.5\linewidth}| p{0.2\linewidth} |}
 \hline
 \multicolumn{1}{|l}{\bfseries Test Method} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Related Requirement(s)}\\
+\hline
+GitHub Walkthrough with Reviewers & A walkthrough happens when the team has meetings with reviewers. During the walkthrough, the other team confirms that they can read issues the team created and also write new issues. Also, they will confirm there is a clear instruction for users & UH-L1, MS-S1, MS-S2\\
 \hline
 Document Review & The peer evaluation happens after the deadline for all important documents. During the document review, the other team points out problems and improves document quality & All\\
 \hline

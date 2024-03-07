@@ -26,11 +26,7 @@ public class LectureTest
     [Test]
     public void LectureTestGetterAndSetter()
     {
-        Lecture l = new Lecture(code);
-        l.name = name;
-        l.instructor = instructor;
-        l.location = location;
-        l.time = time;
+        Lecture l = new Lecture(code, instructor, location, name, time);
         Assert.AreEqual(l.code, code);
         Assert.AreEqual(l.name, name);
         Assert.AreEqual(l.instructor, instructor);

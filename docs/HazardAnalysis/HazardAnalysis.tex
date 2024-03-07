@@ -47,6 +47,7 @@ Nov 23rd & Zihao Du & Add the new requirement IDs in the new SRS\\
 Jan 7th & Zihao Du, Matthew Miller & Revision 1: Update FMEA\\
 & Michael Kim, Waseef Nayeem & \\
 Jan 8th & Zihao Du & Revision 1: Resolve TA feedback and peer review issues\\
+Mar 5th & Zihao Du & Revision 1: Change FMEA table SR due to change of the scope in requirement documents\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -129,19 +130,19 @@ The system will be divided into the following components:
     \hline
          \textbf{Design Functions} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} &\textbf{Detection}& \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref}\\
          \hline
-         AR Camera      &     Building recognition fails      &      The corresponding AR objects set on the target cannot be loaded      &      a. Poor lighting conditions (e.g. in the evening)      &      a. Users cannot see any designed AR objects on the screen even if they try from different angles      &      a. Notify the user that they AR camera may have a poor performance in poor lighting condition or bad weather, give them developer's contact information for more questions      &      a. XX      &      H1-1      \\
-         &&&      b. Bad Weather (e.g. foggy)      &      b. Same as H1-1a      &      b. Same as H1-1a      &      b. XX      &      \\
+         AR Camera      &     Building recognition fails      &      The corresponding AR objects set on the target cannot be loaded      &      a. Poor lighting conditions (e.g. in the evening)      &      a. Users cannot see any designed AR objects on the screen even if they try from different angles      &      a. Notify the user that they AR camera may have a poor performance in poor lighting condition or bad weather, give them developer's contact information for more questions      &      a. NFR-P-RF4      &      H1-1      \\
+         &&&      b. Bad Weather (e.g. foggy)      &      b. Same as H1-1a      &      b. Same as H1-1a      &      b. NFR-P-RF4      &      \\
          \hline
-         Backend Server     &    Server crashes      &      All services related to server (chatting, real time location map) are down      &      a. Server-side Software Error      &      a. Users cannot chat with friends or see other users on the map and error messages are found in the server logs      &      a. Let server attempt to restart once it crashes due to unknown errors      &      a. XX      &      H2-1      \\
-         &      Server fails to respond      &       All related services fail to render new changes      &      a. Server reaches max capacity      &      a. Error messages complaining about server over capacity are found in the log      &      a. Estimate potential user number and get an appropriate plan      &      b. NFR-P-C1      &      H2-2      \\
+         Backend Server     &    Server crashes      &      All services related to server (chatting, real time location map) are down      &      a. Server-side Software Error      &      a. Users cannot chat with friends or see other users on the map and error messages are found in the server logs      &      a. Let server attempt to restart once it crashes due to unknown errors      &      a. NFR-P-RF3      &      H2-1      \\
+         &      Server fails to respond      &       All related services fail to render new changes      &      a. Server reaches max capacity      &      a. Error messages complaining about server over capacity are found in the log      &      a. Estimate potential user number and get an appropriate plan      &      b. NFR-P-SE1      &      H2-2      \\
          \hline
-        General Application Feature      &      Internet connection is lost      &       The user is unable to send or receive data from the server     &      a. The user runs out of mobile data      &      a. The device shows there is no internet connection       &      a. Notify the user that they have lost internet connection      &      a. XX      &      H3-1      \\
-        &&&  b. The internet connection is poor/weak    &        b. Same as H3-1a         &  b. Same as H3-1a           &  b. XX           &\\
+        General Application Feature      &      Internet connection is lost      &       The user is unable to send or receive data from the server     &      a. The user runs out of mobile data      &      a. The device shows there is no internet connection       &      a. Notify the user that they have lost internet connection      &      a. NFR-P-RF1      &      H3-1      \\
+        &&&  b. The internet connection is poor/weak    &        b. Same as H3-1a         &  b. Same as H3-1a           &  b. NFR-P-RF1           &\\
           \hline
-          Database           &    SQL injection attack         &           Personal information leakage and database information corruption           &           a. Inputs like user email and nick name are not validated           &           a. Database log shows malicious SQL statements are inserted as input           &     Limit the use of special characters for all vulnerable user input fields     &   a. XX          &      H4-1            \\
-                                   &&&           b. Users bypass checks in the application and access database directly            &            a. Same as H4-1a            &            a. Add protection rules from the database side      &  a. NFR-P-SC2           &\\
+          Database           &    SQL injection attack         &           Personal information leakage and database information corruption           &           a. Inputs like user email and nick name are not validated           &           a. Database log shows malicious SQL statements are inserted as input           &     Limit the use of special characters for all vulnerable user input fields     &   a. NFR-P-SC5, SC6         &      H4-1            \\
+                                   &&&           b. Users bypass checks in the application and access database directly            &            a. Same as H4-1a            &            a. Add protection rules from the database side      &  a. NFR-S-A1          &\\
           \hline
-          Map and Location           &    Distracted walking when watching the screen         &           Users may block the traffic or even get injured because of distracted walking           &           The game-play of real time location map (User tends to walk and check the map simultaneously)           &           a. Users walk and use the application map at the same time           &     Show a warning message when using the map that tell the user to be aware of the surroundings     &   a. XX          &      H5-1            \\
+          Map and Location           &    Distracted walking when watching the screen         &           Users may block the traffic or even get injured because of distracted walking           &           The game-play of real time location map (User tends to walk and check the map simultaneously)           &           a. Users walk and use the application map at the same time           &     Show a warning message when using the map that tell the user to be aware of the surroundings     &   a. NFR-P-SC3          &      H5-1            \\
           \hline
     \end{tabular}
     \end{adjustbox}
@@ -158,11 +159,11 @@ The system will be divided into the following components:
     \hline
          \textbf{Design Functions} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} &\textbf{Detection}& \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref}\\
          \hline
-         Map and Location     &     Unintentional location sharing      &      The real time location of user outside campus is shared with other users using the map      &      a. User forgets to disconnect from real-time map session      &      a. User is marked outside of campus on the map     &      a. Check if the user location is on campus. If not, disconnect him from the map session and hide his location from other users      &      a. XX      &      H5-2      \\
+         Map and Location     &     Unintentional location sharing      &      The real time location of user outside campus is shared with other users using the map      &      a. User forgets to disconnect from real-time map session      &      a. User is marked outside of campus on the map     &      a. Check if the user location is on campus. If not, disconnect him from the map session and hide his location from other users      &      a. NFR-P-SC4      &      H5-2      \\
          \hline
          User Profile Management     &    User account is hacked      &      Sensitive personal information leakage      &      a. Week password protection rules      &      a. User report      &      a. Add password rest through email functionality      &      a. FR2-4      &      H6-1      \\
          &&&&&      b. Allow users to contact administrators to suspend target account      &      b. NFR-S-A1      & \\
-         &      Malicious user creates bot accounts      &       Database and authentication system have less capacity for normal users    &      a. Lack of human verification during account creation process      &      a. lots of fake accounts are created at the same time in the authentication system log      &      a. Add human verification in account creation process    &      a. FR2-5      &      H6-2     \\
+         &      Malicious user creates bot accounts      &       Database and authentication system have less capacity for normal users    &      a. Lack of human verification during account creation process      &      a. lots of fake accounts are created at the same time in the authentication system log      &      a. Block guest account from connecting to the server    &      a. NFR-S-A1      &      H6-2     \\
           \hline
     \end{tabular}
     \end{adjustbox}
@@ -213,9 +214,9 @@ The following requirements in bold are the new requirements added to our SRS doc
         \item \textbf{Rationale:} When there is no internet connection, the user should be made aware.
         \item \textbf{Fit Criterion:} An error message stating that there is no internet connection is displayed when the product fails to connect to the internet.
     \end{itemize}
-	\item[NFR-P-RF2.] \textbf{There must be a fail-safe for the product to function if the server or internet connection takes too long or fails.}
+	\item[NFR-P-RF2.] \textbf{There must be a fail-safe for the product to function if the server connection takes too long or fails.}
     \begin{itemize}
-        \item \textbf{Rationale:} This will allow the product to function to some degree even during high traffic or bad internet connection situations.
+        \item \textbf{Rationale:} This will allow the product to function to some degree even during high traffic or bad server connection situations.
         \item \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities without connecting to the internet or server.
     \end{itemize}
 	\item[NFR-P-RF3.] \textbf{The server shall attempt to restart when it crashes.}
