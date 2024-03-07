@@ -1956,16 +1956,18 @@ Parts of the below documentation is based on what was planned, and what is plann
 
 \subsection{Testing Instruments}
 
-The tests were performed using NUnit made for Unity.
+The tests were performed using Unity Testing Framework, NUnit made for Unity.
 The test files are located in multiple files with the respective names of the modules they are testing under Assets/Editor.
 OpenCover was planned for coverage testing and will produce a report into xml file.
 These results are visible after the automated tests are completed.
+The CI with GitHub Actions will be completed in phase 2.
 
-\subsection{GUI Testing}
+\subsection{Linters}
 
-Due to how this application targets multiple screen sizes and android versions, this was pushed to phase 2 of the development.
-This test would require test cases for common models and continuous maintenance.
-Additionally, the GUI is automatically scaled by the Unity to match screen sizes and most standard models will display as intended.
+Linters were added into CI using Super-linter. This is an open source linter maintained and used by many people, which shows its reliability.
+The linter only checks the new contents in the repository, making it efficient and concise. 
+The code linter has been active and we have fixed issues brought up by the test results such as duplicate code and formatting issues.
+The results of linters are visible under the GitHub Actions tab.
 
 \section{Trace to Requirements}
 See Traceability tables between Test Cases and Requirements in \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}
