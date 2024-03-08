@@ -30,8 +30,8 @@ jobs:
           projectPath: test/CampusConnectionsTest
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name:
+      - name Get Code Coverage Report:
         uses: actions/upload-artifact@v3
         with:
           name: Coverage results
-          path: ./
+          path: CodeCoverage/Report
