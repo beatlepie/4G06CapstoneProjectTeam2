@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - feat-*
+      - fix-*
   pull_request:
     branches:
       - main
@@ -11,10 +12,7 @@ jobs:
     name: Unit Testing
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-      packages: read
-      statuses: write
+    permissions: write-all
 
     steps:
       - name: Checkout code
@@ -29,4 +27,11 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          projectPath: src/CampusConnections
+          projectPath: test/CampusConnectionsTest
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Code Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Coverage results
+          path: CodeCoverage/Report
