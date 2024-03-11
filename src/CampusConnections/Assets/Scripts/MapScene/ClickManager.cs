@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using Mapbox.Unity.Location;
 using Mapbox.Unity.Map;
 using Mapbox.Utils;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,7 +19,9 @@ public class ClickManager : MonoBehaviour
     private bool isPanelActive;
     private TargetBuilding currentBuilding;
 
-    public int maximumDistance = 30;
+    [Header("Notification")]
+    public TMP_Text notificationText;
+    [SerializeField] GameObject Notification;
     
     void Start()
     {
@@ -43,6 +44,16 @@ public class ClickManager : MonoBehaviour
     void Update()
     { 
         userLocation = _locationProvider.CurrentLocation;
+        // If the userLocation is initialized already, check if the user is still on campus
+        if (userLocation.LatitudeLongitude.x != 0 & userLocation.LatitudeLongitude.y != 0)
+        {
+            if (userLocation.LatitudeLongitude.x < 43.25808 | userLocation.LatitudeLongitude.x > 43.26816 | userLocation.LatitudeLongitude.y < -79.92344 | userLocation.LatitudeLongitude.y > -79.91535)
+            {
+                notificationText.text = "<color=#F14141>Attention: You are not on campus, for sake of your personal data, you will be disconnected from the map.";
+                Notification.SetActive(true);
+            }
+        }
+
     }
 
     public void DisplayTargetEvents(GameObject target)

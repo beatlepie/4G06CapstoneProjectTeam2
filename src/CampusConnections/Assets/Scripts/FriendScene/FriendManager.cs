@@ -7,7 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class FriendManager : MonoBehaviour
 {
@@ -21,6 +20,7 @@ public class FriendManager : MonoBehaviour
     [SerializeField] Transform friendEntryContainer;
     [SerializeField] Transform friendEntryTemplate;
     private List<Transform> friendEntryTransformList;
+    private GameObject deleteTarget;
     public const int friendEntryHeight = 300;
 
     [Header("Invitation")]
@@ -28,10 +28,16 @@ public class FriendManager : MonoBehaviour
     [SerializeField] Transform requestEntryContainer;
     [SerializeField] Transform requestEntryTemplate;
     private List<Transform> requestEntryTransformList;
-    private int invitationCount = 0;
 
     public const int requestEntryHeight = 150;
-    [SerializeField] GameObject badge;
+
+    [Header("Comfirmation")]
+    [SerializeField] GameObject Confirmation;
+    public TMP_Text confirmationText;
+
+    [Header("Notification")]
+    [SerializeField] GameObject Notification;
+    public TMP_Text notificationText;
 
     void Awake()
     {
@@ -42,24 +48,6 @@ public class FriendManager : MonoBehaviour
         requestEntryTransformList = new List<Transform>();
         createFriendList();
         createRequestList();
-    }
-
-    void Update()
-    {
-        // if (invitationCount == 0)
-        // {
-        //     badge.SetActive(false);
-        // }
-        // else if (invitationCount < 100)
-        // {
-        //     badge.SetActive(true);
-        //     badge.GetComponentInChildren<TMP_Text>().text = invitationCount.ToString();
-        // }
-        // else
-        // {
-        //     badge.SetActive(true);
-        //     badge.GetComponentInChildren<TMP_Text>().text = "99+";
-        // }
     }
 
     IEnumerator GetFriends(Action<List<User>> onCallBack)
@@ -148,16 +136,22 @@ public class FriendManager : MonoBehaviour
         }));
     }
 
-    public void OnFriendDeleteclick()
+    public void onFriendDeleteClick()
     {
         GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
-        string targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
+        string targetName = template.transform.Find("Name").GetComponent<TMP_Text>().text;
+        confirmationText.text = "Are you sure you want to delete this friend, <color=#0000FF>" + targetName + "</color> from the list?";
+        deleteTarget = template;
+    }
+    public void OnFriendDeleteConfirm()
+    {
+        string targetEmail = deleteTarget.transform.Find("Email").GetComponent<TMP_Text>().text;
         string userEmailWithoutDot = Utilities.removeDot(currentUser.Email);
         string targetEmailWithoutDot = Utilities.removeDot(targetEmail);
        // Remove friend with that email from friend and tranform list
         friends.RemoveAll(friend => friend.email == targetEmail);
-        Destroy(template);
-        friendEntryTransformList.Remove(template.transform);
+        Destroy(deleteTarget);
+        friendEntryTransformList.Remove(deleteTarget.transform);
         refreshFriendList();
         // Remove target user from current user list in database
         databaseReference.Child("users/" + userEmailWithoutDot + "/friends/" + targetEmailWithoutDot).SetValueAsync(null);
@@ -207,7 +201,6 @@ public class FriendManager : MonoBehaviour
                 entryTransform.Find("Email").GetComponent<TMP_Text>().text = requester.email;
                 requestEntryTransformList.Add(entryTransform);  
             }
-            invitationCount = requesters.Count;
             if(requestEntryHeight * requesters.Count > 1460){
                 // If the request list is short, the default container height is viewport height (1460)
                 requestEntryContainer.GetComponent<RectTransform>().sizeDelta = new Vector2 (800, requestEntryHeight*requesters.Count);
@@ -216,20 +209,19 @@ public class FriendManager : MonoBehaviour
         
     }
 
-    public void EditHelpMsg()
+    public void AddFriendHelpMsg()
     {
-        StartCoroutine(CheckUserByEmail((string msg) =>
-        {
-            GameObject.Find("Help_Message").GetComponent<TMP_Text>().text = msg;
-        }));
+        StartCoroutine(CheckUserByEmail());
+        Notification.SetActive(true);
+        Debug.Log("Finish");
     }
 
-    IEnumerator CheckUserByEmail(Action<string> onCallBack)
+    IEnumerator CheckUserByEmail()
     {
         string email = GameObject.Find("InputEmail").GetComponent<TMP_InputField>().text;
         if(currentUser.Email == email) {
             // Cannot use user email
-            onCallBack.Invoke("<color=#f44336>You cannot add yourself as friend");
+            notificationText.text = "<color=#f44336>You cannot add yourself as friend";
             yield break;
         }
         string senderEmailWithoutDot = Utilities.removeDot(currentUser.Email);
@@ -240,22 +232,20 @@ public class FriendManager : MonoBehaviour
         if(invitationData != null && userData != null)
         {
             DataSnapshot invitationSnapshot = invitationData.Result;
-            string helpMsg = "";
             if(!userData.Result.Exists)
             {
                 // Invalid email
-                helpMsg = "<color=#f44336>Invalid email, user does not exist";
+                notificationText.text = "<color=#f44336>Invalid email, user does not exist.";
             }
             else if (invitationData.Result.Exists) 
             {
                 // Duplicated reques
-                helpMsg = "<color=#ff9800>Friend request has been sent, please wait";
+                notificationText.text = "<color=#ff9800>Friend request has been sent, please wait.";
             }
             else
             {
-                helpMsg = "<color=#4caf50>Success! Request is sent";
+                notificationText.text = "<color=#4caf50>Success! Request is sent.";
                 databaseReference.Child("users/" + receiverEmailWithoutDot + "/invitations/" + senderEmailWithoutDot).SetValueAsync(true);
-                onCallBack.Invoke(helpMsg);
             }
         }
     }
@@ -269,7 +259,6 @@ public class FriendManager : MonoBehaviour
        // Remove invitation from requests and tranform list
         User targetUser = requesters.Find(requester => requester.email == targetEmail);
         requesters.Remove(targetUser);
-        invitationCount--;
         Destroy(template);
         requestEntryTransformList.Remove(template.transform);
         refreshRequestList();
@@ -297,7 +286,6 @@ public class FriendManager : MonoBehaviour
         string requesterEmailWithoutDot = Utilities.removeDot(targetEmail);
         // Remove invitation from requests and tranform list
         requesters.RemoveAll(requester => requester.email == targetEmail);
-        invitationCount--;
         Destroy(template);
         requestEntryTransformList.Remove(template.transform);
         refreshRequestList();
