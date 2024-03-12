@@ -420,18 +420,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36629098}
   m_CullTransparentMesh: 1
---- !u!114 &62176122 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2659243167723016830, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 838214388}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &67830423
 GameObject:
   m_ObjectHideFlags: 0
@@ -1162,6 +1150,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9aa15f2dced0df5498b7613d5fa12a7a, type: 3}
+--- !u!114 &838214389 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3723422320775299182, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
+    type: 3}
+  m_PrefabInstance: {fileID: 838214388}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &910947540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2742,7 +2742,7 @@ MonoBehaviour:
   _map: {fileID: 524771372}
   ARCameraButton: {fileID: 1430719026}
   LectureButton: {fileID: 1384801786}
-  notificationText: {fileID: 62176122}
+  notificationText: {fileID: 838214389}
   Notification: {fileID: 1032989980}
 --- !u!1 &1772307576
 GameObject:
