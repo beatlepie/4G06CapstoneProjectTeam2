@@ -57,10 +57,7 @@ public class ChatHelper : MonoBehaviour
         {
             var msg = _remoteMessageQueue.Dequeue();
             
-            var chatBubble = Instantiate(remoteMsgPrefab, msgPanelObj.transform);
-            var controller = chatBubble.GetComponent<ChatBubbleController>();
-            controller.SetMessage(msg);
-            msgObjList.Add(chatBubble);
+            CreateChatBubble(remoteMsgPrefab, msg);
         }
     }
 
@@ -72,16 +69,21 @@ public class ChatHelper : MonoBehaviour
     private void OnReceivedListener(Message msg)
     {
         var value = msg.Content.Trim();
-        _remoteMessageQueue.Enqueue(msg.Content);
+        _remoteMessageQueue.Enqueue(value);
     }
 
     private void OnSentListener(Message msg)
     {
         var value = msg.Content.Trim();
-        
-        var chatBubble = Instantiate(localMsgPrefab, msgPanelObj.transform);
+        CreateChatBubble(localMsgPrefab, value);
+    }
+
+    private void CreateChatBubble(GameObject prefab, string msg)
+    {
+        var chatBubble = Instantiate(prefab, msgPanelObj.transform);
         var controller = chatBubble.GetComponent<ChatBubbleController>();
-        controller.SetMessage(msg.Content);
+        controller.SetMessage(msg);
+        controller.SetTimestamp(DateTime.Now);
         msgObjList.Add(chatBubble);
     }
 }

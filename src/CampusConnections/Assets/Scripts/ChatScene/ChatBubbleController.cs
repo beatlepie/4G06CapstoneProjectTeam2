@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 
@@ -19,9 +21,9 @@ public class ChatBubbleController : MonoBehaviour
         _timestamp = timeObj.GetComponent<TMP_Text>();
     }
 
-    public void SetTimestamp()
+    public void SetTimestamp(DateTime dt)
     {
-        Debug.Log("WIP");
+        _timestamp.SetText(dt.ToString("hh:mm tt"));
     }
 
     public void SetMessage(string msg)
