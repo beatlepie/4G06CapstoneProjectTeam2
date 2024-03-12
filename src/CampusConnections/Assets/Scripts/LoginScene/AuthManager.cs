@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Assets.Mapbox.Unity.MeshGeneration.Modifiers.MeshModifiers;
 using Database;
 using Firebase.Database;
+using UnityEngine.UI;
 
 public class AuthManager : MonoBehaviour
 {
@@ -20,8 +21,6 @@ public class AuthManager : MonoBehaviour
     [Header("Login")]
     public TMP_InputField emailLoginField;
     public TMP_InputField passwordLoginField;
-    public TMP_Text warningLoginText;
-    public TMP_Text confirmLoginText;
     public TMP_InputField forgetEmailField;
 
     //Register variables
@@ -30,7 +29,11 @@ public class AuthManager : MonoBehaviour
     public TMP_InputField emailRegisterField;
     public TMP_InputField passwordRegisterField;
     public TMP_InputField passwordRegisterVerifyField;
-    public TMP_Text warningRegisterText;
+    public Toggle consentAgreement;
+
+    [Header("Notificiation")]
+    [SerializeField] GameObject Notification;
+    public TMP_Text notificationText;
 
     void Awake()
     {
@@ -94,7 +97,7 @@ public class AuthManager : MonoBehaviour
             FirebaseException firebaseEx = LoginTask.Exception.GetBaseException() as FirebaseException;
             AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
 
-            string message = "Login Failed!";
+            string message = "Wrong Passowrd or Account does not exist!";
             switch (errorCode)
             {
                 case AuthError.MissingEmail:
@@ -113,7 +116,8 @@ public class AuthManager : MonoBehaviour
                     message = "Account does not exist";
                     break;
             }
-            warningLoginText.text = message;
+            notificationText.text = message;
+            Notification.SetActive(true);
         }
         else
         {
@@ -131,8 +135,7 @@ public class AuthManager : MonoBehaviour
                 yield return new WaitUntil(predicate: () => verification.IsCompleted);
             }
             Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
-            warningLoginText.text = "";
-            confirmLoginText.text = "Logged In";
+            notificationText.text = "";
             SceneManager.LoadScene("MenuScene");
         }
     }
@@ -142,12 +145,25 @@ public class AuthManager : MonoBehaviour
         if (_username == "")
         {
             //If the username field is blank show a warning
-            warningRegisterText.text = "Missing Username";
+            notificationText.text = "<color=#F14141>Missing Username";
+            Notification.SetActive(true);
+        }
+        else if (Utilities.containSpecialChar(_username))
+        {
+            notificationText.text = "<color=#F14141>Username Cannot Contain Special Characters!";
+            Notification.SetActive(true);
         }
         else if(passwordRegisterField.text != passwordRegisterVerifyField.text)
         {
             //If the password does not match show a warning
-            warningRegisterText.text = "Password Does Not Match!";
+            notificationText.text = "<color=#F14141>Password Does Not Match!";
+            Notification.SetActive(true);
+        }
+        else if(consentAgreement.isOn == false)
+        {
+            //If the user does not agree to the user consent
+            notificationText.text = "<color=#F14141>Please read and agree to the consent to create an account.";
+            Notification.SetActive(true);
         }
         else 
         {
@@ -175,11 +191,15 @@ public class AuthManager : MonoBehaviour
                     case AuthError.WeakPassword:
                         message = "Weak Password";
                         break;
+                    case AuthError.InvalidEmail:
+                        message = "Invalid Email";
+                        break;
                     case AuthError.EmailAlreadyInUse:
                         message = "Email Already In Use";
                         break;
                 }
-                warningRegisterText.text = message;
+                notificationText.text = "<color=#F14141>" + message;
+                Notification.SetActive(true);
             }
             else
             {
@@ -203,7 +223,8 @@ public class AuthManager : MonoBehaviour
                         Debug.LogWarning(message: $"Failed to register task with {ProfileTask.Exception}");
                         FirebaseException firebaseEx = ProfileTask.Exception.GetBaseException() as FirebaseException;
                         AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
-                        warningRegisterText.text = "Username Set Failed!";
+                        notificationText.text = "<color=#F14141>Username Set Failed!";
+                        Notification.SetActive(true);
                     }
                     else
                     {
@@ -223,11 +244,11 @@ public class AuthManager : MonoBehaviour
                         // If it fails, will attempt at login instead!
                         if (verification.IsCompletedSuccessfully)
                         {
-                            confirmLoginText.text = "Email verification sent!";
+                            notificationText.text = "Email verification sent!";
                         }
                         else
                         {
-                            confirmLoginText.text = "Email verification will be sent on login!";
+                            notificationText.text = "Email verification will be sent on login!";
                         }
                     }
                 }
@@ -242,16 +263,29 @@ public class AuthManager : MonoBehaviour
         if(ResetPwdTask.IsFaulted)
         {
             Debug.LogError("SendPasswordResetEmailAsync encountered an error: " + ResetPwdTask.Exception);
-            warningRegisterText.text = "SendPasswordResetEmailAsync encountered an error:" + ResetPwdTask.Exception;            
+            notificationText.text = "<color=#F14141>SendPasswordResetEmailAsync encountered an error.";            
+            Notification.SetActive(true);
         }
         else if (ResetPwdTask.IsCanceled)
         {
             Debug.LogError("SendPasswordResetEmailAsync was canceled.");
-            warningRegisterText.text = "SendPasswordResetEmailAsync was canceled.";
+            notificationText.text = "<color=#F14141>SendPasswordResetEmailAsync was canceled.";
+            Notification.SetActive(true);
         }
         else
         {
-            confirmLoginText.text = "Password reset email sent successfully.";
+            notificationText.text = "Password reset email sent successfully.";
+            Notification.SetActive(true);
         }
+    }
+
+    public void AgreeToConsent()
+    {
+        consentAgreement.isOn = true;
+    }
+
+    public void DisagreeToConsent()
+    {
+        consentAgreement.isOn = false;
     }
 }

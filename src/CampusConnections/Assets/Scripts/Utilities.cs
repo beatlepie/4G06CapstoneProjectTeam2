@@ -18,6 +18,18 @@ public class Utilities
         return email;
     }
 
+    public static bool containSpecialChar(string target)
+    {
+        string specialChar = @"\|!#$%&/()=?»«@£§€{}.-;'<>_,";
+        foreach (var item in specialChar)
+        {
+            if (target.Contains(item))
+                return true;
+        }
+
+        return false;
+    }
+
     public static User FormalizeDBUserData(DataSnapshot user)
     {
         User result = new User("InvalidUser");

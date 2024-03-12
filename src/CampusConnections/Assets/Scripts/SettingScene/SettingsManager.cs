@@ -31,6 +31,7 @@ public class SettingsManager : MonoBehaviour
     // Edit button in display canvas
     public GameObject EditButton;
     public GameObject ChangePasswordButton;
+    public GameObject VerifyEmailButton;
 
     [Header("Values")]
     // UserID, immutable value, for display and edit canvas
@@ -469,6 +470,24 @@ public class SettingsManager : MonoBehaviour
         PinnedLectureCanvas.SetActive(false);
         PinnedEventCanvas.SetActive(true);
         PasswordCanvas.SetActive(false);
+    }
+
+    /// <summary>
+    /// Function called when Email Verification button is pressed.
+    /// Sends email verification email.
+    /// </summary>
+    public void SendEmailVerification()
+    {
+
+    }
+
+    /// <summary>
+    /// Function called when delete account from password change canvas is pressed.
+    /// 
+    /// </summary>
+    public void DeleteAccount()
+    {
+
     }
 
     // Copied over from lecturemanager, need to change for pinned view!
