@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Database;
 using Firebase.Auth;
 using Firebase.Database;
 using TMPro;
@@ -10,11 +11,6 @@ using UnityEngine.SceneManagement;
 
 public class FriendManager : MonoBehaviour
 {
-    [Header("Firebase")]
-    public FirebaseAuth auth;
-    public FirebaseUser currentUser;
-    public DatabaseReference databaseReference;
-
     [Header("Chat")]
     public List<User> friends;
     [SerializeField] Transform friendEntryContainer;
@@ -41,9 +37,6 @@ public class FriendManager : MonoBehaviour
 
     void Awake()
     {
-        auth = FirebaseAuth.DefaultInstance;
-        databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-        currentUser = auth.CurrentUser;
         friendEntryTransformList = new List<Transform>();
         requestEntryTransformList = new List<Transform>();
         createFriendList();
@@ -52,8 +45,8 @@ public class FriendManager : MonoBehaviour
 
     IEnumerator GetFriends(Action<List<User>> onCallBack)
     {
-        string emailWithoutDot = Utilities.removeDot(currentUser.Email);                
-        var userData = databaseReference.Child("users/" + emailWithoutDot + "/friends").GetValueAsync();
+        string emailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);                
+        var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/friends").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if(userData != null)
         {
@@ -62,7 +55,7 @@ public class FriendManager : MonoBehaviour
             foreach (var x in snapshot.Children)
             {
                 string email = Utilities.addDot(x.Key.ToString());
-                var friendData = databaseReference.Child("users/" + x.Key.ToString()).GetValueAsync();
+                var friendData = DatabaseConnector.Instance.Root.Child("users/" + x.Key.ToString()).GetValueAsync();
                 yield return new WaitUntil(predicate: () => friendData.IsCompleted);
                 DataSnapshot friendSnapshot = friendData.Result;
                 if(friendData != null)
@@ -77,8 +70,8 @@ public class FriendManager : MonoBehaviour
 
     IEnumerator GetInvitations(Action<List<User>> onCallBack)
     {
-        string emailWithoutDot = Utilities.removeDot(currentUser.Email);                
-        var userData = databaseReference.Child("users/" + emailWithoutDot + "/invitations").GetValueAsync();
+        string emailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);                
+        var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/invitations").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if(userData != null)
         {
@@ -87,7 +80,7 @@ public class FriendManager : MonoBehaviour
             foreach (var x in snapshot.Children)
             {
                 string email = Utilities.addDot(x.Key.ToString());
-                var requesterData = databaseReference.Child("users/" + x.Key.ToString()).GetValueAsync();
+                var requesterData = DatabaseConnector.Instance.Root.Child("users/" + x.Key.ToString()).GetValueAsync();
                 yield return new WaitUntil(predicate: () => requesterData.IsCompleted);
                 DataSnapshot requesterSnapshot = requesterData.Result;
                 if(requesterData != null)
@@ -145,8 +138,8 @@ public class FriendManager : MonoBehaviour
     }
     public void OnFriendDeleteConfirm()
     {
-        string targetEmail = deleteTarget.transform.Find("Email").GetComponent<TMP_Text>().text;
-        string userEmailWithoutDot = Utilities.removeDot(currentUser.Email);
+        string targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
+        string userEmailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
         string targetEmailWithoutDot = Utilities.removeDot(targetEmail);
        // Remove friend with that email from friend and tranform list
         friends.RemoveAll(friend => friend.email == targetEmail);
@@ -154,9 +147,9 @@ public class FriendManager : MonoBehaviour
         friendEntryTransformList.Remove(deleteTarget.transform);
         refreshFriendList();
         // Remove target user from current user list in database
-        databaseReference.Child("users/" + userEmailWithoutDot + "/friends/" + targetEmailWithoutDot).SetValueAsync(null);
+        DatabaseConnector.Instance.Root.Child("users/" + userEmailWithoutDot + "/friends/" + targetEmailWithoutDot).SetValueAsync(null);
         // Remove target user from current user list in database
-        databaseReference.Child("users/" + targetEmailWithoutDot + "/friends/" + userEmailWithoutDot).SetValueAsync(null);
+        DatabaseConnector.Instance.Root.Child("users/" + targetEmailWithoutDot + "/friends/" + userEmailWithoutDot).SetValueAsync(null);
     }
 
     public void OnFriendViewclick()
@@ -219,15 +212,15 @@ public class FriendManager : MonoBehaviour
     IEnumerator CheckUserByEmail()
     {
         string email = GameObject.Find("InputEmail").GetComponent<TMP_InputField>().text;
-        if(currentUser.Email == email) {
+        if(DatabaseConnector.Instance.CurrentUser.Email == email) {
             // Cannot use user email
             notificationText.text = "<color=#f44336>You cannot add yourself as friend";
             yield break;
         }
-        string senderEmailWithoutDot = Utilities.removeDot(currentUser.Email);
+        string senderEmailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
         string receiverEmailWithoutDot = Utilities.removeDot(email);
-        var userData = databaseReference.Child("users/" + receiverEmailWithoutDot).GetValueAsync();
-        var invitationData = databaseReference.Child("users/" + receiverEmailWithoutDot + "/invitations/" + senderEmailWithoutDot).GetValueAsync();
+        var userData = DatabaseConnector.Instance.Root.Child("users/" + receiverEmailWithoutDot).GetValueAsync();
+        var invitationData = DatabaseConnector.Instance.Root.Child("users/" + receiverEmailWithoutDot + "/invitations/" + senderEmailWithoutDot).GetValueAsync();
         yield return new WaitUntil(predicate: () => invitationData.IsCompleted && userData.IsCompleted);
         if(invitationData != null && userData != null)
         {
@@ -244,8 +237,9 @@ public class FriendManager : MonoBehaviour
             }
             else
             {
-                notificationText.text = "<color=#4caf50>Success! Request is sent.";
-                databaseReference.Child("users/" + receiverEmailWithoutDot + "/invitations/" + senderEmailWithoutDot).SetValueAsync(true);
+                helpMsg = "<color=#4caf50>Success! Request is sent";
+                DatabaseConnector.Instance.Root.Child("users/" + receiverEmailWithoutDot + "/invitations/" + senderEmailWithoutDot).SetValueAsync(true);
+                onCallBack.Invoke(helpMsg);
             }
         }
     }
@@ -254,7 +248,7 @@ public class FriendManager : MonoBehaviour
     {
         GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         string targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
-        string userEmailWithoutDot = Utilities.removeDot(currentUser.Email);
+        string userEmailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
         string requesterEmailWithoutDot = Utilities.removeDot(targetEmail);
        // Remove invitation from requests and tranform list
         User targetUser = requesters.Find(requester => requester.email == targetEmail);
@@ -263,10 +257,10 @@ public class FriendManager : MonoBehaviour
         requestEntryTransformList.Remove(template.transform);
         refreshRequestList();
         // Remove invitation from database
-        databaseReference.Child("users/" + userEmailWithoutDot + "/invitations/" + requesterEmailWithoutDot).SetValueAsync(null);
+        DatabaseConnector.Instance.Root.Child("users/" + userEmailWithoutDot + "/invitations/" + requesterEmailWithoutDot).SetValueAsync(null);
         // Add friends
-        databaseReference.Child("users/" + userEmailWithoutDot + "/friends/" + requesterEmailWithoutDot).SetValueAsync(true);
-        databaseReference.Child("users/" + requesterEmailWithoutDot + "/friends/" + userEmailWithoutDot).SetValueAsync(true);
+        DatabaseConnector.Instance.Root.Child("users/" + userEmailWithoutDot + "/friends/" + requesterEmailWithoutDot).SetValueAsync(true);
+        DatabaseConnector.Instance.Root.Child("users/" + requesterEmailWithoutDot + "/friends/" + userEmailWithoutDot).SetValueAsync(true);
         // Add new User to friend and transform list so that friend page can get updated
         friends.Add(targetUser);
         Transform entryTransform = Instantiate(friendEntryTemplate, friendEntryContainer);
@@ -282,7 +276,7 @@ public class FriendManager : MonoBehaviour
     {
         GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         string targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
-        string userEmailWithoutDot = Utilities.removeDot(currentUser.Email);
+        string userEmailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
         string requesterEmailWithoutDot = Utilities.removeDot(targetEmail);
         // Remove invitation from requests and tranform list
         requesters.RemoveAll(requester => requester.email == targetEmail);
@@ -290,7 +284,7 @@ public class FriendManager : MonoBehaviour
         requestEntryTransformList.Remove(template.transform);
         refreshRequestList();
         // Remove invitation from database
-        databaseReference.Child("users/" + userEmailWithoutDot + "/invitations/" + requesterEmailWithoutDot).SetValueAsync(null);     
+        DatabaseConnector.Instance.Root.Child("users/" + userEmailWithoutDot + "/invitations/" + requesterEmailWithoutDot).SetValueAsync(null);     
     }
 
     public void SwitchToFriends()

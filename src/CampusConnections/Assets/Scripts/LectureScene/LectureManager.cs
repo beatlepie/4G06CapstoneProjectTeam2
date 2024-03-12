@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Database;
 using UnityEngine;
 using Firebase;
 using Firebase.Database;
@@ -37,21 +38,17 @@ public class LectureManager : MonoBehaviour
     [SerializeField] TMP_InputField lecInstructorEdit;
     [SerializeField] TMP_InputField lecLocationEdit;
     [SerializeField] TMP_InputField lecTimesEdit;
-
-    [Header("Database")]
-    public DatabaseReference databaseReference;
+    
     private void Awake()
     {
         UnityEngine.Debug.Log("lecture manager script running");
-        //db setup
-        databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         //after db stuff
         pgNum.text = "1";
         entryContainer = transform.Find("lectureEntryContainer");
         tabeltitleTemplate = entryContainer.Find("TableTitle");
         entryTemplate = entryContainer.Find("lectureEntryTemplate");
         entryTemplate.gameObject.SetActive(false);
-        if(AuthManager.perms != 2)
+        if(DatabaseConnector.Instance.Perms != PermissonLevel.Admin)
         {
             NewLectureIcon.SetActive(false);
         }
@@ -84,7 +81,7 @@ public class LectureManager : MonoBehaviour
         lectureEntryTransformList = new List<Transform>();
         lectureList = new List<Lecture>();
         var lecInfo = new List<string>();
-        var lectureData = databaseReference.Child("lectures").OrderByKey().StartAt("-").GetValueAsync();
+        var lectureData = DatabaseConnector.Instance.Root.Child("lectures").OrderByKey().StartAt("-").GetValueAsync();
         yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
         if (lectureData != null)
         {
@@ -257,7 +254,7 @@ public class LectureManager : MonoBehaviour
     {
         Lecture lec = new Lecture(lecCodeEdit.text, lecInstructorEdit.text, lecLocationEdit.text, lecNameEdit.text, lecTimesEdit.text);
         string lecJson = JsonUtility.ToJson(lec);
-        databaseReference.Child("lectures/" + lecCodeEdit.text).SetRawJsonValueAsync(lecJson);
+        DatabaseConnector.Instance.Root.Child("lectures/" + lecCodeEdit.text).SetRawJsonValueAsync(lecJson);
         // Add new lecture to the rendered list, clear the filter and render the first page
         lectureList.Add(lec);
         filteredList = new List<Lecture>(lectureList);
@@ -269,7 +266,7 @@ public class LectureManager : MonoBehaviour
 
     public void DeleteLec()
     {
-        databaseReference.Child("lectures/" + lecCodeView.text).SetValueAsync(null);
+        DatabaseConnector.Instance.Root.Child("lectures/" + lecCodeView.text).SetValueAsync(null);
         // Delete this lecture from the rendered list, clear the filter and render the first page
         var target = lectureList.Find(lec => lec.code == lecCodeView.text);
         lectureList.Remove(target);
