@@ -24,6 +24,8 @@ public class InputFieldHandler : MonoBehaviour
     private async void OnEndEditListener(string value)
     {
         value = value.Trim();
+        if (value == "") return;
+        
         var chatMessage = $"{value}\n";
 
         if (!Input.GetButton("Submit")) return;
@@ -42,6 +44,8 @@ public class InputFieldHandler : MonoBehaviour
         var value = _input.text;
 
         value = value.Trim();
+        if (value == "") return;
+        
         var chatMessage = $"{value}\n";
 
         var msg = new Message { Content = chatMessage };
