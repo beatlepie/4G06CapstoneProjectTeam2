@@ -48,6 +48,7 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("SettingsScene");
         SettingsManager.currentUser = true;
+        SettingsManager.state = 0;
     }
 
     public void Quit()

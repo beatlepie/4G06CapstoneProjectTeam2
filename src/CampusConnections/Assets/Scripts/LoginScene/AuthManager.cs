@@ -128,12 +128,6 @@ public class AuthManager : MonoBehaviour
             yield return new WaitUntil(predicate: () => getPerms.IsCompleted);
             DatabaseConnector.Instance.Perms = (PermissonLevel) int.Parse(getPerms.Result.Value.ToString());
 
-            // Email verification if they have not accepted the email yet
-            if (!User.IsEmailVerified)
-            {
-                Task verification = User.SendEmailVerificationAsync();
-                yield return new WaitUntil(predicate: () => verification.IsCompleted);
-            }
             Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
             notificationText.text = "";
             SceneManager.LoadScene("MenuScene");
@@ -235,7 +229,7 @@ public class AuthManager : MonoBehaviour
                         user.nickName = User.DisplayName;
                         string emailWithoutDot = Utilities.removeDot(User.Email);
                         DatabaseConnector.Instance.Root.Child("users").Child(emailWithoutDot).SetRawJsonValueAsync(JsonUtility.ToJson(user));
-                        warningRegisterText.text = "";
+                        notificationText.text = "";
 
                         // Since the registration was success, the email verification can be sent
                         Task verification = User.SendEmailVerificationAsync();

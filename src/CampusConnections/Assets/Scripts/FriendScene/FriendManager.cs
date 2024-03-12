@@ -138,7 +138,7 @@ public class FriendManager : MonoBehaviour
     }
     public void OnFriendDeleteConfirm()
     {
-        string targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
+        string targetEmail = deleteTarget.transform.Find("Email").GetComponent<TMP_Text>().text;
         string userEmailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
         string targetEmailWithoutDot = Utilities.removeDot(targetEmail);
        // Remove friend with that email from friend and tranform list
@@ -237,9 +237,8 @@ public class FriendManager : MonoBehaviour
             }
             else
             {
-                helpMsg = "<color=#4caf50>Success! Request is sent";
+                notificationText.text = "<color=#4caf50>Success! Request is sent";
                 DatabaseConnector.Instance.Root.Child("users/" + receiverEmailWithoutDot + "/invitations/" + senderEmailWithoutDot).SetValueAsync(true);
-                onCallBack.Invoke(helpMsg);
             }
         }
     }

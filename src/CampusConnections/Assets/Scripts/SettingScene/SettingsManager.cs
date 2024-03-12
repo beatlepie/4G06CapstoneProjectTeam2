@@ -6,17 +6,18 @@ using TMPro;
 using System.Collections;
 using System;
 using System.Collections.Generic;
-using System.Security.Permissions;
-using Assets.Mapbox.Unity.MeshGeneration.Modifiers.MeshModifiers;
 using Database;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using System.Threading.Tasks;
+using UnityEngine.EventSystems;
 
 public class SettingsManager : MonoBehaviour
 {
     // These are used to open the profile page for other users
     public static bool currentUser;
     public static string queryEmail;
+    public static int state;
 
     [Header("Canvas")]
     // Canvas containing user information
@@ -26,6 +27,7 @@ public class SettingsManager : MonoBehaviour
     public GameObject PasswordCanvas;
     public GameObject PinnedLectureCanvas;
     public GameObject PinnedEventCanvas;
+    public GameObject ConfirmationCanvas;
 
     [Header("Buttons")]
     // Edit button in display canvas
@@ -63,6 +65,8 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] Transform PinnedEventTemplate;
     [SerializeField] Transform PinnedEventView;
 
+    public TMP_Text notificationText;
+
     private void Start()
     {
         // Default values for profile page.
@@ -72,6 +76,7 @@ public class SettingsManager : MonoBehaviour
         PasswordCanvas.SetActive(false);
         PinnedLectureCanvas.SetActive(false);
         PinnedEventCanvas.SetActive(false);
+        ConfirmationCanvas.SetActive(false);
         // If the id is not the user, then remove the edit buttons!
         if (!currentUser)
         {
@@ -83,6 +88,34 @@ public class SettingsManager : MonoBehaviour
             queryEmail = DatabaseConnector.Instance.CurrentUser.Email;
             EditButton.SetActive(true);
             ChangePasswordButton.SetActive(true);
+        }
+
+        // If email is verified, do not display email verification button!
+        if (DatabaseConnector.Instance.CurrentUser.IsEmailVerified)
+        {
+            VerifyEmailButton.SetActive(false);
+        }
+        else
+        {
+            VerifyEmailButton.SetActive(true);
+        }
+
+        // Based on where the scene was called from, load respective screens first!
+        switch (state)
+        {
+            // bookmarked lectures
+            case 1:
+                DisplayCanvas.SetActive(false);
+                PinnedLectureCanvas.SetActive(true);
+                break;
+            // bookmarked events
+            case 2:
+                DisplayCanvas.SetActive(false);
+                PinnedEventCanvas.SetActive(true);
+                break;
+
+            default:
+                break;
         }
 
         StartCoroutine(getDBdata((List<string> data) =>
@@ -102,7 +135,7 @@ public class SettingsManager : MonoBehaviour
     private void favorites()
     {
         //NO lectures are visible for guest accounts
-        if(DatabaseConnector.Instance.Perms != PermissonLevel.Guest)
+        if (DatabaseConnector.Instance.Perms != PermissonLevel.Guest)
         {
             StartCoroutine(getPinnedLectures((List<string> data) =>
             {
@@ -128,12 +161,12 @@ public class SettingsManager : MonoBehaviour
             {
                 Transform entryTransform = Instantiate(PinnedEventTemplate, PinnedEventView);
                 RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-                entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i/3);
+                entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i / 3);
                 entryTransform.gameObject.SetActive(true);
 
                 entryTransform.Find("Name").GetComponent<TMP_Text>().text = data[i];
-                entryTransform.Find("Organizer").GetComponent<TMP_Text>().text = data[i+1];
-                entryTransform.Find("Location").GetComponent<TMP_Text>().text = data[i+2];
+                entryTransform.Find("Organizer").GetComponent<TMP_Text>().text = data[i + 1];
+                entryTransform.Find("Location").GetComponent<TMP_Text>().text = data[i + 2];
             }
         }));
     }
@@ -163,7 +196,7 @@ public class SettingsManager : MonoBehaviour
 
                 pinnedLectures.Add(lecture.Result.Child("instructor").Value.ToString());
                 pinnedLectures.Add(lecture.Result.Child("location").Value.ToString());
-                
+
             }
             onCallBack.Invoke(pinnedLectures);
         }
@@ -197,14 +230,16 @@ public class SettingsManager : MonoBehaviour
                     e2 = null;
                 }
                 yield return new WaitUntil(predicate: () => e1.IsCompleted & e2.IsCompleted);
-                if (e1 != null & e1.Result.HasChild("name")) {
+                if (e1 != null & e1.Result.HasChild("name"))
+                {
                     pinnedEvents.Add(e1.Result.Child("organizer").Value.ToString());
                     pinnedEvents.Add(e1.Result.Child("location").Value.ToString());
                 }
-                else if (e2 != null & e2.Result.HasChild("name")) {
+                else if (e2 != null & e2.Result.HasChild("name"))
+                {
                     pinnedEvents.Add(e2.Result.Child("organizer").Value.ToString());
                     pinnedEvents.Add(e2.Result.Child("location").Value.ToString());
-                } 
+                }
             }
             onCallBack.Invoke(pinnedEvents);
         }
@@ -253,7 +288,7 @@ public class SettingsManager : MonoBehaviour
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
         yield return www.SendWebRequest();
 
-        if(www.result == UnityWebRequest.Result.Success)
+        if (www.result == UnityWebRequest.Result.Success)
         {
             Texture2D tex = ((DownloadHandlerTexture)www.downloadHandler).texture;
             Debug.Log("texture recieved!");
@@ -314,11 +349,11 @@ public class SettingsManager : MonoBehaviour
             // If the current password is correct:
             if (task.IsCompletedSuccessfully)
             {
-            Debug.LogFormat("Password correct!");
+                Debug.LogFormat("Password correct!");
                 // If the new passwords match:
                 if (NewPassword.text == ConfirmPassword.text)
                 {
-                Debug.LogFormat("Password matches!");
+                    Debug.LogFormat("Password matches!");
                     // This attempts to update the password
                     user.UpdatePasswordAsync(NewPassword.text).ContinueWith(update =>
                     {
@@ -331,9 +366,9 @@ public class SettingsManager : MonoBehaviour
                         {
                             Debug.LogFormat(update.Exception.ToString());
                             Debug.LogFormat("new password update failed!");
-                                // There is a chance insecure password is used, firebase will reject that password
-                                status.text = "New password update failed! \n" +
-                                          "This password may not be viable!";
+                            // There is a chance insecure password is used, firebase will reject that password
+                            status.text = "New password update failed! \n" +
+                                      "This password may not be viable!";
                         }
                     });
                 }
@@ -435,7 +470,8 @@ public class SettingsManager : MonoBehaviour
     {
         updateDBdata();
 
-        StartCoroutine(getImage(profileImageLink.text, success => {
+        StartCoroutine(getImage(profileImageLink.text, success =>
+        {
             profileImageLink.text = "This image is invalid!";
             return;
         }));
@@ -476,26 +512,69 @@ public class SettingsManager : MonoBehaviour
     /// Function called when Email Verification button is pressed.
     /// Sends email verification email.
     /// </summary>
-    public void SendEmailVerification()
+    public IEnumerator SendEmailVerification()
     {
+        // Since the registration was success, the email verification can be sent
+        Task verification = DatabaseConnector.Instance.CurrentUser.SendEmailVerificationAsync();
+        yield return new WaitUntil(predicate: () => verification.IsCompleted);
 
+        // If it fails, will attempt at login instead!
+        if (verification.IsCompletedSuccessfully)
+        {
+            notificationText.text = "Email verification sent!";
+        }
+        else
+        {
+            notificationText.text = "Email verification will be sent on login!";
+        }
     }
 
     /// <summary>
-    /// Function called when delete account from password change canvas is pressed.
-    /// 
+    /// This function exists to link DeleteAccountConfirmed to the button click on unity.
     /// </summary>
     public void DeleteAccount()
     {
-
+        DeleteAccountConfirmed();
     }
 
-    // Copied over from lecturemanager, need to change for pinned view!
-    //public void OnEntryClick()
-    //{
-    //    GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
-    //    string code = template.transform.Find("codeText").GetComponent<TMP_Text>().text;
-    //    Lecture target = lectureEntryList.Find(lecture => lecture.code == code);
-    //    currentLecture = target;
-    //}
+    /// <summary>
+    /// This will delete all user data related to the account and kill the application.
+    /// </summary>
+    public IEnumerator DeleteAccountConfirmed()
+    {
+        var dbRoot = DatabaseConnector.Instance.Root;
+        var value = dbRoot.Child("users").Child(Utilities.removeDot(queryEmail)).GetValueAsync();
+        yield return new WaitUntil(predicate: () => value.IsCompleted);
+
+        foreach (var i in value.Result.Child("friends").Children)
+        {
+            dbRoot.Child("users").Child(Utilities.addDot(i.Key)).Child("friends").Child(Utilities.removeDot(queryEmail)).SetValueAsync(null);
+        }
+        dbRoot.Child("users").Child(Utilities.removeDot(queryEmail)).SetValueAsync(null);
+        // This is supposed to remove the user from firebase auth
+        DatabaseConnector.Instance.Auth.CurrentUser.DeleteAsync();
+
+        Application.Quit();
+    }
+
+    /// <summary>
+    /// This function will handle jumping to the respective list with the item searched when the bookmarked item is clicked!
+    /// </summary>
+    public void OnEntryClick()
+    {
+        // if pinned lecture screen is true, then redirect entry clicked to lecture scene
+        if (PinnedLectureCanvas.activeSelf)
+        {
+            SceneManager.LoadScene("LectureScene");
+            LectureManager.defaultSearchOption = "code";
+            LectureManager.defaultSearchString = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.transform.Find("Code").GetComponent<TMP_Text>().text;
+        }
+        // if pinned event screen is true, then redirect entry clicked to event scene
+        else
+        {
+            SceneManager.LoadScene("EventScene");
+            EventManager.defaultSearchOption = "name";
+            EventManager.defaultSearchString = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.transform.Find("Name").GetComponent<TMP_Text>().text;
+        }
+    }
 }
