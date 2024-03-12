@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Firebase.Auth;
 using Firebase.Database;
 using TMPro;
@@ -170,6 +171,15 @@ public class FriendManager : MonoBehaviour
 
     public void OnFriendNameClick()
     {
+        var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+        var targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
+        
+        foreach (var friend in friends.Where(friend => friend.email == targetEmail))
+        {
+            PlayerPrefs.SetString("LatestChatFriend", friend.nickName);
+            PlayerPrefs.Save();
+        }
+        
         SceneManager.LoadScene("ChatScene");
     }
 
