@@ -32,7 +32,7 @@ public class Pagination<T>
             foreach (T x in entryList) {
                 JObject json = JObject.Parse(JsonUtility.ToJson(x));
                 string target = (string)json[filterBy];
-                if (target.Contains(filterString))
+                if (target.ToLower().Contains(filterString.ToLower()))
                 {
                     filteredList.Add(x);
                 }

@@ -19,11 +19,9 @@ public class EventManager : MonoBehaviour
     private Transform tabeltitleTemplate;
     private Transform entryContainer;
     private Transform entryTemplate;
-    private List<Event> eventList;
-    private List<Event> filteredList;
+    private Pagination<Event> events;
     private List<Transform> eventEntryTransformList;
     public TMP_Text pgNum;
-    public int maxPages;
     public const int PAGECOUNT = 10;
     [SerializeField] Image EditButton;
 
@@ -54,6 +52,7 @@ public class EventManager : MonoBehaviour
         entryContainer = transform.Find("eventEntryContainer");
         tabeltitleTemplate = entryContainer.Find("TableTitle");
         entryTemplate = entryContainer.Find("eventEntryTemplate");
+        eventEntryTransformList = new List<Transform>();
         entryTemplate.gameObject.SetActive(false);
         // If they are not admin, do not show edit button!
         if(AuthManager.perms != 2)
@@ -68,17 +67,6 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    private void UpdateMaxPage()
-    {
-        if(filteredList.Count == 0)
-        {
-            maxPages = 1;
-        }
-        else
-        {
-            maxPages = filteredList.Count % PAGECOUNT == 0 ? filteredList.Count / PAGECOUNT : (int)(filteredList.Count / PAGECOUNT) + 1;
-        }
-    }
     public void GetEventData()
     {
         StartCoroutine(GetEvents());
@@ -86,8 +74,7 @@ public class EventManager : MonoBehaviour
 
     IEnumerator GetEvents()
     {
-        eventEntryTransformList = new List<Transform>();
-        eventList = new List<Event>();
+        List<Event> eventList = new List<Event>();
         var publicEventData = databaseReference.Child("events/public").OrderByKey().StartAt("-").GetValueAsync();
         yield return new WaitUntil(predicate: () => publicEventData.IsCompleted);
         if (publicEventData != null)
@@ -111,31 +98,7 @@ public class EventManager : MonoBehaviour
                 }
             }
         }
-        if (defaultSearchOption != null & defaultSearchString != null)
-        {
-            filteredList = new List<Event>();
-            if (defaultSearchOption == "location")
-            {
-                foreach (Event e in eventList) {
-                    if (e.location.Contains(defaultSearchString)) {
-                        filteredList.Add(e);
-                    }
-                }
-            }
-            else
-            {
-                foreach (Event e in eventList) {
-                    if (e.name.Contains(defaultSearchString)) {
-                        filteredList.Add(e);
-                    }
-                }    
-            }
-        }
-        else
-        {
-            filteredList = new List<Event>(eventList);
-        }
-        UpdateMaxPage();
+        events = new Pagination<Event>(eventList, defaultSearchOption, defaultSearchString, PAGECOUNT);
         DisplayEventList();
     }
 
@@ -143,11 +106,11 @@ public class EventManager : MonoBehaviour
     {
         RectTransform titleRectTransform = tabeltitleTemplate.GetComponent<RectTransform>();
         titleRectTransform.sizeDelta = new Vector2((float)(Screen.width/1.2), titleRectTransform.sizeDelta.y);
-        for (int i = ((Int32.Parse(pgNum.text) - 1) * PAGECOUNT); i < Math.Min((Int32.Parse(pgNum.text)) * PAGECOUNT, filteredList.Count); i++)
+        for (int i = ((events.currentPage - 1) * PAGECOUNT); i < Math.Min((events.currentPage) * PAGECOUNT, events.filteredList.Count); i++)
         {
-            if (filteredList[i] != null)
+            if (events.filteredList[i] != null)
             {
-                Event eventEntry = filteredList[i];
+                Event eventEntry = events.filteredList[i];
                 CreateEventEntryTransform(eventEntry, entryContainer, eventEntryTransformList);
             }
         }
@@ -182,73 +145,56 @@ public class EventManager : MonoBehaviour
 
     public void nextPage()
     {
-        if (Int32.Parse(pgNum.text) == maxPages)
-        {
-            return;
-        }
-        pgNum.text = (Int32.Parse(pgNum.text) + 1).ToString();
+        events.nextPage();
+        pgNum.text = events.currentPage.ToString();
     }
 
     public void prevPage()
     {
-        if (Int32.Parse(pgNum.text) <= 1)
-        {
-            return;
-        }
-        pgNum.text = (Int32.Parse(pgNum.text) - 1).ToString();
+        events.prevPage();
+        pgNum.text = events.currentPage.ToString();
     }
 
     public void lastPage()
     {
-        pgNum.text = (maxPages).ToString();
+        events.lastPage();
+        pgNum.text = events.currentPage.ToString();
     }
 
     public void firstPage()
     {
-        pgNum.text = "1";
+        events.firstPage();
+        pgNum.text = events.currentPage.ToString();
     }
 
     public void onFilter()
     {
-        filteredList.Clear();
         switch (FilterDropdown.value)
         {
             case(0):
             // Name
-                foreach (Event e in eventList)
-                {
-                    if(e.name.Contains(SearchString.text))
-                    {
-                        filteredList.Add(e);
-                    }
-                }
+                events.filterBy = "name";
+                events.filterString = SearchString.text;
+                events.filterEntries();
                 break;
             case(1):
             // Organizer
-                foreach (Event e in eventList)
-                {
-                    if(e.organizer.Contains(SearchString.text))
-                    {
-                        filteredList.Add(e);
-                    }
-                }
+               events.filterBy = "organizer";
+                events.filterString = SearchString.text;
+                events.filterEntries();
                 break;
             case(2):
             // Location
-                foreach (Event e in eventList)
-                {
-                    if(e.location.Contains(SearchString.text))
-                    {
-                        filteredList.Add(e);
-                    }
-                }
+                events.filterBy = "location";
+                events.filterString = SearchString.text;
+                events.filterEntries();
                 break;
             default:
-                filteredList = eventList;
+                events.filterBy = null;
+                events.filterString = null;
+                events.filterEntries();
                 break;
         }
-        firstPage();
-        UpdateMaxPage();
         DisplayEventList();
     }
 
@@ -256,7 +202,7 @@ public class EventManager : MonoBehaviour
     {
         GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         string name = template.transform.Find("nameText").GetComponent<TMP_Text>().text;
-        Event target = eventList.Find(e => e.name == name);
+        Event target = events.entryList.Find(e => e.name == name);
         currentEvent = target;
     }
 
@@ -274,12 +220,9 @@ public class EventManager : MonoBehaviour
         string prefix = eventIsPublicEdit.isOn ? "events/public/" : "events/private/";
         databaseReference.Child(prefix + eventNameEdit.text).SetRawJsonValueAsync(eventJson);
         // Add new event to the rendered list, clear the filter and render the first page
-        eventList.Add(e);
-        filteredList = new List<Event>(eventList);
+        events.addNewEntry(e);
         clearing();
         DisplayEventList();
-        UpdateMaxPage();
-        firstPage();
     }
 
     public void DeleteEvent()
@@ -287,12 +230,9 @@ public class EventManager : MonoBehaviour
         string prefix = eventIsPublicView.isOn ? "events/public/" : "events/private/";
         databaseReference.Child(prefix + eventNameView.text).SetValueAsync(null);
         // Delete this lecture from the rendered list, clear the filter and render the first page
-        var target = eventList.Find(e => e.name == eventNameView.text);
-        eventList.Remove(target);
-        filteredList = new List<Event>(eventList);
+        var target = events.entryList.Find(e => e.name == eventNameView.text);
+        events.removeEntry(target);
         clearing();
         DisplayEventList();
-        UpdateMaxPage();
-        firstPage();
     }
 }
