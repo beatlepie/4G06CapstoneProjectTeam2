@@ -278,10 +278,10 @@ public class SettingsManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Retrieves and sets the 
+    /// Retrieves and sets the image
     /// </summary>
     /// <param name="url">url of the photo we want to retrieve.</param>
-    /// <returns></returns>
+    /// <returns>Action on whether the image was retrieved or not</returns>
     private IEnumerator getImage(string url, Action<bool> success = null)
     {
         // GET image from web
@@ -384,49 +384,6 @@ public class SettingsManager : MonoBehaviour
 
             new WaitUntil(predicate: () => task.IsCompleted);
         });
-
-        // Need to fix this, this method must be coroutined to work!
-
-        // Leaving the IEnumerator code here just in case!
-        //Debug.LogFormat("new password attempt!");
-        //// This checks the current password
-        //Task userValidation = user.ReauthenticateAsync(EmailAuthProvider.GetCredential(user.Email, CurrentPassword.text));
-        //yield return new WaitUntil(predicate: () => userValidation.IsCompleted);
-
-        //if (userValidation.IsCompletedSuccessfully)
-        //{
-        //    Debug.LogFormat("Password correct!");
-        //    // If the new passwords match:
-        //    if (NewPassword.text == ConfirmPassword.text)
-        //    {
-        //        Debug.LogFormat("Password matches!");
-
-        //        Task updatePassword = user.UpdatePasswordAsync(NewPassword.text);
-        //        yield return new WaitUntil(predicate: () => updatePassword.IsCompleted);
-
-        //        if (updatePassword.IsCompletedSuccessfully)
-        //        {
-        //            Debug.LogFormat("new password updated!");
-        //            status.text = "New password update successful!";
-        //        }
-        //        else
-        //        {
-        //            Debug.LogFormat(updatePassword.Exception.ToString());
-        //            Debug.LogFormat("new password update failed!");
-        //            // There is a chance insecure password is used, firebase will reject that password
-        //            status.text = "New password update failed! \n" +
-        //                          "This password may not be viable!";
-        //        }
-        //    }
-        //    else
-        //    {
-        //        status.text = "New password does not match!";
-        //    }
-        //}
-        //else
-        //{
-        //    status.text = "Current password is incorrect!";
-        //}
     }
 
     /// <summary>
@@ -540,7 +497,7 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// This will delete all user data related to the account and kill the application.
     /// </summary>
-    public IEnumerator DeleteAccountConfirmed()
+    private IEnumerator DeleteAccountConfirmed()
     {
         var dbRoot = DatabaseConnector.Instance.Root;
         var value = dbRoot.Child("users").Child(Utilities.removeDot(queryEmail)).GetValueAsync();

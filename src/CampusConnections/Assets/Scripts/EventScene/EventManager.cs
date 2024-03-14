@@ -27,6 +27,7 @@ public class EventManager : MonoBehaviour
     public int maxPages;
     public const int PAGECOUNT = 10;
     [SerializeField] Image EditButton;
+    public GameObject BookmarkButton;
 
     [Header("Detail View")]
     public static Event currentEvent; //The one we want to see details
@@ -51,10 +52,12 @@ public class EventManager : MonoBehaviour
         tabeltitleTemplate = entryContainer.Find("TableTitle");
         entryTemplate = entryContainer.Find("eventEntryTemplate");
         entryTemplate.gameObject.SetActive(false);
+        BookmarkButton.SetActive(false);
         // If they are not admin, do not show edit button!
-        if(DatabaseConnector.Instance.Perms != PermissonLevel.Admin)
+        if (DatabaseConnector.Instance.Perms != PermissonLevel.Admin)
         {
             EditButton.gameObject.SetActive(false);
+            BookmarkButton.SetActive(true);
         }        
         GetEventData();
         if (defaultSearchOption != null & defaultSearchString != null)
@@ -290,5 +293,15 @@ public class EventManager : MonoBehaviour
         DisplayEventList();
         UpdateMaxPage();
         firstPage();
+    }
+
+    /// <summary>
+    /// When the bookmark is clicked, it should redirect to bookmarkedEvents page
+    /// </summary>
+    public void GoToBookmark()
+    {
+        SettingsManager.currentUser = true;
+        SettingsManager.state = 2;
+        SceneManager.LoadScene("SettingsScene");
     }
 }

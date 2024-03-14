@@ -26,6 +26,7 @@ public class LectureManager : MonoBehaviour
     public TMP_Text pgNum;
     public int maxPages;
     public const int PAGECOUNT = 10;
+    public GameObject BookmarkButton;
 
     [Header("Detail View")]
     public static Lecture currentLecture; //The one we want to see details
@@ -48,9 +49,11 @@ public class LectureManager : MonoBehaviour
         tabeltitleTemplate = entryContainer.Find("TableTitle");
         entryTemplate = entryContainer.Find("lectureEntryTemplate");
         entryTemplate.gameObject.SetActive(false);
+        BookmarkButton.SetActive(false);
         if(DatabaseConnector.Instance.Perms != PermissonLevel.Admin)
         {
             NewLectureIcon.SetActive(false);
+            BookmarkButton.SetActive(true);
         }
         GetLectureData();
         if (defaultSearchOption != null & defaultSearchString != null)
@@ -275,5 +278,15 @@ public class LectureManager : MonoBehaviour
         DisplayLectureList();
         UpdateMaxPage();
         firstPage();
+    }
+
+    /// <summary>
+    /// Function handling button press of bookmark button
+    /// </summary>
+    public void GoToBookmark()
+    {
+        SettingsManager.currentUser = true;
+        SettingsManager.state = 1;
+        SceneManager.LoadScene("SettingsScene");
     }
 }
