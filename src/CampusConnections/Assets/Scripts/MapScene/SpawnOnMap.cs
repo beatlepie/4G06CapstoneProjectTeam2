@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Mapbox.Utils;
 using Mapbox.Unity.Map;
 using Mapbox.Unity.Utilities;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class SpawnOnMap : MonoBehaviour
 {
@@ -27,6 +29,7 @@ public class SpawnOnMap : MonoBehaviour
 	{
 		_locations = new Vector2d[_locationStrings.Length];
 		_spawnedObjects = new List<GameObject>();
+		
 		_buildingData = new List<TargetBuilding>();
 		for (int i = 0; i < _locationStrings.Length; i++)
 		{
