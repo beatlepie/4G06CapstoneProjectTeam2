@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ChatBubbleController : MonoBehaviour
 {
@@ -14,6 +16,14 @@ public class ChatBubbleController : MonoBehaviour
     [SerializeField]
     private GameObject timeObj;
     private TMP_Text _timestamp;
+
+    // For link to event and lecture
+    [SerializeField]
+    private Button msgBubble;
+    [SerializeField]
+    public string linkColor;
+    private string targetType;
+    private string targetID;
     
     void Awake()
     {
@@ -28,6 +38,33 @@ public class ChatBubbleController : MonoBehaviour
 
     public void SetMessage(string msg)
     {
-        _message.SetText(msg);
+        List<string> pattern = Utilities.GetActivityPattern(msg);
+        if (pattern[0] != "null")
+        {
+            targetType = pattern[0];
+            targetID = pattern[1];
+            string polishedMsg = Utilities.PolishChatMessage(msg, linkColor);
+            _message.SetText(polishedMsg);
+        }
+        else
+        {
+            _message.SetText(msg);
+        }
+    }
+
+    public void clickOnMessage()
+    {
+        if (targetType == "lecture")
+        {
+            SceneManager.LoadScene("LectureScene");
+            LectureManager.defaultSearchOption = "code";
+            LectureManager.defaultSearchString = targetID;
+        }
+        else if (targetType == "event")
+        {
+            SceneManager.LoadScene("EventScene");
+            EventManager.defaultSearchOption = "name";
+            EventManager.defaultSearchString = targetID;
+        }
     }
 }
