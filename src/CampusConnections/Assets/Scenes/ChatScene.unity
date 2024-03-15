@@ -1186,7 +1186,7 @@ PrefabInstance:
     - target: {fileID: 1106916632299512856, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: -118.25995
+      value: 10.920044
       objectReference: {fileID: 0}
     - target: {fileID: 1106916632299512856, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
         type: 3}
@@ -1311,21 +1311,50 @@ PrefabInstance:
     - target: {fileID: 3723422320775299182, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
         type: 3}
       propertyPath: m_text
-      value: 'What you friend to take a look at a lecture or event?
+      value: 'Want your friend to take a look at a lecture or event?
 
         Send
         them a link!
 
-        <size=60%><u>[event](EVENT NAME)</u></size>
+        <size=60%>Type the following:</size>
 
-        <size=60%><u>[lecture](LECTURE
-        CODE)</u></size>
+        <size=60%><u>[event](EVENT
+        NAME)</u></size> or
 
-        For instance:
+        <size=60%><u>[lecture](LECTURE CODE)</u></size>
 
-        <size=60%>[event](EXPO)</size>
+        <size=60%>They
+        will become a link:</size>
 
-        <size=60%><color=#0000FF>EXPO</size>'
+        <size=60%><color=#0000FF>SAMPLE NAME</color></size>
+
+        <size=80%><color=#7F1010>Only
+        one link per message is allowed</size>'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723422320775299182, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723422320775299182, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723422320775299182, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723422320775299182, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723422320775299182, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
       objectReference: {fileID: 0}
     - target: {fileID: 5932855092638418531, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
         type: 3}
