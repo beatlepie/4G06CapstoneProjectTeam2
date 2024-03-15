@@ -1,4 +1,5 @@
-﻿using Firebase;
+﻿using Auth;
+using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using UnityEngine;
@@ -9,7 +10,6 @@ namespace Database
     {
         public static DatabaseConnector Instance { get; private set; }
 
-        public FirebaseAuth Auth { get; private set; }
         public DatabaseReference Root { get; private set; }
 
         public FirebaseUser CurrentUser { get; private set; }
@@ -42,9 +42,8 @@ namespace Database
                 if (status == DependencyStatus.Available)
                 {
                     Debug.Log("[DatabaseConnector] Successfully established connection with Firebase");
-                    Auth = FirebaseAuth.DefaultInstance;
                     Root = FirebaseDatabase.DefaultInstance.RootReference;
-                    CurrentUser = Auth.CurrentUser;
+                    AuthConnector.Instance.InitAuth();
                 }
                 else
                 {

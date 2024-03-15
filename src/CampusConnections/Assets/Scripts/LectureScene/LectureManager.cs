@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System;
 using Database;
 using UnityEngine;
-using Firebase;
 using Firebase.Database;
 using TMPro;
 using UnityEngine.EventSystems;

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Database;
-using Firebase.Auth;
+using Auth;
 using Firebase.Database;
 using TMPro;
 using UnityEngine;
@@ -44,7 +44,7 @@ public class LectureDetailViewManager : MonoBehaviour
     }
     IEnumerator GetPinnedLectures(Action<List<string>> onCallBack)
     {
-        string emailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);                
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);                
         var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if(userData != null)
@@ -98,7 +98,7 @@ public class LectureDetailViewManager : MonoBehaviour
         myLectureCodes.Add(target.code);
         PinIcon.SetActive(false);
         UnpinIcon.SetActive(true);
-        string emailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
         DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + target.code).SetValueAsync("True");
     }
 
@@ -107,7 +107,7 @@ public class LectureDetailViewManager : MonoBehaviour
         myLectureCodes.Remove(target.code);
         PinIcon.SetActive(true);
         UnpinIcon.SetActive(false);
-        string emailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
         DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + target.code).SetValueAsync(null);
     }
 

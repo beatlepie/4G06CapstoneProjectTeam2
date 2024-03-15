@@ -5,9 +5,8 @@ using Firebase;
 using Firebase.Auth;
 using TMPro;
 using System.Threading.Tasks;
-using Assets.Mapbox.Unity.MeshGeneration.Modifiers.MeshModifiers;
+using Auth;
 using Database;
-using Firebase.Database;
 using UnityEngine.UI;
 
 public class AuthManager : MonoBehaviour
@@ -35,32 +34,6 @@ public class AuthManager : MonoBehaviour
     [SerializeField] GameObject Notification;
     public TMP_Text notificationText;
 
-    void Awake()
-    {
-        //Check that all of the necessary dependencies for Firebase are present on the system
-        /*FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
-        {
-            dependencyStatus = task.Result;
-            if (dependencyStatus == DependencyStatus.Available)
-            {
-                //If they are avalible Initialize Firebase
-                InitializeFirebase();
-            }
-            else
-            {
-                Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
-            }
-        });*/
-    }
-
-    /*private void InitializeFirebase()
-    {
-        //Set the authentication instance object
-        auth = FirebaseAuth.DefaultInstance;
-        //Set the firebase reference
-        databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-    }*/
-
     //Function for the login button
     public void LoginButton()
     {
@@ -86,7 +59,7 @@ public class AuthManager : MonoBehaviour
     private IEnumerator Login(string _email, string _password)
     {
         //Call the Firebase auth signin function passing the email and password
-        Task<AuthResult> LoginTask = DatabaseConnector.Instance.Auth.SignInWithEmailAndPasswordAsync(_email, _password);
+        Task<AuthResult> LoginTask = AuthConnector.Instance.Auth.SignInWithEmailAndPasswordAsync(_email, _password);
         //Wait until the task completes
         yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
 
@@ -97,7 +70,7 @@ public class AuthManager : MonoBehaviour
             FirebaseException firebaseEx = LoginTask.Exception.GetBaseException() as FirebaseException;
             AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
 
-            string message = "Wrong Passowrd or Account does not exist!";
+            string message = "Wrong Password or Account does not exist!";
             switch (errorCode)
             {
                 case AuthError.MissingEmail:
@@ -162,7 +135,7 @@ public class AuthManager : MonoBehaviour
         else 
         {
             //Call the Firebase auth signin function passing the email and password
-            Task<AuthResult> RegisterTask = DatabaseConnector.Instance.Auth.CreateUserWithEmailAndPasswordAsync(_email, _password);
+            Task<AuthResult> RegisterTask = AuthConnector.Instance.Auth.CreateUserWithEmailAndPasswordAsync(_email, _password);
             //Wait until the task completes
             yield return new WaitUntil(predicate: () => RegisterTask.IsCompleted);
 
@@ -252,7 +225,7 @@ public class AuthManager : MonoBehaviour
 
     private IEnumerator ForgetPassword(string _email)
     {
-        Task ResetPwdTask = DatabaseConnector.Instance.Auth.SendPasswordResetEmailAsync(_email);
+        Task ResetPwdTask = AuthConnector.Instance.Auth.SendPasswordResetEmailAsync(_email);
         yield return new WaitUntil(predicate: () => ResetPwdTask.IsCompleted);
         if(ResetPwdTask.IsFaulted)
         {

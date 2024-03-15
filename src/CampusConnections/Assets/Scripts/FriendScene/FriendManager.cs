@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Database;
-using Firebase.Auth;
+using Auth;
 using Firebase.Database;
 using TMPro;
 using UnityEngine;
@@ -45,7 +45,7 @@ public class FriendManager : MonoBehaviour
 
     IEnumerator GetFriends(Action<List<User>> onCallBack)
     {
-        string emailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);                
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);                
         var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/friends").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if(userData != null)
@@ -70,7 +70,7 @@ public class FriendManager : MonoBehaviour
 
     IEnumerator GetInvitations(Action<List<User>> onCallBack)
     {
-        string emailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);                
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);                
         var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/invitations").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if(userData != null)
@@ -139,7 +139,7 @@ public class FriendManager : MonoBehaviour
     public void OnFriendDeleteConfirm()
     {
         string targetEmail = deleteTarget.transform.Find("Email").GetComponent<TMP_Text>().text;
-        string userEmailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
+        string userEmailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
         string targetEmailWithoutDot = Utilities.removeDot(targetEmail);
        // Remove friend with that email from friend and tranform list
         friends.RemoveAll(friend => friend.email == targetEmail);
@@ -212,12 +212,12 @@ public class FriendManager : MonoBehaviour
     IEnumerator CheckUserByEmail()
     {
         string email = GameObject.Find("InputEmail").GetComponent<TMP_InputField>().text;
-        if(DatabaseConnector.Instance.CurrentUser.Email == email) {
+        if(AuthConnector.Instance.CurrentUser.Email == email) {
             // Cannot use user email
             notificationText.text = "<color=#f44336>You cannot add yourself as friend";
             yield break;
         }
-        string senderEmailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
+        string senderEmailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
         string receiverEmailWithoutDot = Utilities.removeDot(email);
         var userData = DatabaseConnector.Instance.Root.Child("users/" + receiverEmailWithoutDot).GetValueAsync();
         var invitationData = DatabaseConnector.Instance.Root.Child("users/" + receiverEmailWithoutDot + "/invitations/" + senderEmailWithoutDot).GetValueAsync();
@@ -247,7 +247,7 @@ public class FriendManager : MonoBehaviour
     {
         GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         string targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
-        string userEmailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
+        string userEmailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
         string requesterEmailWithoutDot = Utilities.removeDot(targetEmail);
        // Remove invitation from requests and tranform list
         User targetUser = requesters.Find(requester => requester.email == targetEmail);
@@ -275,7 +275,7 @@ public class FriendManager : MonoBehaviour
     {
         GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         string targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
-        string userEmailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
+        string userEmailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
         string requesterEmailWithoutDot = Utilities.removeDot(targetEmail);
         // Remove invitation from requests and tranform list
         requesters.RemoveAll(requester => requester.email == targetEmail);

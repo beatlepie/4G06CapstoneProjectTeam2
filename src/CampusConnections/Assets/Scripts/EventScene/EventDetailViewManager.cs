@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Database;
-using Firebase.Auth;
+using Auth;
 using Firebase.Database;
 using TMPro;
 using UnityEngine;
@@ -53,7 +53,7 @@ public class EventDetailViewManager : MonoBehaviour
     }
     IEnumerator GetPinnedLectures(Action<List<string>> onCallBack)
     {
-        string emailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);                
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);                
         var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if(userData != null)
@@ -115,7 +115,7 @@ public class EventDetailViewManager : MonoBehaviour
         myEventNames.Add(target.name);
         PinIcon.SetActive(false);
         UnpinIcon.SetActive(true);
-        string emailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
         DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + target.name).SetValueAsync("True");
     }
 
@@ -124,7 +124,7 @@ public class EventDetailViewManager : MonoBehaviour
         myEventNames.Remove(target.name);
         PinIcon.SetActive(true);
         UnpinIcon.SetActive(false);
-        string emailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
         DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + target.name).SetValueAsync(null);
     }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Auth;
 using Firebase.Database;
 using Firebase.Auth;
 using TMPro;
@@ -85,13 +86,13 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
-            queryEmail = DatabaseConnector.Instance.CurrentUser.Email;
+            queryEmail = AuthConnector.Instance.CurrentUser.Email;
             EditButton.SetActive(true);
             ChangePasswordButton.SetActive(true);
         }
 
         // If email is verified, do not display email verification button!
-        if (DatabaseConnector.Instance.CurrentUser.IsEmailVerified)
+        if (AuthConnector.Instance.CurrentUser.IsEmailVerified)
         {
             VerifyEmailButton.SetActive(false);
         }
@@ -315,7 +316,7 @@ public class SettingsManager : MonoBehaviour
     private void updateDBdata()
     {
         // TODO: implement safety feature!
-        string emailWithoutDot = Utilities.removeDot(DatabaseConnector.Instance.CurrentUser.Email);
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
 
         var dbRoot = DatabaseConnector.Instance.Root;
         dbRoot.Child("users").Child(emailWithoutDot).Child("level").SetValueAsync(newLevel.text);
@@ -340,7 +341,7 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void SaveNewPassword()
     {
-        FirebaseUser user = DatabaseConnector.Instance.CurrentUser;
+        FirebaseUser user = AuthConnector.Instance.CurrentUser;
 
         // This checks the current password
         user.ReauthenticateAsync(EmailAuthProvider.GetCredential(user.Email, CurrentPassword.text)).ContinueWith(task =>
@@ -414,10 +415,23 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void Cancel()
     {
-        DisplayCanvas.SetActive(true);
-        EditCanvas.SetActive(false);
-        PinnedLectureCanvas.SetActive(false);
-        PinnedEventCanvas.SetActive(false);
+        if(state == 0)
+        {
+            DisplayCanvas.SetActive(true);
+            EditCanvas.SetActive(false);
+            PinnedLectureCanvas.SetActive(false);
+            PinnedEventCanvas.SetActive(false);
+        }
+        // return to lecture scene
+        else if(state == 1)
+        {
+            SceneManager.LoadScene("LectureScene");
+        }
+        // return to event scene
+        else if(state == 2)
+        {
+            SceneManager.LoadScene("EventScene");
+        }
     }
 
     /// <summary>
@@ -472,7 +486,7 @@ public class SettingsManager : MonoBehaviour
     public IEnumerator SendEmailVerification()
     {
         // Since the registration was success, the email verification can be sent
-        Task verification = DatabaseConnector.Instance.CurrentUser.SendEmailVerificationAsync();
+        Task verification = AuthConnector.Instance.CurrentUser.SendEmailVerificationAsync();
         yield return new WaitUntil(predicate: () => verification.IsCompleted);
 
         // If it fails, will attempt at login instead!
@@ -509,7 +523,7 @@ public class SettingsManager : MonoBehaviour
         }
         dbRoot.Child("users").Child(Utilities.removeDot(queryEmail)).SetValueAsync(null);
         // This is supposed to remove the user from firebase auth
-        DatabaseConnector.Instance.Auth.CurrentUser.DeleteAsync();
+        AuthConnector.Instance.Auth.CurrentUser.DeleteAsync();
 
         Application.Quit();
     }
