@@ -849,24 +849,24 @@ The use case diagram depicted below identifies the boundaries between the users 
 \section{Look and Feel Requirements}
 \subsection{Appearance Requirements}
   \textbf{LF-A1:} The product shall respond with visual (and auditory, if applicable) feedback once the user interacts with an interactive component.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} Providing feedback will tell the user that the product has done a task in response to the user input.\\
   \textbf{Fit criterion:} Each component must respond as designed in RESPONSE\_TIME when they are triggered.\\\\
   \textbf{LF-A2:} The product shall adapt to most of the common mobile screen sizes with screen components not being congested.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} This will allow the user to view and interact with all the visual elements on the page.\\
   \textbf{Fit criterion:} Visual elements must not exceed the borders of the screen for all screens in SCREEN\_VIEWPORTS list. If a user experience survey is taken among them, the application layout will get at least MIN\_SCORE.\\
 
 \subsection{Style Requirements}
   \textbf{LF-S1:} The colors and themes shall be consistent across different pages.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} Colours should be consistent to allow the user to easily navigate each page.\\
   \textbf{Fit criterion:} Consistency checks show the same color scheme being used on all pages.\\\\
   \textbf{LF-S2:} The color scheme used shall be appealing and not cause eye strain.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} An unappealing colour scheme may cause eye strain in users.\\
   \textbf{Fit criterion:} MOST\_USERS agree with the statement that the screen does not cause strain during a user experience survey.\\
 
 \section{Usability and Humanity Requirements}
 \subsection{Ease of Use Requirements}
   \textbf{UH-EOU1:} The product shall have a user interface that is clear and easy to navigate.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} A user interface that is easy to use will allow users to intuitively navigate between pages without any assistance.\\
   \textbf{Fit criterion:} MOST\_USERS in the testing stage shall be able to find their way to specific pages and access all different core features including messaging friend, lecture and event management and building scanning without needing to try again more than 3 times.\\
 
 \subsection{Personalization and Internationalization Requirements}
@@ -874,33 +874,33 @@ The use case diagram depicted below identifies the boundaries between the users 
 
 \subsection{Learning Requirements}
   \textbf{UH-L1:} The product shall include a user guide about its features available on GitHub repo.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} This will aid users in navigating the user interface if a user is unable to find a feature.\\
   \textbf{Fit criterion:} Users shall be able to access user guide in GitHub and MOST\_USERS shall give positive feedback on that document.\\\\
 
 \subsection{Understandability and Politeness Requirements}
   \textbf{UH-UP1:} The product shall abstain from using technical and software-specific language.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} Technical and software-specific language will not be understood by most users, therefore its use should be limited.\\
   \textbf{Fit criterion:} MOST\_USERS shall hardly find technical and software-specific language among all text displayed by the application.\\
 \subsection{Accessibility Requirements}
   \textbf{UH-A1:} The colors used by the different components of the product shall contrast enough for items on the screen to be more easily visible.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} This will allow users with colour blindness to tell different components apart, as colours with low contrast may be hard to distinguish for these users.\\
   \textbf{Fit criterion:} The color contrast is at least 4.5:1 per the Web Content Accessibility Guidelines’ AA standards for accessibility\cite{WCAG}.\\
 
 \section{Performance Requirements}
 \subsection{Speed and Latency Requirements}
   \textbf{P-SL1:} The product shall display the correct AR objects shortly after successful AR target recognition.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} Response times should be fast to ensure that the product is efficient.\\
   \textbf{Fit criterion:} The time from recognition to the appearance of the AR object is at most RECOGNITION\_TIME.\\\\
   \textbf{P-SL2:} The product shall periodically update the user’s location on the real-time location map.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} User's location should be as accurate as possible. Constant updates will ensure that the user's location is up to date.\\
   \textbf{Fit criterion:} A user’s location must be updated on the map session within LOCATION\_UPDATE\_TIME.\\
 
 \subsection{Safety-Critical Requirements}
   \textbf{P-SC1:} The application will not collect or share any user’s location or personal data without getting permission from the user.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} This gives the user the freedom to choose how their personal data is used by the product.\\
   \textbf{Fit criterion:} User’s personal information does not appear in the database if the user did not grant permissions.\\\\
   \textbf{P-SC2:} User data such as messages and location information will be securely encrypted to protect user’s privacy.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} This decreases the risk of hackers finding personal information in intercepted messages.\\
   \textbf{Fit criterion:} Contents of data packets being transmitted are nonsense when inspected with MONITORING\_TOOL.\\\\
   \textbf{P-SC3:} The product shall display a message upon map startup warning the user to be aware of their surroundings.\\
   \textbf{Rationale:} The gameplay of real-time location map may lead to distracted walking, therefore we need to warn the user for their safety.\\
@@ -917,7 +917,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 
 \subsection{Precision or Accuracy Requirements}
   \textbf{P-PA1:} The product shall accurately identify buildings scanned by the user.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} When a user scans a building, the product should display information about that building\\
   \textbf{Fit criterion:} The application shall identify a building on campus with a success rate of at least 80\%.\\\\
 
 \subsection{Robustness or Fault-Tolerance Requirements}
@@ -938,29 +938,29 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{N/A}\\
 
 \subsection{Scalability or Extensibility Requirements}
-  \textbf{P-SE1:} This product server will be capable of processing about at most MAX\_CAPACITY people concurrently in the release build with a plan of expanding it to support all students on campus (about 40,000 people) in the future.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
-  \textbf{Fit Criterion:} \textcolor{red}{???}\\\\
-  \textbf{P-SE2:} This product database will be capable of storing the account and personal information of about MAX\_USER\_STORED users in the release build with a plan of expanding it to support all students on campus (about 40,000 people) in the future.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
-  \textbf{Fit Criterion:} \textcolor{red}{???}\\\\
-  \textbf{P-SE3:} The application architecture will allow for the addition of new campus buildings and clubs without considerable drawbacks in performance.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
-  \textbf{Fit Criterion:} \textcolor{red}{???}\\\\
+  \textbf{P-SE1:} The product shall have a server that can process all users.\\
+  \textbf{Rationale:} Ensures that the app can handle the requests of multiple users at once.\\
+  \textbf{Fit Criterion:} The server should be capable of processing at most MAX\_CAPACITY people concurrently in the release build with a plan of expanding it to support all students on campus (about 40,000 people) in the future.\\\\
+  \textbf{P-SE2:} The product shall have a database that can store the information of all users.\\
+  \textbf{Rationale:} Ensures that all user's information can be stored in the database\\
+  \textbf{Fit Criterion:} The database should be capable of storing the account and personal information of about MAX\_USER\_STORED users in the release build with a plan of expanding it to support all students on campus (about 40,000 people) in the future.\\\\
+  \textbf{P-SE3:} The application architecture shall allow for the addition of new campus buildings and clubs without considerable drawbacks in performance.\\
+  \textbf{Rationale:} New buildings and clubs may be added in future releases.\\
+  \textbf{Fit Criterion:} New buildings and clubs can be added to the database within a few minutes, and their addition causes minimal increase in processing delay.\\\\
 
 \subsection{Longevity Requirements}
-  \textbf{P-L1:} This application will be expected to operate without major malfunctions in release build for a minimum of 1 year while undergoing further development.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
-  \textbf{Fit Criterion:} \textcolor{red}{???}\\\\
-  \textbf{P-L2:} The finalized product will remain compatible with the promised operating systems and devices for a minimum of 3 years.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
-  \textbf{Fit Criterion:} \textcolor{red}{???}\\\\
+  \textbf{P-L1:} This application shall operate without major malfunctions in release build while undergoing further development.\\
+  \textbf{Rationale:} This will ensure that new releases can be focused on without worrying about any malfunctions in the current release.\\
+  \textbf{Fit Criterion:} The application will be expected to operate for a minimum of 1 year after release.\\\\
+  \textbf{P-L2:} The finalized product shall remain compatible with the promised supported operating systems and devices.\\
+  \textbf{Rationale:} Ensures that users can use the app for a sufficient amount of time without having to get a new phone.\\
+  \textbf{Fit Criterion:} The product should be compatible with supported devices for a minimum of 3 years.\\\\
 
 \section{Operational and Environmental Requirements}
 \subsection{Expected Physical Environment}
-  \textbf{OE-EPE1:} The product will be installed on the user's smartphone (Android).\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
-  \textbf{Fit Criterion:} \textcolor{red}{???}\\\\
+  \textbf{OE-EPE1:} The product shall be installed on the user's smartphone (Android).\\
+  \textbf{Rationale:} The product is a mobile phone application.\\
+  \textbf{Fit Criterion:} The product can be opened from the user's home screen once downloaded.\\\\
 
 \subsection{Wider Environment Requirements}
   \textbf{N/A}\\
@@ -970,7 +970,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 
 \subsection{Productization Requirements}
   \textbf{OE-P1:} The product shall be downloadable for Android devices.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} The expected physical environment is Android devices.\\
   \textbf{Fit criterion:} The product can be downloaded onto an Android device by downloading the APK file directly.\\\\
 
 \subsection{Release Requirements}
@@ -979,25 +979,25 @@ The use case diagram depicted below identifies the boundaries between the users 
 \section{Maintainability and Support Requirements}
 \subsection{Maintenance Requirements}
   \textbf{MS-M1:} Major updates could be rolled out during periods of reduced usage such as after school time, in the Reading Week or in Spring semesters.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
-  \textbf{Fit Criterion:} \textcolor{red}{???}\\\\
+  \textbf{Rationale:} This minimizes the number of users that are impacted by ongoing maintenance.\\
+  \textbf{Fit Criterion:} Dates and times of update releases correspond with days/times that are expected to have lower usage.\\\\
   %This will allow significant time to stablize the update and test them before the updates are applied to the users.
   %Additionally, the administrator can perfrom maintenance on the database and server to check the correct operation of the product.
   %This will maximize the availability of the product.
 
 \subsection{Supportability Requirements}
   \textbf{MS-S1:} Feature requests or issues can be sent to the application's GitHub.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
-  \textbf{Fit Criterion:} \textcolor{red}{???}\\\\
+  \textbf{Rationale:} This will allow users to report bugs/suggest new features to the developers.\\
+  \textbf{Fit Criterion:} A link for the application's GitHub will be provided to users, allowing them to add feature requests or issues.\\\\
   %These opened issues will be discussed by the maintainers and communicated through the issue on how they will be dealt with.
-  \textbf{MS-S2:} All feature issues with implementation details and user manual should be open to any visitor to the application's GitHub.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
-  \textbf{Fit Criterion:} \textcolor{red}{???}\\\\
+  \textbf{MS-S2:} The user manual and all feature issues with implementation details should be open to any visitor to the application's GitHub.\\
+  \textbf{Rationale:} Users should have access to the user manual to aid them in using the product. Feature issues should also be made public so users can see the progress being made.\\
+  \textbf{Fit Criterion:} The user manual and feature issues shall be viewable by any user with/without a GitHub account.\\\\
 
 \subsection{Adaptability Requirements}
-  \textbf{MS-A1:} The product shall be accessible on Android 11 and above for Android devices, as these operating systems are still supported and receive security updates.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
-  \textbf{Fit Criterion:} \textcolor{red}{???}\\\\
+  \textbf{MS-A1:} The product shall be accessible on Android 11 and above for Android devices.\\
+  \textbf{Rationale:} These operating systems are still supported and receive security updates.\\
+  \textbf{Fit Criterion:} All phones with Android 11 or above can run the application without any unexpected issues.\\\\
   %This product may be ported to other universities in Ontario, Canada, or other countries.
   %Although the product is designed to work for university, this can be porte to other large events and buildings to help users navigate and coordinate better.
 
@@ -1033,22 +1033,22 @@ The use case diagram depicted below identifies the boundaries between the users 
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
   \textbf{CUL-C1:} The product shall not be offensive to any marginalized groups.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
+  \textbf{Rationale:} The app is meant to be used by students on campus, many of which are part of marginalized groups.\\
   \textbf{Fit Criterion:} The product shall not use any language or symbols deemed offensive by any marginalized group.\\\\
 
 \section{Compliance Requirements}
 \subsection{Legal Requirements}
-  \textbf{COM-L1:} The data collected from users will be handled as per the same legal requirements for the university.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
-  \textbf{Fit Criterion:} \textcolor{red}{???}\\\\
+  \textbf{COM-L1:} The data collected from users shall be handled as per the same legal requirements set by the university.\\
+  \textbf{Rationale:} The university has specific requirements for their applications that must be followed.\\
+  \textbf{Fit Criterion:} The application does not violate any legal requirements set by the university.\\\\
   %As this application will be used in university, it is subject to the same regulations that the university is beholden to.
   %In the future, different functions can be developed to match specific university or state/country requirements, but this is currently not in scope.
 
 \subsection{Standards Compliance Requirements}
   %This ensures that the application is safe and can be scaled and expanded to other universities or interested parties when needed.
-  \textbf{COM-SC1:} The application will abide by the guidelines set by the university and club managers, adding options to accommodate their requests.\\
-  \textbf{Rationale:} \textcolor{red}{???}\\
-  \textbf{Fit Criterion:} \textcolor{red}{???}\\\\
+  \textbf{COM-SC1:} The application shall abide by the guidelines set by the university and club managers, adding options to accommodate their requests.\\
+  \textbf{Rationale:} The university and club managers has specific guidelines for the application that must be followed.\\
+  \textbf{Fit Criterion:} The application does not violate any guidelines set by the university and club managers.\\\\
 
 \section{Traceability Matrix}
 \begin{table}[H]
