@@ -3376,7 +3376,7 @@ MonoBehaviour:
   objectToPool: {fileID: 1064074361305596, guid: 748e2c1db1257594bb438fbb7bd185f0,
     type: 3}
   parentObj: {fileID: 1001444501}
-  amountToPool: 20
+  amountToPool: 35
 --- !u!114 &2084161110
 MonoBehaviour:
   m_ObjectHideFlags: 0
