@@ -19,13 +19,14 @@ public class RemoteUserPinController : MonoBehaviour
     private Rect _geoFence;
     private Dictionary<string, Vector2d> _remoteLocations;
     private Dictionary<string, GameObject> _remotePins;
+    private Dictionary<string, DateTime> _lastUpdated;
     private Queue<Tuple<string, Vector2d>> _pinUpdates;
     private List<string> _friendEmails;
     
     private bool _isInitialized;
     private bool _sendLocationEnabled;
 
-    private float _elapsed = 0f;
+    private float _elapsed;
     
     private ILocationProvider _locationProvider;
     private ILocationProvider LocationProvider => _locationProvider ??= LocationProviderFactory.Instance.DefaultLocationProvider;
@@ -34,13 +35,14 @@ public class RemoteUserPinController : MonoBehaviour
     {
         _geoFence = new Rect
         {
-            x = 43.2637823403875f,
+            x = 43.25810845308126f,
             y = -79.92312479137712f,
-            xMax = 43.25810845308126f,
+            xMax = 43.2637823403875f,
             yMax = -79.9161072211226f
         };
         
         _remoteLocations = new Dictionary<string, Vector2d>();
+        _lastUpdated = new Dictionary<string, DateTime>();
         _remotePins = new Dictionary<string, GameObject>();
         _pinUpdates = new Queue<Tuple<string, Vector2d>>();
         _friendEmails = new List<string>();
@@ -71,6 +73,7 @@ public class RemoteUserPinController : MonoBehaviour
         {
             if (_remotePins.TryGetValue(loc.Key, out var pin))
             {
+                Debug.Log(loc.Value);
                 pin.transform.position = map.GeoToWorldPosition(loc.Value);
             }
             else
@@ -82,6 +85,20 @@ public class RemoteUserPinController : MonoBehaviour
                     p.SetActive(true);
                     
                     _remotePins[loc.Key] = p;
+                }
+            }
+        }
+
+        foreach (var email in _lastUpdated.Keys)
+        {
+            if (_remoteLocations.ContainsKey(email) && _remotePins.ContainsKey(email))
+            {
+                var time = _lastUpdated[email];
+                if ((DateTime.Now - time) >= TimeSpan.FromSeconds(60))
+                {
+                    _remoteLocations.Remove(email);
+                    _remotePins[email].SetActive(false);
+                    _remotePins.Remove(email);
                 }
             }
         }
@@ -98,6 +115,7 @@ public class RemoteUserPinController : MonoBehaviour
         if (_friendEmails.Contains(loc.Email))
         {
             _pinUpdates.Enqueue(new Tuple<string, Vector2d>(loc.Email, new Vector2d(loc.Latitude, loc.Longitude)));
+            _lastUpdated[loc.Email] = DateTime.Now;
         }
     }
 
@@ -105,9 +123,9 @@ public class RemoteUserPinController : MonoBehaviour
     {
         if (!_isInitialized || !_sendLocationEnabled) return;
         var location = LocationProvider.CurrentLocation.LatitudeLongitude;
-        //if (!_geoFence.Contains(new Vector2((float)location.x, (float)location.y))) return;
+        if (!_geoFence.Contains(new Vector2((float)location.x, (float)location.y))) return;
         
-        var packet = new RemoteUserLocation { Latitude = location.x, Longitude = location.y, Email = _email };
+        var packet = new RemoteUserLocation { Latitude = (float)location.x, Longitude = (float)location.y, Email = _email };
         await locationService.SendAsync(packet);
     }
 

@@ -4,16 +4,16 @@
 public class RemoteUserLocation
 {
     private string email = "";
-    private double lat;
-    private double lng;
+    private float lat;
+    private float lng;
 
-    public double Latitude
+    public float Latitude
     {
         get => lat;
         set => lat = value;
     }
 
-    public double Longitude
+    public float Longitude
     {
         get => lng;
         set => lng = value;
