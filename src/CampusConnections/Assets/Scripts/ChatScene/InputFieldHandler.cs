@@ -25,7 +25,7 @@ public class InputFieldHandler : MonoBehaviour
         _input = GetComponent<TMP_InputField>();
         _input.onEndEdit.AddListener(OnEndEditListener);
 
-        _username = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName;
+        _username = AuthConnector.Instance.CurrentUser.DisplayName;
     }
 
     private void Update()

@@ -13,6 +13,8 @@ namespace Auth
 
         public FirebaseUser CurrentUser { get; private set; }
 
+        public PermissonLevel Perms { get; set; }
+
         /// <summary>
         /// Unity function that is called when application is started.
         /// Forces this to act as a static class with Instance.

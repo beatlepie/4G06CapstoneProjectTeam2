@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class LectureCarousel : MonoBehaviour
 {
-    public DatabaseReference databaseReference;
     [SerializeField] private LectureCarouselView _carouselView;
     public List<Lecture> allLectures;
     [SerializeField] private string _RoomNumUpperRange;
@@ -20,7 +19,6 @@ public class LectureCarousel : MonoBehaviour
 
     private void Setup()
     {
-        databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         allLectures = new List<Lecture>();
         StartCoroutine(GetLectures()); 
     }
@@ -32,7 +30,7 @@ public class LectureCarousel : MonoBehaviour
 
     IEnumerator GetLectures()
     {                
-        var lectureData = databaseReference.Child("lectures/").GetValueAsync();
+        var lectureData = DatabaseConnector.Instance.Root.Child("lectures/").GetValueAsync();
         yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
         if(lectureData != null)
         {

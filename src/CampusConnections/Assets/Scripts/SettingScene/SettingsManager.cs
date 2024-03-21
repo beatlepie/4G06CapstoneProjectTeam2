@@ -496,7 +496,7 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
-            notificationText.text = "Email verification will be sent on login!";
+            notificationText.text = "Email verification failed! Try again later.";
         }
     }
 
