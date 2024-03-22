@@ -41,7 +41,7 @@ public class EventDetailViewManager : MonoBehaviour
 
     void Awake()
     {
-        if(DatabaseConnector.Instance.Perms != PermissonLevel.Admin)
+        if(AuthConnector.Instance.Perms != PermissonLevel.Admin)
         {
             DeleteIcon.SetActive(false);
             EditIcon.SetActive(false);

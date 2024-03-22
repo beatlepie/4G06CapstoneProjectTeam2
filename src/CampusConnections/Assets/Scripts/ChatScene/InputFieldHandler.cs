@@ -1,6 +1,6 @@
-using Firebase.Auth;
 using TMPro;
 using UnityEngine;
+using Auth;
 
 public class InputFieldHandler : MonoBehaviour
 {

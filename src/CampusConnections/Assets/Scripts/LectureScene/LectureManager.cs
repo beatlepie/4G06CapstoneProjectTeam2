@@ -7,6 +7,7 @@ using Firebase.Database;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using Auth;
 
 public class LectureManager : MonoBehaviour
 {
@@ -49,7 +50,7 @@ public class LectureManager : MonoBehaviour
         entryTemplate = entryContainer.Find("lectureEntryTemplate");
         entryTemplate.gameObject.SetActive(false);
         BookmarkButton.SetActive(false);
-        if(DatabaseConnector.Instance.Perms != PermissonLevel.Admin)
+        if(AuthConnector.Instance.Perms != PermissonLevel.Admin)
         {
             NewLectureIcon.SetActive(false);
             BookmarkButton.SetActive(true);

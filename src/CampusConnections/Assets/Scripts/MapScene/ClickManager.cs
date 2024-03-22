@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Auth;
 using Database;
 using Mapbox.Unity.Location;
 using Mapbox.Unity.Map;
@@ -35,7 +34,7 @@ public class ClickManager : MonoBehaviour
             _locationProvider = LocationProviderFactory.Instance.DefaultLocationProvider as AbstractLocationProvider;
         }
         //Check user permissions
-        if(DatabaseConnector.Instance.Perms == PermissonLevel.Guest)
+        if(AuthConnector.Instance.Perms == PermissonLevel.Guest)
         {
             ARCameraButton.SetActive(false);
             LectureButton.SetActive(false);

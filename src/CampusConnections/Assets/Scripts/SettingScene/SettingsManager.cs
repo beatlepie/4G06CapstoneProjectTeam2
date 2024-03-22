@@ -136,7 +136,7 @@ public class SettingsManager : MonoBehaviour
     private void favorites()
     {
         //NO lectures are visible for guest accounts
-        if (DatabaseConnector.Instance.Perms != PermissonLevel.Guest)
+        if (AuthConnector.Instance.Perms != PermissonLevel.Guest)
         {
             StartCoroutine(getPinnedLectures((List<string> data) =>
             {
@@ -226,7 +226,7 @@ public class SettingsManager : MonoBehaviour
                 var e1 = dbRoot.Child("events/public").Child(x.Key.ToString()).GetValueAsync();
                 var e2 = dbRoot.Child("events/private").Child(x.Key.ToString()).GetValueAsync();
                 // If the user is a guest, then DO NOT query the private events!
-                if (DatabaseConnector.Instance.Perms == PermissonLevel.Guest)
+                if (AuthConnector.Instance.Perms == PermissonLevel.Guest)
                 {
                     e2 = null;
                 }

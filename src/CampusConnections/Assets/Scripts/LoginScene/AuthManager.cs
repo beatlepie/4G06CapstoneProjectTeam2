@@ -99,7 +99,7 @@ public class AuthManager : MonoBehaviour
             User = LoginTask.Result.User;
             var getPerms = DatabaseConnector.Instance.Root.Child("users/" + Utilities.removeDot(User.Email) + "/perms").GetValueAsync();
             yield return new WaitUntil(predicate: () => getPerms.IsCompleted);
-            DatabaseConnector.Instance.Perms = (PermissonLevel) int.Parse(getPerms.Result.Value.ToString());
+            AuthConnector.Instance.Perms = (PermissonLevel) int.Parse(getPerms.Result.Value.ToString());
 
             Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
             notificationText.text = "";

@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Linq;
+using Auth;
 using Database;
 
 public class EventManager : MonoBehaviour
@@ -54,7 +54,7 @@ public class EventManager : MonoBehaviour
         entryTemplate.gameObject.SetActive(false);
         BookmarkButton.SetActive(false);
         // If they are not admin, do not show edit button!
-        if (DatabaseConnector.Instance.Perms != PermissonLevel.Admin)
+        if (AuthConnector.Instance.Perms != PermissonLevel.Admin)
         {
             EditButton.gameObject.SetActive(false);
             BookmarkButton.SetActive(true);
@@ -97,7 +97,7 @@ public class EventManager : MonoBehaviour
                 eventList.Add(Utilities.FormalizeDBEventData(e));    
             }
         }
-        if(DatabaseConnector.Instance.Perms != PermissonLevel.Guest)
+        if(AuthConnector.Instance.Perms != PermissonLevel.Guest)
         {
             var privateEventData = DatabaseConnector.Instance.Root.Child("events/private").OrderByKey().StartAt("-").GetValueAsync();
             yield return new WaitUntil(predicate: () => privateEventData.IsCompleted);

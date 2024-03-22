@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Firebase.Database;
 using UnityEngine;
+using Database;
 
 public class LectureCarousel : MonoBehaviour
 {

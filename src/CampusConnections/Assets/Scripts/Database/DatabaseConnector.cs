@@ -12,10 +12,6 @@ namespace Database
 
         public DatabaseReference Root { get; private set; }
 
-        public FirebaseUser CurrentUser { get; private set; }
-
-        public PermissonLevel Perms { get; set; }
-
         private void Awake()
         {
             if (Instance != null && Instance != this)
