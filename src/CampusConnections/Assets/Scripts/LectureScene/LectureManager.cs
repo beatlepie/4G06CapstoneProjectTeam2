@@ -20,11 +20,9 @@ public class LectureManager : MonoBehaviour
     private Transform tabeltitleTemplate;
     private Transform entryContainer;
     private Transform entryTemplate;
-    private List<Lecture> lectureList;
-    private List<Lecture> filteredList;
+    private Pagination<Lecture> lectures;
     private List<Transform> lectureEntryTransformList;
     public TMP_Text pgNum;
-    public int maxPages;
     public const int PAGECOUNT = 10;
     public GameObject BookmarkButton;
 
@@ -48,6 +46,7 @@ public class LectureManager : MonoBehaviour
         entryContainer = transform.Find("lectureEntryContainer");
         tabeltitleTemplate = entryContainer.Find("TableTitle");
         entryTemplate = entryContainer.Find("lectureEntryTemplate");
+        lectureEntryTransformList = new List<Transform>();
         entryTemplate.gameObject.SetActive(false);
         BookmarkButton.SetActive(false);
         if(AuthConnector.Instance.Perms != PermissonLevel.Admin)
@@ -63,17 +62,6 @@ public class LectureManager : MonoBehaviour
         }
     }
 
-    private void UpdateMaxPage()
-    {
-        if(filteredList.Count == 0)
-        {
-            maxPages = 1;
-        }
-        else
-        {
-            maxPages = filteredList.Count % PAGECOUNT == 0 ? filteredList.Count / PAGECOUNT : (int)(filteredList.Count / PAGECOUNT) + 1;
-        }
-    }
     public void GetLectureData()
     {
         StartCoroutine(GetLectures());
@@ -81,10 +69,12 @@ public class LectureManager : MonoBehaviour
 
     IEnumerator GetLectures()
     {
+        //from merge conflict!
         lectureEntryTransformList = new List<Transform>();
         lectureList = new List<Lecture>();
         var lecInfo = new List<string>();
         var lectureData = DatabaseConnector.Instance.Root.Child("lectures").OrderByKey().StartAt("-").GetValueAsync();
+
         yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
         if (lectureData != null)
         {
@@ -94,31 +84,7 @@ public class LectureManager : MonoBehaviour
                 lectureList.Add(Utilities.FormalizeDBLectureData(x));
             }
         }
-        if (defaultSearchOption != null & defaultSearchString != null)
-        {
-            filteredList = new List<Lecture>();
-            if (defaultSearchOption == "location")
-            {
-                foreach (Lecture l in lectureList) {
-                    if (l.location.Contains(defaultSearchString)) {
-                        filteredList.Add(l);
-                    }
-                }
-            }
-            else
-            {
-                foreach (Lecture l in lectureList) {
-                    if (l.code.Contains(defaultSearchString)) {
-                        filteredList.Add(l);
-                    }
-                }  
-            }
-        }
-        else
-        {
-            filteredList = new List<Lecture>(lectureList);
-        }
-        UpdateMaxPage();
+        lectures = new Pagination<Lecture>(lectureList, defaultSearchOption, defaultSearchString, PAGECOUNT);
         DisplayLectureList();
     }
 
@@ -126,11 +92,11 @@ public class LectureManager : MonoBehaviour
     {
         RectTransform titleRectTransform = tabeltitleTemplate.GetComponent<RectTransform>();
         titleRectTransform.sizeDelta = new Vector2((float)(Screen.width/1.2), titleRectTransform.sizeDelta.y);
-        for (int i = ((Int32.Parse(pgNum.text) - 1) * PAGECOUNT); i < Math.Min((Int32.Parse(pgNum.text)) * PAGECOUNT, filteredList.Count); i++)
+        for (int i = ((lectures.currentPage - 1) * PAGECOUNT); i < Math.Min((lectures.currentPage) * PAGECOUNT, lectures.filteredList.Count); i++)
         {
-            if (filteredList[i] != null)
+            if (lectures.filteredList[i] != null)
             {
-                Lecture lectureEntry = filteredList[i];
+                Lecture lectureEntry = lectures.filteredList[i];
                 CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
             }
         }
@@ -170,73 +136,56 @@ public class LectureManager : MonoBehaviour
 
     public void nextPage()
     {
-        if (Int32.Parse(pgNum.text) == maxPages)
-        {
-            return;
-        }
-        pgNum.text = (Int32.Parse(pgNum.text) + 1).ToString();
+        lectures.nextPage();
+        pgNum.text = lectures.currentPage.ToString();
     }
 
     public void prevPage()
     {
-        if (Int32.Parse(pgNum.text) <= 1)
-        {
-            return;
-        }
-        pgNum.text = (Int32.Parse(pgNum.text) - 1).ToString();
+        lectures.prevPage();
+        pgNum.text = lectures.currentPage.ToString();
     }
 
     public void lastPage()
     {
-        pgNum.text = (maxPages).ToString();
+        lectures.lastPage();
+        pgNum.text = lectures.currentPage.ToString();
     }
 
     public void firstPage()
     {
-        pgNum.text = "1";
+        lectures.firstPage();
+        pgNum.text = lectures.currentPage.ToString();
     }
 
     public void onFilter()
     {
-        filteredList.Clear();
         switch (FilterDropdown.value)
         {
             case(0):
             // Code
-                foreach (Lecture l in lectureList)
-                {
-                    if(l.code.Contains(SearchString.text))
-                    {
-                        filteredList.Add(l);
-                    }
-                }
+                lectures.filterBy = "code";
+                lectures.filterString = SearchString.text;
+                var filteredLec = lectures.filterEntries();
                 break;
             case(1):
             // Instructor
-                foreach (Lecture l in lectureList)
-                {
-                    if(l.instructor.Contains(SearchString.text))
-                    {
-                        filteredList.Add(l);
-                    }
-                }
+                lectures.filterBy = "instructor";
+                lectures.filterString = SearchString.text;
+                lectures.filterEntries();
                 break;
             case(2):
             // Location
-                foreach (Lecture l in lectureList)
-                {
-                    if(l.location.Contains(SearchString.text))
-                    {
-                        filteredList.Add(l);
-                    }
-                }
+                lectures.filterBy = "location";
+                lectures.filterString = SearchString.text;
+                lectures.filterEntries();
                 break;
             default:
-                filteredList = lectureList;
+                lectures.filterBy = null;
+                lectures.filterString = null;
+                lectures.filterEntries();
                 break;
         }
-        firstPage();
-        UpdateMaxPage();
         DisplayLectureList();
     }
 
@@ -244,7 +193,7 @@ public class LectureManager : MonoBehaviour
     {
         GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         string code = template.transform.Find("codeText").GetComponent<TMP_Text>().text;
-        Lecture target = lectureList.Find(lecture => lecture.code == code);
+        Lecture target = lectures.entryList.Find(lecture => lecture.code == code);
         currentLecture = target;
     }
 
@@ -259,25 +208,19 @@ public class LectureManager : MonoBehaviour
         string lecJson = JsonUtility.ToJson(lec);
         DatabaseConnector.Instance.Root.Child("lectures/" + lecCodeEdit.text).SetRawJsonValueAsync(lecJson);
         // Add new lecture to the rendered list, clear the filter and render the first page
-        lectureList.Add(lec);
-        filteredList = new List<Lecture>(lectureList);
+        lectures.addNewEntry(lec);
         clearing();
         DisplayLectureList();
-        UpdateMaxPage();
-        firstPage();
     }
 
     public void DeleteLec()
     {
         DatabaseConnector.Instance.Root.Child("lectures/" + lecCodeView.text).SetValueAsync(null);
         // Delete this lecture from the rendered list, clear the filter and render the first page
-        var target = lectureList.Find(lec => lec.code == lecCodeView.text);
-        lectureList.Remove(target);
-        filteredList = new List<Lecture>(lectureList);
+        var target = lectures.entryList.Find(lec => lec.code == lecCodeView.text);
+        lectures.removeEntry(target);
         clearing();
         DisplayLectureList();
-        UpdateMaxPage();
-        firstPage();
     }
 
     /// <summary>

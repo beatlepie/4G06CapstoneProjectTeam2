@@ -15,16 +15,16 @@ namespace RTCServer.Hubs
     public class Location
     {
         private String email = "";
-        private double lat = 0;
-        private double lng = 0;
+        private float lat = 0;
+        private float lng = 0;
 
-        public double Latitude
+        public float Latitude
         {
             get => lat;
             set => lat = value;
         }
 
-        public double Longitude
+        public float Longitude
         {
             get => lng;
             set => lng = value;

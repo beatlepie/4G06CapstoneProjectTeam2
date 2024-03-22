@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Firebase.Database;
 
 public class Utilities
@@ -137,5 +139,38 @@ public class Utilities
             }
         }
         return result;
+    }
+
+    public static List<string> GetActivityPattern(string message)
+    {
+        // Return two strings: first one is the type, second one is the ID (lecture's code, event's name)
+        // Example: [event, EXPO]
+        string pattern = @"\[([a-zA-Z]+)\]\(([a-zA-Z0-9 ']+)\)";
+        Match match = Regex.Match(message, pattern);
+        if (match.Success)
+        {
+            string type = match.Groups[1].Value;
+            string id = match.Groups[2].Value;
+            if (type == "event" | type == "lecture")
+            {
+                return new List<string> {type, id};
+            } 
+        }
+        return new List<string> {"null", ""};
+    }
+
+    public static string PolishChatMessage(string message, string hex)
+    {
+        List<string> pattern = GetActivityPattern(message);
+        if (pattern[0] == "null" & pattern[1] == "")
+        {
+            return message;
+        }
+        else
+        {
+            string originalString = "[" + pattern[0] + "](" + pattern[1] + ")";
+            string activityInfo = "<color=" + hex + ">" + pattern[1] + "</color>";
+            return message.Replace(originalString, activityInfo);
+        }
     }
 }
