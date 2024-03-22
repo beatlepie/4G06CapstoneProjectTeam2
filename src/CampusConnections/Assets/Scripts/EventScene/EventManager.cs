@@ -7,7 +7,8 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Linq;
+using Auth;
+using Database;
 
 public class EventManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class EventManager : MonoBehaviour
     public TMP_Text pgNum;
     public const int PAGECOUNT = 10;
     [SerializeField] Image EditButton;
+    public GameObject BookmarkButton;
 
     [Header("Detail View")]
     public static Event currentEvent; //The one we want to see details
@@ -39,25 +41,25 @@ public class EventManager : MonoBehaviour
     [SerializeField] TMP_InputField eventTimeEdit;
     [SerializeField] TMP_InputField eventDurationEdit;
     [SerializeField] Toggle eventIsPublicEdit;
-
-    [Header("Database")]
-    public DatabaseReference databaseReference;
     private void Awake()
     {
         UnityEngine.Debug.Log("lecture manager script running");
-        //db setup
-        databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         //after db stuff
         pgNum.text = "1";
         entryContainer = transform.Find("eventEntryContainer");
         tabeltitleTemplate = entryContainer.Find("TableTitle");
         entryTemplate = entryContainer.Find("eventEntryTemplate");
-        eventEntryTransformList = new List<Transform>();
+
         entryTemplate.gameObject.SetActive(false);
+        BookmarkButton.SetActive(false);
+        //This may cause issues! leaving this from merge conflict!
+        eventEntryTransformList = new List<Transform>();
+
         // If they are not admin, do not show edit button!
-        if(AuthManager.perms != 2)
+        if (AuthConnector.Instance.Perms != PermissonLevel.Admin)
         {
             EditButton.gameObject.SetActive(false);
+            BookmarkButton.SetActive(true);
         }        
         GetEventData();
         if (defaultSearchOption != null & defaultSearchString != null)
@@ -74,6 +76,9 @@ public class EventManager : MonoBehaviour
 
     IEnumerator GetEvents()
     {
+        eventEntryTransformList = new List<Transform>();
+        eventList = new List<Event>();
+        var publicEventData = DatabaseConnector.Instance.Root.Child("events/public").OrderByKey().StartAt("-").GetValueAsync();
         List<Event> eventList = new List<Event>();
         var publicEventData = databaseReference.Child("events/public").OrderByKey().StartAt("-").GetValueAsync();
         yield return new WaitUntil(predicate: () => publicEventData.IsCompleted);
@@ -85,9 +90,9 @@ public class EventManager : MonoBehaviour
                 eventList.Add(Utilities.FormalizeDBEventData(e));    
             }
         }
-        if(AuthManager.perms != 0)
+        if(AuthConnector.Instance.Perms != PermissonLevel.Guest)
         {
-            var privateEventData = databaseReference.Child("events/private").OrderByKey().StartAt("-").GetValueAsync();
+            var privateEventData = DatabaseConnector.Instance.Root.Child("events/private").OrderByKey().StartAt("-").GetValueAsync();
             yield return new WaitUntil(predicate: () => privateEventData.IsCompleted);
             if (privateEventData != null)
             {
@@ -218,7 +223,7 @@ public class EventManager : MonoBehaviour
         Event e = new Event(eventNameEdit.text, dto.ToUnixTimeSeconds(), int.Parse(eventDurationEdit.text), eventOrganizerEdit.text, eventDescriptionEdit.text, eventLocationEdit.text, eventIsPublicEdit.isOn);
         string eventJson = JsonUtility.ToJson(e);
         string prefix = eventIsPublicEdit.isOn ? "events/public/" : "events/private/";
-        databaseReference.Child(prefix + eventNameEdit.text).SetRawJsonValueAsync(eventJson);
+        DatabaseConnector.Instance.Root.Child(prefix + eventNameEdit.text).SetRawJsonValueAsync(eventJson);
         // Add new event to the rendered list, clear the filter and render the first page
         events.addNewEntry(e);
         clearing();
@@ -228,11 +233,21 @@ public class EventManager : MonoBehaviour
     public void DeleteEvent()
     {
         string prefix = eventIsPublicView.isOn ? "events/public/" : "events/private/";
-        databaseReference.Child(prefix + eventNameView.text).SetValueAsync(null);
+        DatabaseConnector.Instance.Root.Child(prefix + eventNameView.text).SetValueAsync(null);
         // Delete this lecture from the rendered list, clear the filter and render the first page
         var target = events.entryList.Find(e => e.name == eventNameView.text);
         events.removeEntry(target);
         clearing();
         DisplayEventList();
+    }
+
+    /// <summary>
+    /// When the bookmark is clicked, it should redirect to bookmarkedEvents page
+    /// </summary>
+    public void GoToBookmark()
+    {
+        SettingsManager.currentUser = true;
+        SettingsManager.state = 2;
+        SceneManager.LoadScene("SettingsScene");
     }
 }

@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Firebase.Auth;
+using Database;
+using Auth;
 using Firebase.Database;
 using TMPro;
 using UnityEngine;
@@ -9,11 +10,6 @@ using UnityEngine.UI;
 
 public class EventDetailViewManager : MonoBehaviour
 {
-    [Header("Firebase")]
-    public FirebaseAuth auth;
-    public FirebaseUser currentUser;
-    public DatabaseReference databaseReference;
-
     [Header("DetailView")]
     [SerializeField] GameObject ViewPanel;
     [SerializeField] GameObject EditPanel;
@@ -45,10 +41,7 @@ public class EventDetailViewManager : MonoBehaviour
 
     void Awake()
     {
-        auth = FirebaseAuth.DefaultInstance;
-        databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-        currentUser = auth.CurrentUser;
-        if(AuthManager.perms != 2)
+        if(AuthConnector.Instance.Perms != PermissonLevel.Admin)
         {
             DeleteIcon.SetActive(false);
             EditIcon.SetActive(false);
@@ -60,8 +53,8 @@ public class EventDetailViewManager : MonoBehaviour
     }
     IEnumerator GetPinnedLectures(Action<List<string>> onCallBack)
     {
-        string emailWithoutDot = Utilities.removeDot(currentUser.Email);                
-        var userData = databaseReference.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);                
+        var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if(userData != null)
         {
@@ -114,7 +107,7 @@ public class EventDetailViewManager : MonoBehaviour
         UpdateView();
         string targetJson = JsonUtility.ToJson(target);
         string prefix = target.isPublic ? "events/public/" : "events/private/";
-        databaseReference.Child(prefix + target.name).SetRawJsonValueAsync(targetJson);
+        DatabaseConnector.Instance.Root.Child(prefix + target.name).SetRawJsonValueAsync(targetJson);
     }
 
     public void Pin()
@@ -122,8 +115,8 @@ public class EventDetailViewManager : MonoBehaviour
         myEventNames.Add(target.name);
         PinIcon.SetActive(false);
         UnpinIcon.SetActive(true);
-        string emailWithoutDot = Utilities.removeDot(currentUser.Email);
-        databaseReference.Child("users/" + emailWithoutDot + "/events/" + target.name).SetValueAsync("True");
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + target.name).SetValueAsync("True");
     }
 
     public void Unpin()
@@ -131,8 +124,8 @@ public class EventDetailViewManager : MonoBehaviour
         myEventNames.Remove(target.name);
         PinIcon.SetActive(true);
         UnpinIcon.SetActive(false);
-        string emailWithoutDot = Utilities.removeDot(currentUser.Email);
-        databaseReference.Child("users/" + emailWithoutDot + "/events/" + target.name).SetValueAsync(null);
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + target.name).SetValueAsync(null);
     }
 
     public void DetailViewClose()

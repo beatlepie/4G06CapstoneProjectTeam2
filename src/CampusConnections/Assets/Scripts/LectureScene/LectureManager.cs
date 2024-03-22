@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Database;
 using UnityEngine;
-using Firebase;
 using Firebase.Database;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using Auth;
 
 public class LectureManager : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class LectureManager : MonoBehaviour
     private List<Transform> lectureEntryTransformList;
     public TMP_Text pgNum;
     public const int PAGECOUNT = 10;
+    public GameObject BookmarkButton;
 
     [Header("Detail View")]
     public static Lecture currentLecture; //The one we want to see details
@@ -35,14 +37,10 @@ public class LectureManager : MonoBehaviour
     [SerializeField] TMP_InputField lecInstructorEdit;
     [SerializeField] TMP_InputField lecLocationEdit;
     [SerializeField] TMP_InputField lecTimesEdit;
-
-    [Header("Database")]
-    public DatabaseReference databaseReference;
+    
     private void Awake()
     {
         UnityEngine.Debug.Log("lecture manager script running");
-        //db setup
-        databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         //after db stuff
         pgNum.text = "1";
         entryContainer = transform.Find("lectureEntryContainer");
@@ -50,9 +48,11 @@ public class LectureManager : MonoBehaviour
         entryTemplate = entryContainer.Find("lectureEntryTemplate");
         lectureEntryTransformList = new List<Transform>();
         entryTemplate.gameObject.SetActive(false);
-        if(AuthManager.perms != 2)
+        BookmarkButton.SetActive(false);
+        if(AuthConnector.Instance.Perms != PermissonLevel.Admin)
         {
             NewLectureIcon.SetActive(false);
+            BookmarkButton.SetActive(true);
         }
         GetLectureData();
         if (defaultSearchOption != null & defaultSearchString != null)
@@ -69,8 +69,12 @@ public class LectureManager : MonoBehaviour
 
     IEnumerator GetLectures()
     {
-        List<Lecture> lectureList = new List<Lecture>();
-        var lectureData = databaseReference.Child("lectures").OrderByKey().StartAt("-").GetValueAsync();
+        //from merge conflict!
+        lectureEntryTransformList = new List<Transform>();
+        lectureList = new List<Lecture>();
+        var lecInfo = new List<string>();
+        var lectureData = DatabaseConnector.Instance.Root.Child("lectures").OrderByKey().StartAt("-").GetValueAsync();
+
         yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
         if (lectureData != null)
         {
@@ -202,7 +206,7 @@ public class LectureManager : MonoBehaviour
     {
         Lecture lec = new Lecture(lecCodeEdit.text, lecInstructorEdit.text, lecLocationEdit.text, lecNameEdit.text, lecTimesEdit.text);
         string lecJson = JsonUtility.ToJson(lec);
-        databaseReference.Child("lectures/" + lecCodeEdit.text).SetRawJsonValueAsync(lecJson);
+        DatabaseConnector.Instance.Root.Child("lectures/" + lecCodeEdit.text).SetRawJsonValueAsync(lecJson);
         // Add new lecture to the rendered list, clear the filter and render the first page
         lectures.addNewEntry(lec);
         clearing();
@@ -211,11 +215,21 @@ public class LectureManager : MonoBehaviour
 
     public void DeleteLec()
     {
-        databaseReference.Child("lectures/" + lecCodeView.text).SetValueAsync(null);
+        DatabaseConnector.Instance.Root.Child("lectures/" + lecCodeView.text).SetValueAsync(null);
         // Delete this lecture from the rendered list, clear the filter and render the first page
         var target = lectures.entryList.Find(lec => lec.code == lecCodeView.text);
         lectures.removeEntry(target);
         clearing();
         DisplayLectureList();
+    }
+
+    /// <summary>
+    /// Function handling button press of bookmark button
+    /// </summary>
+    public void GoToBookmark()
+    {
+        SettingsManager.currentUser = true;
+        SettingsManager.state = 1;
+        SceneManager.LoadScene("SettingsScene");
     }
 }

@@ -1,18 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Firebase.Auth;
+using Database;
+using Auth;
 using Firebase.Database;
 using TMPro;
 using UnityEngine;
 
 public class LectureDetailViewManager : MonoBehaviour
 {
-    [Header("Firebase")]
-    public FirebaseAuth auth;
-    public FirebaseUser currentUser;
-    public DatabaseReference databaseReference;
-
     [Header("DetailView")]
     [SerializeField] GameObject ViewPanel;
     [SerializeField] GameObject EditPanel;
@@ -36,10 +32,7 @@ public class LectureDetailViewManager : MonoBehaviour
 
     void Awake()
     {
-        auth = FirebaseAuth.DefaultInstance;
-        databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
-        currentUser = auth.CurrentUser;
-        if(AuthManager.perms != 2)
+        if(AuthConnector.Instance.Perms != PermissonLevel.Admin)
         {
             DeleteIcon.SetActive(false);
             EditIcon.SetActive(false);
@@ -51,8 +44,8 @@ public class LectureDetailViewManager : MonoBehaviour
     }
     IEnumerator GetPinnedLectures(Action<List<string>> onCallBack)
     {
-        string emailWithoutDot = Utilities.removeDot(currentUser.Email);                
-        var userData = databaseReference.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);                
+        var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
         yield return new WaitUntil(predicate: () => userData.IsCompleted);
         if(userData != null)
         {
@@ -97,7 +90,7 @@ public class LectureDetailViewManager : MonoBehaviour
         target.time = editTimes.text;
         UpdateView();
         string targetJson = JsonUtility.ToJson(target);
-        databaseReference.Child("lectures/" + target.code).SetRawJsonValueAsync(targetJson);
+        DatabaseConnector.Instance.Root.Child("lectures/" + target.code).SetRawJsonValueAsync(targetJson);
     }
 
     public void Pin()
@@ -105,8 +98,8 @@ public class LectureDetailViewManager : MonoBehaviour
         myLectureCodes.Add(target.code);
         PinIcon.SetActive(false);
         UnpinIcon.SetActive(true);
-        string emailWithoutDot = Utilities.removeDot(currentUser.Email);
-        databaseReference.Child("users/" + emailWithoutDot + "/lectures/" + target.code).SetValueAsync("True");
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + target.code).SetValueAsync("True");
     }
 
     public void Unpin()
@@ -114,8 +107,8 @@ public class LectureDetailViewManager : MonoBehaviour
         myLectureCodes.Remove(target.code);
         PinIcon.SetActive(true);
         UnpinIcon.SetActive(false);
-        string emailWithoutDot = Utilities.removeDot(currentUser.Email);
-        databaseReference.Child("users/" + emailWithoutDot + "/lectures/" + target.code).SetValueAsync(null);
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + target.code).SetValueAsync(null);
     }
 
     public void DetailViewClose()

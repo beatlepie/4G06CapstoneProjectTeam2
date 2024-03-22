@@ -1,5 +1,7 @@
+using Database;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Auth;
 
 public class MenuManager : MonoBehaviour
 {
@@ -8,7 +10,7 @@ public class MenuManager : MonoBehaviour
 
     private void Awake()
     {
-        if(AuthManager.perms == 0)
+        if(AuthConnector.Instance.Perms == PermissonLevel.Guest)
         {
             LecturesButton.SetActive(false);
             ARButton.SetActive(false);
@@ -47,6 +49,7 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("SettingsScene");
         SettingsManager.currentUser = true;
+        SettingsManager.state = 0;
     }
 
     public void Quit()

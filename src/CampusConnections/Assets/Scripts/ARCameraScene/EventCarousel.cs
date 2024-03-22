@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Firebase.Database;
 using UnityEngine;
+using Database;
 
 public class EventCarousel : MonoBehaviour
 {
-    public DatabaseReference databaseReference;
     [SerializeField] private EventCarouselView _carouselView;
     public List<Event> allEvents;
     [SerializeField] private string _RoomNumUpperRange;
@@ -20,7 +20,6 @@ public class EventCarousel : MonoBehaviour
 
     private void Setup()
     {
-        databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         allEvents = new List<Event>();
         StartCoroutine(GetLectures()); 
     }
@@ -32,7 +31,7 @@ public class EventCarousel : MonoBehaviour
 
     IEnumerator GetLectures()
     {                
-        var publicEventData = databaseReference.Child("events/public").GetValueAsync();
+        var publicEventData = DatabaseConnector.Instance.Root.Child("events/public").GetValueAsync();
         yield return new WaitUntil(predicate: () => publicEventData.IsCompleted);
         if(publicEventData != null)
         {
@@ -42,7 +41,7 @@ public class EventCarousel : MonoBehaviour
                allEvents.Add(Utilities.FormalizeDBEventData(e));
             }
         }
-        var privateEventData = databaseReference.Child("events/private").GetValueAsync();
+        var privateEventData = DatabaseConnector.Instance.Root.Child("events/private").GetValueAsync();
         yield return new WaitUntil(predicate: () => privateEventData.IsCompleted);
         if(privateEventData != null)
         {
