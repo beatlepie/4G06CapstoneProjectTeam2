@@ -28,6 +28,7 @@ public class EventManager : MonoBehaviour
     public GameObject BookmarkButton;
 
     [Header("Detail View")]
+    public static List<string> myEvents;
     public static Event currentEvent; //The one we want to see details
     [Header("Detail View View")]
     [SerializeField] TMP_Text eventNameView;
@@ -62,6 +63,7 @@ public class EventManager : MonoBehaviour
             BookmarkButton.SetActive(true);
         }        
         GetEventData();
+        GetPinnedData();
         if (defaultSearchOption != null & defaultSearchString != null)
         {
             SearchString.text = defaultSearchString;
@@ -77,10 +79,8 @@ public class EventManager : MonoBehaviour
     IEnumerator GetEvents()
     {
         eventEntryTransformList = new List<Transform>();
-        eventList = new List<Event>();
         var publicEventData = DatabaseConnector.Instance.Root.Child("events/public").OrderByKey().StartAt("-").GetValueAsync();
         List<Event> eventList = new List<Event>();
-        var publicEventData = databaseReference.Child("events/public").OrderByKey().StartAt("-").GetValueAsync();
         yield return new WaitUntil(predicate: () => publicEventData.IsCompleted);
         if (publicEventData != null)
         {
@@ -105,6 +105,28 @@ public class EventManager : MonoBehaviour
         }
         events = new Pagination<Event>(eventList, defaultSearchOption, defaultSearchString, PAGECOUNT);
         DisplayEventList();
+    }
+
+    public void GetPinnedData()
+    {
+        StartCoroutine(GetPinnedEvents((data) => myEvents = data));
+    }
+
+    IEnumerator GetPinnedEvents(Action<List<string>> onCallBack)
+    {
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);                
+        var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
+        yield return new WaitUntil(predicate: () => userData.IsCompleted);
+        if(userData != null)
+        {
+            List<string> pinnedLectures = new List<string>();
+            DataSnapshot snapshot = userData.Result;
+            foreach (var x in snapshot.Children)
+            {
+                pinnedLectures.Add(x.Key.ToString());
+            }
+            onCallBack.Invoke(pinnedLectures);
+        }
     }
 
     public void DisplayEventList()

@@ -27,6 +27,7 @@ public class LectureManager : MonoBehaviour
     public GameObject BookmarkButton;
 
     [Header("Detail View")]
+    public static List<string> myLectures;
     public static Lecture currentLecture; //The one we want to see details
     [Header("Detail View View")]
     [SerializeField] TMP_Text lecCodeView;
@@ -55,6 +56,7 @@ public class LectureManager : MonoBehaviour
             BookmarkButton.SetActive(true);
         }
         GetLectureData();
+        GetPinnedData();
         if (defaultSearchOption != null & defaultSearchString != null)
         {
             SearchString.text = defaultSearchString;
@@ -71,8 +73,7 @@ public class LectureManager : MonoBehaviour
     {
         //from merge conflict!
         lectureEntryTransformList = new List<Transform>();
-        lectureList = new List<Lecture>();
-        var lecInfo = new List<string>();
+        List<Lecture> lectureList = new List<Lecture>();
         var lectureData = DatabaseConnector.Instance.Root.Child("lectures").OrderByKey().StartAt("-").GetValueAsync();
 
         yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
@@ -86,6 +87,28 @@ public class LectureManager : MonoBehaviour
         }
         lectures = new Pagination<Lecture>(lectureList, defaultSearchOption, defaultSearchString, PAGECOUNT);
         DisplayLectureList();
+    }
+
+    public void GetPinnedData()
+    {
+        StartCoroutine(GetPinnedLectures((data) => myLectures = data));
+    }
+
+    IEnumerator GetPinnedLectures(Action<List<string>> onCallBack)
+    {
+        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);                
+        var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
+        yield return new WaitUntil(predicate: () => userData.IsCompleted);
+        if(userData != null)
+        {
+            List<string> pinnedLectures = new List<string>();
+            DataSnapshot snapshot = userData.Result;
+            foreach (var x in snapshot.Children)
+            {
+                pinnedLectures.Add(x.Key.ToString());
+            }
+            onCallBack.Invoke(pinnedLectures);
+        }
     }
 
     public void DisplayLectureList()

@@ -15,8 +15,8 @@ public class LectureDetailViewManager : MonoBehaviour
     [SerializeField] GameObject DeleteIcon;
     [SerializeField] GameObject EditIcon;
     private Lecture target;
-    private Boolean pinned;
-    private List<string> myLectureCodes = new List<string>();
+    private bool pinned;
+    private List<string> myLectureCodes;
     [SerializeField] GameObject PinIcon;
     [SerializeField] GameObject UnpinIcon;
     [SerializeField] TMP_Text viewCode;
@@ -37,26 +37,7 @@ public class LectureDetailViewManager : MonoBehaviour
             DeleteIcon.SetActive(false);
             EditIcon.SetActive(false);
         }
-        StartCoroutine(GetPinnedLectures((List<string> data) =>
-        {
-            myLectureCodes = data;
-        }));
-    }
-    IEnumerator GetPinnedLectures(Action<List<string>> onCallBack)
-    {
-        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);                
-        var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
-        yield return new WaitUntil(predicate: () => userData.IsCompleted);
-        if(userData != null)
-        {
-            List<string> pinnedLectures = new List<string>();
-            DataSnapshot snapshot = userData.Result;
-            foreach (var x in snapshot.Children)
-            {
-                pinnedLectures.Add(x.Key.ToString());
-            }
-            onCallBack.Invoke(pinnedLectures);
-        }
+        myLectureCodes = LectureManager.myLectures;
     }
     void OnEnable()
     {

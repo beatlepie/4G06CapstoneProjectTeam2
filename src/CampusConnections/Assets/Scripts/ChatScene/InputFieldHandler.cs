@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-using Auth;
+using UnityEngine.Events;
 
 
 public class InputFieldHandler : MonoBehaviour
@@ -19,13 +19,6 @@ public class InputFieldHandler : MonoBehaviour
 
         _input = GetComponent<TMP_InputField>();
         _input.onEndEdit.AddListener(OnEndEditListener);
-
-        _username = AuthConnector.Instance.CurrentUser.DisplayName;
-    }
-
-    private void Update()
-    {
-        _messages.text = messageLog;
     }
 
     private async void OnEndEditListener(string value)

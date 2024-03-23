@@ -52,12 +52,12 @@ public class EventCarousel : MonoBehaviour
             }
         }
             List<EventCarouselData> items = new List<EventCarouselData>();
-            List<Event> filteredLectures = FilterLecturesbyRoom(allEvents, _RoomNumLowerRange, _RoomNumUpperRange);
-            for(int i = 0; i < filteredLectures.Count; i++)
+            List<Event> filteredEvents = FilterLecturesbyRoom(allEvents, _RoomNumLowerRange, _RoomNumUpperRange);
+            for(int i = 0; i < filteredEvents.Count; i++)
             {
-                var spriteResourceKey = $"tex_demo_banner_{(i%3):D2}";
-                var text = filteredLectures[i];
-                EventCarouselData item =  new EventCarouselData(spriteResourceKey, filteredLectures[i], () => Debug.Log($"Clicked: {text}"));
+                var spriteResourceKey = $"tex_event_demo_banner_{(i%3):D2}";
+                var text = filteredEvents[i];
+                EventCarouselData item =  new EventCarouselData(spriteResourceKey, filteredEvents[i], () => Debug.Log($"Clicked: {text}"));
                 items.Add(item);        
             }
             _carouselView.Setup(items.ToArray());

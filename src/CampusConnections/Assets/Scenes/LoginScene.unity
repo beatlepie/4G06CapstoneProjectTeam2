@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.28502667, g: 0.37139323, b: 0.49600998, a: 1}
+  m_IndirectSpecularColor: {r: 0.2850269, g: 0.3713935, b: 0.49601045, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3530,6 +3530,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1106916632299512856, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -926
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106916632299512856, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.0032958984
+      objectReference: {fileID: 0}
     - target: {fileID: 2430019022468272167, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
         type: 3}
       propertyPath: m_Pivot.x
@@ -3655,6 +3665,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3723422320775299182, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
+        type: 3}
+      propertyPath: m_text
+      value: One sec...
+      objectReference: {fileID: 0}
     - target: {fileID: 5932855092638418531, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
         type: 3}
       propertyPath: m_Name
@@ -3760,7 +3775,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1076779759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34eaf010c267493eb2b26b7de38288df, type: 3}
+  m_Script: {fileID: 11500000, guid: 2acaaa7d65a70f04a828014d2c33d749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1076779761
@@ -4584,6 +4599,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1364556580500537396, guid: 723f6e5d84eb7204185c5e0509024439,
+        type: 3}
+      propertyPath: m_text
+      value: 'I understand and agree to the following terms and conditions:
+
+
+        1.
+        We will collect the following data to provide you service:<size=80%>
+
+        \u2022
+        <b> Account information</b>: When you create a CampusConnections account,
+        you can come up with a email, a nickname and password
+
+        \u2022 <b>Content
+        you created</b>: The message you send to friends, the activities you saved,
+        etc.
+
+        \u2022 <b>Location information</b>: When you open the map,
+        you will share your real-time location with your friends in the application
+
+        \u2022
+        <b>Camera access</b>: When you open the AR camera, you will give the application
+        access to your device camera</size>
+
+
+        2. We collect your information
+        only to improve your experience and provide personalized services we WILL
+        NOT use personal information for any business purpose.
+
+
+        3. We foster
+        a community of respect and mutual understanding. Users are expected to communicate
+        with others in a courteous and respectful manner. Phising or sharing inappropriate
+        content may lead to account suspension.'
+      objectReference: {fileID: 0}
     - target: {fileID: 2634194097142678971, guid: 723f6e5d84eb7204185c5e0509024439,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -4740,6 +4790,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9007962194500726513, guid: 723f6e5d84eb7204185c5e0509024439,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1056.74
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

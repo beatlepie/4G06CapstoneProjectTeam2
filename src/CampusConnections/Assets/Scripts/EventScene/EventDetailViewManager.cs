@@ -15,7 +15,7 @@ public class EventDetailViewManager : MonoBehaviour
     [SerializeField] GameObject EditPanel;
     private Event target;
     private bool pinned;
-    private List<string> myEventNames = new List<string>();
+    private List<string> myEventNames;
     [SerializeField] GameObject PinIcon;
     [SerializeField] GameObject UnpinIcon;
     [SerializeField] GameObject DeleteIcon;
@@ -46,26 +46,7 @@ public class EventDetailViewManager : MonoBehaviour
             DeleteIcon.SetActive(false);
             EditIcon.SetActive(false);
         }
-        StartCoroutine(GetPinnedLectures((List<string> data) =>
-        {
-            myEventNames = data;
-        }));
-    }
-    IEnumerator GetPinnedLectures(Action<List<string>> onCallBack)
-    {
-        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);                
-        var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
-        yield return new WaitUntil(predicate: () => userData.IsCompleted);
-        if(userData != null)
-        {
-            List<string> pinnedLectures = new List<string>();
-            DataSnapshot snapshot = userData.Result;
-            foreach (var x in snapshot.Children)
-            {
-                pinnedLectures.Add(x.Key.ToString());
-            }
-            onCallBack.Invoke(pinnedLectures);
-        }
+        myEventNames = EventManager.myEvents;
     }
     void OnEnable()
     {

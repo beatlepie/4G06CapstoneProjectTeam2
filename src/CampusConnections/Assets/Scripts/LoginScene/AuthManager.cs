@@ -97,6 +97,7 @@ public class AuthManager : MonoBehaviour
             //User is now logged in
             //Now get the result
             User = LoginTask.Result.User;
+            AuthConnector.Instance.IsEmailVerified = User.IsEmailVerified;
             var getPerms = DatabaseConnector.Instance.Root.Child("users/" + Utilities.removeDot(User.Email) + "/perms").GetValueAsync();
             yield return new WaitUntil(predicate: () => getPerms.IsCompleted);
             AuthConnector.Instance.Perms = (PermissonLevel) int.Parse(getPerms.Result.Value.ToString());
