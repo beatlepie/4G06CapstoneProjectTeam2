@@ -55,7 +55,7 @@ public class EventCarousel : MonoBehaviour
             List<Event> filteredEvents = FilterLecturesbyRoom(allEvents, _RoomNumLowerRange, _RoomNumUpperRange);
             for(int i = 0; i < filteredEvents.Count; i++)
             {
-                var spriteResourceKey = $"tex_event_demo_banner_{(i%3):D2}";
+                var spriteResourceKey = $"tex_demo_banner_{((i+2)%3):D2}";
                 var text = filteredEvents[i];
                 EventCarouselData item =  new EventCarouselData(spriteResourceKey, filteredEvents[i], () => Debug.Log($"Clicked: {text}"));
                 items.Add(item);        

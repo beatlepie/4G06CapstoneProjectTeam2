@@ -44,7 +44,7 @@ public class LectureCarousel : MonoBehaviour
             List<Lecture> filteredLectures = FilterLecturesbyRoom(allLectures, _RoomNumLowerRange, _RoomNumUpperRange);
             for(int i = 0; i < filteredLectures.Count; i++)
             {
-                var spriteResourceKey = $"tex_lecture_demo_banner_{(i%3):D2}";
+                var spriteResourceKey = $"tex_demo_banner_{(i%3):D2}";
                 var text = filteredLectures[i];
                 LectureCarouselData item =  new LectureCarouselData(spriteResourceKey, filteredLectures[i], () => Debug.Log($"Clicked: {text}"));
                 items.Add(item);        
