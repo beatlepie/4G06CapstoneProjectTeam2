@@ -1,6 +1,5 @@
 ﻿using Auth;
 using Firebase;
-using Firebase.Auth;
 using Firebase.Database;
 using UnityEngine;
 
@@ -47,5 +46,5 @@ namespace Database
                 }
             });
         }
-    }
+    }   
 }

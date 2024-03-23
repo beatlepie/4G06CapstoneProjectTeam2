@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using Database;
 using Auth;
@@ -161,7 +162,7 @@ public class FriendManager : MonoBehaviour
         SceneManager.LoadScene("SettingsScene");
     }
 
-    public void OnFriendNameClick()
+    public void OnFriendChatClick()
     {
         var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         var targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;

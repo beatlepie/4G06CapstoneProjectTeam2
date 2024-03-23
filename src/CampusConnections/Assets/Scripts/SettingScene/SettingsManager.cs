@@ -58,14 +58,15 @@ public class SettingsManager : MonoBehaviour
     public TMP_InputField NewPassword;
     public TMP_InputField ConfirmPassword;
 
-    [Header("PinnedLecture")]
+    [Header("BookmarkedLecture")]
     [SerializeField] Transform PinnedLectureTemplate;
     [SerializeField] Transform PinnedLectureView;
 
-    [Header("PinnedEvent")]
+    [Header("BookmarkedEvent")]
     [SerializeField] Transform PinnedEventTemplate;
     [SerializeField] Transform PinnedEventView;
 
+    [Header("EmailVerification")]
     public TMP_Text notificationText;
 
     private void Start()
@@ -92,7 +93,7 @@ public class SettingsManager : MonoBehaviour
         }
 
         // If email is verified, do not display email verification button!
-        if (AuthConnector.Instance.CurrentUser.IsEmailVerified)
+        if (AuthConnector.Instance.IsEmailVerified)
         {
             VerifyEmailButton.SetActive(false);
         }
@@ -479,6 +480,11 @@ public class SettingsManager : MonoBehaviour
         PasswordCanvas.SetActive(false);
     }
 
+    public void onEmailVerificationClick()
+    {
+        StartCoroutine(SendEmailVerification());
+    }
+
     /// <summary>
     /// Function called when Email Verification button is pressed.
     /// Sends email verification email.
@@ -496,7 +502,7 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
-            notificationText.text = "Email verification failed! Try again later.";
+            notificationText.text = "<color=#F74848>Email verification failed! Try again later.";
         }
     }
 
