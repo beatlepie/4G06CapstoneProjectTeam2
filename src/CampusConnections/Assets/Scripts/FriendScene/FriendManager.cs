@@ -159,6 +159,7 @@ public class FriendManager : MonoBehaviour
         string targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
         SettingsManager.queryEmail = targetEmail;
         SettingsManager.currentUser = false;
+        SettingsManager.state = 0;
         SceneManager.LoadScene("SettingsScene");
     }
 

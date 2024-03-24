@@ -93,7 +93,7 @@ public class SettingsManager : MonoBehaviour
         }
 
         // If email is verified, do not display email verification button!
-        if (AuthConnector.Instance.IsEmailVerified)
+        if (AuthConnector.Instance.IsEmailVerified | AuthConnector.Instance.CurrentUser.Email != queryEmail)
         {
             VerifyEmailButton.SetActive(false);
         }
