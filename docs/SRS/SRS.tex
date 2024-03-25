@@ -61,6 +61,7 @@ Jan 10th & Zihao Du, Matthew Miller & Revision 1: Add new requirements form Haza
 Feb 22 & Zihao Du & Revision 1: Revision 1: Update section 6 - 8, section 20 - 21 to date\\
 Feb 27 & Matthew Miller & Revision 1: Add traceability tables\\
 Mar 3 & Zihao Du & Revision 1: Update functional requirements and rationales\\
+Mar 25 & Waseef Nayeem & Rev1: Updated Section 8 - 14\\
 \bottomrule
 \end{tabularx}
 
@@ -643,7 +644,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \noindent\\
 \textbf{Use case \#12:} Interest/Disinterest Event\\
 \textbf{Precondition:} The user has already logged in and clicks on an event in the list\\
-\textbf{Trigger:} The user clicks on pin/unpin button\\
+\textbf{Trigger:} The user clicks on bookmark/unbookmark button\\
 \textbf{Outcome}
 \begin{enumerate}
 	\item User browses the event list
@@ -658,7 +659,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \noindent\\
 \textbf{Use case \#13:} Add/Remove lecture\\
 \textbf{Precondition:} The user has already logged in and clicks on a lecture in the list\\
-\textbf{Trigger:} The user clicks on pin/unpin button\\
+\textbf{Trigger:} The user clicks on bookmark/unbookmark button\\
 \textbf{Outcome}
 \begin{enumerate}
 	\item User browses the lecture list of the target
@@ -850,7 +851,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Appearance Requirements}
   \textbf{LF-A1:} The product shall respond with visual (and auditory, if applicable) feedback once the user interacts with an interactive component.\\
   \textbf{Rationale:} Providing feedback will tell the user that the product has done a task in response to the user input.\\
-  \textbf{Fit criterion:} Each component must respond as designed in RESPONSE\_TIME when they are triggered.\\\\
+  \textbf{Fit criterion:} Each interactive component responds to user input within RESPONSE\_TIME seconds, either by opening a dialog or altering the visual state. If sound feedback is incorporated, it plays within the same time frame.\\\\
   \textbf{LF-A2:} The product shall adapt to most of the common mobile screen sizes with screen components not being congested.\\
   \textbf{Rationale:} This will allow the user to view and interact with all the visual elements on the page.\\
   \textbf{Fit criterion:} Visual elements must not exceed the borders of the screen for all screens in SCREEN\_VIEWPORTS list. If a user experience survey is taken among them, the application layout will get at least MIN\_SCORE.\\
@@ -861,13 +862,13 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit criterion:} Consistency checks show the same color scheme being used on all pages.\\\\
   \textbf{LF-S2:} The color scheme used shall be appealing and not cause eye strain.\\
   \textbf{Rationale:} An unappealing colour scheme may cause eye strain in users.\\
-  \textbf{Fit criterion:} MOST\_USERS agree with the statement that the screen does not cause strain during a user experience survey.\\
+  \textbf{Fit criterion:} MOST\_USERS agree with the statement that the screen does not cause strain during a user experience survey. MOST\_USERS also agree that the color scheme is visually appealing.\\
 
 \section{Usability and Humanity Requirements}
 \subsection{Ease of Use Requirements}
   \textbf{UH-EOU1:} The product shall have a user interface that is clear and easy to navigate.\\
   \textbf{Rationale:} A user interface that is easy to use will allow users to intuitively navigate between pages without any assistance.\\
-  \textbf{Fit criterion:} MOST\_USERS in the testing stage shall be able to find their way to specific pages and access all different core features including messaging friend, lecture and event management and building scanning without needing to try again more than 3 times.\\
+  \textbf{Fit criterion:} MOST\_USERS in the usability testing stage shall be able to find their way to specific pages and access all different core features including messaging friend, lecture and event management and building scanning without needing to try again more than 3 times.\\
 
 \subsection{Personalization and Internationalization Requirements}
   \textbf{N/A}\\
@@ -880,7 +881,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Understandability and Politeness Requirements}
   \textbf{UH-UP1:} The product shall abstain from using technical and software-specific language.\\
   \textbf{Rationale:} Technical and software-specific language will not be understood by most users, therefore its use should be limited.\\
-  \textbf{Fit criterion:} MOST\_USERS shall hardly find technical and software-specific language among all text displayed by the application.\\
+  \textbf{Fit criterion:} MOST\_USERS shall not find technical and software-specific language among all text displayed by the application.\\
 \subsection{Accessibility Requirements}
   \textbf{UH-A1:} The colors used by the different components of the product shall contrast enough for items on the screen to be more easily visible.\\
   \textbf{Rationale:} This will allow users with colour blindness to tell different components apart, as colours with low contrast may be hard to distinguish for these users.\\
@@ -901,7 +902,7 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit criterion:} User’s personal information does not appear in the database if the user did not grant permissions.\\\\
   \textbf{P-SC2:} User data such as messages and location information will be securely encrypted to protect user’s privacy.\\
   \textbf{Rationale:} This decreases the risk of hackers finding personal information in intercepted messages.\\
-  \textbf{Fit criterion:} Contents of data packets being transmitted are nonsense when inspected with MONITORING\_TOOL.\\\\
+  \textbf{Fit criterion:} Contents of data packets being transmitted are not readable or decryptable by a human or machine when inspected with MONITORING\_TOOLS.\\\\
   \textbf{P-SC3:} The product shall display a message upon map startup warning the user to be aware of their surroundings.\\
   \textbf{Rationale:} The gameplay of real-time location map may lead to distracted walking, therefore we need to warn the user for their safety.\\
   \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon map startup.\\\\
@@ -916,9 +917,9 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit Criterion:} An input in the email field that's not in the format of an email will give the user an error when creating a new account.\\\\
 
 \subsection{Precision or Accuracy Requirements}
-  \textbf{P-PA1:} The product shall accurately identify buildings scanned by the user.\\
-  \textbf{Rationale:} When a user scans a building, the product should display information about that building\\
-  \textbf{Fit criterion:} The application shall identify a building on campus with a success rate of at least 80\%.\\\\
+  \textbf{P-PA1:} The product shall accurately identify building targets scanned by the user.\\
+  \textbf{Rationale:} When a user scans a valid building target, the product should display interactive visual elements with information about that building\\
+  \textbf{Fit criterion:} The application shall correctly identify an indoor or outdoor building target within 2 seconds 80\% of the time under clear conditions (not obscured by objects or in poor lighting).\\\\
 
 \subsection{Robustness or Fault-Tolerance Requirements}
   \textbf{\textcolor{red}{P-RF1:}} The product shall display an error message when there is no internet connection.\\
@@ -929,7 +930,7 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities without connecting to the server.\\\\
   \textbf{P-RF3:} The server shall attempt to restart when it crashes.\\
   \textbf{Rationale:} This requirement enhances the robustness of the backend server and prevents it from going down for a long time because of some intermittent minor errors.\\
-  \textbf{Fit Criterion:} The server should try to restart after it crashes due to unknown errors.\\\\
+  \textbf{Fit Criterion:} The server shall restart the instance if it crashes due to an unrecoverable error.\\\\
   \textbf{P-RF4:} AR Camera should have a notification available in the UI telling users possible reasons the target is not recognized.\\
   \textbf{Rationale:} The user should get a notification telling them that the AR camera may have a bad performance in some cases, and they should be able to report that to the developer if they want the problem to be solved.\\
   \textbf{Fit Criterion:} The product should show the user a list of possible reasons that the camera does not work and the contact information of maintainers once they have trouble using the AR camera and click the help button.\\\\
@@ -1034,7 +1035,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Cultural Requirements}
   \textbf{CUL-C1:} The product shall not be offensive to any marginalized groups.\\
   \textbf{Rationale:} The app is meant to be used by students on campus, many of which are part of marginalized groups.\\
-  \textbf{Fit Criterion:} The product shall not use any language or symbols deemed offensive by any marginalized group.\\\\
+  \textbf{Fit Criterion:} MOST\_USERS that self-identify as a minority agree that the app does not use any offensive language or symbols.\\\\
 
 \section{Compliance Requirements}
 \subsection{Legal Requirements}
@@ -1403,7 +1404,7 @@ Their values are defined in this section for easy maintenance.
 \hline
 \multicolumn{1}{|l}{\bfseries Symbolic Parameter} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Value}\\
 \hline
-MOST\_USER & Majority of the users & 80\% users \\
+MOST\_USERS & Majority of the users & 80\% users \\
 \hline
 MIN\_SCORE & The passing grade for a category in the survey & 7/10\\
 \hline
@@ -1419,7 +1420,7 @@ MESSAGE\_TIME & Max time the system takes to send user message & 2 second\\
 \hline
 LOCATION\_UPDATE\_TIME & Max time the system takes for location update & 10 second\\
 \hline
-MONITORING\_TOOL & Tool to use when monitoring network & Charles Proxy\\
+MONITORING\_TOOLS & Tools uses when monitoring network & Charles Proxy and Wireshark\\
 \hline
 GPS\_ACCURACY & Accuracy of location sharing & 25 meter\\
 \hline
