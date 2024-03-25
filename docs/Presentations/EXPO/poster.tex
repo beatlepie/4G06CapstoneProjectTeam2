@@ -1,0 +1,200 @@
+% Modified from https://www.overleaf.com/latex/templates/university-of-melbourne-poster-template/swfmhrpvfryh
+% The original author is  Jiyu Chen
+% modified by Qi Dang
+% Last Modified: 2021-01-10
+
+% Modified from https://www.overleaf.com/latex/templates/stockholm-university-poster-template/xsrhnggqmcsx
+% The author, Qi Dang, based their work on that of Jiyu Chen, as mentioned above.
+% Modified by Jason Balaci
+% Last Modified: 2022-04-12
+
+% Modified from https://github.com/JacquesCarette/Drasil/blob/master/People/Jason/poster/poster.tex
+% The author, Jason Balaci, changed it to the McMaster version from Qi Dang, who based their work on that of Jiyu Chen, as mentioned above.
+% Modified by Michael (Minsung) Kim
+% Last Modified: 2024-03-25
+
+\documentclass[20pt,margin=1in,innermargin=-1in,blockverticalspace=-0.1in]{tikzposter}
+\geometry{paperwidth=48in,paperheight=36in}
+
+\usepackage{xparse}
+
+\usepackage[canadian]{babel}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{blindtext}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{enumitem}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=numeric]{biblatex}
+
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\usepackage{quiver}
+\usetikzlibrary{babel} % Make sure quiver/tikz uses babel
+
+\usepackage{mwe} % for placeholder images
+
+\addbibresource{references.bib}
+
+\usepackage{McMasterTheme}
+\tikzposterlatexaffectionproofoff
+\usetheme{McMasterTheme}
+\usecolorstyle{McMasterStyle}
+\usetitlestyle{Filled}
+
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault} 
+\usepackage[T1]{fontenc}
+
+\title{Capstone Project Team 2: CampusConnections}
+\author{Abhiram Neelamraju, Firas Elayan, Matthew Miller, Michael Kim, Waseef Nayeem, Zihao Du}
+\institute{Department of Computing and Software, McMaster University}
+\titlegraphic{\includegraphics[width=0.16\textwidth]{assets/mcm-cas_left-wht_eps.eps}}
+\projectlogo{\includegraphics[width=0.06\textwidth]{assets/CampusConnections_logo.png}}
+
+% begin document
+\begin{document}
+
+\maketitle
+
+\centering
+\begin{columns}
+    %----------------------------------
+    %- First Column
+    %----------------------------------
+    \column{0.32}
+
+    \block{What is CampusConnections?}{CampusConnections is an Android mobile application built using Unity for students or visitors of McMaster University. 
+                                       We aim to increase sociability in the campus by giving attendees of McMaster a centralized application to 
+                                       discover events and connect with others of aligning interest in the event. We aid in navigation of the campus through 
+                                       our map and Artificial Reality (AR) camera, which can display what events or lectures are happening in the area ahead 
+                                       or the specific room the camera is pointed at. In addition, searching lectures and events were made easier, allowing 
+                                       users to query events by location or from recieving the details from another friend user. 
+                                       
+                                       This software application will assist its users in discovery of events navigation throughout McMaster to improve their 
+                                       experience during their time at campus.}
+
+    \block{Motivation/Problem}{
+        \begin{itemize}
+            \item Information regarding club or official events or lectures are scattered everywhere, such as OscarPlus, FaceBook, Instagram and other websites. 
+                  \begin{itemize}
+                      \item It is difficult to access and keep track of different events. 
+                      \item Not everyone knows where event notices are posted.
+                      \item Sharing or finding events can be a hassle if the information is provided in a platform you do not frequent.
+                  \end{itemize}
+            \item ?????
+                  \begin{itemize}
+                      \item 
+                  \end{itemize}
+        \end{itemize}
+    }
+
+    %----------------------------------
+    %- Second Column
+    %----------------------------------
+    \column{0.36}
+
+    \block{Software Architecture}{
+        \vspace{-1em}
+        % Originally created with https://q.uiver.app/?q=WzAsNyxbOCw0XSxbMSwwLCJUaGVvcmllcyAoUmVsYXRpb25Db25jZXB0KSJdLFswLDAsIkV4cHJlc3Npb25zIChFeHByKSJdLFsyLDAsIk1hdGhlbWF0aWNhbCBLbm93bGVkZ2UiXSxbMiwxLCJRdWFudGl0eSBEZWZpbml0aW9ucyAoUURlZm5zKSJdLFsyLDIsIkNvZGUgKEdPT0wpIl0sWzEsMSwiU2NpZW50aWZpYyBSZXF1aXJlbWVudHMgU3BlY2lmaWNhdGlvbnMgKFNSUykiXSxbMiwxXSxbMSwzXSxbMyw0XSxbNCw1XSxbMSw2XV0=
+        % But requires some post-processing
+        \[\begin{tikzcd}[cramped,sep=small,align=center,ampersand replacement=\&]
+                {\parbox{0.2\linewidth}{\centering Expression (\textit{Expr}) \\$+$ Description}}
+                \& {\parbox{0.24\linewidth}{\centering Theory \\(\textit{RelationConcept})}}
+                \& |[draw=orange, cloud, aspect=2.8, inner sep=0pt, line width=4]| {\parbox{0.18\linewidth}{\centering Mathematical Knowledge}} \\
+
+                {\parbox{0.25\linewidth}{\centering Scientific Requirements Specifications (SRS)}}
+                \& {\parbox{0.1\linewidth}{\centering Code (GOOL)}}
+                \& {\parbox{0.2\linewidth}{\centering Quantity Definition (\textit{QDefn})}} \\
+
+                \arrow[line width=2, color=green, from=1-1, to=1-2]
+                \arrow[line width=2, squiggly, color=red, from=1-2, to=1-3]
+                \arrow[line width=2, squiggly, color=red, from=1-3, to=2-3]
+                \arrow[line width=2, squiggly, color=red, from=2-3, to=2-2]
+                \arrow[line width=2, color=green, from=1-2, to=2-1]
+            \end{tikzcd}\]
+        \vspace{-2.5em}
+
+        \begin{center}
+            \bold{Tools Used}
+        \end{center}
+        \begin{tabular}{l}
+            Github    &  ?????  \\
+            Firebase &  \\
+            Mapbox & \\
+            Vuforia & \\
+        \end{tabular}
+    }
+
+    \block{Key Features ?????}{
+        \vspace{-1em}
+        % Originally created with https://q.uiver.app/?q=WzAsNixbMSwxLCJNYXRoZW1hdGljYWwgS25vd2xlZGdlIChNb2RlbEtpbmRzKSJdLFsxLDIsIkNvZGUgKEdPT0wpIl0sWzAsMCwiRXF1YXRpb25hbE1vZGVsIChRRGVmbikiXSxbMSwwLCJFcXVhdGlvbmFsUmVhbG0gKE11bHRpRGVmbikiXSxbMiwwLCJldGMuIl0sWzAsMiwiU1JTIl0sWzAsMSwiT25seSBFcXVhdGlvbmFsIl0sWzIsMF0sWzMsMF0sWzQsMF0sWzAsNV1d
+        % But requires some post-processing
+        \[\begin{tikzcd}[cramped,sep=small,align=center,ampersand replacement=\&]
+                {\parbox{0.25\linewidth}{\centering EquationalModel (\textit{QDefn Expr'/ModelExpr})}}
+                \& {\parbox{0.25\linewidth}{\centering EquationalRealm (\textit{MultiDefn Expr'/ModelExpr})}}
+                \& {\parbox{0.25\linewidth}{\centering etc.}} \\
+
+                {\parbox{0.1\linewidth}{\centering SRS}}
+                \& {\parbox{0.25\linewidth}{\centering Mathematical Knowledge (\textit{ModelKinds})}}
+                \& {\parbox{0.1\linewidth}{\centering Code (GOOL)}} \\
+
+                \arrow[line width=2, squiggly, color=blue, from=2-2, to=2-3]
+                \arrow[line width=2, color=green, from=1-1, to=2-2]
+                \arrow[line width=2, color=green, from=1-2, to=2-2]
+                \arrow[line width=2, color=green, from=1-3, to=2-2]
+                \arrow[line width=2, color=green, from=2-2, to=2-1]
+            \end{tikzcd}\]
+        \vspace{-2em}
+
+        \small
+        \begin{tabular}{llll}
+            \textcolor{green}{$\rightarrow$} & Stable transformation & \textcolor{blue}{$\rightsquigarrow$} & ``Close to stable'' transformation \\
+        \end{tabular}
+    }
+
+    %----------------------------------
+    %- Third Column
+    %----------------------------------
+    \column{0.32}
+
+    \block{Key Benefits ?????}{
+        \vspace{-1.5em}
+        \begin{itemize}
+            \item Extendability: 
+            \item Improving productivity, stability, and flexibility in usage
+            \item Current theory types:
+        \end{itemize}
+        \vspace{-0.5em}
+    }
+
+    \block{Future Continuation ?????}{
+        \vspace{-1.2em}
+        \begin{itemize}
+            \item Heat map of user locations in campus to display which study spaces are occupied and which are available.
+            \item Better user interaction by allowing other users to discover nearby users and interact with event attendees more easily.
+            \item Generalization of the application to be used in other campuses or venues.
+        \end{itemize}
+    }
+
+    \block{Acknowledgements \& Team Members}{
+        \vspace{-1em}
+        \begin{itemize}
+            \item To Dr. Irene Yuan, supervisor of this project and for all her help in designing and improving the usability of the application.
+            \item To ?????
+        \end{itemize}
+        %put team photo here?????
+    }
+
+\end{columns}
+
+\end{document}
