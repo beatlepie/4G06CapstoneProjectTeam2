@@ -845,7 +845,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Map and Location}
     \textbf{FR-6-1:} The system shall allow users to see their own real-time locations on campus and the locations of friends who are willing to share.\\
     \textbf{Rationale:} Sharing locations with connections can make it easier for friends to sync up in person on campus, which provides more opportunities for users to network\\
-    \textbf{Fit Criterion:} Users shall be able to see their avatar on the map showing their real-time positions, and also other users' avatars and locations on campus.\\\\
+    \textbf{Fit Criterion:} Users shall be able to see a yellow pin on the map showing their real-time positions, and also other users' and locations represented by blue pins, on campus.\\\\
 
 \section{Look and Feel Requirements}
 \subsection{Appearance Requirements}
@@ -904,7 +904,7 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Rationale:} This decreases the risk of hackers finding personal information in intercepted messages.\\
   \textbf{Fit criterion:} Contents of data packets being transmitted are not readable or decryptable by a human or machine when inspected with MONITORING\_TOOLS.\\\\
   \textbf{P-SC3:} The product shall display a message upon map startup warning the user to be aware of their surroundings.\\
-  \textbf{Rationale:} The gameplay of real-time location map may lead to distracted walking, therefore we need to warn the user for their safety.\\
+  \textbf{Rationale:} The real-time location map may be distracting to users, therefore we need to warn the user for their safety.\\
   \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon map startup.\\\\
   \textbf{P-SC4:} The product shall hide user's location if the user leaves campus.\\
   \textbf{Rationale:} Users may stay connected and share their location even when they leave the campus. To prevent personal information leakage, we need to hide that information and disconnect the user.\\
@@ -913,7 +913,7 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.\\
   \textbf{Fit Criterion:} Any text input with special characters will give the user an error.\\\\
   \textbf{P-SC6:} The product shall validate the email format when creating an account.\\
-  \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.\\
+  \textbf{Rationale:} The format of the input should be validated to ensure no errors occur and no malicious attacks can be executed.\\
   \textbf{Fit Criterion:} An input in the email field that's not in the format of an email will give the user an error when creating a new account.\\\\
 
 \subsection{Precision or Accuracy Requirements}
@@ -998,7 +998,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Adaptability Requirements}
   \textbf{MS-A1:} The product shall be accessible on Android 11 and above for Android devices.\\
   \textbf{Rationale:} These operating systems are still supported and receive security updates.\\
-  \textbf{Fit Criterion:} All phones with Android 11 or above can run the application without any unexpected issues.\\\\
+  \textbf{Fit Criterion:} In a sample of 10 phones running Android 11 or later, at least 9 should be capable of running the application without encountering unexpected issues.\\\\
   %This product may be ported to other universities in Ontario, Canada, or other countries.
   %Although the product is designed to work for university, this can be porte to other large events and buildings to help users navigate and coordinate better.
 
