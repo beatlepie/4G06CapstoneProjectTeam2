@@ -61,6 +61,7 @@ Jan 10th & Zihao Du, Matthew Miller & Revision 1: Add new requirements form Haza
 Feb 22 & Zihao Du & Revision 1: Revision 1: Update section 6 - 8, section 20 - 21 to date\\
 Feb 27 & Matthew Miller & Revision 1: Add traceability tables\\
 Mar 3 & Zihao Du & Revision 1: Update functional requirements and rationales\\
+Mar 25 & Zihao Du & Revision 1: Resolve feedback in section 15-21\\
 \bottomrule
 \end{tabularx}
 
@@ -242,8 +243,20 @@ involved in the Project}
     \hline
     OSCARplus & OSCARplus is is an appointment, registration and job posting system for McMaster students and alumni\\
     \hline
+    \end{tabular}
+    \caption{Naming Conventions and Terminology}
+    \label{TblNaming}
+\end{table}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.3\linewidth} | p{0.7\linewidth}| }
+    \hline
+    \textbf{Term} & \textbf{Definition}\\
+    \hline
     Personal Identification Information (PII) & Personal data that could potentially identify a specific individual\\
     \hline
+    Security Socket Layer (SSL) & Protocol for establishing authenticated and encrypted machine-to-machine communications\\
+    \hline 
     User experience (UX) & The way a user interacts with the system, and the quality of those interactions.\\
     \hline 
     User interface (UI) & The section of the overall system where interactions between the user and the system take place.\\
@@ -253,8 +266,8 @@ involved in the Project}
     Unity & Unity is a cross-platform game engine developed by Unity Technologies\\
     \hline
     \end{tabular}
-    \caption{Naming Conventions and Terminology}
-    \label{TblNaming}
+    \caption{Naming Conventions and Terminology Cont}
+    \label{TblNaming2}
 \end{table}
 
 \section{Relevant Facts And Assumptions}
@@ -265,7 +278,7 @@ involved in the Project}
 
 \subsection{Business Rules}
 \begin{itemize}
-  \item Software should follow industry standard security protocols
+  \item Server should follow industry standard security protocols (SSL)\cite{SSL} when transmitting sensitive data
 \end{itemize}
 
 \subsection{Assumptions}
@@ -978,7 +991,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 
 \section{Maintainability and Support Requirements}
 \subsection{Maintenance Requirements}
-  \textbf{MS-M1:} Major updates could be rolled out during periods of reduced usage such as after school time, in the Reading Week or in Spring semesters.\\
+  \textbf{MS-M1:} Major updates could be rolled out during periods of reduced usage such as after school time in the midnight, in the Reading Week or Spring/Summer semesters.\\
   \textbf{Rationale:} This minimizes the number of users that are impacted by ongoing maintenance.\\
   \textbf{Fit Criterion:} Dates and times of update releases correspond with days/times that are expected to have lower usage.\\\\
   %This will allow significant time to stablize the update and test them before the updates are applied to the users.
@@ -991,7 +1004,7 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit Criterion:} A link for the application's GitHub will be provided to users, allowing them to add feature requests or issues.\\\\
   %These opened issues will be discussed by the maintainers and communicated through the issue on how they will be dealt with.
   \textbf{MS-S2:} The user manual and all feature issues with implementation details should be open to any visitor to the application's GitHub.\\
-  \textbf{Rationale:} Users should have access to the user manual to aid them in using the product. Feature issues should also be made public so users can see the progress being made.\\
+  \textbf{Rationale:} Users should have access to the user manual to aid them in using the application. Feature issues should also be made public so users can see the progress being made.\\
   \textbf{Fit Criterion:} The user manual and feature issues shall be viewable by any user with/without a GitHub account.\\\\
 
 \subsection{Adaptability Requirements}
@@ -1005,12 +1018,12 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Access Requirements}
   \textbf{S-A1:} User with first level access is treated as a guest.\\
   \textbf{Rationale:} User persona: a grade 12 student on a university tour.\\
-  \textbf{Fit Criterion:} Guest must not have access to anything beyond the login, account creation, public events, map without other users' locations and account recovery pages. \\\\
-  \textbf{S-A2:} User with second level access is treated as an actual user.\\
+  \textbf{Fit Criterion:} Guest must not have access to anything beyond the login, account creation, public events, user profile and campus map (without other users' locations) pages. \\\\
+  \textbf{S-A2:} User with second level access is treated as an actual user (student).\\
   \textbf{Rationale:} User persona: a software engineer undergrad student.\\
   \textbf{Fit Criterion:} User will have full access to all features except writing access to the database, which means a user cannot edit or create new lectures or events. \\\\
   \textbf{S-A3:} User with thrid level access is treated as an administrator.\\
-  \textbf{Rationale:} Full access of the system should be given to administrators who works as a maintainer.\\
+  \textbf{Rationale:} User persona: a staff of engineering faculty. Full access of the system should be given to administrators who works as a maintainer.\\
   \textbf{Fit Criterion:} Administrator will have all the access users have and the power to add, delete and edit official events, lectures and all users profiles.\\\\
 
 \subsection{Integrity Requirements}
@@ -1019,28 +1032,28 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Privacy Requirements}
   \textbf{S-P1:} The application will comply with all relevant privacy laws and guidelines.\\
   \textbf{Rationale:} The application will respect the privacy of all the users.\\
-  \textbf{Fit Criterion:} The usage of a user’s personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws \cite{Legislative Services} \cite{CFLC}.\\\\
-  \textbf{S-P2:} Accounts that are inactive for a certain period shall be deleted after notice to prevent unnecessary data from being held.\\
+  \textbf{Fit Criterion:} The usage of a user's personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws \cite{Legislative Services} \cite{CFLC}.\\\\
+  \textbf{S-P2:} Accounts that are inactive for a certain period shall be deleted to prevent unnecessary data from being held.\\
   \textbf{Rationale:} It prevents personal information from being stored in the database unintentionally for a long time.\\
   \textbf{Fit Criterion:} Accounts that are not logged in for a semester will be cleaned from the authentication system and database.
 
 \subsection{Audit Requirements}
-  \textbf{N/A} (This currently does not apply, once the product is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
+  \textbf{N/A} (This currently does not apply, once the application is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
 
 \subsection{Immunity Requirements}
-  \textbf{N/A} (This currently does not apply, once the product is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
+  \textbf{N/A} (This currently does not apply, once the application is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
 
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
   \textbf{CUL-C1:} The product shall not be offensive to any marginalized groups.\\
-  \textbf{Rationale:} The app is meant to be used by students on campus, many of which are part of marginalized groups.\\
+  \textbf{Rationale:} The application is meant to be used by students on campus, many of which are part of marginalized groups.\\
   \textbf{Fit Criterion:} The product shall not use any language or symbols deemed offensive by any marginalized group.\\\\
 
 \section{Compliance Requirements}
 \subsection{Legal Requirements}
   \textbf{COM-L1:} The data collected from users shall be handled as per the same legal requirements set by the university.\\
-  \textbf{Rationale:} The university has specific requirements for their applications that must be followed.\\
-  \textbf{Fit Criterion:} The application does not violate any legal requirements set by the university.\\\\
+  \textbf{Rationale:} The university has specific privacy policy on Collection of Personal Information and Protection of Privacy\cite{Privacy} that must be followed.\\
+  \textbf{Fit Criterion:} The application does not violate the Disclosure of personal information set by the university in the statement when collecting user data and will only collect data to serve student better as state in General uses of personal information h) in the statement.\\\\
   %As this application will be used in university, it is subject to the same regulations that the university is beholden to.
   %In the future, different functions can be developed to match specific university or state/country requirements, but this is currently not in scope.
 
@@ -1142,30 +1155,34 @@ The use case diagram depicted below identifies the boundaries between the users 
 
 \section{Open Issues}
 \begin{itemize}
-  \item To target iOS devices, a device capable of building iOS apps is required.
+  \item To target iOS devices, a device capable of building iOS applications is required.
+  \item To handle different weathers outdoor, the camera view needs to have some derain or defog filters so that they can match the target image.
 \end{itemize}
 
 \section{Off-the-Shelf Solutions}
 \subsection{Ready-Made Products}
 \begin{itemize}
-  \item \textbf{Snapchat:} Snapchat is an existing social media platform that makes use of AR technology through its Lenses feature which provides various filters and effects that users can apply to their content.
-  \item \textbf{Instagram:} Instagram is another platform that incorporates AR in the form of filters and effects.
-  \item \textbf{TikTok:} TikTok similarly uses AR for visual effects and filters.
-  \item \textbf{Facebook:} Many clubs at McMaster use Facebook Groups to coordinate events.
-  \item \textbf{Meetup:} Meetup is another platform designed for organizing and finding events and other social gatherings.
-  \item \textbf{CampusGroups:} CampusGroups is a platform that focuses specifically on university student groups. It allows universities to create private communities for various events and other student engagement activities.
+  \item \textbf{Snapchat:} Snapchat is an existing social media platform that makes use of AR technology through its Lenses feature\cite{lens} which provides various filters and effects that users can apply to their content.
+  \item \textbf{Instagram:} Instagram is another platform that incorporates AR in the form of filters and effects \cite{spark studio}.
+  \item \textbf{TikTok:} TikTok similarly uses AR for visual effects and filters \cite{effect house}.
+  \item \textbf{Facebook:} Many clubs at McMaster use Facebook Groups \cite{fb groups} to coordinate events and talk to members.
+  \item \textbf{CampusGroups:} CampusGroups is a platform that focuses specifically on university student groups. \cite{campus groups} It allows universities to create private communities for various events and other student engagement activities.
+  \item \textbf{Google Maps:} Google Maps offers satellite imagery, aerial photography and street maps for users \cite{google maps}.
+  \item \textbf{MacQuest:} MacQuest provides on-campus navigation and other campus-related services to visitors to McMaster University, McMaster students, staff and faculty \cite{macquest}.
 \end{itemize}
 \subsection{Reusable Components}
 \begin{itemize}
-  \item Models and art assets can be obtained from the Unity Asset Store or similar sources.
-  \item Existing database solutions such as MongoDB.
-  \item Vuforia is another AR toolkit. It also provides an API for Unity.
+  \item Models, UI and art assets that obtained from the Unity Asset Store or created by the team.
+  \item Existing database and authentication systems such as Firebase Database.
+  \item AR engine Vuforia and all the target images the team created.
+  \item Server that handles user location and chat messages
 \end{itemize}
 \subsection{Products That Can Be Copied}
 \begin{itemize}
   \item Groups, events and a friend system similar to other popular social media apps. (Facebook, Instagram, \dots)
-  \item AR camera modes or filters similar to TikTok or Snapchat.
-  \item Text and voice messaging as is common in other social media apps. (Facebook, Instagram, \dots)
+  \item AR camera modes or filters similar to TikTok \cite{effect house} or Snapchat \cite{lens}.
+  \item Text messaging as is common in other social media apps. (Facebook, Instagram, \dots)
+  \item Item bookmarking/unbookmarking similar to OSCARPlus.
 \end{itemize}
 \section{New Problems}
 \subsection{Effects on the Current Environment}
@@ -1195,7 +1212,7 @@ Inhibit the New Product}
 \begin{itemize}
 \item The database free plan is not able to cope with our projected user growth pattern.
 \item Low quality internet connection will lead to latency between user inputs and in-app reactions or even failures of loading some assets.
-\item The accuracy of input data totally depends on device sensor. Low accuracy data may cause bad user experience.
+\item The accuracy of input data totally depends on device sensor (e.g. GPS). Low accuracy data may cause bad user experience.
 \end{itemize}
 
 \subsection{Follow-Up Problems}
@@ -1432,10 +1449,19 @@ MAX\_USER\_STORED & max number of user account stored & 500\\
 
 \subsection{References}
 \begin{thebibliography}{9}
-  \bibitem{FIPPA} Freedom of Information and Protection of Privacy Act (FIPPA), McMaster University; University Secretariat, \url{https://secretariat.mcmaster.ca/privacy/notice-of-collection-use-and-disclosure/}
+  \bibitem{FIPPA} Freedom of Information and Protection of Privacy Act (FIPPA), McMaster University; University Secretariat, \url{https://secretariat.mcmaster.ca/privacy/notice-of-collection-use-and-disclosure/}. Accessed 13 Oct. 2023. 
   \bibitem{WCAG} Web Content Accessibility Guidelines (WCAG) 2, Web Accessibility Initiative, \url{www.w3.org/WAI/WCAG21/quickref/#contrast-minimum}. Accessed 13 Oct. 2023. 
-  \bibitem{Legislative Services} Legislative Services.``Personal Information Protection and Electronic Documents Act.'' Personal Information Protection and Electronic Documents Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/acts/p-8.6/}. 
-  \bibitem{CFLC} ``Consolidated Federal Laws of Canada, Privacy Act.'' Privacy Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/ACTS/P-21/page-1.html#h-397177}. 
+  \bibitem{Legislative Services} Legislative Services. \textit{Personal Information Protection and Electronic Documents Act.} Personal Information Protection and Electronic Documents Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/acts/p-8.6/}.  Accessed 13 Oct. 2023. 
+  \bibitem{CFLC} Consolidated Federal Laws of Canada, Privacy Act. Privacy Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/ACTS/P-21/page-1.html#h-397177}.  Accessed 13 Oct. 2023. 
+  \bibitem{Privacy} McMaster University statement on collection of personal Data. McMaster University, \url{https://secretariat.mcmaster.ca/app/uploads/2019/06/FIPPA_Statement.pdf}.  Accessed 25 Mar 2024. 
+  \bibitem{SSL} ``SSL Encryption.'' IBM, \url{https://www.ibm.com/docs/en/cics-ts/5.6?topic=protocols-ssl-encryption}. Accessed 25 Mar 2024. 
+  \bibitem{lens} Lens Studio. (n.d.),  Snapchat, \url{https://docs.snap.com/lens-studio/home}. Accessed 25 Mar 2024. 
+  \bibitem{spark studio} Meta Spark Studio. Meta, \url{https://spark.meta.com/}. Accessed 25 Mar 2024. 
+  \bibitem{effect house} Tiktok Effect House. Tictok, \url{https://effecthouse.tiktok.com/}. Accessed 25 Mar 2024. 
+  \bibitem{fb groups} Facebook Groups. Facebook, \url{https://creators.facebook.com/tools/groups/?locale=en_US}. Accessed 25 Mar 2024. 
+  \bibitem{campus groups} Campus Groups. READY Education, \url{https://www.campusgroups.com/product/solutions/}. Accessed 25 Mar 2024. 
+  \bibitem{google maps} Google Maps. Google, \url{https://www.google.com/maps}. Accessed 25 Mar 2024. 
+  \bibitem{macquest} \textit{Digital Tourism: MacQuest App Brings users inside campus buildings. } Daily News, McMaster, \url{https://dailynews.mcmaster.ca/articles/digital-tourism-macquest-app-brings-users-inside-campus-buildings/}. Accessed 25 Mar 2024. 
 \end{thebibliography}
 
 \newpage{}
