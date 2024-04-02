@@ -64,6 +64,7 @@ Mar 3 & Zihao Du & Revision 1: Update functional requirements and rationales\\
 Mar 25 & Waseef Nayeem & Rev1: Updated rationales and fit criteria of Requirements in Section 8 - 14\\
 Mar 25 & Zihao Du & Revision 1: Resolve feedback in section 15-21\\
 Apr 1 & Matthew Miller & Revision 1: Updated stakeholders section and added clarifications of user information\\
+Apr 2 & Zihao Du & Revision 1: Update stakeholders and resolved peer feedback\\
 \bottomrule
 \end{tabularx}
 
@@ -74,8 +75,7 @@ Apr 1 & Matthew Miller & Revision 1: Updated stakeholders section and added clar
 \subsection{User Business}
 \quad The project being outlined in this document is an social media application with location-specific features for \
 McMaster University to allow the university's students to connect with each other. The project will allow for interaction \
-between users, in addition to allowing users to find information on different parts of the main campus of McMaster \
-University, including on-campus events and room availability in buildings.
+between users, in addition to allowing users to find information on different parts of the main campus of McMaster University, including on-campus events and lectures in buildings.
 
 \subsection{Goals of the Project}
 \begin{itemize}
@@ -95,8 +95,7 @@ University, including on-campus events and room availability in buildings.
   product.
 
   \item[1.2.4] \textbf{Reliable Data Communication}
-  The product must have good and secure data communication to support the real-time nature of the product. This is important \
-  as the product is using real-time data and significant delays will impact the accuracy and usability of the product. The \
+  The product must have good and secure data communication to support the real-time nature of the product. This is important as the product is using real-time data and significant delays will impact the accuracy and usability of the product. The \
   product must be able to provide the desired output within 5 seconds with good university WiFi connection.
 
   \item[1.2.5] \textbf{Protection of Personal Information}
@@ -124,20 +123,18 @@ University, including on-campus events and room availability in buildings.
 \section{Stakeholders}
 \subsection{Client}
 
-The client for this project is the university administration and the related departments who will be approving our project as well as the users.
+The client for this project is the supervisor, Dr. Yuan. She is doing a research on how AR technology can help build connections on campus after the pandemic. The inspiration of the research steams from a project at the University of Chicago, where an alternate-reality game was created to connect the community during the pandemic through AR and social media.
 
 \subsection{Customer}
 
-The primary customers are the students and department staff members who will be directly using the mobile application to connect with others and discover events.
-Visitors to McMaster who are not students will also be able to use the application, however they will not be able to connect with other users.
+The primary customers consist of McMaster department staff, students, and university club members, who will directly utilize the mobile application. Department staff will utilize the application to announce new events and lectures, while students and club members can broaden their networks, connect with peers, and actively participate in the community.
 
 \subsection{Other Stakeholders}
 
 \begin{itemize}
-\item Legal Experts – Consultants for legal advice regarding privacy laws
-\item Subject Matter Experts – Experts in the field of AR development to be consulted for guidance
-\item Usability Testers – UI/UX designers / testers that will recommend design ideas
-\item IT Support Staff – Personnel that will maintain the app and fix any bugs that may appear
+\item Professors – Increased promotion of campus visits can lead to higher attendance at lectures among students.
+\item Club Manager - Those organizing events for their clubs can leverage the application to broaden event outreach and engage a larger audience.
+\item Visitors on campus tour – Grade 12 students, along with other visitors, can utilize this application to gain a vivid insight into the campus.
 \end{itemize}
 
 \subsection{Hands-On Users of the Project}
@@ -156,7 +153,7 @@ Visitors to McMaster who are not students will also be able to use the applicati
 
 \item \textbf{User Category: Administrators}
 \begin{itemize}
-\item User Role: Department members or Club representatives using the app for announcements, events, and communication.
+\item User Role: Department members or club representatives using the application for announcements, events, and communication.
 
 \item Subject Matter Experience: Familiarity with campus events and announcements.
 
@@ -197,7 +194,7 @@ The finalized version of the product will be regularly serviced and maintained b
 
 \section{Mandated Constraints}
 \subsection{Solution Constraints}
-There are no mandated constraints regarding how the problem must be solved.
+This solution must be a mobile application so that users can walk around on campus with the application.
 \subsection{Implementation Environment of the Current System}
 There are no mandated constraints regarding the implementation environment.
 \subsection{Partner or Collaborative Applications}
@@ -205,7 +202,7 @@ There are no mandated constraints regarding interoperation with other applicatio
 \subsection{Off-the-Shelf Software}
 There are no mandated constraints regarding external software that must be used.
 \subsection{Anticipated Workplace Environment}
-There are no mandated constraints regarding anticipated workplace environment.
+The application must work on Android mobile phone with Android version 11 and above.
 \subsection{Schedule Constraints}
 \begin{itemize}
   \item The proof-of-concept shall be ready to demonstrate by Nov. 13-24, 2023.
@@ -237,15 +234,17 @@ involved in the Project}
     \hline
     Campus Connections & Campus Connections is the name of the company the capstone project team runs and the name of the application\\
     \hline
-    Charles Proxy & A cross-platform HTTP debugging proxy server application for networking monitoring\\
-    \hline
     Extended reality (XR) & AR technology combines the physical world with a ``digital twin world'' able to interact with it\\
     \hline
     Global Positioning System (GPS) & An utility that provides users with positioning, navigation, and timing services\\
     \hline
     ID & identifier of a user, in this application it refers to user email.\\
     \hline
+    IT & Information technology.\\
+    \hline
     OSCARplus & OSCARplus is is an appointment, registration and job posting system for McMaster students and alumni\\
+    \hline
+    Personal Identification Information (PII) & Personal data that could potentially identify a specific individual\\
     \hline
     \end{tabular}
     \caption{Naming Conventions and Terminology}
@@ -256,8 +255,6 @@ involved in the Project}
     \begin{tabular}{|p{0.3\linewidth} | p{0.7\linewidth}| }
     \hline
     \textbf{Term} & \textbf{Definition}\\
-    \hline
-    Personal Identification Information (PII) & Personal data that could potentially identify a specific individual\\
     \hline
     Security Socket Layer (SSL) & Protocol for establishing authenticated and encrypted machine-to-machine communications\\
     \hline 
@@ -511,7 +508,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \textbf{Trigger:} The user clicks on create account button\\
 \textbf{Outcome}
 \begin{enumerate}
-    \item User provides the required information (email, nick name and password)
+    \item User provides the required information (email, nickname and password) and agrees with the privacy policy of this application
     \item System verifies all required information has been provided
     \item System securely registers the given information as user information
     \item User is redirected back to the Home page
@@ -542,8 +539,8 @@ The use case diagram depicted below identifies the boundaries between the users 
 \textbf{Outcome}
 \begin{enumerate}
 	\item User navigates to edit profile page
-    \item User updates the profile to a new one and saves the changes
-    \item System updates user information with updates made by the user and redirects back to the Home page
+    \item User updates the profile (nickname, avatar, program, level) to a new one and saves the changes
+    \item System updates user profile with updates made by the user and redirects back to the Home page
 \end{enumerate}
 \textbf{Postcondition:} The user profile has been changed successfully.
 
@@ -918,7 +915,7 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit criterion:} User’s personal information does not appear in the database if the user did not grant permissions.\\\\
   \textbf{P-SC2:} User data such as messages and location information will be securely encrypted to protect user’s privacy.\\
   \textbf{Rationale:} This decreases the risk of hackers finding personal information in intercepted messages.\\
-  \textbf{Fit criterion:} Contents of data packets being transmitted are not readable or decryptable by a human or machine when inspected with MONITORING\_TOOLS.\\\\
+  \textbf{Fit criterion:} An explicit encryption is used so that contents of data packets being transmitted are not readable or decryptable.\\\
   \textbf{P-SC3:} The product shall display a message upon map startup warning the user to be aware of their surroundings.\\
   \textbf{Rationale:} The real-time location map may be distracting to users, therefore we need to warn the user for their safety.\\
   \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon map startup.\\\\
@@ -1426,7 +1423,7 @@ Their values are defined in this section for easy maintenance.
 \hline
 MOST\_USERS & Majority of the users & 80\% users \\
 \hline
-MIN\_SCORE & The passing grade for a category in the survey & 7/10\\
+MIN\_SCORE & The passing grade for a category in the survey & 70\%\\
 \hline
 RESPONSE\_TIME & Max time the system takes for visual response & 1 second\\
 \hline
@@ -1439,8 +1436,6 @@ RECOGNITION\_TIME & Max time the system takes for image recognition & 3 second\\
 MESSAGE\_TIME & Max time the system takes to send user message & 2 second\\
 \hline
 LOCATION\_UPDATE\_TIME & Max time the system takes for location update & 10 second\\
-\hline
-MONITORING\_TOOLS & Tools uses when monitoring network & Charles Proxy and Wireshark\\
 \hline
 GPS\_ACCURACY & Accuracy of location sharing & 25 meter\\
 \hline
