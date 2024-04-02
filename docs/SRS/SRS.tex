@@ -31,7 +31,7 @@
 \begin{document}
 \pagenumbering{arabic}
 
-\title{Software Requirements Specification for \progname: subtitle describing software} 
+\title{Software Requirements Specification for \progname: Campus Connections} 
 \author{\authname}
 \date{\today}
 	
@@ -58,9 +58,13 @@ Oct 6 & All & Finish Revision 0\\
 Oct 28 & Zihao Du & Divide functional requirements to subcategories\\
 Oct 29 & Zihao Du & Add new non functional requirements from hazard analysis\\
 Jan 10th & Zihao Du, Matthew Miller & Revision 1: Add new requirements form Hazard Analysis, remove out-of-date requirements\\
-Feb 22 & Zihao Du & Revision 1: Revision 1: Update section 6 - 8, section 20 - 21 to date\\
+Feb 22 & Zihao Du & Revision 1: Update section 6 - 8, section 20 - 21 to date\\
 Feb 27 & Matthew Miller & Revision 1: Add traceability tables\\
 Mar 3 & Zihao Du & Revision 1: Update functional requirements and rationales\\
+Mar 25 & Waseef Nayeem & Rev1: Updated rationales and fit criteria of Requirements in Section 8 - 14\\
+Mar 25 & Zihao Du & Revision 1: Resolve feedback in section 15-21\\
+Apr 1 & Matthew Miller & Revision 1: Updated stakeholders section and added clarifications of user information\\
+Apr 2 & Zihao Du & Revision 1: Update stakeholders and resolved peer feedback\\
 April 2 & Michael Kim & Revision 1: Updated dates to exact, updated reflection to match TA feedback\\
 \bottomrule
 \end{tabularx}
@@ -72,8 +76,7 @@ April 2 & Michael Kim & Revision 1: Updated dates to exact, updated reflection t
 \subsection{User Business}
 \quad The project being outlined in this document is an social media application with location-specific features for \
 McMaster University to allow the university's students to connect with each other. The project will allow for interaction \
-between users, in addition to allowing users to find information on different parts of the main campus of McMaster \
-University, including on-campus events and room availability in buildings.
+between users, in addition to allowing users to find information on different parts of the main campus of McMaster University, including on-campus events and lectures in buildings.
 
 \subsection{Goals of the Project}
 \begin{itemize}
@@ -93,8 +96,7 @@ University, including on-campus events and room availability in buildings.
   product.
 
   \item[1.2.4] \textbf{Reliable Data Communication}
-  The product must have good and secure data communication to support the real-time nature of the product. This is important \
-  as the product is using real-time data and significant delays will impact the accuracy and usability of the product. The \
+  The product must have good and secure data communication to support the real-time nature of the product. This is important as the product is using real-time data and significant delays will impact the accuracy and usability of the product. The \
   product must be able to provide the desired output within 5 seconds with good university WiFi connection.
 
   \item[1.2.5] \textbf{Protection of Personal Information}
@@ -122,18 +124,19 @@ University, including on-campus events and room availability in buildings.
 \section{Stakeholders}
 \subsection{Client}
 
-The client for this project is the university administration and the related departments who will be approving our project as well as the users.
+The client for this project is the supervisor, Dr. Yuan. She is doing a research on how AR technology can help build connections on campus after the pandemic. The inspiration of the research steams from a project at the University of Chicago, where an alternate-reality game was created to connect the community during the pandemic through AR and social media.
 
 \subsection{Customer}
 
-The primary customers are the students and department staff members who will be directly using the mobile application to connect with others and discover events.
+The primary customers consist of McMaster department staff, students, and university club members, who will directly utilize the mobile application. Department staff will utilize the application to announce new events and lectures, while students and club members can broaden their networks, connect with peers, and actively participate in the community.
 
 \subsection{Other Stakeholders}
 
 \begin{itemize}
-\item Legal experts – Could be consulted for legal advice regarding privacy laws
-\item Subject Matter Experts – Experts in the field of AR development we might consult for guidance
-\item Usability testers – UI/UX designers / testers we might get recommendations from the design
+\item Professors – Increased promotion of campus visits can lead to higher attendance at lectures among students.
+\item Club Manager - Those organizing events for their clubs can leverage the application to broaden event outreach and engage a larger audience.
+\item Visitors on campus tour – Grade 12 students, along with other visitors, can utilize this application to gain a vivid insight into the campus.
+\item Society – While this application may not wield a monumental impact on society, it will undoubtedly contribute to fostering a positive impression of McMaster University. Its significance lies primarily in its influence on individuals studying and working on campus, yet it will also indirectly affect society by showcasing the vibrant campus life, potentially inspiring more individuals to choose McMaster for their studies or even visit the campus.
 \end{itemize}
 
 \subsection{Hands-On Users of the Project}
@@ -152,7 +155,7 @@ The primary customers are the students and department staff members who will be 
 
 \item \textbf{User Category: Administrators}
 \begin{itemize}
-\item User Role: Department members or Club representatives using the app for announcements, events, and communication.
+\item User Role: Department members or club representatives using the application for announcements, events, and communication.
 
 \item Subject Matter Experience: Familiarity with campus events and announcements.
 
@@ -193,7 +196,7 @@ The finalized version of the product will be regularly serviced and maintained b
 
 \section{Mandated Constraints}
 \subsection{Solution Constraints}
-There are no mandated constraints regarding how the problem must be solved.
+This solution must be a mobile application so that users can walk around on campus with the application.
 \subsection{Implementation Environment of the Current System}
 There are no mandated constraints regarding the implementation environment.
 \subsection{Partner or Collaborative Applications}
@@ -201,7 +204,7 @@ There are no mandated constraints regarding interoperation with other applicatio
 \subsection{Off-the-Shelf Software}
 There are no mandated constraints regarding external software that must be used.
 \subsection{Anticipated Workplace Environment}
-There are no mandated constraints regarding anticipated workplace environment.
+The application must work on Android mobile phone with Android version 11 and above.
 \subsection{Schedule Constraints}
 \begin{itemize}
   \item The proof-of-concept shall be ready to demonstrate by Nov. 13-24, 2023.
@@ -233,18 +236,30 @@ involved in the Project}
     \hline
     Campus Connections & Campus Connections is the name of the company the capstone project team runs and the name of the application\\
     \hline
-    Charles Proxy & A cross-platform HTTP debugging proxy server application for networking monitoring\\
-    \hline
     Extended reality (XR) & AR technology combines the physical world with a ``digital twin world'' able to interact with it\\
     \hline
     Global Positioning System (GPS) & An utility that provides users with positioning, navigation, and timing services\\
     \hline
     ID & identifier of a user, in this application it refers to user email.\\
     \hline
+    IT & Information technology.\\
+    \hline
     OSCARplus & OSCARplus is is an appointment, registration and job posting system for McMaster students and alumni\\
     \hline
     Personal Identification Information (PII) & Personal data that could potentially identify a specific individual\\
     \hline
+    \end{tabular}
+    \caption{Naming Conventions and Terminology}
+    \label{TblNaming}
+\end{table}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.3\linewidth} | p{0.7\linewidth}| }
+    \hline
+    \textbf{Term} & \textbf{Definition}\\
+    \hline
+    Security Socket Layer (SSL) & Protocol for establishing authenticated and encrypted machine-to-machine communications\\
+    \hline 
     User experience (UX) & The way a user interacts with the system, and the quality of those interactions.\\
     \hline 
     User interface (UI) & The section of the overall system where interactions between the user and the system take place.\\
@@ -254,8 +269,8 @@ involved in the Project}
     Unity & Unity is a cross-platform game engine developed by Unity Technologies\\
     \hline
     \end{tabular}
-    \caption{Naming Conventions and Terminology}
-    \label{TblNaming}
+    \caption{Naming Conventions and Terminology Cont}
+    \label{TblNaming2}
 \end{table}
 
 \section{Relevant Facts And Assumptions}
@@ -266,7 +281,7 @@ involved in the Project}
 
 \subsection{Business Rules}
 \begin{itemize}
-  \item Software should follow industry standard security protocols
+  \item Server should follow industry standard security protocols (SSL)\cite{SSL} when transmitting sensitive data
 \end{itemize}
 
 \subsection{Assumptions}
@@ -495,9 +510,9 @@ The use case diagram depicted below identifies the boundaries between the users 
 \textbf{Trigger:} The user clicks on create account button\\
 \textbf{Outcome}
 \begin{enumerate}
-    \item User provides the required information (email, nick name and password)
+    \item User provides the required information (email, nickname and password) and agrees with the privacy policy of this application
     \item System verifies all required information has been provided
-    \item System securely registers user information
+    \item System securely registers the given information as user information
     \item User is redirected back to the Home page
 \end{enumerate}
 \textbf{Postcondition:} The user has successfully created an account and account information is stored and secured in a database.
@@ -526,8 +541,8 @@ The use case diagram depicted below identifies the boundaries between the users 
 \textbf{Outcome}
 \begin{enumerate}
 	\item User navigates to edit profile page
-    \item User updates the profile to a new one and saves the changes
-    \item System updates user information and redirects back to the Home page
+    \item User updates the profile (nickname, avatar, program, level) to a new one and saves the changes
+    \item System updates user profile with updates made by the user and redirects back to the Home page
 \end{enumerate}
 \textbf{Postcondition:} The user profile has been changed successfully.
 
@@ -644,7 +659,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \noindent\\
 \textbf{Use case \#12:} Interest/Disinterest Event\\
 \textbf{Precondition:} The user has already logged in and clicks on an event in the list\\
-\textbf{Trigger:} The user clicks on pin/unpin button\\
+\textbf{Trigger:} The user clicks on bookmark/unbookmark button\\
 \textbf{Outcome}
 \begin{enumerate}
 	\item User browses the event list
@@ -659,7 +674,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \noindent\\
 \textbf{Use case \#13:} Add/Remove lecture\\
 \textbf{Precondition:} The user has already logged in and clicks on a lecture in the list\\
-\textbf{Trigger:} The user clicks on pin/unpin button\\
+\textbf{Trigger:} The user clicks on bookmark/unbookmark button\\
 \textbf{Outcome}
 \begin{enumerate}
 	\item User browses the lecture list of the target
@@ -845,13 +860,13 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Map and Location}
     \textbf{FR-6-1:} The system shall allow users to see their own real-time locations on campus and the locations of friends who are willing to share.\\
     \textbf{Rationale:} Sharing locations with connections can make it easier for friends to sync up in person on campus, which provides more opportunities for users to network\\
-    \textbf{Fit Criterion:} Users shall be able to see their avatar on the map showing their real-time positions, and also other users' avatars and locations on campus.\\\\
+    \textbf{Fit Criterion:} Users shall be able to see a yellow pin on the map showing their real-time positions, and also other users' and locations represented by blue pins, on campus.\\\\
 
 \section{Look and Feel Requirements}
 \subsection{Appearance Requirements}
   \textbf{LF-A1:} The product shall respond with visual (and auditory, if applicable) feedback once the user interacts with an interactive component.\\
   \textbf{Rationale:} Providing feedback will tell the user that the product has done a task in response to the user input.\\
-  \textbf{Fit criterion:} Each component must respond as designed in RESPONSE\_TIME when they are triggered.\\\\
+  \textbf{Fit criterion:} Each interactive component responds to user input within RESPONSE\_TIME seconds, either by opening a dialog or altering the visual state. If sound feedback is incorporated, it plays within the same time frame.\\\\
   \textbf{LF-A2:} The product shall adapt to most of the common mobile screen sizes with screen components not being congested.\\
   \textbf{Rationale:} This will allow the user to view and interact with all the visual elements on the page.\\
   \textbf{Fit criterion:} Visual elements must not exceed the borders of the screen for all screens in SCREEN\_VIEWPORTS list. If a user experience survey is taken among them, the application layout will get at least MIN\_SCORE.\\
@@ -862,13 +877,13 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit criterion:} Consistency checks show the same color scheme being used on all pages.\\\\
   \textbf{LF-S2:} The color scheme used shall be appealing and not cause eye strain.\\
   \textbf{Rationale:} An unappealing colour scheme may cause eye strain in users.\\
-  \textbf{Fit criterion:} MOST\_USERS agree with the statement that the screen does not cause strain during a user experience survey.\\
+  \textbf{Fit criterion:} MOST\_USERS agree with the statement that the screen does not cause strain during a user experience survey. MOST\_USERS also agree that the color scheme is visually appealing.\\
 
 \section{Usability and Humanity Requirements}
 \subsection{Ease of Use Requirements}
   \textbf{UH-EOU1:} The product shall have a user interface that is clear and easy to navigate.\\
   \textbf{Rationale:} A user interface that is easy to use will allow users to intuitively navigate between pages without any assistance.\\
-  \textbf{Fit criterion:} MOST\_USERS in the testing stage shall be able to find their way to specific pages and access all different core features including messaging friend, lecture and event management and building scanning without needing to try again more than 3 times.\\
+  \textbf{Fit criterion:} MOST\_USERS in the usability testing stage shall be able to find their way to specific pages and access all different core features including messaging friend, lecture and event management and building scanning without needing to try again more than 3 times.\\
 
 \subsection{Personalization and Internationalization Requirements}
   \textbf{N/A}\\
@@ -881,7 +896,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Understandability and Politeness Requirements}
   \textbf{UH-UP1:} The product shall abstain from using technical and software-specific language.\\
   \textbf{Rationale:} Technical and software-specific language will not be understood by most users, therefore its use should be limited.\\
-  \textbf{Fit criterion:} MOST\_USERS shall hardly find technical and software-specific language among all text displayed by the application.\\
+  \textbf{Fit criterion:} MOST\_USERS shall not find technical and software-specific language among all text displayed by the application.\\
 \subsection{Accessibility Requirements}
   \textbf{UH-A1:} The colors used by the different components of the product shall contrast enough for items on the screen to be more easily visible.\\
   \textbf{Rationale:} This will allow users with colour blindness to tell different components apart, as colours with low contrast may be hard to distinguish for these users.\\
@@ -902,9 +917,9 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit criterion:} User’s personal information does not appear in the database if the user did not grant permissions.\\\\
   \textbf{P-SC2:} User data such as messages and location information will be securely encrypted to protect user’s privacy.\\
   \textbf{Rationale:} This decreases the risk of hackers finding personal information in intercepted messages.\\
-  \textbf{Fit criterion:} Contents of data packets being transmitted are nonsense when inspected with MONITORING\_TOOL.\\\\
+  \textbf{Fit criterion:} An explicit encryption is used so that contents of data packets being transmitted are not readable or decryptable.\\\
   \textbf{P-SC3:} The product shall display a message upon map startup warning the user to be aware of their surroundings.\\
-  \textbf{Rationale:} The gameplay of real-time location map may lead to distracted walking, therefore we need to warn the user for their safety.\\
+  \textbf{Rationale:} The real-time location map may be distracting to users, therefore we need to warn the user for their safety.\\
   \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon map startup.\\\\
   \textbf{P-SC4:} The product shall hide user's location if the user leaves campus.\\
   \textbf{Rationale:} Users may stay connected and share their location even when they leave the campus. To prevent personal information leakage, we need to hide that information and disconnect the user.\\
@@ -913,24 +928,25 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.\\
   \textbf{Fit Criterion:} Any text input with special characters will give the user an error.\\\\
   \textbf{P-SC6:} The product shall validate the email format when creating an account.\\
-  \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.\\
-  \textbf{Fit Criterion:} An input in the email field that's not in the format of an email will give the user an error when creating a new account.\\\\
+  \textbf{Rationale:} The format of the input should be validated to ensure no errors occur and no malicious attacks can be executed.\\
+  \textbf{Fit Criterion:} All emails in the database should have a email format, an input in the email field that's not in the format of an email will give the user an error when creating a new account.\\
+  $(\forall\; email \in DB\;  |\;  email.Match([A-Z0-9+\_.-]+@[A-Z0-9.-]+)$\\\\
 
 \subsection{Precision or Accuracy Requirements}
-  \textbf{P-PA1:} The product shall accurately identify buildings scanned by the user.\\
-  \textbf{Rationale:} When a user scans a building, the product should display information about that building\\
-  \textbf{Fit criterion:} The application shall identify a building on campus with a success rate of at least 80\%.\\\\
+  \textbf{P-PA1:} The product shall accurately identify building targets scanned by the user.\\
+  \textbf{Rationale:} When a user scans a valid building target, the product should display interactive visual elements with information about that building\\
+  \textbf{Fit criterion:} The application shall correctly identify an indoor or outdoor building target within 2 seconds 80\% of the time under clear conditions (not obscured by objects or in poor lighting).\\\\
 
 \subsection{Robustness or Fault-Tolerance Requirements}
-  \textbf{\textcolor{red}{P-RF1:}} The product shall display an error message when there is no internet connection.\\
-  \textbf{Rationale:} When there is no internet connection, the user should be made aware.\\
+  \textbf{\textcolor{red}{P-RF1 (No Longer Valid Due To Scope Change):}} The product shall display an error message when there is no internet connection.\\
+  \textbf{Rationale:} When there is no internet connection, the user should be made aware. (Note: Due to a change in scope, this requirement is no longer valid)\\
   \textbf{Fit criterion:} An error message stating that there is no internet connection is displayed when the product fails to connect to the internet.\\\\
   \textbf{P-RF2:} There must be a fail-safe for the product to function if the server connection takes too long or fails.\\
   \textbf{Rationale:} This will allow the product to function to some degree even during high traffic or bad server connection situations.\\
   \textbf{Fit Criterion:} The product must be able to provide rudimentary functionalities without connecting to the server.\\\\
   \textbf{P-RF3:} The server shall attempt to restart when it crashes.\\
   \textbf{Rationale:} This requirement enhances the robustness of the backend server and prevents it from going down for a long time because of some intermittent minor errors.\\
-  \textbf{Fit Criterion:} The server should try to restart after it crashes due to unknown errors.\\\\
+  \textbf{Fit Criterion:} The server shall restart the instance if it crashes due to an unrecoverable error.\\\\
   \textbf{P-RF4:} AR Camera should have a notification available in the UI telling users possible reasons the target is not recognized.\\
   \textbf{Rationale:} The user should get a notification telling them that the AR camera may have a bad performance in some cases, and they should be able to report that to the developer if they want the problem to be solved.\\
   \textbf{Fit Criterion:} The product should show the user a list of possible reasons that the camera does not work and the contact information of maintainers once they have trouble using the AR camera and click the help button.\\\\
@@ -979,7 +995,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 
 \section{Maintainability and Support Requirements}
 \subsection{Maintenance Requirements}
-  \textbf{MS-M1:} Major updates could be rolled out during periods of reduced usage such as after school time, in the Reading Week or in Spring semesters.\\
+  \textbf{MS-M1:} Major updates could be rolled out during periods of reduced usage such as after school time in the midnight, in the Reading Week or Spring/Summer semesters.\\
   \textbf{Rationale:} This minimizes the number of users that are impacted by ongoing maintenance.\\
   \textbf{Fit Criterion:} Dates and times of update releases correspond with days/times that are expected to have lower usage.\\\\
   %This will allow significant time to stablize the update and test them before the updates are applied to the users.
@@ -992,13 +1008,13 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit Criterion:} A link for the application's GitHub will be provided to users, allowing them to add feature requests or issues.\\\\
   %These opened issues will be discussed by the maintainers and communicated through the issue on how they will be dealt with.
   \textbf{MS-S2:} The user manual and all feature issues with implementation details should be open to any visitor to the application's GitHub.\\
-  \textbf{Rationale:} Users should have access to the user manual to aid them in using the product. Feature issues should also be made public so users can see the progress being made.\\
+  \textbf{Rationale:} Users should have access to the user manual to aid them in using the application. Feature issues should also be made public so users can see the progress being made.\\
   \textbf{Fit Criterion:} The user manual and feature issues shall be viewable by any user with/without a GitHub account.\\\\
 
 \subsection{Adaptability Requirements}
   \textbf{MS-A1:} The product shall be accessible on Android 11 and above for Android devices.\\
   \textbf{Rationale:} These operating systems are still supported and receive security updates.\\
-  \textbf{Fit Criterion:} All phones with Android 11 or above can run the application without any unexpected issues.\\\\
+  \textbf{Fit Criterion:} In a sample of 10 phones running Android 11 or later, at least 9 should be capable of running the application without encountering unexpected issues.\\\\
   %This product may be ported to other universities in Ontario, Canada, or other countries.
   %Although the product is designed to work for university, this can be porte to other large events and buildings to help users navigate and coordinate better.
 
@@ -1006,12 +1022,12 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Access Requirements}
   \textbf{S-A1:} User with first level access is treated as a guest.\\
   \textbf{Rationale:} User persona: a grade 12 student on a university tour.\\
-  \textbf{Fit Criterion:} Guest must not have access to anything beyond the login, account creation, public events, map without other users' locations and account recovery pages. \\\\
-  \textbf{S-A2:} User with second level access is treated as an actual user.\\
+  \textbf{Fit Criterion:} Guest must not have access to anything beyond the login, account creation, public events, user profile and campus map (without other users' locations) pages. \\\\
+  \textbf{S-A2:} User with second level access is treated as an actual user (student).\\
   \textbf{Rationale:} User persona: a software engineer undergrad student.\\
   \textbf{Fit Criterion:} User will have full access to all features except writing access to the database, which means a user cannot edit or create new lectures or events. \\\\
   \textbf{S-A3:} User with thrid level access is treated as an administrator.\\
-  \textbf{Rationale:} Full access of the system should be given to administrators who works as a maintainer.\\
+  \textbf{Rationale:} User persona: a staff of engineering faculty. Full access of the system should be given to administrators who works as a maintainer.\\
   \textbf{Fit Criterion:} Administrator will have all the access users have and the power to add, delete and edit official events, lectures and all users profiles.\\\\
 
 \subsection{Integrity Requirements}
@@ -1020,28 +1036,28 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Privacy Requirements}
   \textbf{S-P1:} The application will comply with all relevant privacy laws and guidelines.\\
   \textbf{Rationale:} The application will respect the privacy of all the users.\\
-  \textbf{Fit Criterion:} The usage of a user’s personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws \cite{Legislative Services} \cite{CFLC}.\\\\
-  \textbf{S-P2:} Accounts that are inactive for a certain period shall be deleted after notice to prevent unnecessary data from being held.\\
+  \textbf{Fit Criterion:} The usage of a user's personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws \cite{Legislative Services} \cite{CFLC}. More specificly, since the application does not match any of the exceptions in Division 1 Protection of Personal Information in Personal Information Protection and Electronic Documents Act, the application must not do the following: 7.1) Collection without knowledge or consent; 7.2) Use without knowledge or consent; 7.3) Disclosure without knowledge or consent\\\\
+  \textbf{S-P2:} Accounts that are inactive for a certain period shall be deleted to prevent unnecessary data from being held.\\
   \textbf{Rationale:} It prevents personal information from being stored in the database unintentionally for a long time.\\
   \textbf{Fit Criterion:} Accounts that are not logged in for a semester will be cleaned from the authentication system and database.
 
 \subsection{Audit Requirements}
-  \textbf{N/A} (This currently does not apply, once the product is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
+  \textbf{N/A} (This currently does not apply, once the application is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
 
 \subsection{Immunity Requirements}
-  \textbf{N/A} (This currently does not apply, once the product is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
+  \textbf{N/A} (This currently does not apply, once the application is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
 
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
   \textbf{CUL-C1:} The product shall not be offensive to any marginalized groups.\\
   \textbf{Rationale:} The app is meant to be used by students on campus, many of which are part of marginalized groups.\\
-  \textbf{Fit Criterion:} The product shall not use any language or symbols deemed offensive by any marginalized group.\\\\
+  \textbf{Fit Criterion:} MOST\_USERS that self-identify as a minority agree that the app does not use any offensive language or symbols.\\\\
 
 \section{Compliance Requirements}
 \subsection{Legal Requirements}
   \textbf{COM-L1:} The data collected from users shall be handled as per the same legal requirements set by the university.\\
-  \textbf{Rationale:} The university has specific requirements for their applications that must be followed.\\
-  \textbf{Fit Criterion:} The application does not violate any legal requirements set by the university.\\\\
+  \textbf{Rationale:} The university has specific privacy policy on Collection of Personal Information and Protection of Privacy\cite{Privacy} that must be followed.\\
+  \textbf{Fit Criterion:} The application does not violate the Disclosure of personal information set by the university in the statement when collecting user data and will only collect data to serve student better as state in General uses of personal information h) in the statement.\\\\
   %As this application will be used in university, it is subject to the same regulations that the university is beholden to.
   %In the future, different functions can be developed to match specific university or state/country requirements, but this is currently not in scope.
 
@@ -1143,30 +1159,34 @@ The use case diagram depicted below identifies the boundaries between the users 
 
 \section{Open Issues}
 \begin{itemize}
-  \item To target iOS devices, a device capable of building iOS apps is required.
+  \item To target iOS devices, a device capable of building iOS applications is required.
+  \item To handle different weathers outdoor, the camera view needs to have some derain or defog filters so that they can match the target image.
 \end{itemize}
 
 \section{Off-the-Shelf Solutions}
 \subsection{Ready-Made Products}
 \begin{itemize}
-  \item \textbf{Snapchat:} Snapchat is an existing social media platform that makes use of AR technology through its Lenses feature which provides various filters and effects that users can apply to their content.
-  \item \textbf{Instagram:} Instagram is another platform that incorporates AR in the form of filters and effects.
-  \item \textbf{TikTok:} TikTok similarly uses AR for visual effects and filters.
-  \item \textbf{Facebook:} Many clubs at McMaster use Facebook Groups to coordinate events.
-  \item \textbf{Meetup:} Meetup is another platform designed for organizing and finding events and other social gatherings.
-  \item \textbf{CampusGroups:} CampusGroups is a platform that focuses specifically on university student groups. It allows universities to create private communities for various events and other student engagement activities.
+  \item \textbf{Snapchat:} Snapchat is an existing social media platform that makes use of AR technology through its Lenses feature\cite{lens} which provides various filters and effects that users can apply to their content.
+  \item \textbf{Instagram:} Instagram is another platform that incorporates AR in the form of filters and effects \cite{spark studio}.
+  \item \textbf{TikTok:} TikTok similarly uses AR for visual effects and filters \cite{effect house}.
+  \item \textbf{Facebook:} Many clubs at McMaster use Facebook Groups \cite{fb groups} to coordinate events and talk to members.
+  \item \textbf{CampusGroups:} CampusGroups is a platform that focuses specifically on university student groups. \cite{campus groups} It allows universities to create private communities for various events and other student engagement activities.
+  \item \textbf{Google Maps:} Google Maps offers satellite imagery, aerial photography and street maps for users \cite{google maps}.
+  \item \textbf{MacQuest:} MacQuest provides on-campus navigation and other campus-related services to visitors to McMaster University, McMaster students, staff and faculty \cite{macquest}.
 \end{itemize}
 \subsection{Reusable Components}
 \begin{itemize}
-  \item Models and art assets can be obtained from the Unity Asset Store or similar sources.
-  \item Existing database solutions such as MongoDB.
-  \item Vuforia is another AR toolkit. It also provides an API for Unity.
+  \item Models, UI and art assets that obtained from the Unity Asset Store or created by the team.
+  \item Existing database and authentication systems such as Firebase Database.
+  \item AR engine Vuforia and all the target images the team created.
+  \item Server that handles user location and chat messages
 \end{itemize}
 \subsection{Products That Can Be Copied}
 \begin{itemize}
   \item Groups, events and a friend system similar to other popular social media apps. (Facebook, Instagram, \dots)
-  \item AR camera modes or filters similar to TikTok or Snapchat.
-  \item Text and voice messaging as is common in other social media apps. (Facebook, Instagram, \dots)
+  \item AR camera modes or filters similar to TikTok \cite{effect house} or Snapchat \cite{lens}.
+  \item Text messaging as is common in other social media apps. (Facebook, Instagram, \dots)
+  \item Item bookmarking/unbookmarking similar to OSCARPlus.
 \end{itemize}
 \section{New Problems}
 \subsection{Effects on the Current Environment}
@@ -1196,7 +1216,7 @@ Inhibit the New Product}
 \begin{itemize}
 \item The database free plan is not able to cope with our projected user growth pattern.
 \item Low quality internet connection will lead to latency between user inputs and in-app reactions or even failures of loading some assets.
-\item The accuracy of input data totally depends on device sensor. Low accuracy data may cause bad user experience.
+\item The accuracy of input data totally depends on device sensor (e.g. GPS). Low accuracy data may cause bad user experience.
 \end{itemize}
 
 \subsection{Follow-Up Problems}
@@ -1410,9 +1430,9 @@ Their values are defined in this section for easy maintenance.
 \hline
 \multicolumn{1}{|l}{\bfseries Symbolic Parameter} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Value}\\
 \hline
-MOST\_USER & Majority of the users & 80\% users \\
+MOST\_USERS & Majority of the users & 80\% users \\
 \hline
-MIN\_SCORE & The passing grade for a category in the survey & 7/10\\
+MIN\_SCORE & The passing grade for a category in the survey & 70\%\\
 \hline
 RESPONSE\_TIME & Max time the system takes for visual response & 1 second\\
 \hline
@@ -1426,8 +1446,6 @@ MESSAGE\_TIME & Max time the system takes to send user message & 2 second\\
 \hline
 LOCATION\_UPDATE\_TIME & Max time the system takes for location update & 10 second\\
 \hline
-MONITORING\_TOOL & Tool to use when monitoring network & Charles Proxy\\
-\hline
 GPS\_ACCURACY & Accuracy of location sharing & 25 meter\\
 \hline
 MAX\_CAPACITY & max number of simultaneous users & 200\\
@@ -1439,10 +1457,19 @@ MAX\_USER\_STORED & max number of user account stored & 500\\
 
 \subsection{References}
 \begin{thebibliography}{9}
-  \bibitem{FIPPA} Freedom of Information and Protection of Privacy Act (FIPPA), McMaster University; University Secretariat, \url{https://secretariat.mcmaster.ca/privacy/notice-of-collection-use-and-disclosure/}
+  \bibitem{FIPPA} Freedom of Information and Protection of Privacy Act (FIPPA), McMaster University; University Secretariat, \url{https://secretariat.mcmaster.ca/privacy/notice-of-collection-use-and-disclosure/}. Accessed 13 Oct. 2023. 
   \bibitem{WCAG} Web Content Accessibility Guidelines (WCAG) 2, Web Accessibility Initiative, \url{www.w3.org/WAI/WCAG21/quickref/#contrast-minimum}. Accessed 13 Oct. 2023. 
-  \bibitem{Legislative Services} Legislative Services.``Personal Information Protection and Electronic Documents Act.'' Personal Information Protection and Electronic Documents Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/acts/p-8.6/}. 
-  \bibitem{CFLC} ``Consolidated Federal Laws of Canada, Privacy Act.'' Privacy Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/ACTS/P-21/page-1.html#h-397177}. 
+  \bibitem{Legislative Services} Legislative Services. \textit{Personal Information Protection and Electronic Documents Act.} Personal Information Protection and Electronic Documents Act, 28 Sept. 2023, \url{https://laws-lois.justice.gc.ca/eng/acts/p-8.6/}.  Accessed 13 Oct. 2023. 
+  \bibitem{CFLC} Consolidated Federal Laws of Canada, Privacy Act. Privacy Act, 28 Sept. 2023, \url{https://laws-lois.justice.gc.ca/eng/ACTS/P-21/page-1.html#h-397177}.  Accessed 13 Oct. 2023. 
+  \bibitem{Privacy} McMaster University statement on collection of personal Data. McMaster University, \url{https://secretariat.mcmaster.ca/app/uploads/2019/06/FIPPA_Statement.pdf}.  Accessed 25 Mar 2024. 
+  \bibitem{SSL} ``SSL Encryption.'' IBM, \url{https://www.ibm.com/docs/en/cics-ts/5.6?topic=protocols-ssl-encryption}. Accessed 25 Mar 2024. 
+  \bibitem{lens} Lens Studio. (n.d.),  Snapchat, \url{https://docs.snap.com/lens-studio/home}. Accessed 25 Mar 2024. 
+  \bibitem{spark studio} Meta Spark Studio. Meta, \url{https://spark.meta.com/}. Accessed 25 Mar 2024. 
+  \bibitem{effect house} Tiktok Effect House. Tictok, \url{https://effecthouse.tiktok.com/}. Accessed 25 Mar 2024. 
+  \bibitem{fb groups} Facebook Groups. Facebook, \url{https://creators.facebook.com/tools/groups/?locale=en_US}. Accessed 25 Mar 2024. 
+  \bibitem{campus groups} Campus Groups. READY Education, \url{https://www.campusgroups.com/product/solutions/}. Accessed 25 Mar 2024. 
+  \bibitem{google maps} Google Maps. Google, \url{https://www.google.com/maps}. Accessed 25 Mar 2024. 
+  \bibitem{macquest} \textit{Digital Tourism: MacQuest App Brings users inside campus buildings. } Daily News, McMaster, \url{https://dailynews.mcmaster.ca/articles/digital-tourism-macquest-app-brings-users-inside-campus-buildings/}. Accessed 25 Mar 2024. 
 \end{thebibliography}
 
 \newpage{}
