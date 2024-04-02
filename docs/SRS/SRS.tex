@@ -135,6 +135,7 @@ The primary customers consist of McMaster department staff, students, and univer
 \item Professors – Increased promotion of campus visits can lead to higher attendance at lectures among students.
 \item Club Manager - Those organizing events for their clubs can leverage the application to broaden event outreach and engage a larger audience.
 \item Visitors on campus tour – Grade 12 students, along with other visitors, can utilize this application to gain a vivid insight into the campus.
+\item Society – While this application may not wield a monumental impact on society, it will undoubtedly contribute to fostering a positive impression of McMaster University. Its significance lies primarily in its influence on individuals studying and working on campus, yet it will also indirectly affect society by showcasing the vibrant campus life, potentially inspiring more individuals to choose McMaster for their studies or even visit the campus.
 \end{itemize}
 
 \subsection{Hands-On Users of the Project}
@@ -927,7 +928,8 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit Criterion:} Any text input with special characters will give the user an error.\\\\
   \textbf{P-SC6:} The product shall validate the email format when creating an account.\\
   \textbf{Rationale:} The format of the input should be validated to ensure no errors occur and no malicious attacks can be executed.\\
-  \textbf{Fit Criterion:} An input in the email field that's not in the format of an email will give the user an error when creating a new account.\\\\
+  \textbf{Fit Criterion:} All emails in the database should have a email format, an input in the email field that's not in the format of an email will give the user an error when creating a new account.\\
+  $(\forall\; email \in DB\;  |\;  email.Match([A-Z0-9+\_.-]+@[A-Z0-9.-]+)$\\\\
 
 \subsection{Precision or Accuracy Requirements}
   \textbf{P-PA1:} The product shall accurately identify building targets scanned by the user.\\
@@ -935,7 +937,7 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit criterion:} The application shall correctly identify an indoor or outdoor building target within 2 seconds 80\% of the time under clear conditions (not obscured by objects or in poor lighting).\\\\
 
 \subsection{Robustness or Fault-Tolerance Requirements}
-  \textbf{\textcolor{red}{P-RF1 (No Longer Valid):}} The product shall display an error message when there is no internet connection.\\
+  \textbf{\textcolor{red}{P-RF1 (No Longer Valid Due To Scope Change):}} The product shall display an error message when there is no internet connection.\\
   \textbf{Rationale:} When there is no internet connection, the user should be made aware. (Note: Due to a change in scope, this requirement is no longer valid)\\
   \textbf{Fit criterion:} An error message stating that there is no internet connection is displayed when the product fails to connect to the internet.\\\\
   \textbf{P-RF2:} There must be a fail-safe for the product to function if the server connection takes too long or fails.\\
@@ -1033,7 +1035,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \subsection{Privacy Requirements}
   \textbf{S-P1:} The application will comply with all relevant privacy laws and guidelines.\\
   \textbf{Rationale:} The application will respect the privacy of all the users.\\
-  \textbf{Fit Criterion:} The usage of a user's personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws \cite{Legislative Services} \cite{CFLC}.\\\\
+  \textbf{Fit Criterion:} The usage of a user's personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws \cite{Legislative Services} \cite{CFLC}. More specificly, since the application does not match any of the exceptions in Division 1 Protection of Personal Information in Personal Information Protection and Electronic Documents Act, the application must not do the following: 7.1) Collection without knowledge or consent; 7.2) Use without knowledge or consent; 7.3) Disclosure without knowledge or consent\\\\
   \textbf{S-P2:} Accounts that are inactive for a certain period shall be deleted to prevent unnecessary data from being held.\\
   \textbf{Rationale:} It prevents personal information from being stored in the database unintentionally for a long time.\\
   \textbf{Fit Criterion:} Accounts that are not logged in for a semester will be cleaned from the authentication system and database.
@@ -1450,8 +1452,8 @@ MAX\_USER\_STORED & max number of user account stored & 500\\
 \begin{thebibliography}{9}
   \bibitem{FIPPA} Freedom of Information and Protection of Privacy Act (FIPPA), McMaster University; University Secretariat, \url{https://secretariat.mcmaster.ca/privacy/notice-of-collection-use-and-disclosure/}. Accessed 13 Oct. 2023. 
   \bibitem{WCAG} Web Content Accessibility Guidelines (WCAG) 2, Web Accessibility Initiative, \url{www.w3.org/WAI/WCAG21/quickref/#contrast-minimum}. Accessed 13 Oct. 2023. 
-  \bibitem{Legislative Services} Legislative Services. \textit{Personal Information Protection and Electronic Documents Act.} Personal Information Protection and Electronic Documents Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/acts/p-8.6/}.  Accessed 13 Oct. 2023. 
-  \bibitem{CFLC} Consolidated Federal Laws of Canada, Privacy Act. Privacy Act, 28 Sept. 2023, \url{laws-lois.justice.gc.ca/eng/ACTS/P-21/page-1.html#h-397177}.  Accessed 13 Oct. 2023. 
+  \bibitem{Legislative Services} Legislative Services. \textit{Personal Information Protection and Electronic Documents Act.} Personal Information Protection and Electronic Documents Act, 28 Sept. 2023, \url{https://laws-lois.justice.gc.ca/eng/acts/p-8.6/}.  Accessed 13 Oct. 2023. 
+  \bibitem{CFLC} Consolidated Federal Laws of Canada, Privacy Act. Privacy Act, 28 Sept. 2023, \url{https://laws-lois.justice.gc.ca/eng/ACTS/P-21/page-1.html#h-397177}.  Accessed 13 Oct. 2023. 
   \bibitem{Privacy} McMaster University statement on collection of personal Data. McMaster University, \url{https://secretariat.mcmaster.ca/app/uploads/2019/06/FIPPA_Statement.pdf}.  Accessed 25 Mar 2024. 
   \bibitem{SSL} ``SSL Encryption.'' IBM, \url{https://www.ibm.com/docs/en/cics-ts/5.6?topic=protocols-ssl-encryption}. Accessed 25 Mar 2024. 
   \bibitem{lens} Lens Studio. (n.d.),  Snapchat, \url{https://docs.snap.com/lens-studio/home}. Accessed 25 Mar 2024. 
