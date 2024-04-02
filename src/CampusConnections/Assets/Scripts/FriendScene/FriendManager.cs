@@ -217,7 +217,6 @@ public class FriendManager : MonoBehaviour
     {
         StartCoroutine(CheckUserByEmail());
         Notification.SetActive(true);
-        Debug.Log("Finish");
     }
 
     IEnumerator CheckUserByEmail()
