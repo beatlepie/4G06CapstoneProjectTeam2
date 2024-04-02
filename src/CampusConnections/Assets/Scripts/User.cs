@@ -17,22 +17,18 @@ public class User
     public User(string email)
     {
         this.email = email;
-        this.nickName = "";
-        this.program = "";
-        this.level = 0;
-        this.photoUri = null;
-        this.friends = new List<string>();
-        this.events = new List<string>();
-        this.lectures = new List<string>();
-        this.friendInvitation = new List<string>();
+        nickName = "";
+        program = "";
+        level = 0;
+        photoUri = null;
+        friends = new List<string>();
+        events = new List<string>();
+        lectures = new List<string>();
+        friendInvitation = new List<string>();
         // Sets the permissions of the user, where it is by default 1 for mcmaster email and 0 for all else
         if (email.EndsWith("mcmaster.ca"))
-        {
-            this.perms = 1;
-        }
+            perms = 1;
         else
-        {
-            this.perms = 0;
-        }
+            perms = 0;
     }
 }

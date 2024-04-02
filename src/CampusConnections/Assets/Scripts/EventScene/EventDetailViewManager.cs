@@ -10,45 +10,46 @@ using UnityEngine.UI;
 
 public class EventDetailViewManager : MonoBehaviour
 {
-    [Header("DetailView")]
-    [SerializeField] GameObject ViewPanel;
-    [SerializeField] GameObject EditPanel;
+    [Header("DetailView")] [SerializeField]
+    private GameObject ViewPanel;
+
+    [SerializeField] private GameObject EditPanel;
     private Event target;
     private bool pinned;
     private List<string> myEventNames;
-    [SerializeField] GameObject PinIcon;
-    [SerializeField] GameObject UnpinIcon;
-    [SerializeField] GameObject DeleteIcon;
-    [SerializeField] GameObject EditIcon;
+    [SerializeField] private GameObject PinIcon;
+    [SerializeField] private GameObject UnpinIcon;
+    [SerializeField] private GameObject DeleteIcon;
+    [SerializeField] private GameObject EditIcon;
 
-    [Header("ViewPanel")]
-    [SerializeField] TMP_Text viewName;
-    [SerializeField] TMP_Text viewDescription;
-    [SerializeField] TMP_Text viewOrganizer;
-    [SerializeField] TMP_Text viewLocation;
-    [SerializeField] TMP_Text viewTime;
-    [SerializeField] TMP_Text viewDuration;
-    [SerializeField] Toggle viewIsPublic;
+    [Header("ViewPanel")] [SerializeField] private TMP_Text viewName;
+    [SerializeField] private TMP_Text viewDescription;
+    [SerializeField] private TMP_Text viewOrganizer;
+    [SerializeField] private TMP_Text viewLocation;
+    [SerializeField] private TMP_Text viewTime;
+    [SerializeField] private TMP_Text viewDuration;
+    [SerializeField] private Toggle viewIsPublic;
 
-    [Header("EditPanel")]
-    [SerializeField] TMP_InputField editName;
-    [SerializeField] TMP_InputField editDesciprtion;
-    [SerializeField] TMP_InputField editOrganizer;
-    [SerializeField] TMP_InputField editLocation;
-    [SerializeField] TMP_InputField editTime;
-    [SerializeField] TMP_InputField editDuration;
-    [SerializeField] Toggle editIsPublic;
+    [Header("EditPanel")] [SerializeField] private TMP_InputField editName;
+    [SerializeField] private TMP_InputField editDesciprtion;
+    [SerializeField] private TMP_InputField editOrganizer;
+    [SerializeField] private TMP_InputField editLocation;
+    [SerializeField] private TMP_InputField editTime;
+    [SerializeField] private TMP_InputField editDuration;
+    [SerializeField] private Toggle editIsPublic;
 
-    void Awake()
+    private void Awake()
     {
-        if(AuthConnector.Instance.Perms != PermissonLevel.Admin)
+        if (AuthConnector.Instance.Perms != PermissonLevel.Admin)
         {
             DeleteIcon.SetActive(false);
             EditIcon.SetActive(false);
         }
+
         myEventNames = EventManager.myEvents;
     }
-    void OnEnable()
+
+    private void OnEnable()
     {
         target = EventManager.currentEvent;
         pinned = myEventNames.Contains(target.name);
@@ -57,7 +58,7 @@ public class EventDetailViewManager : MonoBehaviour
         UpdateView();
     }
 
-    void UpdateView()
+    private void UpdateView()
     {
         viewName.text = target.name;
         viewDescription.text = target.description;
@@ -81,13 +82,13 @@ public class EventDetailViewManager : MonoBehaviour
         target.description = editDesciprtion.text;
         target.organizer = editOrganizer.text;
         target.location = editLocation.text;
-        DateTimeOffset dto = new DateTimeOffset(DateTime.Parse(editTime.text).ToUniversalTime());
+        var dto = new DateTimeOffset(DateTime.Parse(editTime.text).ToUniversalTime());
         target.time = dto.ToUnixTimeSeconds();
         target.duration = int.Parse(editDuration.text);
         target.isPublic = editIsPublic.isOn;
         UpdateView();
-        string targetJson = JsonUtility.ToJson(target);
-        string prefix = target.isPublic ? "events/public/" : "events/private/";
+        var targetJson = JsonUtility.ToJson(target);
+        var prefix = target.isPublic ? "events/public/" : "events/private/";
         DatabaseConnector.Instance.Root.Child(prefix + target.name).SetRawJsonValueAsync(targetJson);
     }
 
@@ -96,8 +97,9 @@ public class EventDetailViewManager : MonoBehaviour
         myEventNames.Add(target.name);
         PinIcon.SetActive(false);
         UnpinIcon.SetActive(true);
-        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + target.name).SetValueAsync("True");
+        var emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + target.name)
+            .SetValueAsync("True");
     }
 
     public void Unpin()
@@ -105,8 +107,9 @@ public class EventDetailViewManager : MonoBehaviour
         myEventNames.Remove(target.name);
         PinIcon.SetActive(true);
         UnpinIcon.SetActive(false);
-        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + target.name).SetValueAsync(null);
+        var emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + target.name)
+            .SetValueAsync(null);
     }
 
     public void DetailViewClose()

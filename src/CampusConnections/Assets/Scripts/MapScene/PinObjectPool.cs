@@ -10,32 +10,28 @@ public class PinObjectPool : MonoBehaviour
     public GameObject parentObj;
     public int amountToPool;
 
-    void Awake()
+    private void Awake()
     {
         SharedInstance = this;
     }
 
-    void Start()
+    private void Start()
     {
         pooledObjects = new List<GameObject>();
         GameObject tmp;
-        for(int i = 0; i < amountToPool; i++)
+        for (var i = 0; i < amountToPool; i++)
         {
             tmp = Instantiate(objectToPool, parentObj.transform);
             tmp.SetActive(false);
             pooledObjects.Add(tmp);
         }
     }
-    
+
     public GameObject GetPooledObject()
     {
-        for(int i = 0; i < amountToPool; i++)
-        {
-            if(!pooledObjects[i].activeInHierarchy)
-            {
+        for (var i = 0; i < amountToPool; i++)
+            if (!pooledObjects[i].activeInHierarchy)
                 return pooledObjects[i];
-            }
-        }
         return null;
     }
 }

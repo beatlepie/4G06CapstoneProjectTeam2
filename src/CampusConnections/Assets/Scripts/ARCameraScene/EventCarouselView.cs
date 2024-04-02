@@ -2,6 +2,4 @@
 
 public class EventCarouselView : CarouselView<EventCarouselData, EventCarouselCell>
 {
-
 }
-

@@ -3,8 +3,8 @@
 [System.Serializable]
 public class Message
 {
-    [SerializeField]
-    private string content = "";
+    [SerializeField] private string content = "";
+
     public string Content
     {
         get => content;

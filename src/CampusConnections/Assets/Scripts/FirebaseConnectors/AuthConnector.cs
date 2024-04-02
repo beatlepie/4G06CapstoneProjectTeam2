@@ -12,7 +12,7 @@ namespace Auth
         public FirebaseAuth Auth { get; private set; }
 
         public FirebaseUser CurrentUser { get; private set; }
-        public bool IsEmailVerified {get; set; }
+        public bool IsEmailVerified { get; set; }
 
         public PermissonLevel Perms { get; set; }
 
@@ -29,7 +29,7 @@ namespace Auth
             }
 
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
         }
 
         /// <summary>

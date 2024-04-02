@@ -5,12 +5,11 @@ using UnityEngine.Events;
 
 public class InputFieldHandler : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject rtcObject;
+    [SerializeField] private GameObject rtcObject;
     private SignalRService _rtcService;
-    
+
     private TMP_InputField _input;
-    
+
     public UnityEvent<Message> MessageSent { get; } = new();
 
     private void Start()
@@ -25,14 +24,14 @@ public class InputFieldHandler : MonoBehaviour
     {
         value = value.Trim();
         if (value == "") return;
-        
+
         var chatMessage = $"{value}\n";
 
         if (!Input.GetButton("Submit")) return;
 
         var msg = new Message { Content = chatMessage };
         await _rtcService.SendAsync(msg);
-        
+
         MessageSent.Invoke(msg);
 
         _input.text = "";
@@ -45,14 +44,14 @@ public class InputFieldHandler : MonoBehaviour
 
         value = value.Trim();
         if (value == "") return;
-        
+
         var chatMessage = $"{value}\n";
 
         var msg = new Message { Content = chatMessage };
         await _rtcService.SendAsync(msg);
-        
+
         MessageSent.Invoke(msg);
-        
+
         _input.text = "";
         _input.ActivateInputField();
     }

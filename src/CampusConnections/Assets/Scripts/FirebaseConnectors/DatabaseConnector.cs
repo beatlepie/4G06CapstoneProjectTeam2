@@ -18,19 +18,19 @@ namespace Database
                 Destroy(this);
                 return;
             }
-        
+
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        
+            DontDestroyOnLoad(gameObject);
+
             InitFirebase();
         }
 
         private void InitFirebase()
         {
             Debug.Log("[DatabaseConnector] Initializing Firebase Connection...");
-        
+
             DependencyStatus status;
-        
+
             FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
             {
                 status = task.Result;
@@ -46,5 +46,5 @@ namespace Database
                 }
             });
         }
-    }   
+    }
 }

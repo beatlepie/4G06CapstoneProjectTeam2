@@ -9,37 +9,40 @@ using UnityEngine;
 
 public class LectureDetailViewManager : MonoBehaviour
 {
-    [Header("DetailView")]
-    [SerializeField] GameObject ViewPanel;
-    [SerializeField] GameObject EditPanel;
-    [SerializeField] GameObject DeleteIcon;
-    [SerializeField] GameObject EditIcon;
+    [Header("DetailView")] [SerializeField]
+    private GameObject ViewPanel;
+
+    [SerializeField] private GameObject EditPanel;
+    [SerializeField] private GameObject DeleteIcon;
+    [SerializeField] private GameObject EditIcon;
     private Lecture target;
     private bool pinned;
     private List<string> myLectureCodes;
-    [SerializeField] GameObject PinIcon;
-    [SerializeField] GameObject UnpinIcon;
-    [SerializeField] TMP_Text viewCode;
-    [SerializeField] TMP_Text viewName;
-    [SerializeField] TMP_Text viewInstructor;
-    [SerializeField] TMP_Text viewLocation;
-    [SerializeField] TMP_Text viewTimes;
-    [SerializeField] TMP_InputField editCode;
-    [SerializeField] TMP_InputField editName;
-    [SerializeField] TMP_InputField editInstructor;
-    [SerializeField] TMP_InputField editLocation;
-    [SerializeField] TMP_InputField editTimes;
+    [SerializeField] private GameObject PinIcon;
+    [SerializeField] private GameObject UnpinIcon;
+    [SerializeField] private TMP_Text viewCode;
+    [SerializeField] private TMP_Text viewName;
+    [SerializeField] private TMP_Text viewInstructor;
+    [SerializeField] private TMP_Text viewLocation;
+    [SerializeField] private TMP_Text viewTimes;
+    [SerializeField] private TMP_InputField editCode;
+    [SerializeField] private TMP_InputField editName;
+    [SerializeField] private TMP_InputField editInstructor;
+    [SerializeField] private TMP_InputField editLocation;
+    [SerializeField] private TMP_InputField editTimes;
 
-    void Awake()
+    private void Awake()
     {
-        if(AuthConnector.Instance.Perms != PermissonLevel.Admin)
+        if (AuthConnector.Instance.Perms != PermissonLevel.Admin)
         {
             DeleteIcon.SetActive(false);
             EditIcon.SetActive(false);
         }
+
         myLectureCodes = LectureManager.myLectures;
     }
-    void OnEnable()
+
+    private void OnEnable()
     {
         target = LectureManager.currentLecture;
         pinned = myLectureCodes.Contains(target.code);
@@ -48,7 +51,7 @@ public class LectureDetailViewManager : MonoBehaviour
         UpdateView();
     }
 
-    void UpdateView()
+    private void UpdateView()
     {
         viewCode.text = target.code;
         viewName.text = target.name;
@@ -70,7 +73,7 @@ public class LectureDetailViewManager : MonoBehaviour
         target.location = editLocation.text;
         target.time = editTimes.text;
         UpdateView();
-        string targetJson = JsonUtility.ToJson(target);
+        var targetJson = JsonUtility.ToJson(target);
         DatabaseConnector.Instance.Root.Child("lectures/" + target.code).SetRawJsonValueAsync(targetJson);
     }
 
@@ -79,8 +82,9 @@ public class LectureDetailViewManager : MonoBehaviour
         myLectureCodes.Add(target.code);
         PinIcon.SetActive(false);
         UnpinIcon.SetActive(true);
-        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + target.code).SetValueAsync("True");
+        var emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + target.code)
+            .SetValueAsync("True");
     }
 
     public void Unpin()
@@ -88,8 +92,9 @@ public class LectureDetailViewManager : MonoBehaviour
         myLectureCodes.Remove(target.code);
         PinIcon.SetActive(true);
         UnpinIcon.SetActive(false);
-        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + target.code).SetValueAsync(null);
+        var emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + target.code)
+            .SetValueAsync(null);
     }
 
     public void DetailViewClose()

@@ -17,24 +17,21 @@ public class ClickManager : MonoBehaviour
 
     private AbstractLocationProvider _locationProvider = null;
     private Location userLocation;
-    
+
     private bool isPanelActive;
     private TargetBuilding currentBuilding;
 
-    [Header("Notification")]
-    public TMP_Text notificationText;
-    [SerializeField] GameObject Notification;
-    
-    void Start()
+    [Header("Notification")] public TMP_Text notificationText;
+    [SerializeField] private GameObject Notification;
+
+    private void Start()
     {
         BuildingClickHandler.PointerClickAction += DisplayTargetEvents;
-        
+
         if (null == _locationProvider)
-        {
             _locationProvider = LocationProviderFactory.Instance.DefaultLocationProvider as AbstractLocationProvider;
-        }
         //Check user permissions
-        if(AuthConnector.Instance.Perms == PermissonLevel.Guest)
+        if (AuthConnector.Instance.Perms == PermissonLevel.Guest)
         {
             ARCameraButton.SetActive(false);
             LectureButton.SetActive(false);
@@ -42,20 +39,19 @@ public class ClickManager : MonoBehaviour
 
         isPanelActive = false;
     }
-    
-    void Update()
-    { 
+
+    private void Update()
+    {
         userLocation = _locationProvider.CurrentLocation;
         // If the userLocation is initialized already, check if the user is still on campus
-        if (userLocation.LatitudeLongitude.x != 0 & userLocation.LatitudeLongitude.y != 0)
-        {
-            if (userLocation.LatitudeLongitude.x < 43.25808 | userLocation.LatitudeLongitude.x > 43.26816 | userLocation.LatitudeLongitude.y < -79.92344 | userLocation.LatitudeLongitude.y > -79.91535)
+        if ((userLocation.LatitudeLongitude.x != 0) & (userLocation.LatitudeLongitude.y != 0))
+            if ((userLocation.LatitudeLongitude.x < 43.25808) | (userLocation.LatitudeLongitude.x > 43.26816) |
+                (userLocation.LatitudeLongitude.y < -79.92344) | (userLocation.LatitudeLongitude.y > -79.91535))
             {
-                notificationText.text = "<color=#F14141>Attention: You are not on campus, for sake of your personal data, you will be disconnected from the map.";
+                notificationText.text =
+                    "<color=#F14141>Attention: You are not on campus, for sake of your personal data, you will be disconnected from the map.";
                 Notification.SetActive(true);
             }
-        }
-
     }
 
     public void DisplayTargetEvents(GameObject target)
@@ -84,8 +80,10 @@ public class ClickManager : MonoBehaviour
 
     public void onARButtonClick()
     {
-        var currentPlayerLocation = new GeoCoordinatePortable.GeoCoordinate(userLocation.LatitudeLongitude.x, userLocation.LatitudeLongitude.y);
-        var targetLocation = new GeoCoordinatePortable.GeoCoordinate(currentBuilding.buildingCoords.x, currentBuilding.buildingCoords.y);        
+        var currentPlayerLocation =
+            new GeoCoordinatePortable.GeoCoordinate(userLocation.LatitudeLongitude.x, userLocation.LatitudeLongitude.y);
+        var targetLocation =
+            new GeoCoordinatePortable.GeoCoordinate(currentBuilding.buildingCoords.x, currentBuilding.buildingCoords.y);
         Debug.Log(currentPlayerLocation);
         Debug.Log(targetLocation);
         Debug.Log("AR Camera Mode");
@@ -99,7 +97,8 @@ public class ClickManager : MonoBehaviour
 
     public void onCloseButtonClick()
     {
-        if (isPanelActive) {
+        if (isPanelActive)
+        {
             targetActions.SetActive(false);
             isPanelActive = false;
         }
@@ -107,15 +106,15 @@ public class ClickManager : MonoBehaviour
 
     public void onCenterButtonClick()
     {
-        _map.UpdateMap(new Vector2d(userLocation.LatitudeLongitude.x, userLocation.LatitudeLongitude.y), _map.AbsoluteZoom);
+        _map.UpdateMap(new Vector2d(userLocation.LatitudeLongitude.x, userLocation.LatitudeLongitude.y),
+            _map.AbsoluteZoom);
     }
 
     public void onReturnButtonClick()
     {
         if (!isPanelActive)
-        {
-            isPanelActive = true; // Prevents bug that causes app to freeze when displaying target events after returning to Map Scene
-        }
+            isPanelActive =
+                true; // Prevents bug that causes app to freeze when displaying target events after returning to Map Scene
         SceneManager.LoadScene("MenuScene");
     }
 }

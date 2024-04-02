@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class BuildingClickHandler : MonoBehaviour, IPointerClickHandler
 {
     public static System.Action<GameObject> PointerClickAction;
-    
+
     public void OnPointerClick(PointerEventData eventData)
     {
         PointerClickAction?.Invoke(gameObject);

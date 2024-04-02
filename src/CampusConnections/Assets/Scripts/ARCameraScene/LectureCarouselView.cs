@@ -2,6 +2,4 @@
 
 public class LectureCarouselView : CarouselView<LectureCarouselData, LectureCarouselCell>
 {
-
 }
-

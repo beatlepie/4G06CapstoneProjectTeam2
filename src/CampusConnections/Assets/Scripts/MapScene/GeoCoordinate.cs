@@ -12,7 +12,8 @@ namespace GeoCoordinatePortable
         /// <summary>
         /// Represents a <see cref="GeoCoordinate"/> object that has unknown latitude and longitude fields.
         /// </summary>
-        public static readonly GeoCoordinate Unknown = new GeoCoordinate();
+        public static readonly GeoCoordinate Unknown = new();
+
         private double _course;
         private double _horizontalAccuracy;
         private double _latitude;
@@ -101,13 +102,11 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">Latitude is set outside the valid range.</exception>
         public double Latitude
         {
-            get { return _latitude; }
+            get => _latitude;
             set
             {
                 if (value > 90.0 || value < -90.0)
-                {
                     throw new ArgumentOutOfRangeException("Latitude", "Argument must be in range of -90 to 90");
-                }
                 _latitude = value;
             }
         }
@@ -121,13 +120,11 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">Longitude is set outside the valid range.</exception>
         public double Longitude
         {
-            get { return _longitude; }
+            get => _longitude;
             set
             {
                 if (value > 180.0 || value < -180.0)
-                {
                     throw new ArgumentOutOfRangeException("Longitude", "Argument must be in range of -180 to 180");
-                }
                 _longitude = value;
             }
         }
@@ -141,7 +138,7 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">HorizontalAccuracy is set outside the valid range.</exception>
         public double HorizontalAccuracy
         {
-            get { return _horizontalAccuracy; }
+            get => _horizontalAccuracy;
             set
             {
                 if (value < 0.0)
@@ -159,7 +156,7 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">VerticalAccuracy is set outside the valid range.</exception>
         public double VerticalAccuracy
         {
-            get { return _verticalAccuracy; }
+            get => _verticalAccuracy;
             set
             {
                 if (value < 0.0)
@@ -177,7 +174,7 @@ namespace GeoCoordinatePortable
         /// <exception cref="System.ArgumentOutOfRangeException">Speed is set outside the valid range.</exception>
         public double Speed
         {
-            get { return _speed; }
+            get => _speed;
             set
             {
                 if (value < 0.0)
@@ -195,7 +192,7 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">Course is set outside the valid range.</exception>
         public double Course
         {
-            get { return _course; }
+            get => _course;
             set
             {
                 if (value < 0.0 || value > 360.0)
@@ -283,9 +280,7 @@ namespace GeoCoordinatePortable
         {
             if (double.IsNaN(Latitude) || double.IsNaN(Longitude) || double.IsNaN(other.Latitude) ||
                 double.IsNaN(other.Longitude))
-            {
                 throw new ArgumentException("Argument latitude or longitude is not a number");
-            }
 
             var d1 = Latitude * (Math.PI / 180.0);
             var num1 = Longitude * (Math.PI / 180.0);
@@ -329,10 +324,7 @@ namespace GeoCoordinatePortable
         /// </returns>
         public override string ToString()
         {
-            if (this == Unknown)
-            {
-                return "Unknown";
-            }
+            if (this == Unknown) return "Unknown";
 
             return
                 $"{Latitude.ToString("G", CultureInfo.InvariantCulture)}, {Longitude.ToString("G", CultureInfo.InvariantCulture)}";

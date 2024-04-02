@@ -10,10 +10,10 @@ public class Lecture
     public Lecture(string code)
     {
         this.code = code;
-        this.name = placeholder;
-        this.instructor = placeholder;
-        this.time = placeholder;
-        this.location = placeholder;
+        name = placeholder;
+        instructor = placeholder;
+        time = placeholder;
+        location = placeholder;
     }
 
     public Lecture(string code, string instructor, string location, string name, string time)

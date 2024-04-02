@@ -5,17 +5,18 @@ using Auth;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] GameObject LecturesButton;
-    [SerializeField] GameObject ARButton;
+    [SerializeField] private GameObject LecturesButton;
+    [SerializeField] private GameObject ARButton;
 
     private void Awake()
     {
-        if(AuthConnector.Instance.Perms == PermissonLevel.Guest)
+        if (AuthConnector.Instance.Perms == PermissonLevel.Guest)
         {
             LecturesButton.SetActive(false);
             ARButton.SetActive(false);
         }
     }
+
     public void Lectures()
     {
         SceneManager.LoadScene("LectureScene");

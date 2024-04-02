@@ -10,26 +10,28 @@ using UnityEngine;
 
 public class RemoteUserPinController : MonoBehaviour
 {
-    [SerializeField] AbstractMap map;
+    [SerializeField] private AbstractMap map;
     [SerializeField] private LocationHubService locationService;
-    
+
     private string _email;
     private DatabaseReference _dbRoot;
-    
+
     private Rect _geoFence;
     private Dictionary<string, Vector2d> _remoteLocations;
     private Dictionary<string, GameObject> _remotePins;
     private Dictionary<string, DateTime> _lastUpdated;
     private Queue<Tuple<string, Vector2d>> _pinUpdates;
     private List<string> _friendEmails;
-    
+
     private bool _isInitialized;
     private bool _sendLocationEnabled;
 
     private float _elapsed;
-    
+
     private ILocationProvider _locationProvider;
-    private ILocationProvider LocationProvider => _locationProvider ??= LocationProviderFactory.Instance.DefaultLocationProvider;
+
+    private ILocationProvider LocationProvider =>
+        _locationProvider ??= LocationProviderFactory.Instance.DefaultLocationProvider;
 
     private void Start()
     {
@@ -40,18 +42,18 @@ public class RemoteUserPinController : MonoBehaviour
             xMax = 43.2637823403875f,
             yMax = -79.9161072211226f
         };
-        
+
         _remoteLocations = new Dictionary<string, Vector2d>();
         _lastUpdated = new Dictionary<string, DateTime>();
         _remotePins = new Dictionary<string, GameObject>();
         _pinUpdates = new Queue<Tuple<string, Vector2d>>();
         _friendEmails = new List<string>();
-        
+
         _email = FirebaseAuth.DefaultInstance.CurrentUser.Email;
         _dbRoot = FirebaseDatabase.DefaultInstance.RootReference;
-        
+
         LocationProviderFactory.Instance.mapManager.OnInitialized += () => _isInitialized = true;
-        
+
         locationService.NewLocationReceived.AddListener(OnReceivedListener);
 
         _sendLocationEnabled = true;
@@ -62,7 +64,7 @@ public class RemoteUserPinController : MonoBehaviour
     private void Update()
     {
         _elapsed += Time.deltaTime;
-        
+
         while (_pinUpdates.Count > 0)
         {
             var p = _pinUpdates.Dequeue();
@@ -70,7 +72,6 @@ public class RemoteUserPinController : MonoBehaviour
         }
 
         foreach (var loc in _remoteLocations)
-        {
             if (_remotePins.TryGetValue(loc.Key, out var pin))
             {
                 Debug.Log(loc.Value);
@@ -83,25 +84,22 @@ public class RemoteUserPinController : MonoBehaviour
                 {
                     p.transform.position = map.GeoToWorldPosition(loc.Value);
                     p.SetActive(true);
-                    
+
                     _remotePins[loc.Key] = p;
                 }
             }
-        }
 
         foreach (var email in _lastUpdated.Keys)
-        {
             if (_remoteLocations.ContainsKey(email) && _remotePins.ContainsKey(email))
             {
                 var time = _lastUpdated[email];
-                if ((DateTime.Now - time) >= TimeSpan.FromSeconds(60))
+                if (DateTime.Now - time >= TimeSpan.FromSeconds(60))
                 {
                     _remoteLocations.Remove(email);
                     _remotePins[email].SetActive(false);
                     _remotePins.Remove(email);
                 }
             }
-        }
 
         if (_elapsed >= 1f)
         {
@@ -124,8 +122,9 @@ public class RemoteUserPinController : MonoBehaviour
         if (!_isInitialized || !_sendLocationEnabled) return;
         var location = LocationProvider.CurrentLocation.LatitudeLongitude;
         if (!_geoFence.Contains(new Vector2((float)location.x, (float)location.y))) return;
-        
-        var packet = new RemoteUserLocation { Latitude = (float)location.x, Longitude = (float)location.y, Email = _email };
+
+        var packet = new RemoteUserLocation
+            { Latitude = (float)location.x, Longitude = (float)location.y, Email = _email };
         await locationService.SendAsync(packet);
     }
 
@@ -133,8 +132,8 @@ public class RemoteUserPinController : MonoBehaviour
     {
         var emailWithoutDot = Utilities.removeDot(_email);
         var userData = _dbRoot.Child("users/" + emailWithoutDot + "/friends").GetValueAsync();
-        yield return new WaitUntil(predicate: () => userData.IsCompleted);
-        
+        yield return new WaitUntil(() => userData.IsCompleted);
+
         if (userData != null)
         {
             var snapshot = userData.Result;

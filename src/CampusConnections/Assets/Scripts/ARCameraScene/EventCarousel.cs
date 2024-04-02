@@ -13,7 +13,7 @@ public class EventCarousel : MonoBehaviour
     [SerializeField] private string _RoomNumUpperRange;
     [SerializeField] private string _RoomNumLowerRange;
 
-    void Start()
+    private void Start()
     {
         Setup();
     }
@@ -21,7 +21,7 @@ public class EventCarousel : MonoBehaviour
     private void Setup()
     {
         allEvents = new List<Event>();
-        StartCoroutine(GetLectures()); 
+        StartCoroutine(GetLectures());
     }
 
     private void Cleanup()
@@ -29,64 +29,56 @@ public class EventCarousel : MonoBehaviour
         _carouselView.Cleanup();
     }
 
-    IEnumerator GetLectures()
-    {                
+    private IEnumerator GetLectures()
+    {
         var publicEventData = DatabaseConnector.Instance.Root.Child("events/public").GetValueAsync();
-        yield return new WaitUntil(predicate: () => publicEventData.IsCompleted);
-        if(publicEventData != null)
+        yield return new WaitUntil(() => publicEventData.IsCompleted);
+        if (publicEventData != null)
         {
-            DataSnapshot snapshot = publicEventData.Result;
-            foreach (var e in snapshot.Children)
-            {
-               allEvents.Add(Utilities.FormalizeDBEventData(e));
-            }
+            var snapshot = publicEventData.Result;
+            foreach (var e in snapshot.Children) allEvents.Add(Utilities.FormalizeDBEventData(e));
         }
+
         var privateEventData = DatabaseConnector.Instance.Root.Child("events/private").GetValueAsync();
-        yield return new WaitUntil(predicate: () => privateEventData.IsCompleted);
-        if(privateEventData != null)
+        yield return new WaitUntil(() => privateEventData.IsCompleted);
+        if (privateEventData != null)
         {
-            DataSnapshot snapshot = privateEventData.Result;
-            foreach (var e in snapshot.Children)
-            {
-               allEvents.Add(Utilities.FormalizeDBEventData(e));
-            }
+            var snapshot = privateEventData.Result;
+            foreach (var e in snapshot.Children) allEvents.Add(Utilities.FormalizeDBEventData(e));
         }
-            List<EventCarouselData> items = new List<EventCarouselData>();
-            List<Event> filteredEvents = FilterLecturesbyRoom(allEvents, _RoomNumLowerRange, _RoomNumUpperRange);
-            for(int i = 0; i < filteredEvents.Count; i++)
-            {
-                var spriteResourceKey = $"tex_demo_banner_{((i+2)%3):D2}";
-                var text = filteredEvents[i];
-                EventCarouselData item =  new EventCarouselData(spriteResourceKey, filteredEvents[i], () => Debug.Log($"Clicked: {text}"));
-                items.Add(item);        
-            }
-            _carouselView.Setup(items.ToArray());
+
+        var items = new List<EventCarouselData>();
+        var filteredEvents = FilterLecturesbyRoom(allEvents, _RoomNumLowerRange, _RoomNumUpperRange);
+        for (var i = 0; i < filteredEvents.Count; i++)
+        {
+            var spriteResourceKey = $"tex_demo_banner_{(i + 2) % 3:D2}";
+            var text = filteredEvents[i];
+            var item = new EventCarouselData(spriteResourceKey, filteredEvents[i], () => Debug.Log($"Clicked: {text}"));
+            items.Add(item);
+        }
+
+        _carouselView.Setup(items.ToArray());
     }
 
     public static List<Event> FilterLecturesbyRoom(List<Event> allEvents, string LowerBound, string UpperBound)
     {
         // E.g. room JHE 103 - JHE 124
         // Find the 3 digit room number, check if the part before room number(e.g. JHE A vs JHE ) is the same and compare room number as a integer
-        Regex regex = new Regex(@"\d+");
-        string roomNumU = regex.Match(UpperBound).Value;
-        string roomNumL = regex.Match(LowerBound).Value;
+        var regex = new Regex(@"\d+");
+        var roomNumU = regex.Match(UpperBound).Value;
+        var roomNumL = regex.Match(LowerBound).Value;
         // Assume upperbound and lowerbound have the same prefix
-        string prefix = UpperBound.Split(roomNumU)[0];
-        List<Event> filteredEvents = new List<Event>();
-        foreach (Event e in allEvents)
+        var prefix = UpperBound.Split(roomNumU)[0];
+        var filteredEvents = new List<Event>();
+        foreach (var e in allEvents)
         {
-            string targetRoomNum = regex.Match(e.location).Value;
-            if(string.IsNullOrWhiteSpace(targetRoomNum))
-            {
-                continue;
-            }
-            string targetPrefix = e.location.Split(targetRoomNum)[0];
-            if (int.Parse(targetRoomNum) >= int.Parse(roomNumL) & int.Parse(targetRoomNum) <= int.Parse(roomNumU) & prefix == targetPrefix)
-            {
-                filteredEvents.Add(e);
-            }
+            var targetRoomNum = regex.Match(e.location).Value;
+            if (string.IsNullOrWhiteSpace(targetRoomNum)) continue;
+            var targetPrefix = e.location.Split(targetRoomNum)[0];
+            if ((int.Parse(targetRoomNum) >= int.Parse(roomNumL)) & (int.Parse(targetRoomNum) <= int.Parse(roomNumU)) &
+                (prefix == targetPrefix)) filteredEvents.Add(e);
         }
+
         return filteredEvents;
     }
 }
-
