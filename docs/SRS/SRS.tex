@@ -58,11 +58,12 @@ Oct 6 & All & Finish Revision 0\\
 Oct 28 & Zihao Du & Divide functional requirements to subcategories\\
 Oct 29 & Zihao Du & Add new non functional requirements from hazard analysis\\
 Jan 10th & Zihao Du, Matthew Miller & Revision 1: Add new requirements form Hazard Analysis, remove out-of-date requirements\\
-Feb 22 & Zihao Du & Revision 1: Revision 1: Update section 6 - 8, section 20 - 21 to date\\
+Feb 22 & Zihao Du & Revision 1: Update section 6 - 8, section 20 - 21 to date\\
 Feb 27 & Matthew Miller & Revision 1: Add traceability tables\\
 Mar 3 & Zihao Du & Revision 1: Update functional requirements and rationales\\
 Mar 25 & Waseef Nayeem & Rev1: Updated rationales and fit criteria of Requirements in Section 8 - 14\\
 Mar 25 & Zihao Du & Revision 1: Resolve feedback in section 15-21\\
+Apr 1 & Matthew Miller & Revision 1: Updated stakeholders section and added clarifications of user information\\
 \bottomrule
 \end{tabularx}
 
@@ -128,13 +129,15 @@ The client for this project is the university administration and the related dep
 \subsection{Customer}
 
 The primary customers are the students and department staff members who will be directly using the mobile application to connect with others and discover events.
+Visitors to McMaster who are not students will also be able to use the application, however they will not be able to connect with other users.
 
 \subsection{Other Stakeholders}
 
 \begin{itemize}
-\item Legal experts – Could be consulted for legal advice regarding privacy laws
-\item Subject Matter Experts – Experts in the field of AR development we might consult for guidance
-\item Usability testers – UI/UX designers / testers we might get recommendations from the design
+\item Legal Experts – Consultants for legal advice regarding privacy laws
+\item Subject Matter Experts – Experts in the field of AR development to be consulted for guidance
+\item Usability Testers – UI/UX designers / testers that will recommend design ideas
+\item IT Support Staff – Personnel that will maintain the app and fix any bugs that may appear
 \end{itemize}
 
 \subsection{Hands-On Users of the Project}
@@ -510,7 +513,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \begin{enumerate}
     \item User provides the required information (email, nick name and password)
     \item System verifies all required information has been provided
-    \item System securely registers user information
+    \item System securely registers the given information as user information
     \item User is redirected back to the Home page
 \end{enumerate}
 \textbf{Postcondition:} The user has successfully created an account and account information is stored and secured in a database.
@@ -540,7 +543,7 @@ The use case diagram depicted below identifies the boundaries between the users 
 \begin{enumerate}
 	\item User navigates to edit profile page
     \item User updates the profile to a new one and saves the changes
-    \item System updates user information and redirects back to the Home page
+    \item System updates user information with updates made by the user and redirects back to the Home page
 \end{enumerate}
 \textbf{Postcondition:} The user profile has been changed successfully.
 
