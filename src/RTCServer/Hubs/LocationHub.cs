@@ -1,39 +1,38 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace RTCServer.Hubs
+namespace RTCServer.Hubs;
+
+public class LocationHub : Hub
 {
-    public class LocationHub : Hub
+    public async Task SendLocation(Location location)
     {
-        public async Task SendLocation(Location location)
-        {
-            Console.WriteLine($"Received: {location.Latitude}, {location.Longitude}");
-            await Clients.Others.SendAsync("ReceiveMessage", location);
-        }
+        Console.WriteLine($"Received: {location.Latitude}, {location.Longitude}");
+        await Clients.Others.SendAsync("ReceiveMessage", location);
+    }
+}
+
+[Serializable]
+public class Location
+{
+    private string _email = "";
+    private float _lat;
+    private float _lng;
+
+    public float Latitude
+    {
+        get => _lat;
+        set => _lat = value;
     }
 
-    [System.Serializable]
-    public class Location
+    public float Longitude
     {
-        private String email = "";
-        private float lat = 0;
-        private float lng = 0;
+        get => _lng;
+        set => _lng = value;
+    }
 
-        public float Latitude
-        {
-            get => lat;
-            set => lat = value;
-        }
-
-        public float Longitude
-        {
-            get => lng;
-            set => lng = value;
-        }
-
-        public String Email
-        {
-            get => email;
-            set => email = value;
-        }
+    public string Email
+    {
+        get => _email;
+        set => _email = value;
     }
 }
