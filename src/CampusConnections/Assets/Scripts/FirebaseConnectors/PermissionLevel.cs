@@ -1,6 +1,6 @@
 ﻿namespace Database
 {
-    public enum PermissonLevel
+    public enum PermissionLevel
     {
         Guest,
         Student,

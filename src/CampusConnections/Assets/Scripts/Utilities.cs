@@ -1,73 +1,70 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Firebase.Database;
 
-public class Utilities
+public static class Utilities
 {
-    public static string removeDot(string email)
+    public static string RemoveDot(string email)
     {
         // Replace last . in email with _ since firebase index cannot contain dot
         var indexOfDot = email.LastIndexOf('.');
         var emailWithOutDot = indexOfDot == -1
             ? email
-            : email.Substring(0, indexOfDot) + "_" + email.Substring(indexOfDot + 1);
+            : email[..indexOfDot] + "_" + email[(indexOfDot + 1)..];
         return emailWithOutDot;
     }
 
-    public static string addDot(string emailWithoutDot)
+    public static string AddDot(string emailWithoutDot)
     {
         // Change back email from removeDot method
         var index = emailWithoutDot.LastIndexOf('_');
         var email = index == -1
             ? emailWithoutDot
-            : emailWithoutDot.Substring(0, index) + "." + emailWithoutDot.Substring(index + 1);
+            : emailWithoutDot[..index] + "." + emailWithoutDot[(index + 1)..];
         return email;
     }
 
-    public static bool containSpecialChar(string target)
+    public static bool ContainSpecialChar(string target)
     {
-        var specialChar = @"\|!#$%&/()=?»«@£§€{}.-;'<>_,";
-        foreach (var item in specialChar)
-            if (target.Contains(item))
-                return true;
-
-        return false;
+        const string specialChar = @"\|!#$%&/()=?»«@£§€{}.-;'<>_,";
+        return specialChar.Any(target.Contains);
     }
 
     public static User FormalizeDBUserData(DataSnapshot user)
     {
         var result = new User("InvalidUser");
         foreach (var x in user.Children)
-            switch (x.Key.ToString())
+            switch (x.Key)
             {
                 case "email":
-                    result.email = x.Value.ToString();
+                    result.Email = x.Value.ToString();
                     break;
                 case "nickName":
-                    result.nickName = x.Value.ToString();
+                    result.NickName = x.Value.ToString();
                     break;
                 case "photoUri":
-                    result.photoUri = (Uri)x.Value;
+                    result.PhotoUri = (Uri)x.Value;
                     break;
                 case "level":
-                    result.level = int.Parse(x.Value.ToString());
+                    result.Level = int.Parse(x.Value.ToString());
                     break;
                 case "program":
-                    result.program = x.Value.ToString();
+                    result.Program = x.Value.ToString();
                     break;
                 case "friends":
-                    foreach (var friend in x.Children) result.friends.Add(addDot(friend.Key.ToString()));
+                    foreach (var friend in x.Children) result.Friends.Add(AddDot(friend.Key));
                     break;
                 case "invitations":
                     foreach (var invitation in x.Children)
-                        result.friendInvitation.Add(addDot(invitation.Key.ToString()));
+                        result.FriendInvitation.Add(AddDot(invitation.Key));
                     break;
                 case "events":
-                    foreach (var e in x.Children) result.friends.Add(e.Key.ToString());
+                    foreach (var e in x.Children) result.Friends.Add(e.Key);
                     break;
                 case "lectures":
-                    foreach (var lecture in x.Children) result.friendInvitation.Add(lecture.Key.ToString());
+                    foreach (var lecture in x.Children) result.FriendInvitation.Add(lecture.Key);
                     break;
             }
 
@@ -78,28 +75,28 @@ public class Utilities
     {
         var result = new Event("InvalidEvent");
         foreach (var x in e.Children)
-            switch (x.Key.ToString())
+            switch (x.Key)
             {
                 case "name":
-                    result.name = x.Value.ToString();
+                    result.Name = x.Value.ToString();
                     break;
                 case "description":
-                    result.description = x.Value.ToString();
+                    result.Description = x.Value.ToString();
                     break;
                 case "location":
-                    result.location = x.Value.ToString();
+                    result.Location = x.Value.ToString();
                     break;
                 case "duration":
-                    result.duration = int.Parse(x.Value.ToString());
+                    result.Duration = int.Parse(x.Value.ToString());
                     break;
                 case "isPublic":
-                    result.isPublic = (bool)x.Value;
+                    result.IsPublic = (bool)x.Value;
                     break;
                 case "organizer":
-                    result.organizer = x.Value.ToString();
+                    result.Organizer = x.Value.ToString();
                     break;
                 case "time":
-                    result.time = (long)x.Value;
+                    result.Time = (long)x.Value;
                     break;
             }
 
@@ -110,22 +107,22 @@ public class Utilities
     {
         var result = new Lecture("InvalidLecture");
         foreach (var x in e.Children)
-            switch (x.Key.ToString())
+            switch (x.Key)
             {
                 case "code":
-                    result.code = x.Value.ToString();
+                    result.Code = x.Value.ToString();
                     break;
                 case "name":
-                    result.name = x.Value.ToString();
+                    result.Name = x.Value.ToString();
                     break;
                 case "location":
-                    result.location = x.Value.ToString();
+                    result.Location = x.Value.ToString();
                     break;
                 case "instructor":
-                    result.instructor = x.Value.ToString();
+                    result.Instructor = x.Value.ToString();
                     break;
                 case "time":
-                    result.time = x.Value.ToString();
+                    result.Time = x.Value.ToString();
                     break;
             }
 
@@ -136,7 +133,7 @@ public class Utilities
     {
         // Return two strings: first one is the type, second one is the ID (lecture's code, event's name)
         // Example: [event, EXPO]
-        var pattern = @"\[([a-zA-Z]+)\]\(([a-zA-Z0-9 ']+)\)";
+        const string pattern = @"\[([a-zA-Z]+)\]\(([a-zA-Z0-9 ']+)\)";
         var match = Regex.Match(message, pattern);
         if (match.Success)
         {

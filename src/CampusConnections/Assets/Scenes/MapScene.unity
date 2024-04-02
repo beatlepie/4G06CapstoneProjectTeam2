@@ -505,7 +505,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1619833177}
         m_TargetAssemblyTypeName: ClickManager, Assembly-CSharp
-        m_MethodName: onBackButtonClick
+        m_MethodName: OnBackButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -755,7 +755,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1619833177}
         m_TargetAssemblyTypeName: ClickManager, Assembly-CSharp
-        m_MethodName: onReturnButtonClick
+        m_MethodName: OnReturnButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1179,7 +1179,7 @@ PrefabInstance:
     - target: {fileID: 7425407840101007606, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: onReturnButtonClick
+      value: OnReturnButtonClick
       objectReference: {fileID: 0}
     - target: {fileID: 7425407840101007606, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
         type: 3}
@@ -1746,7 +1746,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1619833177}
         m_TargetAssemblyTypeName: ClickManager, Assembly-CSharp
-        m_MethodName: onCloseButtonClick
+        m_MethodName: OnCloseButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2146,7 +2146,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1619833177}
         m_TargetAssemblyTypeName: ClickManager, Assembly-CSharp
-        m_MethodName: onARButtonClick
+        m_MethodName: OnARButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3015,7 +3015,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1619833177}
         m_TargetAssemblyTypeName: ClickManager, Assembly-CSharp
-        m_MethodName: onCenterButtonClick
+        m_MethodName: OnCenterButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

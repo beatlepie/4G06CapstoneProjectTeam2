@@ -18,8 +18,13 @@ public class TargetBuilding : MonoBehaviour
 
     private void FloatAndSpin()
     {
-        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
-        transform.position = new Vector3(transform.position.x,
-            Mathf.Sin(Time.fixedTime * Mathf.PI * frequency) * amplitude + 10, transform.position.z);
+        Transform rotatedTransform;
+        (rotatedTransform = transform).Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+
+        var position = rotatedTransform.position;
+        position = new Vector3(position.x,
+            Mathf.Sin(Time.fixedTime * Mathf.PI * frequency) * amplitude + 10, position.z);
+
+        transform.position = position;
     }
 }

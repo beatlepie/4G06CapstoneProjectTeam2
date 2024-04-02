@@ -1,25 +1,23 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Database;
 using Auth;
-using Firebase.Database;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class LectureDetailViewManager : MonoBehaviour
 {
-    [Header("DetailView")] [SerializeField]
-    private GameObject ViewPanel;
+    [FormerlySerializedAs("ViewPanel")] [Header("DetailView")] [SerializeField]
+    private GameObject viewPanel;
 
-    [SerializeField] private GameObject EditPanel;
-    [SerializeField] private GameObject DeleteIcon;
-    [SerializeField] private GameObject EditIcon;
-    private Lecture target;
-    private bool pinned;
-    private List<string> myLectureCodes;
-    [SerializeField] private GameObject PinIcon;
-    [SerializeField] private GameObject UnpinIcon;
+    [FormerlySerializedAs("EditPanel")] [SerializeField] private GameObject editPanel;
+    [FormerlySerializedAs("DeleteIcon")] [SerializeField] private GameObject deleteIcon;
+    [FormerlySerializedAs("EditIcon")] [SerializeField] private GameObject editIcon;
+    private Lecture _target;
+    private bool _pinned;
+    private List<string> _myLectureCodes;
+    [FormerlySerializedAs("PinIcon")] [SerializeField] private GameObject pinIcon;
+    [FormerlySerializedAs("UnpinIcon")] [SerializeField] private GameObject unpinIcon;
     [SerializeField] private TMP_Text viewCode;
     [SerializeField] private TMP_Text viewName;
     [SerializeField] private TMP_Text viewInstructor;
@@ -33,73 +31,73 @@ public class LectureDetailViewManager : MonoBehaviour
 
     private void Awake()
     {
-        if (AuthConnector.Instance.Perms != PermissonLevel.Admin)
+        if (AuthConnector.Instance.Perms != PermissionLevel.Admin)
         {
-            DeleteIcon.SetActive(false);
-            EditIcon.SetActive(false);
+            deleteIcon.SetActive(false);
+            editIcon.SetActive(false);
         }
 
-        myLectureCodes = LectureManager.myLectures;
+        _myLectureCodes = LectureManager.MyLectures;
     }
 
     private void OnEnable()
     {
-        target = LectureManager.currentLecture;
-        pinned = myLectureCodes.Contains(target.code);
-        PinIcon.SetActive(!pinned);
-        UnpinIcon.SetActive(pinned);
+        _target = LectureManager.CurrentLecture;
+        _pinned = _myLectureCodes.Contains(_target.Code);
+        pinIcon.SetActive(!_pinned);
+        unpinIcon.SetActive(_pinned);
         UpdateView();
     }
 
     private void UpdateView()
     {
-        viewCode.text = target.code;
-        viewName.text = target.name;
-        viewInstructor.text = target.instructor;
-        viewLocation.text = target.location;
-        viewTimes.text = target.time;
-        editCode.text = target.code;
-        editName.text = target.name;
-        editInstructor.text = target.instructor;
-        editLocation.text = target.location;
-        editTimes.text = target.time;
+        viewCode.text = _target.Code;
+        viewName.text = _target.Name;
+        viewInstructor.text = _target.Instructor;
+        viewLocation.text = _target.Location;
+        viewTimes.text = _target.Time;
+        editCode.text = _target.Code;
+        editName.text = _target.Name;
+        editInstructor.text = _target.Instructor;
+        editLocation.text = _target.Location;
+        editTimes.text = _target.Time;
     }
 
     public void SaveChanges()
     {
-        target.code = editCode.text;
-        target.name = editName.text;
-        target.instructor = editInstructor.text;
-        target.location = editLocation.text;
-        target.time = editTimes.text;
+        _target.Code = editCode.text;
+        _target.Name = editName.text;
+        _target.Instructor = editInstructor.text;
+        _target.Location = editLocation.text;
+        _target.Time = editTimes.text;
         UpdateView();
-        var targetJson = JsonUtility.ToJson(target);
-        DatabaseConnector.Instance.Root.Child("lectures/" + target.code).SetRawJsonValueAsync(targetJson);
+        var targetJson = JsonUtility.ToJson(_target);
+        DatabaseConnector.Instance.Root.Child("lectures/" + _target.Code).SetRawJsonValueAsync(targetJson);
     }
 
     public void Pin()
     {
-        myLectureCodes.Add(target.code);
-        PinIcon.SetActive(false);
-        UnpinIcon.SetActive(true);
-        var emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + target.code)
+        _myLectureCodes.Add(_target.Code);
+        pinIcon.SetActive(false);
+        unpinIcon.SetActive(true);
+        var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + _target.Code)
             .SetValueAsync("True");
     }
 
     public void Unpin()
     {
-        myLectureCodes.Remove(target.code);
-        PinIcon.SetActive(true);
-        UnpinIcon.SetActive(false);
-        var emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + target.code)
+        _myLectureCodes.Remove(_target.Code);
+        pinIcon.SetActive(true);
+        unpinIcon.SetActive(false);
+        var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + _target.Code)
             .SetValueAsync(null);
     }
 
     public void DetailViewClose()
     {
-        ViewPanel.SetActive(true);
-        EditPanel.SetActive(false);
+        viewPanel.SetActive(true);
+        editPanel.SetActive(false);
     }
 }

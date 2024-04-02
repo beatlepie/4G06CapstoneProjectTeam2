@@ -5,13 +5,14 @@ using System.Text.RegularExpressions;
 using Firebase.Database;
 using UnityEngine;
 using Database;
+using UnityEngine.Serialization;
 
 public class LectureCarousel : MonoBehaviour
 {
-    [SerializeField] private LectureCarouselView _carouselView;
-    public List<Lecture> allLectures;
-    [SerializeField] private string _RoomNumUpperRange;
-    [SerializeField] private string _RoomNumLowerRange;
+    [FormerlySerializedAs("_carouselView")] [SerializeField] private LectureCarouselView carouselView;
+    private List<Lecture> _allLectures;
+    [FormerlySerializedAs("_RoomNumUpperRange")] [SerializeField] private string roomNumUpperRange;
+    [FormerlySerializedAs("_RoomNumLowerRange")] [SerializeField] private string roomNumLowerRange;
 
     private void Start()
     {
@@ -20,13 +21,13 @@ public class LectureCarousel : MonoBehaviour
 
     private void Setup()
     {
-        allLectures = new List<Lecture>();
+        _allLectures = new List<Lecture>();
         StartCoroutine(GetLectures());
     }
 
     private void Cleanup()
     {
-        _carouselView.Cleanup();
+        carouselView.Cleanup();
     }
 
     private IEnumerator GetLectures()
@@ -36,9 +37,9 @@ public class LectureCarousel : MonoBehaviour
         if (lectureData != null)
         {
             var snapshot = lectureData.Result;
-            foreach (var lecture in snapshot.Children) allLectures.Add(Utilities.FormalizeDBLectureData(lecture));
+            foreach (var lecture in snapshot.Children) _allLectures.Add(Utilities.FormalizeDBLectureData(lecture));
             var items = new List<LectureCarouselData>();
-            var filteredLectures = FilterLecturesbyRoom(allLectures, _RoomNumLowerRange, _RoomNumUpperRange);
+            var filteredLectures = FilterLecturesByRoom(_allLectures, roomNumLowerRange, roomNumUpperRange);
             for (var i = 0; i < filteredLectures.Count; i++)
             {
                 var spriteResourceKey = $"tex_demo_banner_{i % 3:D2}";
@@ -48,25 +49,25 @@ public class LectureCarousel : MonoBehaviour
                 items.Add(item);
             }
 
-            _carouselView.Setup(items.ToArray());
+            carouselView.Setup(items.ToArray());
         }
     }
 
-    public static List<Lecture> FilterLecturesbyRoom(List<Lecture> allLectures, string LowerBound, string UpperBound)
+    private static List<Lecture> FilterLecturesByRoom(List<Lecture> allLectures, string lowerBound, string upperBound)
     {
         // E.g. room JHE 103 - JHE 124
         // Find the 3 digit room number, check if the part before room number(e.g. JHE A vs JHE ) is the same and compare room number as a integer
         var regex = new Regex(@"\d+");
-        var roomNumU = regex.Match(UpperBound).Value;
-        var roomNumL = regex.Match(LowerBound).Value;
-        // Assume upperbound and lowerbound have the same prefix
-        var prefix = UpperBound.Split(roomNumU)[0];
+        var roomNumU = regex.Match(upperBound).Value;
+        var roomNumL = regex.Match(lowerBound).Value;
+        // Assume upper bound and lower bound have the same prefix
+        var prefix = upperBound.Split(roomNumU)[0];
         var filteredLectures = new List<Lecture>();
         foreach (var l in allLectures)
         {
-            var targetRoomNum = regex.Match(l.location).Value;
+            var targetRoomNum = regex.Match(l.Location).Value;
             if (string.IsNullOrWhiteSpace(targetRoomNum)) continue;
-            var targetPrefix = l.location.Split(targetRoomNum)[0];
+            var targetPrefix = l.Location.Split(targetRoomNum)[0];
             if ((int.Parse(targetRoomNum) >= int.Parse(roomNumL)) & (int.Parse(targetRoomNum) <= int.Parse(roomNumU)) &
                 (prefix == targetPrefix)) filteredLectures.Add(l);
         }

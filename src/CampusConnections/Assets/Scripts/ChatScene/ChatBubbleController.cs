@@ -18,8 +18,8 @@ public class ChatBubbleController : MonoBehaviour
     // For link to event and lecture
     [SerializeField] private Button msgBubble;
     [SerializeField] public string linkColor;
-    private string targetType;
-    private string targetID;
+    private string _targetType;
+    private string _targetID;
 
     private void Awake()
     {
@@ -37,8 +37,8 @@ public class ChatBubbleController : MonoBehaviour
         var pattern = Utilities.GetActivityPattern(msg);
         if (pattern[0] != "null")
         {
-            targetType = pattern[0];
-            targetID = pattern[1];
+            _targetType = pattern[0];
+            _targetID = pattern[1];
             var polishedMsg = Utilities.PolishChatMessage(msg, linkColor);
             _message.SetText(polishedMsg);
         }
@@ -50,17 +50,17 @@ public class ChatBubbleController : MonoBehaviour
 
     public void clickOnMessage()
     {
-        if (targetType == "lecture")
+        if (_targetType == "lecture")
         {
             SceneManager.LoadScene("LectureScene");
-            LectureManager.defaultSearchOption = "code";
-            LectureManager.defaultSearchString = targetID;
+            LectureManager.DefaultSearchOption = "code";
+            LectureManager.DefaultSearchString = _targetID;
         }
-        else if (targetType == "event")
+        else if (_targetType == "event")
         {
             SceneManager.LoadScene("EventScene");
-            EventManager.defaultSearchOption = "name";
-            EventManager.defaultSearchString = targetID;
+            EventManager.DefaultSearchOption = "name";
+            EventManager.DefaultSearchString = _targetID;
         }
     }
 }

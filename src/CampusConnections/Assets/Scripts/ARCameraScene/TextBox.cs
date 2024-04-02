@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,13 +6,13 @@ public class TextBox : MonoBehaviour
 {
     public TextMeshPro tmp;
     public GameObject surface;
-    private AudioSource clickSound;
+    private AudioSource _clickSound;
     [SerializeField] private string textBoxName;
     [SerializeField] private GameObject carousel;
 
     private void Start()
     {
-        clickSound = GetComponent<AudioSource>();
+        _clickSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -25,18 +23,20 @@ public class TextBox : MonoBehaviour
         surface.transform.localScale = newScale;
         if (Input.GetMouseButtonDown(0))
         {
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-                if (hit.collider.name == textBoxName)
-                {
-                    clickSound.Play();
-                    if (carousel != null)
+            if (Camera.main != null)
+            {
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out var hit, Mathf.Infinity))
+                    if (hit.collider.name == textBoxName)
                     {
-                        GameObject.Find(textBoxName).SetActive(false);
-                        carousel.SetActive(true);
+                        _clickSound.Play();
+                        if (carousel != null)
+                        {
+                            GameObject.Find(textBoxName).SetActive(false);
+                            carousel.SetActive(true);
+                        }
                     }
-                }
+            }
         }
     }
 }

@@ -130,7 +130,7 @@ public class RemoteUserPinController : MonoBehaviour
 
     private IEnumerator GetFriendsList()
     {
-        var emailWithoutDot = Utilities.removeDot(_email);
+        var emailWithoutDot = Utilities.RemoveDot(_email);
         var userData = _dbRoot.Child("users/" + emailWithoutDot + "/friends").GetValueAsync();
         yield return new WaitUntil(() => userData.IsCompleted);
 
@@ -139,7 +139,7 @@ public class RemoteUserPinController : MonoBehaviour
             var snapshot = userData.Result;
             foreach (var x in snapshot.Children)
             {
-                var email = Utilities.addDot(x.Key);
+                var email = Utilities.AddDot(x.Key);
                 _friendEmails.Add(email);
             }
         }

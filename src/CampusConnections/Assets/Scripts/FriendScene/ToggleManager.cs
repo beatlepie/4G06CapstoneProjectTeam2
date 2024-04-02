@@ -1,14 +1,15 @@
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ToggleManager : MonoBehaviour
 {
     public int selected;
     public GameObject option1;
     public GameObject option2;
-    public GameObject ChatUI;
-    public GameObject RequestUI;
+    [FormerlySerializedAs("ChatUI")] public GameObject chatUI;
+    [FormerlySerializedAs("RequestUI")] public GameObject requestUI;
     [SerializeField] private Color selectedBackground;
     [SerializeField] private Color unselectedBackground;
     [SerializeField] private Color selectedTextColor;
@@ -23,7 +24,7 @@ public class ToggleManager : MonoBehaviour
         option2.GetComponent<Image>().color = unselectedBackground;
     }
 
-    public void selectOption1()
+    public void SelectOption1()
     {
         if (selected == 1) return;
         selected = 1;
@@ -31,11 +32,11 @@ public class ToggleManager : MonoBehaviour
         option1.GetComponent<Image>().color = selectedBackground;
         option2.GetComponentInChildren<TMP_Text>().color = unselectedTextColor;
         option2.GetComponent<Image>().color = unselectedBackground;
-        ChatUI.SetActive(true);
-        RequestUI.SetActive(false);
+        chatUI.SetActive(true);
+        requestUI.SetActive(false);
     }
 
-    public void selectOption2()
+    public void SelectOption2()
     {
         if (selected == 2) return;
         selected = 2;
@@ -43,7 +44,7 @@ public class ToggleManager : MonoBehaviour
         option2.GetComponent<Image>().color = selectedBackground;
         option1.GetComponentInChildren<TMP_Text>().color = unselectedTextColor;
         option1.GetComponent<Image>().color = unselectedBackground;
-        ChatUI.SetActive(false);
-        RequestUI.SetActive(true);
+        chatUI.SetActive(false);
+        requestUI.SetActive(true);
     }
 }

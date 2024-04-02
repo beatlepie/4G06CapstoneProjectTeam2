@@ -1,39 +1,38 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Mapbox.Utils;
 using Mapbox.Unity.Map;
 using Mapbox.Unity.Utilities;
 using System.Collections.Generic;
-using Random = UnityEngine.Random;
+using UnityEngine.Serialization;
 
 public class SpawnOnMap : MonoBehaviour
 {
-    [SerializeField] private AbstractMap _map;
+    [FormerlySerializedAs("_map")] [SerializeField] private AbstractMap map;
 
-    [SerializeField] [Geocode] private string[] _locationStrings;
+    [FormerlySerializedAs("_locationStrings")] [SerializeField] [Geocode] private string[] locationStrings;
 
     private Vector2d[] _locations;
 
-    [SerializeField] private float _spawnScale = 100f;
+    [FormerlySerializedAs("_spawnScale")] [SerializeField] private float spawnScale = 100f;
 
-    [SerializeField] private GameObject _markerPrefab;
+    [FormerlySerializedAs("_markerPrefab")] [SerializeField] private GameObject markerPrefab;
 
     private List<GameObject> _spawnedObjects;
     private List<TargetBuilding> _buildingData;
 
     private void Start()
     {
-        _locations = new Vector2d[_locationStrings.Length];
+        _locations = new Vector2d[locationStrings.Length];
         _spawnedObjects = new List<GameObject>();
 
         _buildingData = new List<TargetBuilding>();
-        for (var i = 0; i < _locationStrings.Length; i++)
+        for (var i = 0; i < locationStrings.Length; i++)
         {
-            var locationString = _locationStrings[i];
+            var locationString = locationStrings[i];
             _locations[i] = Conversions.StringToLatLon(locationString);
-            var instance = Instantiate(_markerPrefab);
-            instance.transform.localPosition = _map.GeoToWorldPosition(_locations[i], true);
-            instance.transform.localScale = new Vector3(_spawnScale, _spawnScale, _spawnScale);
+            var instance = Instantiate(markerPrefab);
+            instance.transform.localPosition = map.GeoToWorldPosition(_locations[i]);
+            instance.transform.localScale = new Vector3(spawnScale, spawnScale, spawnScale);
             var data = instance.GetComponent<TargetBuilding>();
             data.buildingCoords = _locations[i];
             data.buildingName = BuildingLocation.Name[locationString];
@@ -51,8 +50,8 @@ public class SpawnOnMap : MonoBehaviour
             var spawnedObject = _spawnedObjects[i];
             var data = _buildingData[i];
             var location = _locations[i];
-            spawnedObject.transform.localPosition = _map.GeoToWorldPosition(location, true);
-            spawnedObject.transform.localScale = new Vector3(_spawnScale, _spawnScale, _spawnScale);
+            spawnedObject.transform.localPosition = map.GeoToWorldPosition(location);
+            spawnedObject.transform.localScale = new Vector3(spawnScale, spawnScale, spawnScale);
             data.buildingCoords = location;
         }
     }

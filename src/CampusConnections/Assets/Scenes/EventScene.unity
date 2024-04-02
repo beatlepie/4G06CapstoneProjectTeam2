@@ -5316,7 +5316,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: clearing
+        m_MethodName: Clearing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7812,7 +7812,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: nextPage
+        m_MethodName: NextPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7824,7 +7824,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: clearing
+        m_MethodName: Clearing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12787,7 +12787,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: clearing
+        m_MethodName: Clearing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13295,7 +13295,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: clearing
+        m_MethodName: Clearing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13307,7 +13307,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: onFilter
+        m_MethodName: OnFilter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15884,7 +15884,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: clearing
+        m_MethodName: Clearing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19181,7 +19181,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: prevPage
+        m_MethodName: PrevPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19193,7 +19193,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: clearing
+        m_MethodName: Clearing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

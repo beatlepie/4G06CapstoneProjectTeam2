@@ -9979,7 +9979,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 125755928}
         m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
-        m_MethodName: onEmailVerificationClick
+        m_MethodName: OnEmailVerificationClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

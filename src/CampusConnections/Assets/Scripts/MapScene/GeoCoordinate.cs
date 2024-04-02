@@ -12,7 +12,7 @@ namespace GeoCoordinatePortable
         /// <summary>
         /// Represents a <see cref="GeoCoordinate"/> object that has unknown latitude and longitude fields.
         /// </summary>
-        public static readonly GeoCoordinate Unknown = new();
+        private static readonly GeoCoordinate Unknown = new();
 
         private double _course;
         private double _horizontalAccuracy;
@@ -24,19 +24,8 @@ namespace GeoCoordinatePortable
         /// <summary>
         /// Initializes a new instance of GeoCoordinate that has no data fields set.
         /// </summary>
-        public GeoCoordinate()
+        private GeoCoordinate()
             : this(double.NaN, double.NaN)
-        {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the GeoCoordinate class from latitude and longitude data.
-        /// </summary>
-        /// <param name="latitude">The latitude of the location. May range from -90.0 to 90.0. </param>
-        /// <param name="longitude">The longitude of the location. May range from -180.0 to 180.0.</param>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">Latitude or longitude is out of range.</exception>
-        public GeoCoordinate(double latitude, double longitude)
-            : this(latitude, longitude, double.NaN)
         {
         }
 
@@ -45,12 +34,11 @@ namespace GeoCoordinatePortable
         /// </summary>
         /// <param name="latitude">Latitude. May range from -90.0 to 90.0.</param>
         /// <param name="longitude">Longitude. May range from -180.0 to 180.0</param>
-        /// <param name="altitude">The altitude in meters. May be negative, 0, positive, or Double.NaN, if unknown.</param>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         ///     latitude, longitude or altitude is out of range.
         /// </exception>
-        public GeoCoordinate(double latitude, double longitude, double altitude)
-            : this(latitude, longitude, altitude, double.NaN, double.NaN, double.NaN, double.NaN)
+        public GeoCoordinate(double latitude, double longitude)
+            : this(latitude, longitude, double.NaN, double.NaN, double.NaN, double.NaN)
         {
         }
 
@@ -60,7 +48,6 @@ namespace GeoCoordinatePortable
         /// </summary>
         /// <param name="latitude">The latitude of the location. May range from -90.0 to 90.0.</param>
         /// <param name="longitude">The longitude of the location. May range from -180.0 to 180.0.</param>
-        /// <param name="altitude">The altitude in meters. May be negative, 0, positive, or Double.NaN, if unknown.</param>
         /// <param name="horizontalAccuracy">
         ///     The accuracy of the latitude and longitude coordinates, in meters. Must be greater
         ///     than or equal to 0. If a value of 0 is supplied to this constructor, the HorizontalAccuracy property will be set to
@@ -81,12 +68,11 @@ namespace GeoCoordinatePortable
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         ///     If latitude, longitude, horizontalAccuracy, verticalAccuracy, course is out of range.
         /// </exception>
-        public GeoCoordinate(double latitude, double longitude, double altitude, double horizontalAccuracy,
+        private GeoCoordinate(double latitude, double longitude, double horizontalAccuracy,
             double verticalAccuracy, double speed, double course)
         {
             Latitude = latitude;
             Longitude = longitude;
-            Altitude = altitude;
             HorizontalAccuracy = horizontalAccuracy;
             VerticalAccuracy = verticalAccuracy;
             Speed = speed;
@@ -100,13 +86,13 @@ namespace GeoCoordinatePortable
         ///     Latitude of the location.
         /// </returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException">Latitude is set outside the valid range.</exception>
-        public double Latitude
+        private double Latitude
         {
             get => _latitude;
             set
             {
-                if (value > 90.0 || value < -90.0)
-                    throw new ArgumentOutOfRangeException("Latitude", "Argument must be in range of -90 to 90");
+                if (value is > 90.0 or < -90.0)
+                    throw new ArgumentOutOfRangeException(nameof(Latitude), "Argument must be in range of -90 to 90");
                 _latitude = value;
             }
         }
@@ -118,13 +104,13 @@ namespace GeoCoordinatePortable
         ///     The longitude.
         /// </returns>
         /// <exception cref="T:System.ArgumentOutOfRangeException">Longitude is set outside the valid range.</exception>
-        public double Longitude
+        private double Longitude
         {
             get => _longitude;
             set
             {
-                if (value > 180.0 || value < -180.0)
-                    throw new ArgumentOutOfRangeException("Longitude", "Argument must be in range of -180 to 180");
+                if (value is > 180.0 or < -180.0)
+                    throw new ArgumentOutOfRangeException(nameof(Longitude), "Argument must be in range of -180 to 180");
                 _longitude = value;
             }
         }
@@ -142,7 +128,7 @@ namespace GeoCoordinatePortable
             set
             {
                 if (value < 0.0)
-                    throw new ArgumentOutOfRangeException("HorizontalAccuracy", "Argument must be non negative");
+                    throw new ArgumentOutOfRangeException(nameof(HorizontalAccuracy), "Argument must be non negative");
                 _horizontalAccuracy = value == 0.0 ? double.NaN : value;
             }
         }
@@ -160,7 +146,7 @@ namespace GeoCoordinatePortable
             set
             {
                 if (value < 0.0)
-                    throw new ArgumentOutOfRangeException("VerticalAccuracy", "Argument must be non negative");
+                    throw new ArgumentOutOfRangeException(nameof(VerticalAccuracy), "Argument must be non negative");
                 _verticalAccuracy = value == 0.0 ? double.NaN : value;
             }
         }
@@ -178,7 +164,7 @@ namespace GeoCoordinatePortable
             set
             {
                 if (value < 0.0)
-                    throw new ArgumentOutOfRangeException("speed", "Argument must be non negative");
+                    throw new ArgumentOutOfRangeException($"speed", "Argument must be non negative");
                 _speed = value;
             }
         }
@@ -195,8 +181,8 @@ namespace GeoCoordinatePortable
             get => _course;
             set
             {
-                if (value < 0.0 || value > 360.0)
-                    throw new ArgumentOutOfRangeException("course", "Argument must be in range 0 to 360");
+                if (value is < 0.0 or > 360.0)
+                    throw new ArgumentOutOfRangeException($"course", "Argument must be in range 0 to 360");
                 _course = value;
             }
         }
@@ -208,14 +194,6 @@ namespace GeoCoordinatePortable
         ///     true if the GeoCoordinate does not contain latitude or longitude data; otherwise, false.
         /// </returns>
         public bool IsUnknown => Equals(Unknown);
-
-        /// <summary>
-        ///     Gets the altitude of the GeoCoordinate, in meters.
-        /// </summary>
-        /// <returns>
-        ///     The altitude, in meters.
-        /// </returns>
-        public double Altitude { get; set; }
 
         /// <summary>
         ///     Determines if the GeoCoordinate object is equivalent to the parameter, based solely on latitude and longitude.

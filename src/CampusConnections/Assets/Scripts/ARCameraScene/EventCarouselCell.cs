@@ -1,35 +1,36 @@
 ﻿using FancyCarouselView.Runtime.Scripts;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class EventCarouselCell : CarouselCell<EventCarouselData, EventCarouselCell>
 {
-    [SerializeField] private Image _image;
-    [SerializeField] private TMP_Text _name;
-    [SerializeField] private TMP_Text _description;
-    [SerializeField] private TMP_Text _location;
-    [SerializeField] private TMP_Text _organizer;
-    [SerializeField] private Button _button;
+    [FormerlySerializedAs("_image")] [SerializeField] private Image image;
+    [FormerlySerializedAs("_name")] [SerializeField] private TMP_Text eventName;
+    [FormerlySerializedAs("_description")] [SerializeField] private TMP_Text description;
+    [FormerlySerializedAs("_location")] [SerializeField] private TMP_Text location;
+    [FormerlySerializedAs("_organizer")] [SerializeField] private TMP_Text organizer;
+    [FormerlySerializedAs("_button")] [SerializeField] private Button button;
 
     private EventCarouselData _data;
 
     protected override void Refresh(EventCarouselData data)
     {
         _data = data;
-        _image.sprite = Resources.Load<Sprite>("Carousel_Background/" + data.SpriteResourceKey);
-        _name.text = data.eve.name;
-        _description.text = data.eve.description;
-        _location.text = data.eve.location;
-        _organizer.text = data.eve.organizer;
+        image.sprite = Resources.Load<Sprite>("Carousel_Background/" + data.SpriteResourceKey);
+        eventName.text = data.EventRef.Name;
+        description.text = data.EventRef.Description;
+        location.text = data.EventRef.Location;
+        organizer.text = data.EventRef.Organizer;
     }
 
     protected override void OnVisibilityChanged(bool visibility)
     {
         if (visibility)
-            _button.onClick.AddListener(OnClick);
+            button.onClick.AddListener(OnClick);
         else
-            _button.onClick.RemoveListener(OnClick);
+            button.onClick.RemoveListener(OnClick);
     }
 
     private void OnClick()

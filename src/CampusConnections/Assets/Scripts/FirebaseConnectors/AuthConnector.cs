@@ -1,7 +1,5 @@
 ﻿using Database;
-using Firebase;
 using Firebase.Auth;
-using Firebase.Database;
 using UnityEngine;
 
 namespace Auth
@@ -14,7 +12,7 @@ namespace Auth
         public FirebaseUser CurrentUser { get; private set; }
         public bool IsEmailVerified { get; set; }
 
-        public PermissonLevel Perms { get; set; }
+        public PermissionLevel Perms { get; set; }
 
         /// <summary>
         /// Unity function that is called when application is started.

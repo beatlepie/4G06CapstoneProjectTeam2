@@ -3,25 +3,25 @@
 [System.Serializable]
 public class RemoteUserLocation
 {
-    private string email = "";
-    private float lat;
-    private float lng;
+    private string _email = "";
+    private float _lat;
+    private float _lng;
 
     public float Latitude
     {
-        get => lat;
-        set => lat = value;
+        get => _lat;
+        set => _lat = value;
     }
 
     public float Longitude
     {
-        get => lng;
-        set => lng = value;
+        get => _lng;
+        set => _lng = value;
     }
 
     public string Email
     {
-        get => email;
-        set => email = value;
+        get => _email;
+        set => _email = value;
     }
 }

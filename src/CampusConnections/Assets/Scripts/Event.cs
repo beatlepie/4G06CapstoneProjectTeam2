@@ -2,39 +2,39 @@ using System;
 
 public class Event
 {
-    public string name;
-    public long time;
-    public int duration;
-    public string organizer;
-    public string description;
-    public string location;
-    public bool isPublic;
-    public static long defaultTime = 1695056400; // Start date of project
-    public static int defaultDuration = 30; // Minimium 30 mins
-    public static string placeholder = "NA";
+    public string Name;
+    public long Time;
+    public int Duration;
+    public string Organizer;
+    public string Description;
+    public string Location;
+    public bool IsPublic;
+    public const long DefaultTime = 1695056400; // Start date of project
+    public const int DefaultDuration = 30; // Minimum 30 minutes
+    public const string Placeholder = "NA";
 
     public Event(string name)
     {
-        // Default evet
-        this.name = name;
-        time = defaultTime;
-        duration = defaultDuration;
-        organizer = placeholder;
-        description = placeholder;
-        location = placeholder;
-        isPublic = false;
+        // Default event
+        this.Name = name;
+        Time = DefaultTime;
+        Duration = DefaultDuration;
+        Organizer = Placeholder;
+        Description = Placeholder;
+        Location = Placeholder;
+        IsPublic = false;
     }
 
     public Event(string name, long time, int duration, string organizer, string description, string location,
         bool isPublic)
     {
         // Event with all information
-        this.name = name;
-        this.time = time;
-        this.duration = duration;
-        this.organizer = organizer;
-        this.description = description;
-        this.location = location;
-        this.isPublic = isPublic;
+        this.Name = name;
+        this.Time = time;
+        this.Duration = duration;
+        this.Organizer = organizer;
+        this.Description = description;
+        this.Location = location;
+        this.IsPublic = isPublic;
     }
 }

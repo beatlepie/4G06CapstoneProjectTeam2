@@ -4,49 +4,49 @@ using System.Linq;
 using System.Collections.Generic;
 using Database;
 using Auth;
-using Firebase.Database;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class FriendManager : MonoBehaviour
 {
-    [Header("Chat")] public List<User> friends;
+    [Header("Chat")] private List<User> _friends;
     [SerializeField] private Transform friendEntryContainer;
     [SerializeField] private Transform friendEntryTemplate;
-    private List<Transform> friendEntryTransformList;
-    private GameObject deleteTarget;
-    public const int friendEntryHeight = 300;
+    private List<Transform> _friendEntryTransformList;
+    private GameObject _deleteTarget;
+    private const int FriendEntryHeight = 300;
 
-    [Header("Invitation")] public List<User> requesters;
+    [Header("Invitation")] private List<User> _requesters;
     [SerializeField] private Transform requestEntryContainer;
     [SerializeField] private Transform requestEntryTemplate;
-    private List<Transform> requestEntryTransformList;
+    private List<Transform> _requestEntryTransformList;
 
-    public const int requestEntryHeight = 150;
+    private const int RequestEntryHeight = 150;
 
-    [Header("Comfirmation")] [SerializeField]
-    private GameObject Confirmation;
+    [FormerlySerializedAs("Confirmation")] [Header("Confirmation")] [SerializeField]
+    private GameObject confirmation;
 
     public TMP_Text confirmationText;
 
-    [Header("Notification")] [SerializeField]
-    private GameObject Notification;
+    [FormerlySerializedAs("Notification")] [Header("Notification")] [SerializeField]
+    private GameObject notification;
 
     public TMP_Text notificationText;
 
     private void Awake()
     {
-        friendEntryTransformList = new List<Transform>();
-        requestEntryTransformList = new List<Transform>();
-        createFriendList();
-        createRequestList();
+        _friendEntryTransformList = new List<Transform>();
+        _requestEntryTransformList = new List<Transform>();
+        CreateFriendList();
+        CreateRequestList();
     }
 
     private IEnumerator GetFriends(Action<List<User>> onCallBack)
     {
-        var emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
+        var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
         var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/friends").GetValueAsync();
         yield return new WaitUntil(() => userData.IsCompleted);
         if (userData != null)
@@ -55,15 +55,11 @@ public class FriendManager : MonoBehaviour
             var snapshot = userData.Result;
             foreach (var x in snapshot.Children)
             {
-                var email = Utilities.addDot(x.Key.ToString());
-                var friendData = DatabaseConnector.Instance.Root.Child("users/" + x.Key.ToString()).GetValueAsync();
+                var friendData = DatabaseConnector.Instance.Root.Child("users/" + x.Key).GetValueAsync();
                 yield return new WaitUntil(() => friendData.IsCompleted);
                 var friendSnapshot = friendData.Result;
-                if (friendData != null)
-                {
-                    var friend = Utilities.FormalizeDBUserData(friendSnapshot);
-                    friends.Add(friend);
-                }
+                var friend = Utilities.FormalizeDBUserData(friendSnapshot);
+                friends.Add(friend);
             }
 
             onCallBack.Invoke(friends);
@@ -72,7 +68,7 @@ public class FriendManager : MonoBehaviour
 
     private IEnumerator GetInvitations(Action<List<User>> onCallBack)
     {
-        var emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
+        var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
         var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/invitations")
             .GetValueAsync();
         yield return new WaitUntil(() => userData.IsCompleted);
@@ -82,79 +78,75 @@ public class FriendManager : MonoBehaviour
             var snapshot = userData.Result;
             foreach (var x in snapshot.Children)
             {
-                var email = Utilities.addDot(x.Key.ToString());
-                var requesterData = DatabaseConnector.Instance.Root.Child("users/" + x.Key.ToString()).GetValueAsync();
+                var requesterData = DatabaseConnector.Instance.Root.Child("users/" + x.Key).GetValueAsync();
                 yield return new WaitUntil(() => requesterData.IsCompleted);
                 var requesterSnapshot = requesterData.Result;
-                if (requesterData != null)
-                {
-                    var requester = Utilities.FormalizeDBUserData(requesterSnapshot);
-                    requesters.Add(requester);
-                }
+                var requester = Utilities.FormalizeDBUserData(requesterSnapshot);
+                requesters.Add(requester);
             }
 
             onCallBack.Invoke(requesters);
         }
     }
 
-    private void refreshFriendList()
+    private void RefreshFriendList()
     {
         // Update transforms of all friend templates once friends changes (accept/ignore)
-        for (var i = 0; i < friends.Count; i++)
+        for (var i = 0; i < _friends.Count; i++)
         {
-            var entryRectTransform = friendEntryTransformList[i].GetComponent<RectTransform>();
-            entryRectTransform.anchoredPosition = new Vector2(0, -friendEntryHeight * i);
+            var entryRectTransform = _friendEntryTransformList[i].GetComponent<RectTransform>();
+            entryRectTransform.anchoredPosition = new Vector2(0, -FriendEntryHeight * i);
         }
 
-        if (friendEntryHeight * friends.Count > 1460)
+        if (FriendEntryHeight * _friends.Count > 1460)
             // If the friend list is short, the default container height is viewport height (1460)
             friendEntryContainer.GetComponent<RectTransform>().sizeDelta =
-                new Vector2(800, friendEntryHeight * friends.Count);
+                new Vector2(800, FriendEntryHeight * _friends.Count);
     }
 
-    private void createFriendList()
+    private void CreateFriendList()
     {
-        StartCoroutine(GetFriends((List<User> data) =>
+        StartCoroutine(GetFriends(data =>
         {
-            friends = data;
-            foreach (var friend in friends)
+            _friends = data;
+            foreach (var friend in _friends)
             {
                 var entryTransform = Instantiate(friendEntryTemplate, friendEntryContainer);
                 var entryRectTransform = entryTransform.GetComponent<RectTransform>();
                 entryRectTransform.anchoredPosition =
-                    new Vector2(0, -friendEntryHeight * friendEntryTransformList.Count);
+                    new Vector2(0, -FriendEntryHeight * _friendEntryTransformList.Count);
                 entryTransform.gameObject.SetActive(true);
-                entryTransform.Find("Email").GetComponent<TMP_Text>().text = friend.email;
-                entryTransform.Find("Name").GetComponent<TMP_Text>().text = friend.nickName;
-                friendEntryTransformList.Add(entryTransform);
+                entryTransform.Find("Email").GetComponent<TMP_Text>().text = friend.Email;
+                entryTransform.Find("Name").GetComponent<TMP_Text>().text = friend.NickName;
+                _friendEntryTransformList.Add(entryTransform);
             }
 
-            if (friendEntryHeight * friends.Count > 1460)
+            if (FriendEntryHeight * _friends.Count > 1460)
                 // If the friend list is short, the default container height is viewport height (1460)
                 friendEntryContainer.GetComponent<RectTransform>().sizeDelta =
-                    new Vector2(800, friendEntryHeight * friends.Count);
+                    new Vector2(800, FriendEntryHeight * _friends.Count);
         }));
     }
 
-    public void onFriendDeleteClick()
+    public void OnFriendDeleteClick()
     {
         var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         var targetName = template.transform.Find("Name").GetComponent<TMP_Text>().text;
         confirmationText.text = "Are you sure you want to delete this friend, <color=#0000FF>" + targetName +
                                 "</color> from the list?";
-        deleteTarget = template;
+        _deleteTarget = template;
     }
 
     public void OnFriendDeleteConfirm()
     {
-        var targetEmail = deleteTarget.transform.Find("Email").GetComponent<TMP_Text>().text;
-        var userEmailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        var targetEmailWithoutDot = Utilities.removeDot(targetEmail);
-        // Remove friend with that email from friend and tranform list
-        friends.RemoveAll(friend => friend.email == targetEmail);
-        Destroy(deleteTarget);
-        friendEntryTransformList.Remove(deleteTarget.transform);
-        refreshFriendList();
+        var targetEmail = _deleteTarget.transform.Find("Email").GetComponent<TMP_Text>().text;
+        var userEmailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
+        var targetEmailWithoutDot = Utilities.RemoveDot(targetEmail);
+        // Remove friend with that email from friend and transform list
+        _friends.RemoveAll(friend => friend.Email == targetEmail);
+        Destroy(_deleteTarget);
+        _friendEntryTransformList.Remove(_deleteTarget.transform);
+        RefreshFriendList();
         // Remove target user from current user list in database
         DatabaseConnector.Instance.Root.Child("users/" + userEmailWithoutDot + "/friends/" + targetEmailWithoutDot)
             .SetValueAsync(null);
@@ -163,13 +155,13 @@ public class FriendManager : MonoBehaviour
             .SetValueAsync(null);
     }
 
-    public void OnFriendViewclick()
+    public void OnFriendViewClick()
     {
         var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         var targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
-        SettingsManager.queryEmail = targetEmail;
-        SettingsManager.currentUser = false;
-        SettingsManager.state = 0;
+        SettingsManager.QueryEmail = targetEmail;
+        SettingsManager.CurrentUser = false;
+        SettingsManager.State = 0;
         SceneManager.LoadScene("SettingsScene");
     }
 
@@ -178,57 +170,57 @@ public class FriendManager : MonoBehaviour
         var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         var targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
 
-        foreach (var friend in friends.Where(friend => friend.email == targetEmail))
+        foreach (var friend in _friends.Where(friend => friend.Email == targetEmail))
         {
-            PlayerPrefs.SetString("LatestChatFriend", friend.nickName);
+            PlayerPrefs.SetString("LatestChatFriend", friend.NickName);
             PlayerPrefs.Save();
         }
 
         SceneManager.LoadScene("ChatScene");
     }
 
-    private void refreshRequestList()
+    private void RefreshRequestList()
     {
         // Update transforms of all request templates once requests changes (accept/ignore)
-        for (var i = 0; i < requesters.Count; i++)
+        for (var i = 0; i < _requesters.Count; i++)
         {
-            var entryRectTransform = requestEntryTransformList[i].GetComponent<RectTransform>();
-            entryRectTransform.anchoredPosition = new Vector2(0, -requestEntryHeight * i);
+            var entryRectTransform = _requestEntryTransformList[i].GetComponent<RectTransform>();
+            entryRectTransform.anchoredPosition = new Vector2(0, -RequestEntryHeight * i);
         }
 
-        if (requestEntryHeight * requesters.Count > 1460)
+        if (RequestEntryHeight * _requesters.Count > 1460)
             // If the request list is short, the default container height is viewport height (1460)
             requestEntryContainer.GetComponent<RectTransform>().sizeDelta =
-                new Vector2(800, requestEntryHeight * requesters.Count);
+                new Vector2(800, RequestEntryHeight * _requesters.Count);
     }
 
-    private void createRequestList()
+    private void CreateRequestList()
     {
-        StartCoroutine(GetInvitations((List<User> data) =>
+        StartCoroutine(GetInvitations(data =>
         {
-            requesters = data;
-            foreach (var requester in requesters)
+            _requesters = data;
+            foreach (var requester in _requesters)
             {
                 var entryTransform = Instantiate(requestEntryTemplate, requestEntryContainer);
                 var entryRectTransform = entryTransform.GetComponent<RectTransform>();
                 entryRectTransform.anchoredPosition =
-                    new Vector2(0, -requestEntryHeight * requestEntryTransformList.Count);
+                    new Vector2(0, -RequestEntryHeight * _requestEntryTransformList.Count);
                 entryTransform.gameObject.SetActive(true);
-                entryTransform.Find("Email").GetComponent<TMP_Text>().text = requester.email;
-                requestEntryTransformList.Add(entryTransform);
+                entryTransform.Find("Email").GetComponent<TMP_Text>().text = requester.Email;
+                _requestEntryTransformList.Add(entryTransform);
             }
 
-            if (requestEntryHeight * requesters.Count > 1460)
+            if (RequestEntryHeight * _requesters.Count > 1460)
                 // If the request list is short, the default container height is viewport height (1460)
                 requestEntryContainer.GetComponent<RectTransform>().sizeDelta =
-                    new Vector2(800, requestEntryHeight * requesters.Count);
+                    new Vector2(800, RequestEntryHeight * _requesters.Count);
         }));
     }
 
     public void AddFriendHelpMsg()
     {
         StartCoroutine(CheckUserByEmail());
-        Notification.SetActive(true);
+        notification.SetActive(true);
     }
 
     private IEnumerator CheckUserByEmail()
@@ -241,15 +233,14 @@ public class FriendManager : MonoBehaviour
             yield break;
         }
 
-        var senderEmailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        var receiverEmailWithoutDot = Utilities.removeDot(email);
+        var senderEmailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
+        var receiverEmailWithoutDot = Utilities.RemoveDot(email);
         var userData = DatabaseConnector.Instance.Root.Child("users/" + receiverEmailWithoutDot).GetValueAsync();
         var invitationData = DatabaseConnector.Instance.Root
             .Child("users/" + receiverEmailWithoutDot + "/invitations/" + senderEmailWithoutDot).GetValueAsync();
         yield return new WaitUntil(() => invitationData.IsCompleted && userData.IsCompleted);
         if (invitationData != null && userData != null)
         {
-            var invitationSnapshot = invitationData.Result;
             if (!userData.Result.Exists)
             {
                 // Invalid email
@@ -257,7 +248,7 @@ public class FriendManager : MonoBehaviour
             }
             else if (invitationData.Result.Exists)
             {
-                // Duplicated reques
+                // Duplicated request
                 notificationText.text = "<color=#ff9800>Friend request has been sent, please wait.";
             }
             else
@@ -270,18 +261,18 @@ public class FriendManager : MonoBehaviour
         }
     }
 
-    public void OnRequestAcceptclick()
+    public void OnRequestAcceptClick()
     {
         var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         var targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
-        var userEmailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        var requesterEmailWithoutDot = Utilities.removeDot(targetEmail);
-        // Remove invitation from requests and tranform list
-        var targetUser = requesters.Find(requester => requester.email == targetEmail);
-        requesters.Remove(targetUser);
+        var userEmailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
+        var requesterEmailWithoutDot = Utilities.RemoveDot(targetEmail);
+        // Remove invitation from requests and transform list
+        var targetUser = _requesters.Find(requester => requester.Email == targetEmail);
+        _requesters.Remove(targetUser);
         Destroy(template);
-        requestEntryTransformList.Remove(template.transform);
-        refreshRequestList();
+        _requestEntryTransformList.Remove(template.transform);
+        RefreshRequestList();
         // Remove invitation from database
         DatabaseConnector.Instance.Root
             .Child("users/" + userEmailWithoutDot + "/invitations/" + requesterEmailWithoutDot).SetValueAsync(null);
@@ -291,27 +282,27 @@ public class FriendManager : MonoBehaviour
         DatabaseConnector.Instance.Root.Child("users/" + requesterEmailWithoutDot + "/friends/" + userEmailWithoutDot)
             .SetValueAsync(true);
         // Add new User to friend and transform list so that friend page can get updated
-        friends.Add(targetUser);
+        _friends.Add(targetUser);
         var entryTransform = Instantiate(friendEntryTemplate, friendEntryContainer);
         var entryRectTransform = entryTransform.GetComponent<RectTransform>();
-        entryRectTransform.anchoredPosition = new Vector2(0, -friendEntryHeight * friendEntryTransformList.Count);
+        entryRectTransform.anchoredPosition = new Vector2(0, -FriendEntryHeight * _friendEntryTransformList.Count);
         entryTransform.gameObject.SetActive(true);
-        entryTransform.Find("Email").GetComponent<TMP_Text>().text = targetUser.email;
-        friendEntryTransformList.Add(entryTransform);
-        refreshFriendList();
+        entryTransform.Find("Email").GetComponent<TMP_Text>().text = targetUser.Email;
+        _friendEntryTransformList.Add(entryTransform);
+        RefreshFriendList();
     }
 
-    public void OnRequestIgnoreclick()
+    public void OnRequestIgnoreClick()
     {
         var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         var targetEmail = template.transform.Find("Email").GetComponent<TMP_Text>().text;
-        var userEmailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        var requesterEmailWithoutDot = Utilities.removeDot(targetEmail);
-        // Remove invitation from requests and tranform list
-        requesters.RemoveAll(requester => requester.email == targetEmail);
+        var userEmailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
+        var requesterEmailWithoutDot = Utilities.RemoveDot(targetEmail);
+        // Remove invitation from requests and transform list
+        _requesters.RemoveAll(requester => requester.Email == targetEmail);
         Destroy(template);
-        requestEntryTransformList.Remove(template.transform);
-        refreshRequestList();
+        _requestEntryTransformList.Remove(template.transform);
+        RefreshRequestList();
         // Remove invitation from database
         DatabaseConnector.Instance.Root
             .Child("users/" + userEmailWithoutDot + "/invitations/" + requesterEmailWithoutDot).SetValueAsync(null);

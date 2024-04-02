@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Auth;
-using Firebase.Database;
 using Firebase.Auth;
 using TMPro;
 using System.Collections;
@@ -10,33 +9,33 @@ using System.Collections.Generic;
 using Database;
 using UnityEngine.UI;
 using UnityEngine.Networking;
-using System.Threading.Tasks;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 public class SettingsManager : MonoBehaviour
 {
     // These are used to open the profile page for other users
-    public static bool currentUser;
-    public static string queryEmail;
-    public static int state;
+    public static bool CurrentUser;
+    public static string QueryEmail;
+    public static int State;
 
-    [Header("Canvas")]
+    [FormerlySerializedAs("DisplayCanvas")] [Header("Canvas")]
     // Canvas containing user information
-    public GameObject DisplayCanvas;
+    public GameObject displayCanvas;
 
     // Canvas handling the edit of user information
-    public GameObject EditCanvas;
-    public GameObject PasswordCanvas;
-    public GameObject PinnedLectureCanvas;
-    public GameObject PinnedEventCanvas;
-    public GameObject ConfirmationCanvas;
+    [FormerlySerializedAs("EditCanvas")] public GameObject editCanvas;
+    [FormerlySerializedAs("PasswordCanvas")] public GameObject passwordCanvas;
+    [FormerlySerializedAs("PinnedLectureCanvas")] public GameObject pinnedLectureCanvas;
+    [FormerlySerializedAs("PinnedEventCanvas")] public GameObject pinnedEventCanvas;
+    [FormerlySerializedAs("ConfirmationCanvas")] public GameObject confirmationCanvas;
 
-    [Header("Buttons")]
+    [FormerlySerializedAs("EditButton")] [Header("Buttons")]
     // Edit button in display canvas
-    public GameObject EditButton;
+    public GameObject editButton;
 
-    public GameObject ChangePasswordButton;
-    public GameObject VerifyEmailButton;
+    [FormerlySerializedAs("ChangePasswordButton")] public GameObject changePasswordButton;
+    [FormerlySerializedAs("VerifyEmailButton")] public GameObject verifyEmailButton;
 
     [Header("Values")]
     // UserID, immutable value, for display and edit canvas
@@ -59,19 +58,19 @@ public class SettingsManager : MonoBehaviour
     public TMP_InputField profileImageLink;
 
     // These values are used during change password
-    public TMP_InputField CurrentPassword;
-    public TMP_InputField NewPassword;
-    public TMP_InputField ConfirmPassword;
+    [FormerlySerializedAs("CurrentPassword")] public TMP_InputField currentPassword;
+    [FormerlySerializedAs("NewPassword")] public TMP_InputField newPassword;
+    [FormerlySerializedAs("ConfirmPassword")] public TMP_InputField confirmPassword;
 
-    [Header("BookmarkedLecture")] [SerializeField]
-    private Transform PinnedLectureTemplate;
+    [FormerlySerializedAs("PinnedLectureTemplate")] [Header("BookmarkedLecture")] [SerializeField]
+    private Transform pinnedLectureTemplate;
 
-    [SerializeField] private Transform PinnedLectureView;
+    [FormerlySerializedAs("PinnedLectureView")] [SerializeField] private Transform pinnedLectureView;
 
-    [Header("BookmarkedEvent")] [SerializeField]
-    private Transform PinnedEventTemplate;
+    [FormerlySerializedAs("PinnedEventTemplate")] [Header("BookmarkedEvent")] [SerializeField]
+    private Transform pinnedEventTemplate;
 
-    [SerializeField] private Transform PinnedEventView;
+    [FormerlySerializedAs("PinnedEventView")] [SerializeField] private Transform pinnedEventView;
 
     [Header("EmailVerification")] public TMP_Text notificationText;
 
@@ -79,50 +78,47 @@ public class SettingsManager : MonoBehaviour
     {
         // Default values for profile page.
         // Display is the default view
-        DisplayCanvas.SetActive(true);
-        EditCanvas.SetActive(false);
-        PasswordCanvas.SetActive(false);
-        PinnedLectureCanvas.SetActive(false);
-        PinnedEventCanvas.SetActive(false);
-        ConfirmationCanvas.SetActive(false);
+        displayCanvas.SetActive(true);
+        editCanvas.SetActive(false);
+        passwordCanvas.SetActive(false);
+        pinnedLectureCanvas.SetActive(false);
+        pinnedEventCanvas.SetActive(false);
+        confirmationCanvas.SetActive(false);
         // If the id is not the user, then remove the edit buttons!
-        if (!currentUser)
+        if (!CurrentUser)
         {
-            EditButton.SetActive(false);
-            ChangePasswordButton.SetActive(false);
+            editButton.SetActive(false);
+            changePasswordButton.SetActive(false);
         }
         else
         {
-            queryEmail = AuthConnector.Instance.CurrentUser.Email;
-            EditButton.SetActive(true);
-            ChangePasswordButton.SetActive(true);
+            QueryEmail = AuthConnector.Instance.CurrentUser.Email;
+            editButton.SetActive(true);
+            changePasswordButton.SetActive(true);
         }
 
         // If email is verified, do not display email verification button!
-        if (AuthConnector.Instance.IsEmailVerified | (AuthConnector.Instance.CurrentUser.Email != queryEmail))
-            VerifyEmailButton.SetActive(false);
+        if (AuthConnector.Instance.IsEmailVerified | (AuthConnector.Instance.CurrentUser.Email != QueryEmail))
+            verifyEmailButton.SetActive(false);
         else
-            VerifyEmailButton.SetActive(true);
+            verifyEmailButton.SetActive(true);
 
         // Based on where the scene was called from, load respective screens first!
-        switch (state)
+        switch (State)
         {
             // bookmarked lectures
             case 1:
-                DisplayCanvas.SetActive(false);
-                PinnedLectureCanvas.SetActive(true);
+                displayCanvas.SetActive(false);
+                pinnedLectureCanvas.SetActive(true);
                 break;
             // bookmarked events
             case 2:
-                DisplayCanvas.SetActive(false);
-                PinnedEventCanvas.SetActive(true);
-                break;
-
-            default:
+                displayCanvas.SetActive(false);
+                pinnedEventCanvas.SetActive(true);
                 break;
         }
 
-        StartCoroutine(getDBdata((List<string> data) =>
+        StartCoroutine(GetDBData(data =>
         {
             userIDDisplay.text = data[0];
             username.text = data[2];
@@ -130,25 +126,25 @@ public class SettingsManager : MonoBehaviour
             program.text = data[3];
             profileImageLink.text = data[4];
 
-            StartCoroutine(getImage(data[4]));
+            StartCoroutine(GetImage(data[4]));
         }));
 
-        favorites();
+        Favorites();
     }
 
-    private void favorites()
+    private void Favorites()
     {
         //NO lectures are visible for guest accounts
-        if (AuthConnector.Instance.Perms != PermissonLevel.Guest)
-            StartCoroutine(getPinnedLectures((List<string> data) =>
+        if (AuthConnector.Instance.Perms != PermissionLevel.Guest)
+            StartCoroutine(GetPinnedLectures(data =>
             {
                 var entryHeight = -200;
 
                 for (var i = 0; i < data.Count; i = i + 3)
                 {
-                    var entryTransform = Instantiate(PinnedLectureTemplate, PinnedLectureView);
+                    var entryTransform = Instantiate(pinnedLectureTemplate, pinnedLectureView);
                     var entryRectTransform = entryTransform.GetComponent<RectTransform>();
-                    entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i / 3);
+                    entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i / 3f);
                     entryTransform.gameObject.SetActive(true);
 
                     entryTransform.Find("Code").GetComponent<TMP_Text>().text = data[i];
@@ -156,14 +152,14 @@ public class SettingsManager : MonoBehaviour
                     entryTransform.Find("Location").GetComponent<TMP_Text>().text = data[i + 2];
                 }
             }));
-        StartCoroutine(getPinnedEvents((List<string> data) =>
+        StartCoroutine(GetPinnedEvents(data =>
         {
             var entryHeight = -200;
             for (var i = 0; i < data.Count; i = i + 3)
             {
-                var entryTransform = Instantiate(PinnedEventTemplate, PinnedEventView);
+                var entryTransform = Instantiate(pinnedEventTemplate, pinnedEventView);
                 var entryRectTransform = entryTransform.GetComponent<RectTransform>();
-                entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i / 3);
+                entryRectTransform.anchoredPosition = new Vector2(0, -660 + entryHeight * i / 3f);
                 entryTransform.gameObject.SetActive(true);
 
                 entryTransform.Find("Name").GetComponent<TMP_Text>().text = data[i];
@@ -178,10 +174,10 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     /// <param name="onCallBack">List to be returned.</param>
     /// <returns>Returns list of lectures that are pinned by the user. </returns>
-    private IEnumerator getPinnedLectures(Action<List<string>> onCallBack)
+    private static IEnumerator GetPinnedLectures(Action<List<string>> onCallBack)
     {
         //Currently a duplicate of a function in the lecture view side!
-        var emailWithoutDot = Utilities.removeDot(queryEmail);
+        var emailWithoutDot = Utilities.RemoveDot(QueryEmail);
         var dbRoot = DatabaseConnector.Instance.Root;
         var userData = dbRoot.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
         yield return new WaitUntil(() => userData.IsCompleted);
@@ -191,9 +187,9 @@ public class SettingsManager : MonoBehaviour
             var snapshot = userData.Result;
             foreach (var x in snapshot.Children)
             {
-                pinnedLectures.Add(x.Key.ToString());
+                pinnedLectures.Add(x.Key);
 
-                var lecture = dbRoot.Child("lectures").Child(x.Key.ToString()).GetValueAsync();
+                var lecture = dbRoot.Child("lectures").Child(x.Key).GetValueAsync();
                 yield return new WaitUntil(() => lecture.IsCompleted);
 
                 pinnedLectures.Add(lecture.Result.Child("instructor").Value.ToString());
@@ -209,10 +205,10 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     /// <param name="onCallBack">List to be returned.</param>
     /// <returns>Returns list of events that are pinned by the user. </returns>
-    private IEnumerator getPinnedEvents(Action<List<string>> onCallBack)
+    private static IEnumerator GetPinnedEvents(Action<List<string>> onCallBack)
     {
         //Currently a duplicate of a function in the lecture view side!
-        var emailWithoutDot = Utilities.removeDot(queryEmail);
+        var emailWithoutDot = Utilities.RemoveDot(QueryEmail);
         var dbRoot = DatabaseConnector.Instance.Root;
         var userData = dbRoot.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
         yield return new WaitUntil(() => userData.IsCompleted);
@@ -222,19 +218,19 @@ public class SettingsManager : MonoBehaviour
             var snapshot = userData.Result;
             foreach (var x in snapshot.Children)
             {
-                pinnedEvents.Add(x.Key.ToString());
+                pinnedEvents.Add(x.Key);
 
-                var e1 = dbRoot.Child("events/public").Child(x.Key.ToString()).GetValueAsync();
-                var e2 = dbRoot.Child("events/private").Child(x.Key.ToString()).GetValueAsync();
+                var e1 = dbRoot.Child("events/public").Child(x.Key).GetValueAsync();
+                var e2 = dbRoot.Child("events/private").Child(x.Key).GetValueAsync();
                 // If the user is a guest, then DO NOT query the private events!
-                if (AuthConnector.Instance.Perms == PermissonLevel.Guest) e2 = null;
-                yield return new WaitUntil(() => e1.IsCompleted & e2.IsCompleted);
-                if ((e1 != null) & e1.Result.HasChild("name"))
+                if (AuthConnector.Instance.Perms == PermissionLevel.Guest) e2 = null;
+                yield return new WaitUntil(() => e2 != null && e1.IsCompleted && e2.IsCompleted);
+                if (e1 != null && e1.Result.HasChild("name"))
                 {
                     pinnedEvents.Add(e1.Result.Child("organizer").Value.ToString());
                     pinnedEvents.Add(e1.Result.Child("location").Value.ToString());
                 }
-                else if ((e2 != null) & e2.Result.HasChild("name"))
+                else if (e2 != null && e2.Result.HasChild("name"))
                 {
                     pinnedEvents.Add(e2.Result.Child("organizer").Value.ToString());
                     pinnedEvents.Add(e2.Result.Child("location").Value.ToString());
@@ -248,12 +244,12 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// Function for calling values from the database.
     /// </summary>
-    private IEnumerator getDBdata(Action<List<string>> onCallBack)
+    private static IEnumerator GetDBData(Action<List<string>> onCallBack)
     {
         var userData = new List<string>();
 
         var dbRoot = DatabaseConnector.Instance.Root;
-        var value = dbRoot.Child("users").Child(Utilities.removeDot(queryEmail)).GetValueAsync();
+        var value = dbRoot.Child("users").Child(Utilities.RemoveDot(QueryEmail)).GetValueAsync();
         yield return new WaitUntil(() => value.IsCompleted);
 
         if (value != null)
@@ -282,8 +278,9 @@ public class SettingsManager : MonoBehaviour
     /// Retrieves and sets the image
     /// </summary>
     /// <param name="url">url of the photo we want to retrieve.</param>
+    /// <param name="success"></param>
     /// <returns>Action on whether the image was retrieved or not</returns>
-    private IEnumerator getImage(string url, Action<bool> success = null)
+    private IEnumerator GetImage(string url, Action<bool> success = null)
     {
         // GET image from web
         var www = UnityWebRequestTexture.GetTexture(url);
@@ -292,7 +289,7 @@ public class SettingsManager : MonoBehaviour
         if (www.result == UnityWebRequest.Result.Success)
         {
             var tex = ((DownloadHandlerTexture)www.downloadHandler).texture;
-            Debug.Log("texture recieved!");
+            Debug.Log("texture received!");
             // Below method must be used as resize and reinitialize only changes the container not the image!
             var scaled = new Texture2D(500, 500);
             Graphics.ConvertTexture(tex, scaled);
@@ -305,7 +302,7 @@ public class SettingsManager : MonoBehaviour
         else
         {
             Debug.Log("Error retrieving profile image!");
-            success.Invoke(false);
+            success?.Invoke(false);
         }
 
         //// Clean up
@@ -315,10 +312,10 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// Function for updating the db with the new data set by the user.
     /// </summary>
-    private void updateDBdata()
+    private void UpdateDBData()
     {
         // TODO: implement safety feature!
-        var emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
+        var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
 
         var dbRoot = DatabaseConnector.Instance.Root;
         dbRoot.Child("users").Child(emailWithoutDot).Child("level").SetValueAsync(newLevel.text);
@@ -332,10 +329,10 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void ChangePassword()
     {
-        PasswordCanvas.SetActive(true);
-        DisplayCanvas.SetActive(false);
+        passwordCanvas.SetActive(true);
+        displayCanvas.SetActive(false);
         // Technically not necessary to do this, but for safety
-        EditCanvas.SetActive(false);
+        editCanvas.SetActive(false);
     }
 
     /// <summary>
@@ -346,7 +343,7 @@ public class SettingsManager : MonoBehaviour
         var user = AuthConnector.Instance.CurrentUser;
 
         // This checks the current password
-        user.ReauthenticateAsync(EmailAuthProvider.GetCredential(user.Email, CurrentPassword.text)).ContinueWith(task =>
+        user.ReauthenticateAsync(EmailAuthProvider.GetCredential(user.Email, currentPassword.text)).ContinueWith(task =>
         {
             Debug.LogFormat("new password attempt!");
             // If the current password is correct:
@@ -354,11 +351,11 @@ public class SettingsManager : MonoBehaviour
             {
                 Debug.LogFormat("Password correct!");
                 // If the new passwords match:
-                if (NewPassword.text == ConfirmPassword.text)
+                if (newPassword.text == confirmPassword.text)
                 {
                     Debug.LogFormat("Password matches!");
                     // This attempts to update the password
-                    user.UpdatePasswordAsync(NewPassword.text).ContinueWith(update =>
+                    user.UpdatePasswordAsync(newPassword.text).ContinueWith(update =>
                     {
                         if (update.IsCompletedSuccessfully)
                         {
@@ -367,7 +364,7 @@ public class SettingsManager : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogFormat(update.Exception.ToString());
+                            if (update.Exception != null) Debug.LogFormat(update.Exception.ToString());
                             Debug.LogFormat("new password update failed!");
                             // There is a chance insecure password is used, firebase will reject that password
                             status.text = "New password update failed! \n" +
@@ -385,7 +382,7 @@ public class SettingsManager : MonoBehaviour
                 status.text = "Current password is incorrect!";
             }
 
-            new WaitUntil(() => task.IsCompleted);
+            return new WaitUntil(() => task.IsCompleted);
         });
     }
 
@@ -408,8 +405,8 @@ public class SettingsManager : MonoBehaviour
         newProgram.text = program.text;
         newLevel.text = level.text;
 
-        DisplayCanvas.SetActive(false);
-        EditCanvas.SetActive(true);
+        displayCanvas.SetActive(false);
+        editCanvas.SetActive(true);
     }
 
     /// <summary>
@@ -417,20 +414,20 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void Cancel()
     {
-        if (state == 0)
+        if (State == 0)
         {
-            DisplayCanvas.SetActive(true);
-            EditCanvas.SetActive(false);
-            PinnedLectureCanvas.SetActive(false);
-            PinnedEventCanvas.SetActive(false);
+            displayCanvas.SetActive(true);
+            editCanvas.SetActive(false);
+            pinnedLectureCanvas.SetActive(false);
+            pinnedEventCanvas.SetActive(false);
         }
         // return to lecture scene
-        else if (state == 1)
+        else if (State == 1)
         {
             SceneManager.LoadScene("LectureScene");
         }
         // return to event scene
-        else if (state == 2)
+        else if (State == 2)
         {
             SceneManager.LoadScene("EventScene");
         }
@@ -441,16 +438,15 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void Save()
     {
-        updateDBdata();
+        UpdateDBData();
 
-        StartCoroutine(getImage(profileImageLink.text, success =>
+        StartCoroutine(GetImage(profileImageLink.text, _ =>
         {
             profileImageLink.text = "This image is invalid!";
-            return;
         }));
 
         // reusing this function as it will also update profile image
-        StartCoroutine(getDBdata((List<string> data) =>
+        StartCoroutine(GetDBData(data =>
         {
             userIDDisplay.text = data[0];
             username.text = data[2];
@@ -459,29 +455,29 @@ public class SettingsManager : MonoBehaviour
             profileImageLink.text = data[4];
         }));
 
-        DisplayCanvas.SetActive(true);
-        EditCanvas.SetActive(false);
+        displayCanvas.SetActive(true);
+        editCanvas.SetActive(false);
     }
 
     public void PinnedLecture()
     {
-        DisplayCanvas.SetActive(false);
-        EditCanvas.SetActive(false);
-        PinnedLectureCanvas.SetActive(true);
-        PinnedEventCanvas.SetActive(false);
-        PasswordCanvas.SetActive(false);
+        displayCanvas.SetActive(false);
+        editCanvas.SetActive(false);
+        pinnedLectureCanvas.SetActive(true);
+        pinnedEventCanvas.SetActive(false);
+        passwordCanvas.SetActive(false);
     }
 
     public void PinnedEvent()
     {
-        DisplayCanvas.SetActive(false);
-        EditCanvas.SetActive(false);
-        PinnedLectureCanvas.SetActive(false);
-        PinnedEventCanvas.SetActive(true);
-        PasswordCanvas.SetActive(false);
+        displayCanvas.SetActive(false);
+        editCanvas.SetActive(false);
+        pinnedLectureCanvas.SetActive(false);
+        pinnedEventCanvas.SetActive(true);
+        passwordCanvas.SetActive(false);
     }
 
-    public void onEmailVerificationClick()
+    public void OnEmailVerificationClick()
     {
         StartCoroutine(SendEmailVerification());
     }
@@ -490,17 +486,14 @@ public class SettingsManager : MonoBehaviour
     /// Function called when Email Verification button is pressed.
     /// Sends email verification email.
     /// </summary>
-    public IEnumerator SendEmailVerification()
+    private IEnumerator SendEmailVerification()
     {
         // Since the registration was success, the email verification can be sent
         var verification = AuthConnector.Instance.CurrentUser.SendEmailVerificationAsync();
         yield return new WaitUntil(() => verification.IsCompleted);
 
         // If it fails, will attempt at login instead!
-        if (verification.IsCompletedSuccessfully)
-            notificationText.text = "Email verification sent!";
-        else
-            notificationText.text = "<color=#F74848>Email verification failed! Try again later.";
+        notificationText.text = verification.IsCompletedSuccessfully ? "Email verification sent!" : "<color=#F74848>Email verification failed! Try again later.";
     }
 
     /// <summary>
@@ -508,7 +501,7 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void DeleteAccount()
     {
-        DeleteAccountConfirmed();
+        StartCoroutine(DeleteAccountConfirmed());
     }
 
     /// <summary>
@@ -517,13 +510,13 @@ public class SettingsManager : MonoBehaviour
     private IEnumerator DeleteAccountConfirmed()
     {
         var dbRoot = DatabaseConnector.Instance.Root;
-        var value = dbRoot.Child("users").Child(Utilities.removeDot(queryEmail)).GetValueAsync();
+        var value = dbRoot.Child("users").Child(Utilities.RemoveDot(QueryEmail)).GetValueAsync();
         yield return new WaitUntil(() => value.IsCompleted);
 
         foreach (var i in value.Result.Child("friends").Children)
-            dbRoot.Child("users").Child(Utilities.addDot(i.Key)).Child("friends").Child(Utilities.removeDot(queryEmail))
+            dbRoot.Child("users").Child(Utilities.AddDot(i.Key)).Child("friends").Child(Utilities.RemoveDot(QueryEmail))
                 .SetValueAsync(null);
-        dbRoot.Child("users").Child(Utilities.removeDot(queryEmail)).SetValueAsync(null);
+        dbRoot.Child("users").Child(Utilities.RemoveDot(QueryEmail)).SetValueAsync(null);
         // This is supposed to remove the user from firebase auth
         AuthConnector.Instance.Auth.CurrentUser.DeleteAsync();
 
@@ -536,19 +529,19 @@ public class SettingsManager : MonoBehaviour
     public void OnEntryClick()
     {
         // if pinned lecture screen is true, then redirect entry clicked to lecture scene
-        if (PinnedLectureCanvas.activeSelf)
+        if (pinnedLectureCanvas.activeSelf)
         {
             SceneManager.LoadScene("LectureScene");
-            LectureManager.defaultSearchOption = "code";
-            LectureManager.defaultSearchString = EventSystem.current.currentSelectedGameObject.transform.parent
+            LectureManager.DefaultSearchOption = "code";
+            LectureManager.DefaultSearchString = EventSystem.current.currentSelectedGameObject.transform.parent
                 .gameObject.transform.Find("Code").GetComponent<TMP_Text>().text;
         }
         // if pinned event screen is true, then redirect entry clicked to event scene
         else
         {
             SceneManager.LoadScene("EventScene");
-            EventManager.defaultSearchOption = "name";
-            EventManager.defaultSearchString = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject
+            EventManager.DefaultSearchOption = "name";
+            EventManager.DefaultSearchString = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject
                 .transform.Find("Name").GetComponent<TMP_Text>().text;
         }
     }

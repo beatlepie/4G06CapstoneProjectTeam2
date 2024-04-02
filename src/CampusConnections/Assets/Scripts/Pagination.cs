@@ -5,96 +5,96 @@ using Newtonsoft.Json.Linq;
 
 public class Pagination<T>
 {
-    public List<T> entryList;
-    public List<T> filteredList;
-    public int maxPage;
-    public int currentPage;
-    public int pageCount;
-    public string filterBy;
-    public string filterString;
+    public readonly List<T> EntryList;
+    public List<T> FilteredList;
+    public int MaxPage;
+    public int CurrentPage;
+    private readonly int _pageCount;
+    public string FilterBy;
+    public string FilterString;
 
     public Pagination(List<T> entryList, string filterBy, string filterString, int pageCount = 10)
     {
-        this.entryList = new List<T>(entryList);
-        filteredList = new List<T>(entryList);
-        this.filterBy = filterBy;
-        this.filterString = filterString;
-        this.pageCount = pageCount;
-        filterEntries();
-        currentPage = 1;
+        this.EntryList = new List<T>(entryList);
+        FilteredList = new List<T>(entryList);
+        this.FilterBy = filterBy;
+        this.FilterString = filterString;
+        this._pageCount = pageCount;
+        FilterEntries();
+        CurrentPage = 1;
     }
 
-    public List<T> filterEntries()
+    public List<T> FilterEntries()
     {
-        if ((filterBy != null) & (filterString != null))
+        if ((FilterBy != null) & (FilterString != null))
         {
-            filteredList.Clear();
-            foreach (var x in entryList)
+            FilteredList.Clear();
+            foreach (var x in EntryList)
             {
                 var json = JObject.Parse(JsonUtility.ToJson(x));
-                var target = (string)json[filterBy];
-                if (target.ToLower().Contains(filterString.ToLower())) filteredList.Add(x);
+                var target = (string)json[FilterBy];
+                if (target != null && target.ToLower().Contains(FilterString.ToLower())) FilteredList.Add(x);
             }
         }
         else
         {
-            filteredList = new List<T>(entryList);
+            FilteredList = new List<T>(EntryList);
         }
 
         UpdateMaxPage();
-        firstPage();
-        return filteredList;
+        FirstPage();
+        return FilteredList;
     }
 
-    public void addNewEntry(T x)
+    public void AddNewEntry(T x)
     {
-        entryList.Add(x);
-        filterEntries();
+        EntryList.Add(x);
+        FilterEntries();
         UpdateMaxPage();
-        firstPage();
+        FirstPage();
     }
 
-    public void removeEntry(T x)
+    public void RemoveEntry(T x)
     {
-        entryList.Remove(x);
-        filterEntries();
+        EntryList.Remove(x);
+        FilterEntries();
         UpdateMaxPage();
-        firstPage();
+        FirstPage();
     }
 
     private void UpdateMaxPage()
     {
-        if (filteredList.Count == 0)
-            maxPage = 1;
+        if (FilteredList.Count == 0)
+            MaxPage = 1;
         else
-            maxPage = filteredList.Count % pageCount == 0
-                ? filteredList.Count / pageCount
-                : (int)(filteredList.Count / pageCount) + 1;
+            MaxPage = FilteredList.Count % _pageCount == 0
+                ? FilteredList.Count / _pageCount
+                : FilteredList.Count / _pageCount + 1;
     }
 
-    public int nextPage()
+    public int NextPage()
     {
-        if (currentPage == maxPage) return -1;
-        currentPage = currentPage + 1;
-        return currentPage;
+        if (CurrentPage == MaxPage) return -1;
+        CurrentPage = CurrentPage + 1;
+        return CurrentPage;
     }
 
-    public int prevPage()
+    public int PrevPage()
     {
-        if (currentPage <= 1) return -1;
-        currentPage = currentPage - 1;
-        return currentPage;
+        if (CurrentPage <= 1) return -1;
+        CurrentPage = CurrentPage - 1;
+        return CurrentPage;
     }
 
-    public int lastPage()
+    public int LastPage()
     {
-        currentPage = maxPage;
-        return currentPage;
+        CurrentPage = MaxPage;
+        return CurrentPage;
     }
 
-    public int firstPage()
+    public int FirstPage()
     {
-        currentPage = 1;
-        return currentPage;
+        CurrentPage = 1;
+        return CurrentPage;
     }
 }
