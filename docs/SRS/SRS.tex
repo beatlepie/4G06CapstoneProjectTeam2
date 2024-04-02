@@ -1236,7 +1236,12 @@ The development of the project will be divided into two phases
     \item Revision 0, initial development
     \item Revision 1, refinement of the project and documents
 \end{itemize}
-Revision 0 starts now and ends with the Verification and Validation Report. In this phase, the team will work on some design-related documents and specify the scope of the project, what skills the team will be using, and how the interaction of different components be. Then the team will start implementation as proof of concept and demonstrate their product to stakeholders. After that, the team will write a V\&V report based on the demonstration and stakeholder feedback.  As for implementation, the following table show what should be done by end of the first round:\\
+Revision 0 starts now and ends with the Verification and Validation Report. 
+In this phase, the team will work on some design-related documents and specify the scope of the project, 
+what skills the team will be using, and how the interaction of different components be. 
+Then the team will start implementation as proof of concept and demonstrate their product to stakeholders. 
+After that, the team will write a V\&V report based on the demonstration and stakeholder feedback. 
+As for implementation, the following table show what should be done by end of the first round:\\
 \begin{table}[H]
     \centering
     \begin{tabular}{|p{0.5\linewidth} | p{0.2\linewidth}| p{0.3\linewidth} |}
@@ -1267,7 +1272,7 @@ Revision 0 starts now and ends with the Verification and Validation Report. In t
     \hline
 	CI \& CD & Low & Jan 20, 2024\\
 	\hline
-	More consistent UI & Medium & Feb 12, 2024\\
+	More consistent, McMaster UI & Medium & Feb 12, 2024\\
 	\hline
 	AR camera with lectures and events details & High & Feb 12, 2024\\
 	\hline
@@ -1316,13 +1321,17 @@ With the the starting users, there may not be enough engagement for this applica
 \subsection{Data That Has to be Modified or Translated for the New System}
 
 \qquad Currently, all data we need are in OSCARplus and club management part of the university administration.
-These data will be requested via API or a new web based or internal input system will be made to move all the data over to our product.
+These data will be requested via API or a method of importing as a data file to the internal input system will be made to move all the data over to our product.
 
 As this product handles real time data, there is no need to migrate outdated data to the product.
 
 \section{Costs}
 
-In the initial release build of our application, we will be keeping costs at an absolute minimum. We will be utilizing free technologies such as Vuforia for image recognition features and MongoDB as our database solution, our development expenses will remain at \$0. Additionally, we plan on using GitHub's free hosting service for the deployment of our application, further eliminating any hosting-related expenses. We plan to scale our infrastructure with time where we may explore more premium options, such as AWS S3 bucket and MongoDB Atlas, to ensure the continued seamless operation and performance of our application while serving all McMaster students.
+In the initial release build of our application, we will be keeping costs at an absolute minimum. 
+We will be utilizing free technologies such as Vuforia for image recognition features and Firebase as our database solution, 
+our development expenses will remain at \$0. Additionally, we plan on using GitHub's free hosting service for the deployment of 
+our application, further eliminating any hosting-related expenses. We plan to scale our infrastructure with time where we may explore 
+more premium options, such as AWS S3 bucket or Microsft Azure and Firebase, to ensure the continued seamless operation and performance of our application while serving all McMaster students.
 
 \section{User Documentation and Training}
 \subsection{User Documentation Requirements}
@@ -1331,20 +1340,18 @@ In the initial release build of our application, we will be keeping costs at an 
 
 \item Digital User Manual:
 
-The purpose of the document will be to outline the main functions the product serves such as navigation and event discovery and how the user can make use of them. This will also highlight some common possible errors / mistakes that can occur and how the user should interact with the system to avoid them in the first place or handle them in a sensible manner if they occur.
-
- 
+The purpose of the document will be to outline the main functions the product serves such as navigation and event discovery and how the user can make use of them. 
+This will also highlight some common possible errors / mistakes that can occur and how the user should interact with the system to avoid them in the first place or 
+handle them in a sensible manner if they occur.
 
 \item Event Posting Guideline:
 
-The purpose of this document will be to streamline and outline the process for clubs and departments to post events in the proper manner
+The purpose of this document will be to streamline and outline the process for clubs and departments to post events to display and polulate the correct fields.
 
 \item Privacy Policy:
 
 This document will display the data handling and user privacy rights clearly.
-
  
-
 \item Terms of Service:
 
 This document will outline terms of service and all user responsibilities.
@@ -1353,7 +1360,6 @@ This document will outline terms of service and all user responsibilities.
 Motivation:
 
 User documentation will be created by the developers and will improve the on-app experience of the users.
-
 
 \subsection{Training Requirements}
 
@@ -1368,8 +1374,8 @@ To provide a better experience for administrators and avoid overwhelming them wi
 
 \section{Waiting Room}
 \begin{itemize}
-  \item User generated content such as text or image posts.
-  \item ``Gamification'' features (i.e. collectibles, achievements, stickers, \dots) to increase or incentivize social engagement.
+  \item Heatmaps of other users in campus to display the availability of sutdy spaces.
+  \item Better friend system to allow interactions between nearby individuals or socialize with other event attendees.
 \end{itemize}
 \section{Ideas for Solution}
 Implementation ideas for solutions
@@ -1381,7 +1387,7 @@ Implementation ideas for solutions
 	\end{itemize}
 \item Server
 	\begin{itemize}
-	\item AWS might be a purchasable and reliable option for the back-end
+	\item AWS or Microsft Azure might be a purchasable and reliable option for the back-end
 	\item SignalR is a real-time communication library used by lots of other projects, it is based on C\#, so it should work with ASP.NET as our back-end server
 	\end{itemize}
 \item Map
@@ -1482,26 +1488,27 @@ graduate attribute of Lifelong Learning.  Please answer the following questions:
       \begin{itemize}
           \item Skills: 1, 2, 3, 4, 8
       \end{itemize}
-      Soft skills are quite important for a team and an engineer. And that's why I'd like to focus on soft skills like presentation skills and documentation skills. It will be not only critical to succeed in this capstone project but also beneficial to software engineering careers. Communication plays a very important role in software engineer's daily work and I will take this opportunity to further improve my skills.\\
-      I'll also focus on Unity game development and front-end development because that attracts me the most and what I have the most experience in and I'd like to strengthen my skills and learn more about game development during this project.
+      Soft skills are quite important for a team and an engineer. And that's why I'd like to focus on soft skills like presentation skills and documentation skills. It will be critical to succeed in this capstone project but also beneficial to software engineering careers. Communication plays a very important role in software engineer's daily work and I will take this opportunity to further improve my skills by holding frequent team meetings and documenting the discussions and decisions.\\
+      I will also focus on Unity game development and front-end development because that attracts me the most and what I have the most experience in and I'd like to strengthen my skills and learn more about game development during this project. The guides and examples posted by other users or experts will be referenced to follow industry standard. Documentations of various packages we plan to use will be checked to referenced to make it easier to troubleshoot when issues are encountered.
     \item \textbf{Michael (Minsung) Kim}
         \begin{itemize}
           \item Skills: 3, 7, 9, 10
         \end{itemize}
         All documentation and work progress will be tracked on git and meetings. Additionally, the work done will always be added to git to keep track of all work records. This will improve my skills in git and allow me to resolve merge conflicts better and manage any issues from the CI/CD pipeline. As the liaison, I need to ensure that the team is on the right track and no misunderstandings are left. We will have meetings regarding work done to keep everyone updated and let everyone know which tasks may be difficult or require further clarification. There will be discussions before the supervisor meeting so that we know what we need to ask and what subjects we could use their advice in. \\
-        I will focus on the back-end of the project so that data communication is secure and efficient. I am very interested in the database architecture and encryption that goes into on disk and in transit communication. I will learn more about different databases such as SQL and MongoDB, their benefits and security. As I have the advanced databases course, this will help me with the database skills. The information security course will help with the data encryption part of the back-end development as well. Further research and looking into open source libraries that support back-end will help significantly as well.
+        I will focus on the back-end of the project so that data communication is secure and efficient. I am very interested in the database architecture and encryption that goes into on disk and in transit communication. I will learn more about different databases such as SQL and MongoDB, their benefits and security. As I have the advanced databases course, this will help me with the database skills. The information security course will help with the data encryption part of the back-end development as well. Further research and looking into open source libraries that support back-end such as SignalR will help significantly as well.
       \item \textbf{Firas Elayan}
         \begin{itemize}
         \item Skills: 4, 5, 6, 7, 9
         \end{itemize}
-        Unity and other general platforms for developing products such as the one in our capstone project are a new field to me that I do not have a lot of experience in. I'd like to acquire a near-advanced level of technical skills in relation to those platforms so that I'm able to build an array of good products of a very useful type that function properly and meet all requirements.\\
-        Git is an extremely beneficial tool if used correctly. I'd like to improve my skills in git to ensure this project and future projects I participate in building have a smooth development life, especially with how expensive errors and issues can become the more complex the project gets.
+        Unity and other general platforms for developing products such as the one in our capstone project are a new field to me that I do not have a lot of experience in. I'd like to acquire a near-advanced level of technical skills in relation to those platforms so that I'm able to build an array of good products of a very useful type that function properly and meet all requirements. This will be done by following the guide videos and demos posted on YouTube and official documentations. \\
+        Git is an extremely beneficial tool if used correctly. I would like to improve my skills in git to ensure this project and future projects I participate in have a smooth development life cycle, especially with how expensive errors and issues can become the more complex the project gets. This will be done with frequent push with proper CI/CD pipeline built. I will work closely with the automated tests and ensure that any issues are caught early and dealt with before becoming a blocker to the project.
       \item \textbf{Matthew Miller}
         \begin{itemize}
             \item Skills: 1, 2, 4, 8, 9
         \end{itemize}
-        I want to work on my presentation skills and documentation skills so that I can focus on improving my oral and written communication skills. Since I have autism, communication has always been a challenge, so I would like to take the opportunity to work on those skills.
-        I also chose to focus on Unity game development skills, front-end development skills, and back-end development skills so that I can gain experience with a variety of different coding skills.
+        I want to work on my presentation skills and documentation skills so that I can focus on improving my oral and written communication skills. Since I have autism, communication has always been a challenge, so I would like to take the opportunity to work on those skills. Attending the team meetings creating GitHub issues to keep track of all the requirements for the project will help in team cohesion and discussing the possible solutions and road blocks.
+
+        I also chose to focus on Unity game development skills, front-end development skills, and back-end development skills so that I can gain experience with a variety of different coding skills. This will be achieved by following the guides online and working closely with other team members to keep track of all the work being done in the project.
 
       \item \textbf{Waseef Nayeem}
         \begin{itemize}
