@@ -51,34 +51,21 @@ Apr 3 & 1.1 & Resolve TA feedback about functional and non functional tests\\
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l} 
   \toprule		
-  \textbf{symbol} & \textbf{description}\\
+  \textbf{Symbol} & \textbf{Description}\\
   \midrule 
   APK & Android Application Package\\
-  \midrule 
   AR & Augmented reality\\
-  \midrule 
   Azure & A cloud computing platform run by Microsoft\\
-  \midrule 
   CI & Continuous integration\\
-  \midrule 
   JHE & John Hodgins Engineering Building\\
-  \midrule 
   JMeter & Load testing tool for analyzing and measuring the performance\\
-  \midrule 
   NUnit & An open-source unit testing framework for the .NET Framework and Mono\\
-  \midrule 
   OpenCover & An open source code coverage tool\\
-  \midrule 
   SRS & Software Requirements Specification\\
-  \midrule
   TA & Teaching Assistant\\
-  \midrule 
   UI & User Interface\\
-  \midrule 
   UTF & Unity Test Framework\\
-  \midrule 
   VnV & Verification and Validation\\
-  \midrule 
   XML & Extensible Markup Language\\
   \bottomrule
 \end{tabular}\\
@@ -451,31 +438,31 @@ This section covers all tests related to functional requirements about lectures 
 \begin{enumerate}
 \item \textbf{FRT-LE1}
 
-\textbf{Name:} Save Event
+\textbf{Name:} Bookmark Event
 
 \textbf{Initial State:} A sample event:
 \begin{itemize}
 \item Name: EXPO
 \end{itemize}
 
-\textbf{Input:} On the event page, user clicks on the save button on the pop-up window with details of the sample event
+\textbf{Input:} On the event page, user clicks on the bookmark button on the pop-up window with details of the sample event
 					
-\textbf{Expected Output:} The event is saved to the user's event list
+\textbf{Expected Output:} The event is bookmarked to the user's event list
 
-\textbf{Actual Output:} The event EXPO is saved to the user's event list
+\textbf{Actual Output:} The event EXPO is bookmarked to the user's event list
 
 \textbf{Results:} Pass
 
 \item \textbf{FRT-LE2}
 
-\textbf{Name:} Unsave Event
+\textbf{Name:} Unbookmark Event
 
-\textbf{Initial State:} A sample event that is already been saved:
+\textbf{Initial State:} A sample event that is already been bookmarked:
 \begin{itemize}
 \item Name: EXPO
 \end{itemize}
 
-\textbf{Input:} On the event page, user clicks on the unsave button on the pop-up window with details of the sample event
+\textbf{Input:} On the event page, user clicks on the unbookmark button on the pop-up window with details of the sample event
 					
 \textbf{Expected Output:} The event is removed from the user's event list
 
@@ -485,31 +472,31 @@ This section covers all tests related to functional requirements about lectures 
 
 \item \textbf{FRT-LE3}
 
-\textbf{Name:} Save Lecture
+\textbf{Name:} Bookmark Lecture
 
 \textbf{Initial State:} A sample lecture:
 \begin{itemize}
 \item Code: SFWRENG 4G06
 \end{itemize}
 
-\textbf{Input:} On the lecture page, user clicks on the save button on the pop-up window with details of the sample lecture
+\textbf{Input:} On the lecture page, user clicks on the bookmark button on the pop-up window with details of the sample lecture
 					
-\textbf{Expected Output:} The lecture is saved to the user's lecture list
+\textbf{Expected Output:} The lecture is bookmarked to the user's lecture list
 
-\textbf{Actual Output:} The lecture SFWRENG 4G06 is saved to the user's lecture list
+\textbf{Actual Output:} The lecture SFWRENG 4G06 is bookmarked to the user's lecture list
 
 \textbf{Results:} Pass
 
 \item \textbf{FRT-LE4}
 
-\textbf{Name:} Unsave Lecture
+\textbf{Name:} Unbookmark Lecture
 
-\textbf{Initial State:} A sample lecture that is already been saved:
+\textbf{Initial State:} A sample lecture that is already been bookmarked:
 \begin{itemize}
 \item Code: SFWRENG 4G06
 \end{itemize}
 
-\textbf{Input:} On the lecture page, user clicks on the unsave button on the pop-up window with details of the sample lecture
+\textbf{Input:} On the lecture page, user clicks on the unbookmark button on the pop-up window with details of the sample lecture
 					
 \textbf{Expected Output:} The lecture is removed from the user's lecture list
 
@@ -1653,7 +1640,7 @@ This section contains tests related to the module: Event in module hierarchy.
 \item organizer: PLACEHOLDER
 \item duration: DEFAULT\_DURATION
 \item time: DEFAULT\_TIME
-\item isPulbic: false
+\item isPublic: false
 \item location: PLACEHOLDER
 \end{itemize}
 
@@ -1674,7 +1661,7 @@ This section contains tests related to the module: Event in module hierarchy.
 \item organizer: Team 2
 \item duration: 30
 \item time: 1708922625
-\item isPulbic: true
+\item isPublic: true
 \item location: Online
 \end{itemize}
 					
@@ -1946,75 +1933,75 @@ Call next page method first
 \end{enumerate}
 
 \subsection{Authentication}
-This section contains tests related to the module: Authentication in module hierarchy. \textcolor{red}{Due to the time constraint, we will finish unit tests for this module in Revision 1 following the same pattern}
+This section contains tests related to the module: Authentication in module hierarchy. 
 \begin{enumerate}
 \item \textbf{FRT-M5-1}
 
 \textbf{Name:} Get current user email
 
-\textbf{Initial State:} Current user email: `unitTest@test.com'
+\textbf{Initial State:} Current logged in user email: `unitTest@test.com'
 					
-\textbf{Input:} NA
+\textbf{Input:} The user navigates to the User Profile Page.
 					
-\textbf{Expected Output:} The email in the initial state
+\textbf{Expected Output:} The current user email (unitTest@test.com) is returned in the email section of the profile.
 
-\textbf{Actual Output:} \textcolor{red}{TBD}
+\textbf{Actual Output:} The current user email (unitTest@test.com) is returned correctly in the profile.
 
-\textbf{Result:} \textcolor{red}{TBD}
+\textbf{Result:} Pass
 
 \item \textbf{FRT-M5-2}
 
 \textbf{Name:} Is email verified
 
-\textbf{Initial State:} Current user is email verified: true
+\textbf{Initial State:} Current logged in user is email verified: true
 					
-\textbf{Input:} NA
+\textbf{Input:} The user navigates to the User Profile Page.
 					
-\textbf{Expected Output:} The boolean value in initial state 
+\textbf{Expected Output:} The verify email button is no longer visible.
 
-\textbf{Actual Output:} \textcolor{red}{TBD}
+\textbf{Actual Output:} The verify email button is no longer visible.
 
-\textbf{Result:} \textcolor{red}{TBD}
+\textbf{Result:} Pass
 
 \item \textbf{FRT-M5-3}
 
 \textbf{Name:} Verify email
 
-\textbf{Initial State:} Current user email: `unitTest@test.com'
+\textbf{Initial State:} Current logged in user email: `unitTest@test.com'
 					
-\textbf{Input:} Call verify email method
+\textbf{Input:} Verify email button is pressed.
 					
 \textbf{Expected Output:} An email is sent to the email address to verify the email
 
-\textbf{Actual Output:} \textcolor{red}{TBD}
+\textbf{Actual Output:} unitTest@test.com recieves the email verification email, which allows them to click on a link that will verify their email.
 
-\textbf{Result:} \textcolor{red}{TBD}
+\textbf{Result:} Pass
 \end{enumerate}
 
 \subsection{Database}
-This section contains tests related to the module: Database in module hierarchy. \textcolor{red}{Due to the time constraint, we will finish unit tests for this module in Revision 1 following the same pattern}
+This section contains tests related to the module: Database in module hierarchy. 
 \begin{enumerate}
 \item \textbf{FRT-M6-1}
 
-\textbf{Name:} Get value
+\textbf{Name:} Retrieve Values From Database
 
-\textbf{Initial State:} NA
+\textbf{Initial State:} Logged in with student account. 
 					
-\textbf{Input:} A valid path to a test node: `/events/public/EXPO/name'
+\textbf{Input:} Retrieve the data under `/events/public/EXPO/name'
 					
-\textbf{Expected Output:} The corresponding value of the node: EXPO
+\textbf{Expected Output:} The name of the event `EXPO' is returned.
 
-\textbf{Actual Output:} \textcolor{red}{TBD}
+\textbf{Actual Output:} The name of the event `EXPO' is returned.
 
-\textbf{Result:} \textcolor{red}{TBD}
+\textbf{Result:} Pass
 
 \item \textbf{FRT-M6-2}
 
-\textbf{Name:} Set value
+\textbf{Name:} Set Value to Database
 
-\textbf{Initial State:} NA
+\textbf{Initial State:} Logged in with admin account. 
 					
-\textbf{Input:} A valid path to a test node and a new value: 
+\textbf{Input:} Set the data under the following entry: 
 \begin{itemize}
 \item path: `/events/public/EXPO/description'
 \item value: `EXPO, yes!'
@@ -2022,23 +2009,23 @@ This section contains tests related to the module: Database in module hierarchy.
 
 \textbf{Expected Output:} The corresponding value changes to the new value
 
-\textbf{Actual Output:} \textcolor{red}{TBD}
+\textbf{Actual Output:} The database is updated to the new value.
 
-\textbf{Result:} \textcolor{red}{TBD}
+\textbf{Result:} Pass
 
 \item \textbf{FRT-M6-3}
 
-\textbf{Name:} Delete data
+\textbf{Name:} Delete Data From Database
 
-\textbf{Initial State:} NA
+\textbf{Initial State:} Logged in with Admin account.
 					
-\textbf{Input:} A valid path to a test node : `/events/public/EXPO'
+\textbf{Input:} Delete the entry at: `/events/public/EXPO'
 
-\textbf{Expected Output:} The corresponding event is removed
+\textbf{Expected Output:} The corresponding event is removed from database.
 
-\textbf{Actual Output:} \textcolor{red}{TBD}
+\textbf{Actual Output:} The event is removed from database.
 
-\textbf{Result:} \textcolor{red}{TBD}
+\textbf{Result:} Pass
 \end{enumerate}
 
 \section{Changes Due to Testing}
@@ -2050,29 +2037,32 @@ During the weekly meeting, our supervisor, Dr. Yuan, emphasized the necessity of
 \subsection{Changes due to usability test result}
 The only test fails is the ``Common periods of usage'' rating question. It has come to light that survey participants express a preference for utilizing the application after school so that they won't miss any events happen in the evening. This observation is directly linked to maintenance requirement MS-M1. The team will change that major update time in that requirement to be summer break or weekend midnight to affect fewer users.\\
 The absence of instructions for the AR camera has been repeatedly highlighted in the feedback. Consequently, the team will resolve this issue by adding instructions when user clicks on the help button. \\
-Participants have noted that saved lectures and events are not readily accessible, as they are currently hidden within the settings. In response to this feedback, the team will create a link to the saved lectures and events page directly from the list pages. \\
+Participants have noted that bookmarked lectures and events are not readily accessible, as they are currently hidden within the settings. In response to this feedback, the team will create a link to the bookmarked lectures and events page directly from the list pages. \\
 Each of the aforementioned changes will be documented as a separate issue in the GitHub repo for future discussion.\\
 \subsection{Changes due to load test result}
 The load test in section \ref{load} shows that NFRT-P16 passes without any issues -- with fewer than 1000 users connecting to the application, the server handles the load effectively, as indicated by the nearly negligible response time observed in the figure. However, it is crucial to note that upon scaling up to accommodate approximately 40,000 concurrent requests after Revision 1, the server begins to reject connections and getting a significant increase in response time.Therefore, this is a good warning for the team regarding the need to scale the server infrastructure adequately to support a larger user base.
 \subsection{Changes due to failing tests}
 NFRT-P10 fails due to a change of the scope. The team will update SRS and VnV Plan so that internet connection lost warning is no longer a requirement.
 \subsection{Changes due to user enumeration vulnerability}
-\textcolor{red}{\textbf{If granted additional time, the team will implement the following changes:}}
 
-User enumeration occurs when a malicious actor utilizes brute-force techniques to guess or confirm valid users within the system. In our application, this vulnerability can occur during the login process, where attackers can determine the validity of an email by analyzing error messages. Therefore,  the team proposes implementing a more generic error message during login attempts (FRT-UA4). Additionally,, a new test should be added to verify unsuccessful login attempts using an email not registered in the system.
+User enumeration occurs when a malicious actor utilizes brute-force techniques to guess or confirm valid users within the system. In our application, this vulnerability can occur during the login process, where attackers can determine the validity of an email by analyzing error messages. 
+Therefore, the team proposes implementing a more generic error message during login attempts (FRT-UA4). Additionally, a new test should be added to verify unsuccessful login attempts using an email not registered in the system.
 
 On the other hand, the password recovery page effectively prevents this type of attack by only checking for email format without revealing whether the email exists in the system. 
 
 Moreover, there are concerns regarding attackers exploiting server response times to detect user existence but that does not seem to be a problem with our application as Firebase's real-time database responds to valid and invalid login attempts with indistinguishable time differences.
 
-Considering the project's scope and potential visibility (most of our customers will be students and department staff), frequent enumeration attacks are unlikely. Nevertheless, the aforementioned measures should sufficiently safeguard against such attacks.
+Considering the project's scope and potential visibility (most of our customers will be students and department staff), enumeration attacks can be identified quickly. 
+With majority of users having McMaster email and non-McMaster emails having guest privilages, this mitigates possible user enumeration attacks significantly.
+In addition, the email verification process will allow Campus Connections team to easily identify suspicious activity.
+With the aforementioned measures, the application sufficiently safeguards against such attacks.
 
 \section{Automated Testing}
-The tests are run from local machine as there were difficulties in implementing GitHub Action for it.
-When attempting to setup the automated tests, there were issues due to how Vuforia was not a package that could be imported automatically.
+The majority of tests are run from local machine due to Unity and unity package size and behavior.
+When attempting to setup the automated tests, there were issues due to how Vuforia was not a package that could be imported automatically due to how they host their library.
+Communication with the database occurs asynchonously, which cause problems when testing automatically using CI/CD. 
 This caused problems as the program failed to build automatically. The package was too big to be included in the repository, and Large File Storage had limits.
-Due to the above reason, automated tests could not be performed through GitHub Actions, they could be run on local.
-Parts of the below documentation is based on what was planned, and what is planned for phase 2 of the development.
+This also resulted in many tests being done locally.
 
 \subsection{Testing Instruments}
 
