@@ -261,7 +261,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2062812257265331944}
         m_TargetAssemblyTypeName: ChatBubbleController, Assembly-CSharp
-        m_MethodName: clickOnMessage
+        m_MethodName: ClickOnMessage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

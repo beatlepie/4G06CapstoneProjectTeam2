@@ -7,6 +7,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controls the behaviour of chat bubble game objects.
+/// Chat bubbles display messages sent by users in the chat scene.
+/// Authors: Waseef Nayeem, Zihao Du
+/// Date: 2024=03-12
+/// </summary>
 public class ChatBubbleController : MonoBehaviour
 {
     [SerializeField] private GameObject msgObj;
@@ -48,7 +54,11 @@ public class ChatBubbleController : MonoBehaviour
         }
     }
 
-    public void clickOnMessage()
+    /// <summary>
+    /// Handler function for clicking on message links.
+    /// Messages can have embedded links to events or lectures.
+    /// </summary>
+    public void ClickOnMessage()
     {
         if (_targetType == "lecture")
         {
