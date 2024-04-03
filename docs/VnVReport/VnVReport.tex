@@ -40,6 +40,7 @@ Mar 6 & 1.0 & Add non-functional requirements evaluation\\
 Mar 6 & 1.0 & Load test, Usability test, unit test results\\
 Mar 6 & 1.0 & Add Automated test, non-dynamic test result and changes due to testing\\
 Apr 2 & 1.1 & Resolve team 11 feedback\\
+Apr 3 & 1.1 & Resolve TA feedback about functional and non functional tests\\
 \bottomrule
 \end{tabularx}
 
@@ -160,7 +161,7 @@ This section covers all tests related to functional requirements about the accou
 
 \item \textbf{FRT-UA2}
 
-\textbf{Name:} Unsuccessful Account Creation
+\textbf{Name:} Unsuccessful Account Creation With Existing Email
 
 \textbf{Initial State:} The user does not have an account and is not logged in to the application
 
@@ -197,7 +198,7 @@ This section covers all tests related to functional requirements about the accou
 
 \item \textbf{FRT-UA4}
 
-\textbf{Name:} Unsuccessful Account Login
+\textbf{Name:} Unsuccessful Account Login With Wrong Password
 
 \textbf{Initial State:} The user has an account and is not logged in to the application
 
@@ -296,7 +297,7 @@ This section covers all tests related to functional requirements about the accou
 \begin{itemize}
 \item Email: qtest@gmail.com (this is an existing test account)
 \item password: qtesting
-\item newProgram: Computer Science
+\item program: Software Engineering
 \end{itemize}
 
 \textbf{Input:} New Profile:
@@ -320,7 +321,7 @@ This section covers all tests related to functional requirements about interacti
 
 \textbf{Initial State:} The user is logged in with the following account:
 \begin{itemize}
-\item Semail: FRT-SN1@test.com
+\item Femail: FRT-SN1@test.com
 \item password: testing
 \end{itemize}
 
@@ -329,9 +330,9 @@ This section covers all tests related to functional requirements about interacti
 \item Temail: FRT-SN1-F@test.com
 \end{itemize}
 					
-\textbf{Expected Output:} A Request is sent to the target user
+\textbf{Expected Output:} A Friend request is sent to the target user and available to be accepted or rejected by the target user in the request list
 
-\textbf{Actual Output:} A Request is sent to the target user
+\textbf{Actual Output:} A Friend request is sent to the target user and available to be accepted or rejected by the target user in the request list
 
 \textbf{Results:} Pass
 
@@ -339,9 +340,9 @@ This section covers all tests related to functional requirements about interacti
 
 \textbf{Name:} Friend Request Acceptance
 
-\textbf{Initial State:} A friend request was sent from an account (Semail) to the target account (Temail):
+\textbf{Initial State:} A friend request was sent from an account (Femail) to the target account (Temail):
 \begin{itemize}
-\item Semail: FRT-SN1@test.com
+\item Femail: FRT-SN1@test.com
 \item Temail: FRT-SN1-F@test.com
 \end{itemize}
 
@@ -357,9 +358,9 @@ This section covers all tests related to functional requirements about interacti
 
 \textbf{Name:} Successful Friend Rejection
 
-\textbf{Initial State:} A friend request was sent from an account (Semail) to the target account (Temail):
+\textbf{Initial State:} A friend request was sent from an account (Femail) to the target account (Temail):
 \begin{itemize}
-\item Semail: FRT-SN1@test.com
+\item Femail: FRT-SN1@test.com
 \item Temail: FRT-SN1-F@test.com
 \end{itemize}
 
@@ -545,6 +546,44 @@ This section covers all tests related to functional requirements about lectures 
 
 \item \textbf{FRT-LE6}
 
+\textbf{Name:} Administrator Add Event With Existing Name
+
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+Sample event exists:
+\begin{itemize}
+\item name: Test event
+\item description: Sample event for system test
+\item time: 0
+\item duration: 0
+\item location: Online
+\item isPublic: true
+\item organizer: Team 2
+\end{itemize}
+
+\textbf{Input:} New sample event:
+\begin{itemize}
+\item name: Test event
+\item description: New sample event
+\item time: 100
+\item duration: 30
+\item location: TBD
+\item isPublic: false
+\item organizer: TBD
+\end{itemize}
+					
+\textbf{Expcted Output:} The sample event is update to be the same as the input event
+
+\textbf{Actual Output:} The sample event is update to be the same as the input event
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE7}
+
 \textbf{Name:} Administrator Edit Event
 
 \textbf{Initial State:} User is logged in as an administrator
@@ -561,11 +600,11 @@ This section covers all tests related to functional requirements about lectures 
 					
 \textbf{Expected Output:} The test event location is updated to the new one
 
-\textbf{Actual Output:} The test event location is updated toITB AB102
+\textbf{Actual Output:} The test event location is updated to ITB AB102
 
 \textbf{Results:} Pass
 
-\item \textbf{FRT-LE7}
+\item \textbf{FRT-LE8}
 
 \textbf{Name:} Administrator Delete Event
 
@@ -586,7 +625,7 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Results:} Pass
 
-\item \textbf{FRT-LE8}
+\item \textbf{FRT-LE9}
 
 \textbf{Name:} Administrator Add Lecture
 
@@ -608,6 +647,40 @@ This section covers all tests related to functional requirements about lectures 
 \textbf{Expected Output:} The lecture is added to the lecture list
 
 \textbf{Actual Output:} The lecture TEST 1T03 is added to the lecture list
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE10}
+
+\textbf{Name:} Administrator Add Lecture With Existing Code
+
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+A sample lecture exists:
+\begin{itemize}
+\item code: TEST 1T03
+\item name: Test lecture
+\item time: 12:00 - 13:00, Mon
+\item location: Online
+\item instructor: NA
+\end{itemize}
+
+\textbf{Input:} New sample lecture:
+\begin{itemize}
+\item code: TEST 1T03
+\item name: New test lecture
+\item time: 12:00 - 13:00, Wed
+\item location: TBD
+\item instructor: TBD
+\end{itemize}
+					
+\textbf{Expected Output:} The sample lecture is update to be the same as the input lecture
+
+\textbf{Actual Output:} The sample lecture is update to be the same as the input lecture
 
 \textbf{Results:} Pass
 
@@ -708,10 +781,11 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Name:} Lecture Filter by Code
 
-\textbf{Initial State:} Some software engineering lecture exists:
+\textbf{Initial State:} Some software engineering lectures exist in the system with the following course codes (other attributes of lecture do not affect the test and can be empty):
 \begin{itemize}
 \item SFWRENG 4G06
 \item SFWRENG 4E03
+\item COMPSCI 4TB3
 \end{itemize}
 
 \textbf{Input:} Filter:
@@ -719,9 +793,9 @@ This section covers all tests related to functional requirements about lectures 
 \item FilterString: SFWRENG
 \end{itemize}
 					
-\textbf{Expected Output:} All lectures which do not contain the FilterString in the code are removed from the list
+\textbf{Expected Output:} All lectures which do not contain the FilterString in the code are removed from the list (COMPSCI 4TB3 in this case)
 
-\textbf{Actual Output:} All lectures which do not contain the SFWRENG in the code are removed from the list
+\textbf{Actual Output:} All lectures which do not contain the SFWRENG in the code are removed from the list (COMPSCI 4TB3 in this case)
 
 \textbf{Results:} Pass
 
@@ -729,10 +803,11 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Name:} Event Filter by Name
 
-\textbf{Initial State:} Some job fair event exists:
+\textbf{Initial State:} Some events exist in the system with following names (other attributes of event do not affect the test and can be empty):
 \begin{itemize}
 \item Job Fair: March 4
 \item Job Fair: March 10
+\item Rev 0 Demo
 \end{itemize}
 
 \textbf{Input:} Filter:
@@ -740,9 +815,9 @@ This section covers all tests related to functional requirements about lectures 
 \item FilterString: Job Fair
 \end{itemize}
 					
-\textbf{Expected Output:} All events which do not contain the FilterString in the name are removed from the list
+\textbf{Expected Output:} All events which do not contain the FilterString in the name are removed from the list (Rev 0 Demo in this case)
 
-\textbf{Actual Output:} All events which do not contain the Job Fair in the name are removed from the list
+\textbf{Actual Output:} All events which do not contain the Job Fair in the name are removed from the list (Rev 0 Demo in this case)
 
 \textbf{Results:} Pass
 \end{enumerate}
@@ -1313,7 +1388,7 @@ This section corresponds to the Operational and Environmental tests in VnV Plan 
 \item Any accounts that are not active for a long time (a semester) will be removed from the system
 \end{itemize}
 
-\textbf{Actual Output:} Convinced the participants that the authentication system and database will clean inactive data periodically
+\textbf{Actual Output:} Convinced the participants that the authentication system and database will clean inactive data every semester
 
 \textbf{Result:} Pass
 \end{enumerate}
@@ -1976,7 +2051,17 @@ Each of the aforementioned changes will be documented as a separate issue in the
 \subsection{Changes due to load test result}
 The load test in section \ref{load} shows that NFRT-P16 passes without any issues -- with fewer than 1000 users connecting to the application, the server handles the load effectively, as indicated by the nearly negligible response time observed in the figure. However, it is crucial to note that upon scaling up to accommodate approximately 40,000 concurrent requests after Revision 1, the server begins to reject connections and getting a significant increase in response time.Therefore, this is a good warning for the team regarding the need to scale the server infrastructure adequately to support a larger user base.
 \subsection{Changes due to failing tests}
-NFRT-P10 fails due to a change of the scope. The team will update SRS and VnV Plan so that internet connection lost warning is no longer a requirement.\\
+NFRT-P10 fails due to a change of the scope. The team will update SRS and VnV Plan so that internet connection lost warning is no longer a requirement.
+\subsection{Changes due to user enumeration vulnerability}
+\textcolor{red}{\textbf{If granted additional time, the team will implement the following changes:}}
+
+User enumeration occurs when a malicious actor utilizes brute-force techniques to guess or confirm valid users within the system. In our application, this vulnerability can occur during the login process, where attackers can determine the validity of an email by analyzing error messages. Therefore,  the team proposes implementing a more generic error message during login attempts (FRT-UA4). Additionally,, a new test should be added to verify unsuccessful login attempts using an email not registered in the system.
+
+On the other hand, the password recovery page effectively prevents this type of attack by only checking for email format without revealing whether the email exists in the system. 
+
+Moreover, there are concerns regarding attackers exploiting server response times to detect user existence but that does not seem to be a problem with our application as Firebase's real-time database responds to valid and invalid login attempts with indistinguishable time differences.
+
+Considering the project's scope and potential visibility (most of our customers will be students and department staff), frequent enumeration attacks are unlikely. Nevertheless, the aforementioned measures should sufficiently safeguard against such attacks.
 
 \section{Automated Testing}
 The tests are run from local machine as there were difficulties in implementing GitHub Action for it.
@@ -2030,6 +2115,20 @@ The testing files are located in \href{https://github.com/beatlepie/4G06Capstone
 \section*{Appendix}
 \subsection{Symbolic Parameters}
 Check the Symbolic Parameter Table in \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan} for more details.
+
+The following table only contains symbols that appear only in the report
+\begin{table}[H]
+\caption{\bf Symbolic Parameter Table}
+\begin{tabular}{|p{0.4\linewidth} | p{0.3\linewidth}| p{0.3\linewidth} |}
+\hline
+\multicolumn{1}{|l}{\bfseries Symbolic Parameter} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Value}\\
+\hline
+Femail & The friend email, an email that exists in the application database, usually used with target email to test user communication & Value depends on the test it belongs to\\
+\hline
+Temail & The target email, an email that exists in the application database, usually used with friend email to test user communication & Value depends on the test it belongs to\\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{Reflection}
 The information in this section will be used to evaluate the team members on the
