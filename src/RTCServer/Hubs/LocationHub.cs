@@ -2,8 +2,18 @@
 
 namespace RTCServer.Hubs;
 
+/// <summary>
+/// A Hub endpoint class for real-time location sharing between users.
+/// Author: Waseef Nayeem
+/// Date: 2024-02-01
+/// </summary>
 public class LocationHub : Hub
 {
+    /// <summary>
+    /// An RPC function that shares the invoking client's location with other connected clients.
+    /// </summary>
+    /// <param name="location">Location object containing latitude, longitude and user email</param>
+    /// <returns></returns>
     public async Task SendLocation(Location location)
     {
         Console.WriteLine($"Received: {location.Latitude}, {location.Longitude}");
@@ -11,6 +21,9 @@ public class LocationHub : Hub
     }
 }
 
+/// <summary>
+/// A data helper class that wraps and serializes the required parameters for location sharing.
+/// </summary>
 [Serializable]
 public class Location
 {
