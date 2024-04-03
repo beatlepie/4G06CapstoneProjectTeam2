@@ -43,6 +43,7 @@ Feb 25 & 1.1 & Revision 1: Resolve TA Feedback: add TA review in the plan and fi
 Feb 27 & 1.1 & Revision 1: Resolve TA Feedback for functional requirements: make functional tests more specific and add/remove tests according to Revision 1 requirements\\
 Mar 2 & 1.1 & Revision 1: Resolve TA Feedback for non-functional requirements: add usability survey content to non-functional tests\\
 Mar 3 & 1.1 & Revision 1: Add unit tests according to the design documentation; Add new non-dynamic tests to the table\\
+Apr 3 & 1.1 & Revision 1: Changes related to VnV Report feedback\\
 \bottomrule
 \end{tabularx}
 
@@ -395,7 +396,7 @@ This section includes all test cases related to user accounts. This will include
 
 \item{\textbf{FRT-UA2}}
 
-\textbf{Name:} Unsuccessful Account Creation
+\textbf{Name:} Unsuccessful Account Creation With Existing Email
 
 \textbf{Control:} Manual
 					
@@ -440,7 +441,7 @@ This section includes all test cases related to user accounts. This will include
 
 \item{\textbf{FRT-UA4}}
 
-\textbf{Name:} Unsuccessful Account Login
+\textbf{Name:} Unsuccessful Account Login With Wrong Password
 
 \textbf{Control:} Manual
 					
@@ -561,7 +562,7 @@ This section includes all test cases related to user accounts. This will include
 \begin{itemize}
 \item Email: qtest@gmail.com (this is an existing test account)
 \item password: qtesting
-\item newProgram: Computer Science
+\item program: Software Engineering
 \end{itemize}
 
 \textbf{Input:} New Profile:
@@ -866,6 +867,48 @@ This section includes all test cases related to events and lectures happening on
 
 \item{\textbf{FRT-LE6}}
 
+\textbf{Name:} Administrator Add Event With Existing Name
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+An event with following information exists:
+\begin{itemize}
+\item name: Test event
+\item description: Sample event for system test
+\item time: 0
+\item duration: 0
+\item location: Online
+\item isPublic: true
+\item organizer: Team 2
+\end{itemize}
+
+\textbf{Input:} New sample event:
+\begin{itemize}
+\item name: Test event
+\item description: New Description
+\item time: 100
+\item duration: 30
+\item location: NA
+\item isPublic: false
+\item organizer: NA
+\end{itemize}
+					
+\textbf{Output:} The sample event information is changed to the one in the input
+
+\textbf{Test Case Derivation:} Administrators know the event name should be unique and it is unlikely that they give a different event the same name, so this happens most likely when they want to update an event (for instance monthly updated club event)
+					
+\textbf{How test will be performed:} The tester will log in as an administrator and add the sample event. Then the tester will verify the event is still in the list with all information updated
+
+\textbf{Related Requirement(s):} FR-4-3
+
+\item{\textbf{FRT-LE7}}
+
 \textbf{Name:} Administrator Edit Event
 
 \textbf{Control:} Manual
@@ -890,7 +933,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-3
 
-\item{\textbf{FRT-LE7}}
+\item{\textbf{FRT-LE8}}
 
 \textbf{Name:} Administrator Delete Event
 
@@ -915,7 +958,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-3
 
-\item{\textbf{FRT-LE8}}
+\item{\textbf{FRT-LE9}}
 
 \textbf{Name:} Administrator Add Lecture
 
@@ -944,7 +987,45 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-4
 
-\item{\textbf{FRT-LE9}}
+\item{\textbf{FRT-LE10}}
+
+\textbf{Name:} Administrator Add Lecture With Existing Code
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+A lecture with following information exists:
+\begin{itemize}
+\item code: TEST 1T03
+\item name: Test lecture
+\item time: 12:00 - 13:00, Mon
+\item location: Online
+\item instructor: NA
+\end{itemize}
+
+\textbf{Input:} New sample lecture:
+\begin{itemize}
+\item code: TEST 1T03
+\item name: New Test lecture
+\item time: 12:00 - 13:00, Wed
+\item location: TBD
+\item instructor: TBD
+\end{itemize}
+					
+\textbf{Output:} The sample lecture information is changed to the one in the input
+
+\textbf{Test Case Derivation:} Administrators know that lecture code should be unique and it is very unlikely that they give a different lecture the same code, so this happens most likely when they want to update a lecture (for instance in a new semester the lecture has a new schedule)
+					
+\textbf{How test will be performed:} The tester will log in as an administrator and add the sample lecture. Then the tester will verify the lecture is still in the list with all information updated
+
+\textbf{Related Requirement(s):} FR-4-4
+
+\item{\textbf{FRT-LE11}}
 
 \textbf{Name:} Administrator Edit Lecture
 
@@ -970,7 +1051,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-4
 
-\item{\textbf{FRT-LE10}}
+\item{\textbf{FRT-LE12}}
 
 \textbf{Name:} Administrator Delete Lecture
 
@@ -995,7 +1076,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-4
 
-\item{\textbf{FRT-LE11}}
+\item{\textbf{FRT-LE13}}
 
 \textbf{Name:} Event Information
 
@@ -1022,7 +1103,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-5
 
-\item{\textbf{FRT-LE12}}
+\item{\textbf{FRT-LE14}}
 
 \textbf{Name:} Lecture Information
 
@@ -1049,7 +1130,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-6
 
-\item{\textbf{FRT-LE13}}
+\item{\textbf{FRT-LE15}}
 
 \textbf{Name:} Lecture Filter by code
 
@@ -1074,7 +1155,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-7
 
-\item{\textbf{FRT-LE14}}
+\item{\textbf{FRT-LE16}}
 
 \textbf{Name:} Event Filter by Name
 
@@ -1432,7 +1513,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 					
 \textbf{Initial State:} User starts to register
 					
-\textbf{Input/Condition:} User enters nickname with some special character: `; DELETE *'
+\textbf{Input/Condition:} User enters nickname with some special character: `; DELETE *' (See all SPECIAL\_CHAR in the appendix)
 					
 \textbf{Output/Result:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
 
@@ -1830,9 +1911,8 @@ elements of the interface. All of the survey takers are McMaster students
 	\end{longtable}
 
 	\newpage
-
 	\begin{longtable}{|l|cccccccccccc|}
-		\caption{Traceability Between Functional Test Cases and Functional Requirements, FR-3-6 to FR-6}                                                                                                                                                                                                  \\
+		\caption{Functional Test Case and Requirement Traceability Cont.}                                                                                                                                                                                                  \\
 		\hline
 		\textbf{Test IDs}   & \multicolumn{12}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                                 \\
 		\hline
@@ -1847,13 +1927,15 @@ elements of the interface. All of the survey takers are McMaster students
 		\textbf{FRT-LE5} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
 		\textbf{FRT-LE6} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
 		\textbf{FRT-LE7} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
-		\textbf{FRT-LE8} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE8} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
 		\textbf{FRT-LE9} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
 		\textbf{FRT-LE10} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
-		\textbf{FRT-LE11} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ &~\\
-		\textbf{FRT-LE12} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ &~\\
-		\textbf{FRT-LE13} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ &~\\
-		\textbf{FRT-LE14} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ &~\\
+		\textbf{FRT-LE11} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE12} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE13} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE14} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE15} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE16} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ &~\\
 		\textbf{FRT-AR1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ &~\\
 		\textbf{FRT-AR2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ &~\\
 		\textbf{FRT-AR3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X &~\\
@@ -2574,7 +2656,7 @@ Their values are defined in this section for easy maintenance.
 \hline
 INITIAL\_USER\_STATE & The default user state with all default user information & All entries empty except email, nickname and password \\
 \hline
-DEFAULT\_AVATAR & The default virtual avatar & An unisex virtual avatar with default settings \\
+DEFAULT\_AVATAR & The default virtual avatar & An unisex avatar with default settings \\
 \hline
 MIN\_SCORE & The passing grade for a category in the survey & 3.5/5\\
 \hline
@@ -2584,17 +2666,19 @@ SURVEY\_SAMPLE\_SIZE & Sample size of the usability survey & 5\\
 \hline
 SCREEN\_VIEWPORTS & List of all popular mobile screen sizes & 360X740, 390X844, 820X1180\\
 \hline
-RECOGNITION\_TIME & Max time the system takes for image recognition & 3 second\\
+RECOGNITION\_TIME & Max time the system takes to recognize image & 3 second\\
 \hline
 LOCATION\_UPDATE\_TIME & Max time the system takes for location to update & 10 second\\
 \hline
-AR\_ACCURACY & The success rate of AR camera target recognition & 80\%\\
+AR\_ACCURACY & AR camera target recognition success rate & 80\%\\
 \hline
 PLACEHOLDER & Default value of attributes of type string for data structures in unit testing & NA\\
 \hline
 DEFAULT\_TIME & Default unix time for events & 1708922625\\
 \hline
 DEFAULT\_DURATION & Default duration (in minutes) for events & 30\\
+\hline
+SPECIAL\_CHAR & Suspicious characters that can be used for SQL injection & \textbackslash $\vert$ ! \# \$ \% \& / ( ) = ?  @ £ § € \{ \} . - ; ' ,  \textlangle \textrangle \\
 \hline
 \end{tabular}
 \end{table}
@@ -2665,7 +2749,10 @@ The survey will be composed of following three session and take about 30 minutes
 	\item \textbf{Appealing Colour Scheme:} The colour scheme chosen for the interface is similar to McMaster official application.
 	\item \textbf{No Technical or Software-specific Language:} The product does not use technical/software-specific language unless necessary.
 	\item \textbf{Common periods of usage:} You will be using the application mostly during school time (from 8:30 AM to 6:30 PM).
-	\item \textbf{Cultural Friendliness:} The application does not have any words or symbols that are offensive to you.
+	\item \textbf{Cultural Friendliness:} The application does not have any words or symbols that are offensive to you.\\\\
+\textcolor{red}{\textbf{If given more time, the following questions will be added when conducting a new usability survey}}
+	\item \textbf{Customer Satisfaction:} This application will be useful for my daily life and I'd like to recommend it to my friends.
+	\item \textbf{Loading Speed:} This application loads/updates what I need in a reasonable time.
 \end{enumerate}
 \subsubsection{Open-ended Questions}
 \textbf{In this section we invite participants to provide their thoughts on the pros and cons of the project. They should feel free to share any feedback or insights.}
