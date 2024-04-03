@@ -3,6 +3,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{float}
+\usepackage[normalem]{ulem}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -1441,105 +1442,6 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \item{\textbf{NFRT-P3}}
 
-\textbf{Name:} Code Walkthrough For User Personal Data
-
-\textbf{Type:} Non-functional, Static, Manual
-
-\textbf{Input/Condition:} Source code
-
-\textbf{Output/Result:} Successfully convinced the participants the following:
-\begin{itemize}
-  \item User's personal information does not appear in the database if the user did not grant permission
-\end{itemize}
-
-\textbf{How test will be performed:} A code walkthough will be held by the developers to show that database storing is only possible when the user grants permission
-
-\textbf{Related Requirement(s):} P-SC1
-
-\item{\textbf{NFRT-P4}}
-
-\textbf{Name:} Code Walkthrough For Data Transmission Encryption
-
-\textbf{Type:} Non-functional, Static, Manual
-
-\textbf{Input/Condition:} Source code
-
-\textbf{Output/Result:} Successfully convinced the participants the following:
-\begin{itemize}
-  \item The product only transmits encrypted data from server to user
-\end{itemize}
-
-\textbf{How test will be performed:}  A code walkthough will be held by the developers to show that the application transmit encrypted data only
-
-\textbf{Related Requirement(s):} P-SC2
-
-\item{\textbf{NFRT-P5}}
-
-\textbf{Name:} Warning when starting AR camera
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} User allows the application to use camera
-					
-\textbf{Input/Condition:} User turns on the AR camera
-					
-\textbf{Output/Result:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
-
-\textbf{How test will be performed:} The testers will open the AR camera on one device and visually inspect if the message is shown
-
-\textbf{Related Requirement(s):} P-SC3
-
-\item{\textbf{NFRT-P6}}
-
-\textbf{Name:} Leaving campus warning
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} User opens the map
-					
-\textbf{Input/Condition:} User moves out of the campus
-					
-\textbf{Output/Result:} A warning message is displayed telling the user that the map is not available out of campus
-
-\textbf{How test will be performed:} The tester will open the map and walk out of campus and visually inspect if the warning message appears
-
-\textbf{Related Requirement(s):} P-SC4
-
-\item{\textbf{NFRT-P7}}
-
-\textbf{Name:} Special character warning
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} User starts to register
-					
-\textbf{Input/Condition:} User enters nickname with some special character: `; DELETE *' (See all SPECIAL\_CHAR in the appendix)
-					
-\textbf{Output/Result:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
-
-\textbf{How test will be performed:} The tester will start to register and enter the nickname above and visually inspect if the warning message appears
-
-\textbf{Related Requirement(s):} P-SC5
-
-\item{\textbf{NFRT-P8}}
-
-\textbf{Name:} Email format warning
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} User starts to register
-					
-\textbf{Input/Condition:} User enters a not email string in the email field:
-`SELECT * FROM TABLE'
-					
-\textbf{Output/Result:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
-
-\textbf{How test will be performed:} The tester will start to register and enters a email `SELECT * FROM TABLE' and visually inspect if the warning message appears
-
-\textbf{Related Requirement(s):} P-SC6
-
-\item{\textbf{NFRT-P9}}
-
 \textbf{Name:} AR camera accuracy
 
 \textbf{Type:} Non-functional, Dynamic, Manual
@@ -1554,7 +1456,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-PA1
 
-\item{\textbf{NFRT-P10}}
+\item{\textbf{NFRT-P4}}
 
 \textbf{Name:} Warning when internet connection is lost
 
@@ -1570,7 +1472,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-RF1
 
-\item{\textbf{NFRT-P11}}
+\item{\textbf{NFRT-P5}}
 
 \textbf{Name:} Rudimentary functions when the server connection is lost
 
@@ -1586,7 +1488,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-RF2
 
-\item{\textbf{NFRT-P12}}
+\item{\textbf{NFRT-P6}}
 
 \textbf{Name:} Code inspection for server restart
 
@@ -1603,7 +1505,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-RF3
 
-\item{\textbf{NFRT-P13}}
+\item{\textbf{NFRT-P7}}
 
 \textbf{Name:} AR camera help button
 
@@ -1619,7 +1521,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-RF4
 
-\item{\textbf{NFRT-P14}}
+\item{\textbf{NFRT-P8}}
 
 \textbf{Name:} Load testing for server
 
@@ -1635,7 +1537,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-SE1
 
-\item{\textbf{NFRT-P15}}
+\item{\textbf{NFRT-P9}}
 
 \textbf{Name:} Code inspection for database capacity
 
@@ -1652,7 +1554,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-SE2
 
-\item{\textbf{NFRT-P16}}
+\item{\textbf{NFRT-P10}}
 
 \textbf{Name:} Code walkthrough for adding new building
 
@@ -1669,7 +1571,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-SE3
 
-\item{\textbf{NFRT-P17}}
+\item{\textbf{NFRT-P11}}
 
 \textbf{Name:} Code Peer Evaluation For Longevity
 
@@ -1793,6 +1695,39 @@ The testers will then download and install the product onto the phone from the G
 \end{enumerate}
 
 \textbf{Related Requirement(s):} S-A1, S-A2, S-A3
+
+\item{\textbf{NFRT-S2}}
+
+\textbf{Name:} Special character warning
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User starts to register
+					
+\textbf{Input/Condition:} User enters nickname with some special character: `; DELETE *' (See all SPECIAL\_CHAR in the appendix)
+					
+\textbf{Output/Result:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
+
+\textbf{How test will be performed:} The tester will start to register and enter the nickname above and visually inspect if the warning message appears
+
+\textbf{Related Requirement(s):} P-SC5
+
+\item{\textbf{NFRT-S3}}
+
+\textbf{Name:} Email format warning
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User starts to register
+					
+\textbf{Input/Condition:} User enters a not email string in the email field:
+`SELECT * FROM TABLE'
+					
+\textbf{Output/Result:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
+
+\textbf{How test will be performed:} The tester will start to register and enters a email `SELECT * FROM TABLE' and visually inspect if the warning message appears
+
+\textbf{Related Requirement(s):} P-SC6
 \end{enumerate}
 
 \subsubsection{Privacy}
@@ -1830,6 +1765,75 @@ The testers will then download and install the product onto the phone from the G
 \textbf{How test will be performed:} A code inspection will be held with supervisor's attendance to show the system is set to clean inactive users periodically
 
 \textbf{Related Requirement(s):} S-P2
+
+\item{\textbf{NFRT-PVC3}}
+
+\textbf{Name:} Code Walkthrough For User Personal Data
+
+\textbf{Type:} Non-functional, Static, Manual
+
+\textbf{Input/Condition:} Source code
+
+\textbf{Output/Result:} Successfully convinced the participants the following:
+\begin{itemize}
+  \item User's personal information does not appear in the database if the user did not grant permission
+\end{itemize}
+
+\textbf{How test will be performed:} A code walkthough will be held by the developers to show that database storing is only possible when the user grants permission
+
+\textbf{Related Requirement(s):} P-SC1
+
+\item{\textbf{NFRT-PVC4}}
+
+\textbf{Name:} Code Walkthrough For Data Transmission Encryption
+
+\textbf{Type:} Non-functional, Static, Manual
+
+\textbf{Input/Condition:} Source code
+
+\textbf{Output/Result:} Successfully convinced the participants the following:
+\begin{itemize}
+  \item The product only transmits encrypted data from server to user
+\end{itemize}
+
+\textbf{How test will be performed:}  A code walkthough will be held by the developers to show that the application transmit encrypted data only
+
+\textbf{Related Requirement(s):} P-SC2
+
+\item{\textbf{NFRT-PVC5}}
+
+\textbf{Name:} Leaving campus warning
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User opens the map
+					
+\textbf{Input/Condition:} User moves out of the campus
+					
+\textbf{Output/Result:} A warning message is displayed telling the user that the map is not available out of campus
+
+\textbf{How test will be performed:} The tester will open the map and walk out of campus and visually inspect if the warning message appears
+
+\textbf{Related Requirement(s):} P-SC4
+\end{enumerate}
+
+\subsubsection{User Safety}
+\begin{enumerate}
+\item{\textbf{NFRT-US1}}
+
+\textbf{Name:} Warning when starting AR camera
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User allows the application to use camera
+					
+\textbf{Input/Condition:} User turns on the AR camera
+					
+\textbf{Output/Result:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
+
+\textbf{How test will be performed:} The testers will open the AR camera on one device and visually inspect if the message is shown
+
+\textbf{Related Requirement(s):} P-SC3
 \end{enumerate}
 
 \subsubsection{Cultural}
@@ -1973,17 +1977,17 @@ elements of the interface. All of the survey takers are McMaster students
 		\hline
 		\textbf{NFRT-P1} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
 		\textbf{NFRT-P2} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-P3} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P4} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P5} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P6} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P7} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P8} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P9} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P10} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ & ~ & ~ \\
-		\textbf{NFRT-P11} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X & ~ & ~ \\
-		\textbf{NFRT-P12} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & X & ~ \\
-		\textbf{NFRT-P13} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & X \\
+		\textbf{NFRT-\sout{P3} \textcolor{red}{PVC3}} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-\sout{P4} \textcolor{red}{PVC4}} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-\sout{P5} \textcolor{red}{US1}} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-\sout{P6} \textcolor{red}{PVC5}} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-\sout{P7} \textcolor{red}{S2}} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-\sout{P8} \textcolor{red}{S3}} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ & ~ & ~ \\
+		\textbf{NFRT-P5} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X & ~ & ~ \\
+		\textbf{NFRT-P6} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & X & ~ \\
+		\textbf{NFRT-P7} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & X \\
 		\hline
 	\end{longtable}
 
@@ -1996,10 +2000,10 @@ elements of the interface. All of the survey takers are McMaster students
 		\hline
 		~                   & \textbf{P-SE1} & \textbf{P-SE2} & \textbf{P-SE3} & \textbf{P-L1} & \textbf{P-L2} & \textbf{OE-EPE1} & \textbf{OE-P1} & \textbf{MS-M1} & \textbf{MS-S1} & \textbf{MS-S2} & \textbf{MS-A1}  \\
 		\hline
-		\textbf{NFRT-P14} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
-		\textbf{NFRT-P15} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
-		\textbf{NFRT-P16} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
-		\textbf{NFRT-P17} & ~                                                         & ~             & ~             & X             & X             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-P8} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-P9} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-P10} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-P11} & ~                                                         & ~             & ~             & X             & X             & ~             & ~             & ~             & ~             & ~ &~\\
 		\textbf{NFRT-OE1} & ~                                                         & ~             & ~             & ~             & ~             & X             & X             & ~             & ~             & ~ &~\\
 		\textbf{NFRT-MS1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ &~\\
 		\textbf{NFRT-MS2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             &X  &~\\

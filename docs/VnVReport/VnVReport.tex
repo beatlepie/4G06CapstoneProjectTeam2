@@ -1037,93 +1037,6 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \item \textbf{NFRT-P3}
 
-\textbf{Name:} Code Walkthrough For User Personal Data
-
-\textbf{Input:} Source code (see details in section \ref{static})
-
-\textbf{Expected Output:} Successfully convinced the participants the following:
-\begin{itemize}
-  \item User's personal information does not appear in the database if the user did not grant permission
-\end{itemize}
-
-\textbf{Actual Output:} Successfully convinced the participants that the user personal information is collected under permission only
-
-\textbf{Result:} Pass
-
-\item \textbf{NFRT-P4}
-
-\textbf{Name:} Code Walkthrough For Data Transmission Encryption
-
-\textbf{Input:} Source code (see details in section \ref{static})
-
-\textbf{Expected Output:} Successfully convinced the participants the following:
-\begin{itemize}
-  \item The product only transmits encrypted data from server to user
-\end{itemize}
-
-\textbf{Actual Output:} Successfully convinced the participants that the data send from/to the server are encrypted
-
-\textbf{Result:} Pass
-
-\item \textbf{NFRT-P5}
-
-\textbf{Name:} Warning when starting AR camera
-
-\textbf{Initial State:} User allows the application to use camera
-					
-\textbf{Input:} User turns on the AR camera
-					
-\textbf{Expected Output:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
-
-\textbf{Actual Output:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
-
-\textbf{Result:} Pass
-
-\item \textbf{NFRT-P6}
-
-\textbf{Name:} Leaving campus warning
-
-\textbf{Initial State:} User opens the map
-					
-\textbf{Input:} User moves out of the campus
-					
-\textbf{Expected Output:} A warning message is displayed telling the user that the map is not available out of campus
-
-\textbf{Actual Output:} A warning message is displayed telling the user that the map is not available out of campus and the user is redirected to the menu page once the warning message is closed
-
-\textbf{Result:} Pass
-
-\item \textbf{NFRT-P7}
-
-\textbf{Name:} Special character warning
-
-\textbf{Initial State:} User starts to register
-					
-\textbf{Input:} User enters nickname with some special character: `; DELETE *'
-					
-\textbf{Expected Output:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
-
-\textbf{Actual Output:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
-
-\textbf{Result:} Pass
-
-\item \textbf{NFRT-P8}
-
-\textbf{Name:} Email format warning
-
-\textbf{Initial State:} User starts to register
-					
-\textbf{Input:} User enters a not email string in the email field:
-`SELECT * FROM TABLE'
-					
-\textbf{Expected Output:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
-
-\textbf{Actual Output:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
-
-\textbf{Result:} Pass
-
-\item \textbf{NFRT-P9}
-
 \textbf{Name:} AR camera accuracy
 
 \textbf{Initial State:} User is near or in a target building (JHE)
@@ -1136,7 +1049,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Result:} Pass
 
-\item \textbf{\textcolor{red}{NFRT-P10}}
+\item \textbf{\textcolor{red}{NFRT-P4}}
 
 \textbf{Name:} Warning when internet connection is lost
 
@@ -1152,7 +1065,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Reason:} Due to a change in the scope of the project, the corresponding requirement is moved out of the scope, therefore this test fails because the feature is not implemented
 
-\item \textbf{NFRT-P11}
+\item \textbf{NFRT-P5}
 
 \textbf{Name:} Rudimentary functions when the server connection is lost
 
@@ -1166,7 +1079,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Result:} Pass
 
-\item \textbf{NFRT-P12}
+\item \textbf{NFRT-P6}
 
 \textbf{Name:} Code inspection for server restart
 
@@ -1183,7 +1096,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Result:} Pass
 
-\item \textbf{NFRT-P13}
+\item \textbf{NFRT-P7}
 
 \textbf{Name:} AR camera help button
 
@@ -1197,7 +1110,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Result:} Pass
 
-\item \textbf{NFRT-P14}
+\item \textbf{NFRT-P8}
 
 \textbf{Name:} Load testing for server
 
@@ -1211,7 +1124,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Result:} Pass
 
-\item \textbf{NFRT-P15}
+\item \textbf{NFRT-P9}
 
 \textbf{Name:} Code inspection for database capacity
 
@@ -1228,7 +1141,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Result:} Pass
 
-\item \textbf{NFRT-P16}
+\item \textbf{NFRT-P10}
 
 \textbf{Name:} Code walkthrough for adding new building
 
@@ -1245,7 +1158,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Result:} Pass
 
-\item \textbf{NFRT-P17}
+\item \textbf{NFRT-P11}
 
 \textbf{Name:} Code Peer Evaluation For Longevity
 
@@ -1355,6 +1268,35 @@ This section corresponds to the Operational and Environmental tests in VnV Plan 
 \end{itemize}
 
 \textbf{Result:} Pass
+
+\item \textbf{NFRT-S2}
+
+\textbf{Name:} Special character warning
+
+\textbf{Initial State:} User starts to register
+					
+\textbf{Input:} User enters nickname with some special character: `; DELETE *'
+					
+\textbf{Expected Output:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
+
+\textbf{Actual Output:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
+
+\textbf{Result:} Pass
+
+\item \textbf{NFRT-S3}
+
+\textbf{Name:} Email format warning
+
+\textbf{Initial State:} User starts to register
+					
+\textbf{Input:} User enters a not email string in the email field:
+`SELECT * FROM TABLE'
+					
+\textbf{Expected Output:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
+
+\textbf{Actual Output:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
+
+\textbf{Result:} Pass
 \end{enumerate}
 \subsection{Privacy}
 \begin{enumerate}
@@ -1391,7 +1333,69 @@ This section corresponds to the Operational and Environmental tests in VnV Plan 
 \textbf{Actual Output:} Convinced the participants that the authentication system and database will clean inactive data every semester
 
 \textbf{Result:} Pass
+
+\item \textbf{NFRT-PRV3}
+
+\textbf{Name:} Code Walkthrough For User Personal Data
+
+\textbf{Input:} Source code (see details in section \ref{static})
+
+\textbf{Expected Output:} Successfully convinced the participants the following:
+\begin{itemize}
+  \item User's personal information does not appear in the database if the user did not grant permission
+\end{itemize}
+
+\textbf{Actual Output:} Successfully convinced the participants that the user personal information is collected under permission only
+
+\textbf{Result:} Pass
+
+\item \textbf{NFRT-PRV4}
+
+\textbf{Name:} Code Walkthrough For Data Transmission Encryption
+
+\textbf{Input:} Source code (see details in section \ref{static})
+
+\textbf{Expected Output:} Successfully convinced the participants the following:
+\begin{itemize}
+  \item The product only transmits encrypted data from server to user
+\end{itemize}
+
+\textbf{Actual Output:} Successfully convinced the participants that the data send from/to the server are encrypted
+
+\textbf{Result:} Pass
+
+\item \textbf{NFRT-PRV5}
+
+\textbf{Name:} Leaving campus warning
+
+\textbf{Initial State:} User opens the map
+					
+\textbf{Input:} User moves out of the campus
+					
+\textbf{Expected Output:} A warning message is displayed telling the user that the map is not available out of campus
+
+\textbf{Actual Output:} A warning message is displayed telling the user that the map is not available out of campus and the user is redirected to the menu page once the warning message is closed
+
+\textbf{Result:} Pass
 \end{enumerate}
+
+\subsection{User Safety}
+\begin{enumerate}
+\item \textbf{NFRT-US1}
+
+\textbf{Name:} Warning when starting AR camera
+
+\textbf{Initial State:} User allows the application to use camera
+					
+\textbf{Input:} User turns on the AR camera
+					
+\textbf{Expected Output:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
+
+\textbf{Actual Output:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
+
+\textbf{Result:} Pass
+\end{enumerate}
+
 \subsection{Culture}
 \begin{enumerate}
 \item \textbf{NFRT-CUL1}
