@@ -207,305 +207,305 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item [\refstepcounter{mnum} \mthemnum \label{mDB}:] Database Module
-\item [\refstepcounter{mnum} \mthemnum \label{mServer}:] Server Module
-\item [\refstepcounter{mnum} \mthemnum \label{mAuth}:] Authentication Module
-\item [\refstepcounter{mnum} \mthemnum \label{mARCamera}:] AR Camera Module
-\item [\refstepcounter{mnum} \mthemnum \label{mARInterface}:] AR Interface Module
-\item [\refstepcounter{mnum} \mthemnum \label{mMap}:] Mapbox Module
-\item [\refstepcounter{mnum} \mthemnum \label{mRealTimeMap}:] RealTimeMap Module
-\item [\refstepcounter{mnum} \mthemnum \label{mUser}:] User Module
-\item [\refstepcounter{mnum} \mthemnum \label{mLec}:] Lecture Module
-\item [\refstepcounter{mnum} \mthemnum \label{mEvent}:] Event Module
-\item [\refstepcounter{mnum} \mthemnum \label{mDBConnector}:] DBConnector Module
-\item [\refstepcounter{mnum} \mthemnum \label{mAuthConnector}:] AuthConnector Module
-\item [\refstepcounter{mnum} \mthemnum \label{mUP}:] User Profile Module
-\item [\refstepcounter{mnum} \mthemnum \label{mUL}:] User Login Module
-\item [\refstepcounter{mnum} \mthemnum \label{mFM}:] Friend Manager Module
-\item [\refstepcounter{mnum} \mthemnum \label{mFR}:] Friend Request Module
-\item [\refstepcounter{mnum} \mthemnum \label{mFC}:] Friend Chat Module
-\item [\refstepcounter{mnum} \mthemnum \label{mADV}:] Activity Detail View Module
-\item [\refstepcounter{mnum} \mthemnum \label{mLDV}:] Lecture Detail View Module
-\item [\refstepcounter{mnum} \mthemnum \label{mEDV}:] Event Detail View Module
-\item [\refstepcounter{mnum} \mthemnum \label{mPF}:] Pagination and Filter Module
-\item [\refstepcounter{mnum} \mthemnum \label{mLL}:] Lecture List Manager Module
-\item [\refstepcounter{mnum} \mthemnum \label{mEL}:] Event List Manager Module
-\item [\refstepcounter{mnum} \mthemnum \label{mNoti}:] Notification Module
-\end{description}
-
-
-\begin{table}[H]
-\centering
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
-\toprule
-\textbf{Level 1} & \textbf{Level 2}\\
-\midrule
-
-{Hardware-Hiding Module} & ~ \\
-\midrule
-
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}
-& AR Interface Module\\
-& Real-time Map Module\\
-& User Module\\
-& Lecture Module\\
-& Event Module\\
-& User Profile Module\\
-& User Login Module\\
-& Friend Manager Module\\ 
-& Friend Request Module\\
-& Friend Chat Module\\
-& Lecture Detail View Module\\
-& Event Detail View Module\\
-& Lecture List Manager Module\\
-& Event List Manager Module\\
-& DBConnector Module\\
-& AuthConnector Module\\
-& Notification Module\\
-\midrule
-
-\multirow{3}{0.3\textwidth}{Software Decision Module}
-& Database Module\\
-& Server Module\\
-& Authentication Module\\
-& AR Camera Module\\
-& Mapbox Module\\
-& Activity Detail View Module\\
-& Pagination and Filter Module\\
-\bottomrule
-
-\end{tabular}
-\caption{Module Hierarchy}
-\label{TblMH}
-\end{table}
-
-\section{Connection Between Requirements and Design} \label{SecConnection}
-
-The design of the system is intended to satisfy the requirements developed in
-the SRS. In this stage, the system is decomposed into modules. The connection
-between requirements and modules is listed in Table~\ref{TblFRT}, \ref{TblNFRT}, \ref{TblNFRT-CONT}.
-
-\section{Module Decomposition} \label{SecMD}
-
-Modules are decomposed according to the principle of ``information hiding''
-proposed by \citet{ParnasEtAl1984}. The \emph{Secrets} field in a module
-decomposition is a brief statement of the design decision hidden by the
-module. The \emph{Services} field specifies \emph{what} the module will do
-without documenting \emph{how} to do it. For each module, a suggestion for the
-implementing software is given under the \emph{Implemented By} title. If the
-entry is \emph{OS}, this means that the module is provided by the operating
-system or by standard programming language libraries.  \emph{\progname{}} means the
-module will be implemented by the \progname{} software.
-
-Only the leaf modules in the hierarchy have to be implemented. If a dash
-(\emph{--}) is shown, this means that the module is not a leaf and will not have
-to be implemented.
-
-\subsection{Hardware Hiding Modules (\mref{mHH})}
-
-\begin{description}
-\item[Secrets:]The data structure and algorithm used to implement the virtual
-  hardware.
-\item[Services:]Serves as a virtual hardware used by the rest of the
-  system. This module provides the interface between the hardware and the
-  software. So, the system can use it to display outputs or to accept inputs.
-\item[Implemented By:] OS
-\end{description}
-
-\subsection{Behaviour-Hiding Module}
-\subsubsection{AR Interface Module (\mref{mARInterface})}
-\begin{description}
-\item[Secrets:]How AR User Interface elements are created and displayed.
-\item[Services:]Creates 3D AR elements when notified by the AR Camera of a new valid target. Handles user input relating to AR UI elements.
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{Real-time Map Module (\mref{mRealTimeMap})}
-\begin{description}
-\item[Secrets:]How users, events and buildings are organized and displayed on the virtual map provided by the MapBox Module.
-\item[Services:]Displays points of interest such as buildings or events. Handles user interaction with points of interest. Displays user's avatar at their current location. Displays nearby friend locations on the map.
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{User Module (\mref{mUser})}
-\begin{description}
-  \item[Secrets:]Data structure of a User.
-  \item[Services:]Provides functionalities to interact with user data for other modules to use.
-  \item[Implemented By:] CampusConnections
-  \item[Type of Module:] Abstract Data Type
-\end{description}
-
-\subsubsection{Lecture Module (\mref{mLec})}
-\begin{description}
-  \item[Secrets:]Data structure of a Lecture.
-  \item[Services:]Provides CRUD operations for users and administrators to interact with lecture data.
-  \item[Implemented By:] CampusConnections
-  \item[Type of Module:] Abstract Data Type
-\end{description}
-
-\subsubsection{Event Module (\mref{mEvent})}
-\begin{description}
-  \item[Secrets:]Data structure of an Event.
-  \item[Services:]Provides CRUD operations for users and administrators to interact with event data.
-  \item[Implemented By:] CampusConnections
-  \item[Type of Module:] Abstract Data Type
-\end{description}
-
-\subsubsection{DBConnector Module (\mref{mDBConnector})}
-\begin{description}
-  \item[Secrets:]How users get access to the database data.
-  \item[Services:]Provides database root for users to connect to.
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mHH}):] Hardware-Hiding Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mDB}):] Database Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mServer}):] Server Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mAuth}):] Authentication Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mARCamera}):] AR Camera Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mARInterface}):] AR Interface Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mMap}):] Mapbox Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mRealTimeMap}):] RealTimeMap Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mUser}):] User Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mLec}):] Lecture Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mEvent}):] Event Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mDBConnector}):] DBConnector Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mAuthConnector}):] AuthConnector Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mUP}):] User Profile Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mUL}):] User Login Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mFM}):] Friend Manager Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mFR}):] Friend Request Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mFC}):] Friend Chat Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mADV}):] Activity Detail View Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mLDV}):] Lecture Detail View Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mEDV}):] Event Detail View Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mPF}):] Pagination and Filter Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mLL}):] Lecture List Manager Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mEL}):] Event List Manager Module
+  \item [\refstepcounter{mnum} \mthemnum (\mref{mNoti}):] Notification Module
+  \end{description}
+  
+  
+  \begin{table}[H]
+  \centering
+  \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+  \toprule
+  \textbf{Level 1} & \textbf{Level 2}\\
+  \midrule
+  
+  {Hardware-Hiding Module} & ~ \\
+  \midrule
+  
+  \multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}
+  & AR Interface Module\\
+  & Real-time Map Module\\
+  & User Module\\
+  & Lecture Module\\
+  & Event Module\\
+  & User Profile Module\\
+  & User Login Module\\
+  & Friend Manager Module\\ 
+  & Friend Request Module\\
+  & Friend Chat Module\\
+  & Lecture Detail View Module\\
+  & Event Detail View Module\\
+  & Lecture List Manager Module\\
+  & Event List Manager Module\\
+  & DBConnector Module\\
+  & AuthConnector Module\\
+  & Notification Module\\
+  \midrule
+  
+  \multirow{3}{0.3\textwidth}{Software Decision Module}
+  & Database Module\\
+  & Server Module\\
+  & Authentication Module\\
+  & AR Camera Module\\
+  & Mapbox Module\\
+  & Activity Detail View Module\\
+  & Pagination and Filter Module\\
+  \bottomrule
+  
+  \end{tabular}
+  \caption{Module Hierarchy}
+  \label{TblMH}
+  \end{table}
+  
+  \section{Connection Between Requirements and Design} \label{SecConnection}
+  
+  The design of the system is intended to satisfy the requirements developed in
+  the SRS. In this stage, the system is decomposed into modules. The connection
+  between requirements and modules is listed in Table~\ref{TblFRT}, \ref{TblNFRT}, \ref{TblNFRT-CONT}.
+  
+  \section{Module Decomposition} \label{SecMD}
+  
+  Modules are decomposed according to the principle of ``information hiding''
+  proposed by \citet{ParnasEtAl1984}. The \emph{Secrets} field in a module
+  decomposition is a brief statement of the design decision hidden by the
+  module. The \emph{Services} field specifies \emph{what} the module will do
+  without documenting \emph{how} to do it. For each module, a suggestion for the
+  implementing software is given under the \emph{Implemented By} title. If the
+  entry is \emph{OS}, this means that the module is provided by the operating
+  system or by standard programming language libraries.  \emph{\progname{}} means the
+  module will be implemented by the \progname{} software.
+  
+  Only the leaf modules in the hierarchy have to be implemented. If a dash
+  (\emph{--}) is shown, this means that the module is not a leaf and will not have
+  to be implemented.
+  
+  \subsection{Hardware Hiding Modules (\label{mHH})}
+  
+  \begin{description}
+  \item[Secrets:]The data structure and algorithm used to implement the virtual
+    hardware.
+  \item[Services:]Serves as a virtual hardware used by the rest of the
+    system. This module provides the interface between the hardware and the
+    software. So, the system can use it to display outputs or to accept inputs.
+  \item[Implemented By:] OS
+  \end{description}
+  
+  \subsection{Behaviour-Hiding Module}
+  \subsubsection{AR Interface Module (\label{mARInterface})}
+  \begin{description}
+  \item[Secrets:]How AR User Interface elements are created and displayed.
+  \item[Services:]Creates 3D AR elements when notified by the AR Camera of a new valid target. Handles user input relating to AR UI elements.
   \item[Implemented By:] CampusConnections
   \item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{AuthConnector Module (\mref{mAuthConnector})}
-\begin{description}
-  \item[Secrets:]How current users get access to authentication information.
-  \item[Services:]Provides current user information (e.g. if the email is verified) from authentication system for users
+  \end{description}
+  
+  \subsubsection{Real-time Map Module (\label{mRealTimeMap})}
+  \begin{description}
+  \item[Secrets:]How users, events and buildings are organized and displayed on the virtual map provided by the MapBox Module.
+  \item[Services:]Displays points of interest such as buildings or events. Handles user interaction with points of interest. Displays user's avatar at their current location. Displays nearby friend locations on the map.
   \item[Implemented By:] CampusConnections
   \item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{User Profile Module (\mref{mUP})}
-\begin{description}
-  \item[Secrets:]How to display user profile and edit profile handlers
-  \item[Services:]Allows users to view and edit (only for themselves) a user's profile.
+  \end{description}
+  
+  \subsubsection{User Module (\label{mUser})}
+  \begin{description}
+    \item[Secrets:]Data structure of a User.
+    \item[Services:]Provides functionalities to interact with user data for other modules to use.
+    \item[Implemented By:] CampusConnections
+    \item[Type of Module:] Abstract Data Type
+  \end{description}
+  
+  \subsubsection{Lecture Module (\label{mLec})}
+  \begin{description}
+    \item[Secrets:]Data structure of a Lecture.
+    \item[Services:]Provides CRUD operations for users and administrators to interact with lecture data.
+    \item[Implemented By:] CampusConnections
+    \item[Type of Module:] Abstract Data Type
+  \end{description}
+  
+  \subsubsection{Event Module (\label{mEvent})}
+  \begin{description}
+    \item[Secrets:]Data structure of an Event.
+    \item[Services:]Provides CRUD operations for users and administrators to interact with event data.
+    \item[Implemented By:] CampusConnections
+    \item[Type of Module:] Abstract Data Type
+  \end{description}
+  
+  \subsubsection{DBConnector Module (\label{mDBConnector})}
+  \begin{description}
+    \item[Secrets:]How users get access to the database data.
+    \item[Services:]Provides database root for users to connect to.
+    \item[Implemented By:] CampusConnections
+    \item[Type of Module:] Abstract Object
+  \end{description}
+  
+  \subsubsection{AuthConnector Module (\label{mAuthConnector})}
+  \begin{description}
+    \item[Secrets:]How current users get access to authentication information.
+    \item[Services:]Provides current user information (e.g. if the email is verified) from authentication system for users
+    \item[Implemented By:] CampusConnections
+    \item[Type of Module:] Abstract Object
+  \end{description}
+  
+  \subsubsection{User Profile Module (\label{mUP})}
+  \begin{description}
+    \item[Secrets:]How to display user profile and edit profile handlers
+    \item[Services:]Allows users to view and edit (only for themselves) a user's profile.
+    \item[Implemented By:] CampusConnections
+    \item[Type of Module:] Abstract Object
+  \end{description}
+  
+  \subsubsection{User Login Module (\label{mUL})}
+  \begin{description}
+    \item[Secrets:]The layout of account login/creation handlers and input fields
+    \item[Services:]Allows users to enter account information to login to the system or create an account. Provide functionality to reset password as well.
+    \item[Implemented By:] CampusConnections
+    \item[Type of Module:] Abstract Object
+  \end{description}
+  
+  \subsubsection{Friend Manager Module (\label{mFM})}
+  \begin{description}
+  \item[Secrets:]How to display friends as a list with corresponding handlers including adding, deleting, messaging and viewing.
+  \item[Services:]Displays friends and as as a list and handle user input to add, message, delete a friend.
   \item[Implemented By:] CampusConnections
   \item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{User Login Module (\mref{mUL})}
-\begin{description}
-  \item[Secrets:]The layout of account login/creation handlers and input fields
-  \item[Services:]Allows users to enter account information to login to the system or create an account. Provide functionality to reset password as well.
+  \end{description}
+  
+  \subsubsection{Friend Request Module (\label{mFR})}
+  \begin{description}
+  \item[Secrets:]How to display friend requests as a list with corresponding handlers to accept or ignore requests.
+  \item[Services:]Displays friend requests and as as a list and handle user input to accept or ignore a request.
   \item[Implemented By:] CampusConnections
   \item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{Friend Manager Module (\mref{mFM})}
-\begin{description}
-\item[Secrets:]How to display friends as a list with corresponding handlers including adding, deleting, messaging and viewing.
-\item[Services:]Displays friends and as as a list and handle user input to add, message, delete a friend.
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{Friend Request Module (\mref{mFR})}
-\begin{description}
-\item[Secrets:]How to display friend requests as a list with corresponding handlers to accept or ignore requests.
-\item[Services:]Displays friend requests and as as a list and handle user input to accept or ignore a request.
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{Friend Chat Module (\mref{mFC})}
-\begin{description}
-\item[Secrets:]Procedures related to how chat messages are sent, received and handled on the client side.
-\item[Services:]Provides a link between the user interface and the backend server to allow users to chat in real time. Converts user input in the form of messages to data packets that are sent to the backend server.
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{Event Detail View Module (\mref{mEDV})}
-\begin{description}
-\item[Secrets:]How to inherit (\mref{mADV}) with activity type Event.
-\item[Services:]All services inherited from (\mref{mADV}) with activity type Event
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{Lecture Detail View Module (\mref{mLDV})}
-\begin{description}
-\item[Secrets:]How to inherit (\mref{mADV}) with activity type lecture.
-\item[Services:]All services inherited from (\mref{mADV}) with activity type Event
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{Lecture List Manager Module (\mref{mLL})}
-\begin{description}
-\item[Secrets:]Implementation details of how lectures are displayed as a list with services inherited from (\mref{mPF}).
-\item[Services:]Displays a sequence of lectures as a list with pagination and filtering functionalities inherited from (\mref{mPF}).
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{Event List Manager Module (\mref{mEL})}
-\begin{description}
-\item[Secrets:]Implementation details of how events are displayed as a list with services inherited from (\mref{mPF}).
-\item[Services:]Displays a sequence of events as a list with pagination and filtering functionalities inherited from (\mref{mPF}).
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Object
-\end{description}
-
-\subsubsection{Notification Module (\mref{mNoti})}
-\begin{description}
-\item[Secrets:] How users get a notification.
-\item[Services:]Displays a pop up window showing corresponding notification messages.
-\item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Object
-\end{description}
-
-\subsection{Software Decision Module}
-\subsubsection{Database Module (\mref{mDB})}
-\begin{description}
-\item[Secrets:]Database settings including structures of stored data, connection settings.
-\item[Services:]Provides CURD operations to database tables.
-\item[Implemented By:] Firebase
-\item[Type of Module:] Library
-\end{description}
-
-\subsubsection{Server Module (\mref{mServer})}
-\begin{description}
-\item[Secrets:]How real-time data is sent to and received from clients.
-\item[Services:]Provides real-time communication endpoints for chatting and location sharing.
-\item[Implemented By:] Microsoft
-\item[Type of Module:] Library
-\end{description}
-
-\subsubsection{Authentication Module (\mref{mAuth})}
-\begin{description}
-\item[Secrets:]Authentication token and user data related to authentication
-\item[Services:]Provides authentication token to existing users and prevent unauthorized users from accessing any accounts.
-\item[Implemented By:] Firebase
-\item[Type of Module:] Library
-\end{description}
-
-\subsubsection{AR Camera Module (\mref{mARCamera})}
-\begin{description}
-\item[Secrets:]How AR targets are recognized.
-\item[Services:]Detects valid AR targets in the device's camera view and notifies the AR Interface module of the newly detected target.
-\item[Implemented By:] Vuforia
-\item[Type of Module:] Library
-\end{description}
-
-\subsubsection{Mapbox Module (\mref{mMap})}
-\begin{description}
-\item[Secrets:]How to build and display customizable maps.
-\item[Services:]Provides different styles of interactive and customizable maps with basic functionalities (e.g. pan, center).
-\item[Implemented By:] Mapbox
-\item[Type of Module:] Library
-\end{description}
-
-\subsubsection{Activity Detail View Module (\mref{mADV})}
-\begin{description}
-  \item[Secrets:]How details of activities are displayed and changed.
-  \item[Services:]Provides functionality for users and administrators to view, bookmakr, unbookmark; edit, and delete activities respectively.
+  \end{description}
+  
+  \subsubsection{Friend Chat Module (\label{mFC})}
+  \begin{description}
+  \item[Secrets:]Procedures related to how chat messages are sent, received and handled on the client side.
+  \item[Services:]Provides a link between the user interface and the backend server to allow users to chat in real time. Converts user input in the form of messages to data packets that are sent to the backend server.
   \item[Implemented By:] CampusConnections
-  \item[Type of Module:] Generic Module
-\end{description}
-
-\subsubsection{Pagination and Filter Module (\mref{mPF})}
-\begin{description}
-  \item[Secrets:]Algorithm used for paginating and filter activities.
-  \item[Services:]Displays activities as a paginated list which can be filtered by certain keyword.
+  \item[Type of Module:] Abstract Object
+  \end{description}
+  
+  \subsubsection{Event Detail View Module (\label{mEDV})}
+  \begin{description}
+  \item[Secrets:]How to inherit (\mref{mADV}) with activity type Event.
+  \item[Services:]All services inherited from (\mref{mADV}) with activity type Event
   \item[Implemented By:] CampusConnections
-  \item[Type of Module:] Generic Module
-\end{description}
+  \item[Type of Module:] Abstract Object
+  \end{description}
+  
+  \subsubsection{Lecture Detail View Module (\label{mLDV})}
+  \begin{description}
+  \item[Secrets:]How to inherit (\label{mADV}) with activity type lecture.
+  \item[Services:]All services inherited from (\mref{mADV}) with activity type Event
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Abstract Object
+  \end{description}
+  
+  \subsubsection{Lecture List Manager Module (\label{mLL})}
+  \begin{description}
+  \item[Secrets:]Implementation details of how lectures are displayed as a list with services inherited from (\mref{mPF}).
+  \item[Services:]Displays a sequence of lectures as a list with pagination and filtering functionalities inherited from (\mref{mPF}).
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Abstract Object
+  \end{description}
+  
+  \subsubsection{Event List Manager Module (\label{mEL})}
+  \begin{description}
+  \item[Secrets:]Implementation details of how events are displayed as a list with services inherited from (\mref{mPF}).
+  \item[Services:]Displays a sequence of events as a list with pagination and filtering functionalities inherited from (\mref{mPF}).
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Abstract Object
+  \end{description}
+  
+  \subsubsection{Notification Module (\label{mNoti})}
+  \begin{description}
+  \item[Secrets:] How users get a notification.
+  \item[Services:]Displays a pop up window showing corresponding notification messages.
+  \item[Implemented By:] CampusConnections
+  \item[Type of Module:] Abstract Object
+  \end{description}
+  
+  \subsection{Software Decision Module}
+  \subsubsection{Database Module (\label{mDB})}
+  \begin{description}
+  \item[Secrets:]Database settings including structures of stored data, connection settings.
+  \item[Services:]Provides CURD operations to database tables.
+  \item[Implemented By:] Firebase
+  \item[Type of Module:] Library
+  \end{description}
+  
+  \subsubsection{Server Module (\label{mServer})}
+  \begin{description}
+  \item[Secrets:]How real-time data is sent to and received from clients.
+  \item[Services:]Provides real-time communication endpoints for chatting and location sharing.
+  \item[Implemented By:] Microsoft
+  \item[Type of Module:] Library
+  \end{description}
+  
+  \subsubsection{Authentication Module (\label{mAuth})}
+  \begin{description}
+  \item[Secrets:]Authentication token and user data related to authentication
+  \item[Services:]Provides authentication token to existing users and prevent unauthorized users from accessing any accounts.
+  \item[Implemented By:] Firebase
+  \item[Type of Module:] Library
+  \end{description}
+  
+  \subsubsection{AR Camera Module (\label{mARCamera})}
+  \begin{description}
+  \item[Secrets:]How AR targets are recognized.
+  \item[Services:]Detects valid AR targets in the device's camera view and notifies the AR Interface module of the newly detected target.
+  \item[Implemented By:] Vuforia
+  \item[Type of Module:] Library
+  \end{description}
+  
+  \subsubsection{Mapbox Module (\label{mMap})}
+  \begin{description}
+  \item[Secrets:]How to build and display customizable maps.
+  \item[Services:]Provides different styles of interactive and customizable maps with basic functionalities (e.g. pan, center).
+  \item[Implemented By:] Mapbox
+  \item[Type of Module:] Library
+  \end{description}
+  
+  \subsubsection{Activity Detail View Module (\label{mADV})}
+  \begin{description}
+    \item[Secrets:]How details of activities are displayed and changed.
+    \item[Services:]Provides functionality for users and administrators to view, bookmakr, unbookmark; edit, and delete activities respectively.
+    \item[Implemented By:] CampusConnections
+    \item[Type of Module:] Generic Module
+  \end{description}
+  
+  \subsubsection{Pagination and Filter Module (\label{mPF})}
+  \begin{description}
+    \item[Secrets:]Algorithm used for paginating and filter activities.
+    \item[Services:]Displays activities as a paginated list which can be filtered by certain keyword.
+    \item[Implemented By:] CampusConnections
+    \item[Type of Module:] Generic Module
+  \end{description}
 
 \section{Traceability Matrix} \label{SecTM}
 
