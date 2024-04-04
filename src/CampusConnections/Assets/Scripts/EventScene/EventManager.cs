@@ -27,6 +27,7 @@ public class EventManager : MonoBehaviour
     private Pagination<Event> _events;
     private List<Transform> _eventEntryTransformList;
     public TMP_Text pgNum;
+    // Following numbers come from Figma design
     private const int PageCount = 10;
     private const int HeaderHeight = 690;
     [FormerlySerializedAs("EditButton")] [SerializeField] private Image editButton;
@@ -86,6 +87,9 @@ public class EventManager : MonoBehaviour
         StartCoroutine(GetEvents());
     }
 
+    /// <summary>
+    /// Async call to retrieve event data from db
+    /// </summary>
     private IEnumerator GetEvents()
     {
         _eventEntryTransformList = new List<Transform>();
@@ -115,11 +119,17 @@ public class EventManager : MonoBehaviour
         DisplayEventList();
     }
 
+    /// <summary>
+    /// Retrieve bookmarked event data and store it to the state
+    /// </summary>
     private void GetBookmarkedData()
     {
         StartCoroutine(GetBookmarkedEvents((data) => MyEvents = data));
     }
 
+    /// <summary>
+    /// Get and store a list of bookmarked events from database
+    /// </summary>
     private IEnumerator GetBookmarkedEvents(Action<List<string>> onCallBack)
     {
         var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
@@ -127,10 +137,10 @@ public class EventManager : MonoBehaviour
         yield return new WaitUntil(() => userData.IsCompleted);
         if (userData != null)
         {
-            var bookmarkedLectures = new List<string>();
+            var bookmarkedOnes = new List<string>();
             var snapshot = userData.Result;
-            foreach (var x in snapshot.Children) bookmarkedLectures.Add(x.Key);
-            onCallBack.Invoke(bookmarkedLectures);
+            foreach (var x in snapshot.Children) bookmarkedOnes.Add(x.Key);
+            onCallBack.Invoke(bookmarkedOnes);
         }
     }
 
@@ -152,6 +162,9 @@ public class EventManager : MonoBehaviour
             }
     }
 
+    /// <summary>
+    /// Create an event entry in the list view given a template and its corresponding event information
+    /// </summary>
     private void CreateEventEntryTransform(Event eventEntry, Transform container, List<Transform> transformList)
     { 
         var templateHeight = (Screen.height - HeaderHeight) / (float) PageCount;

@@ -20,6 +20,9 @@ public class EventCarouselCell : CarouselCell<EventCarouselData, EventCarouselCe
 
     private EventCarouselData _data;
 
+    /// <summary>
+    /// Override the carouselview refresh to display event related content
+    /// </summary>
     protected override void Refresh(EventCarouselData data)
     {
         _data = data;

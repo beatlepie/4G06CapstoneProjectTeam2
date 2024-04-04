@@ -30,6 +30,9 @@ public class LectureCarouselCell : CarouselCell<LectureCarouselData, LectureCaro
         instructor.text = data.Lecture.Instructor;
     }
 
+    /// <summary>
+    /// Override the carouselview refresh to display lecture related content
+    /// </summary>
     protected override void OnVisibilityChanged(bool visibility)
     {
         if (visibility)

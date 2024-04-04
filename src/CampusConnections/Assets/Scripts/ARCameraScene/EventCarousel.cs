@@ -25,7 +25,7 @@ public class EventCarousel : MonoBehaviour
     private void Setup()
     {
         _allEvents = new List<Event>();
-        StartCoroutine(GetLectures());
+        StartCoroutine(GetEvents());
     }
 
     private void Cleanup()
@@ -33,7 +33,10 @@ public class EventCarousel : MonoBehaviour
         carouselView.Cleanup();
     }
 
-    private IEnumerator GetLectures()
+    /// <summary>
+    /// Get a list of events from db
+    /// </summary>
+    private IEnumerator GetEvents()
     {
         var publicEventData = DatabaseConnector.Instance.Root.Child("events/public").GetValueAsync();
         yield return new WaitUntil(() => publicEventData.IsCompleted);

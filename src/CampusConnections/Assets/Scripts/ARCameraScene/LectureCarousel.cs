@@ -35,6 +35,9 @@ public class LectureCarousel : MonoBehaviour
         carouselView.Cleanup();
     }
 
+    /// <summary>
+    /// Get a list of lectures from db
+    /// </summary>
     private IEnumerator GetLectures()
     {
         var lectureData = DatabaseConnector.Instance.Root.Child("lectures/").GetValueAsync();

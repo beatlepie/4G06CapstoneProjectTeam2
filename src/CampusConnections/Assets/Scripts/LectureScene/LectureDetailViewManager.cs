@@ -54,6 +54,9 @@ public class LectureDetailViewManager : MonoBehaviour
         UpdateView();
     }
 
+    /// <summary>
+    /// Update the view and edit panel information
+    /// </summary>
     private void UpdateView()
     {
         viewCode.text = _target.Code;
@@ -68,6 +71,9 @@ public class LectureDetailViewManager : MonoBehaviour
         editTimes.text = _target.Time;
     }
 
+    /// <summary>
+    /// Once the user changes edit panel content and hits save button, update the state
+    /// </summary>
     public void SaveChanges()
     {
         _target.Code = editCode.text;

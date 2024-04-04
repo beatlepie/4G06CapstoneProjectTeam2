@@ -28,6 +28,7 @@ public class LectureManager : MonoBehaviour
     private Pagination<Lecture> _lectures;
     private List<Transform> _lectureEntryTransformList;
     public TMP_Text pgNum;
+    // Following numbers come from Figma design
     private const int PageCount = 10;
     private const int HeaderHeight = 690;
     [FormerlySerializedAs("BookmarkButton")] public GameObject bookmarkButton;
@@ -80,6 +81,9 @@ public class LectureManager : MonoBehaviour
         StartCoroutine(GetLectures());
     }
 
+    /// <summary>
+    /// Async call to retrieve lecture data from db
+    /// </summary>
     private IEnumerator GetLectures()
     {
         _lectureEntryTransformList = new List<Transform>();
@@ -97,11 +101,17 @@ public class LectureManager : MonoBehaviour
         DisplayLectureList();
     }
 
+    /// <summary>
+    /// Retrieve bookmarked lecture data and store it to the state
+    /// </summary>
     private void GetBookmarkedData()
     {
         StartCoroutine(GetBookmarkedLectures((data) => MyLectures = data));
     }
 
+    /// <summary>
+    /// Get and store a list of bookmarked lectures from database
+    /// </summary>
     private IEnumerator GetBookmarkedLectures(Action<List<string>> onCallBack)
     {
         var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
@@ -109,10 +119,10 @@ public class LectureManager : MonoBehaviour
         yield return new WaitUntil(() => userData.IsCompleted);
         if (userData != null)
         {
-            var bookmarkedLectures = new List<string>();
+            var bookmarkedOnes = new List<string>();
             var snapshot = userData.Result;
-            foreach (var x in snapshot.Children) bookmarkedLectures.Add(x.Key);
-            onCallBack.Invoke(bookmarkedLectures);
+            foreach (var x in snapshot.Children) bookmarkedOnes.Add(x.Key);
+            onCallBack.Invoke(bookmarkedOnes);
         }
     }
 
@@ -134,6 +144,9 @@ public class LectureManager : MonoBehaviour
             }
     }
 
+    /// <summary>
+    /// Create a lecture entry in the list view given a template and its corresponding lecture information
+    /// </summary>
     private void CreateLectureEntryTransform(Lecture lectureEntry, Transform container, List<Transform> transformList)
     { 
         float templateHeight = (Screen.height - HeaderHeight) / (float) PageCount;

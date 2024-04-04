@@ -62,6 +62,9 @@ public class EventDetailViewManager : MonoBehaviour
         UpdateView();
     }
 
+    /// <summary>
+    /// Update the view and edit panel information
+    /// </summary>
     private void UpdateView()
     {
         viewName.text = _target.Name;
@@ -82,6 +85,9 @@ public class EventDetailViewManager : MonoBehaviour
         editIsPublic.isOn = _target.IsPublic;
     }
 
+    /// <summary>
+    /// Once the user changes edit panel content and hits save button, update the state
+    /// </summary>
     public void SaveChanges()
     {
         _target.Name = editName.text;
