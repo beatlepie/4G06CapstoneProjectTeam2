@@ -55,6 +55,7 @@ urlcolor=cyan          % color of external links
 \midrule
 Jan 15 & 1.0 & Add introduction and module decomposition\\
 Jan 17 & 1.0 & Revision 0\\
+Apr 4  & 1.1 & Revision 1: Updated MIS to be consisted with design changes, implemented feedback, added new modules\\
 \bottomrule
 \end{tabularx}
 
@@ -150,7 +151,7 @@ The following table is taken directly from the Module Guide document for this pr
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding} & ~ \\
+{Hardware-Hiding} & Hardware-Hiding Module \\
 \midrule
 
 \multirow{7}{0.3\textwidth}{Behaviour-Hiding}
@@ -1179,39 +1180,34 @@ None
 
 Authentication
 
+\subsection{External Module Documentation}
+
+This module is provided by a 3rd party library (Firebase Authentication). For details of all syntax and semantics of exported constants and access programs, refer to the \href{https://firebase.google.com/docs/reference/unity/namespace/firebase/auth}{Firebase Auth Unity API Documentation}.
+documentation
+
 \subsection{Uses}
 
-Database Module
+Hardware-Hiding Module, Database Module
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
 
-None
+Please refer to the external module documentation section.
 
 \subsubsection{Exported Access Programs}
 
-\begin{center}
-	\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
-	\hline
-	\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-	\hline
-	User & - & FirebaseUser & TokenExpiredException \\
-	\hline
-	\end{tabular}
-\end{center}
+Please refer to the external module documentation section.
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
 
-\begin{itemize}
-\item User: FirebaseUser
-\end{itemize}
+Please refer to the external module documentation section.
 
 \subsubsection{Environment Variables}
 
-None
+Please refer to the external module documentation section.
 
 \subsubsection{Assumptions}
 
@@ -1219,35 +1215,15 @@ The user will have a unique account and only has access to that account.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent User():
-\begin{itemize}
-\item transition: $(Auth.CurrentUser.valid = true) \rightarrow User = Auth.CurrentUser$ 
-\item output: $User := Auth.CurrentUser$
-\item exception: $(Auth.CurrentUser.valid = false) \rightarrow TokenExpiredException$
-\end{itemize}
+Please refer to the external module documentation section.
 
 \subsubsection{Local Functions}
 
-\noindent Login(\_email, \_password):
-\begin{itemize}
-\item transition: $\exists <\_email, \_password> \in FirebaseAuth \Rightarrow Login$
-\item output: $User = AuthResult.CurrentUser$
-\item exception: $exc:= \lnot(\exists <\_email, \_password> \in FirebaseAuth) \Rightarrow AuthFailedException$
-\end{itemize}
-
-\noindent Register():
-\begin{itemize}
-\item transition: $\lnot(\exists \_email \in FirebaseAuth) \rightarrow FirebaseAuth.add(User) \land FirebaseDatabase.add(User)$ 
-\item output: $User \in FirebaseAuth \land User \in FirebaseDatabase$
-\item exception: $\exists \_email \in FirebaseAuth \rightarrow IllegalDatabaseOperationException$
-\end{itemize}
+Please refer to the external module documentation section.
 
 \subsubsection{Local Constants}
 
-\begin{itemize}
-  \item auth: FirebaseAuth
-  \item DatabaseReference: DatabaseReference
-\end{itemize}
+Please refer to the external module documentation section.
 
 \newpage
 
@@ -1818,53 +1794,34 @@ PAGECOUNT: number of entries shown in one page
 
 FirebaseDatabase
 
-\noindent This module uses Firebase Realtime Database library. For details of all syntax and semantics of exported constants and access programs, see \href{https://firebase.google.com/docs/reference/unity/namespace/firebase/database}{Firebase database documentation}.
+\subsection{External Module Documentation}
+
+This module is provided by a 3rd party library (Firebase Realtime Database). For details of all syntax and semantics of exported constants and access programs, refer to the \href{https://firebase.google.com/docs/reference/unity/namespace/firebase/database}{Firebase Database Unity API Documentation}.
 documentation
+
 \subsection{Uses}
 
-None
+Hardware-Hiding Module
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-See \href{https://firebase.google.com/docs/reference/unity/namespace/firebase/database}{Firebase database documentation}.
+
+Please refer to the external module documentation section.
+
 \subsubsection{Exported Access Programs}
-The following table will show some functions the application uses most frequently, for more details, see \href{https://firebase.google.com/docs/reference/unity/namespace/firebase/database}{Firebase database documentation}.
-\begin{center}
-\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-Child & String & DatabaseReference & PermissionDenied, NetworkError, ExpiredToken \\
-HasChild & String & $\mathbb{B}$ & PermissionDenied, NetworkError, ExpiredToken \\
-RemoveValueAsync & String & Task$<\mathbb{B}>$ & PermissionDenied,  NetworkError,  ExpiredToken \\
-SetValueAsync & String , String & Task$<\mathbb{B}>$ & PermissionDenied,  NetworkError,  ExpiredToken \\
-GetValueAsync & String & Task$<$DataSnapshot$>$ & PermissionDenied, NetworkError,  ExpiredToken \\
-GoOffline & - & - & PermissionDenied, NetworkError,  ExpiredToken \\
-GoOnline & - & - & PermissionDenied, NetworkError,  ExpiredToken \\
-\hline
-\end{tabular}
-\end{center}
+
+Please refer to the external module documentation section.
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
 
-None
+Please refer to the external module documentation section.
 
 \subsubsection{Environment Variables}
 
-\begin{itemize}
-\item DBreference: Firebase.Database.DatabaseReference\\
-A reference to the root location of this database
-\item User: Firebase.Auth.FirebaseUser\\
-The current user that operates this database
-\item PermittedUsers: set of String\\
-The list of user emails that are allowed to read the database content
-\item Admins: set of String\\
-The list of user emails that are allowed to edit the database content
-\end{itemize}
-
+Please refer to the external module documentation section.
 
 \subsubsection{Assumptions}
 
@@ -1872,54 +1829,7 @@ Assume the database connection is stable and it will not disconnect unless the u
 
 \subsubsection{Access Routine Semantics}
 
-\noindent Child(pathString):
-\begin{itemize}
-\item transition: none 
-\item output: $out :=$ DatabaseReference to pathString relative to the root
-\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin PermittedUsers \Rightarrow PermissionDenied$
-\end{itemize}
-
-\noindent HasChild(pathString):
-\begin{itemize}
-\item transition: none 
-\item output: $out := DBreference.Child(pathString) = \text{null}$
-\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin PermittedUsers \Rightarrow PermissionDenied$
-\end{itemize}
-
-\noindent RemoveValueAsync(pathString):
-\begin{itemize}
-\item transition: $DBreference.Child(pathString) := \text{null}$
-\item output: $out := DBreference.HasChild(pathString)$
-\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin Admins \Rightarrow PermissionDenied$
-\end{itemize}
-
-\noindent SetValueAsync(pathString, value):
-\begin{itemize}
-\item transition: $DBreference.Child(pathString) := value$
-\item output: $out := DBreference.Child(pathString) = value$
-\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin Admins \Rightarrow PermissionDenied$
-\end{itemize}
-
-\noindent GetValueAsync(pathString):
-\begin{itemize}
-\item transition: none
-\item output: $out :=$ Snapshot of $DBreference.Child(pathString)$
-\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin PermittedUsers \Rightarrow PermissionDenied$
-\end{itemize}
-
-\noindent GoOffline():
-\begin{itemize}
-\item transition: Manually disconnect the FirebaseDatabase client from the server and disable automatic reconnection.
-\item output: none
-\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin Admins \Rightarrow PermissionDenied$
-\end{itemize}
-
-\noindent GoOnline():
-\begin{itemize}
-\item transition: Manually reestablish a connection to the FirebaseDatabase server and enable automatic reconnection.
-\item output: none
-\item exception: $exc := NoInternet \Rightarrow NetworkError\ | \ TokenExpired \Rightarrow ExpiredToken\ | \\ User.email \notin Admins \Rightarrow PermissionDenied$
-\end{itemize}
+Please refer to the external module documentation section.
 
 \subsubsection{Local Functions}
 
@@ -1946,12 +1856,12 @@ None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{3cm} p{2cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-SendMessage & User, String & Task & - \\
-SendLocation & Group, $\mathbb{R}$, $\mathbb{R}$ & Task & - \\
+SendMessage & String & Task & - \\
+SendLocation & String, $\mathbb{R}$, $\mathbb{R}$ & Task & - \\
 
 \hline
 \end{tabular}
@@ -1973,17 +1883,17 @@ User identifiers are unique.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent SendMessage(recipient, msg):
+\noindent SendMessage($msg$):
 \begin{itemize}
 \item transition: none
-\item output: $out :=$ Task; $out$.IsCompleted $:= True$
+\item output: $out :=$ Task; $out$.IsCompleted $:= True$; Invokes the ReceiveMessage() function on all other connected clients. 
 \item exception: none
 \end{itemize}
 
-\noindent SendLocation(friendGroup, lat, lon):
+\noindent SendLocation($e$, $lat$, $lon$):
 \begin{itemize}
 \item transition: none
-\item output: $out :=$ Task; $out$.IsCompleted $:= True$
+\item output: $out :=$ Task; $out$.IsCompleted $:= True$; Invokes the ReceiveMessage() function on all other connected clients.
 \item exception: none
 \end{itemize}
 
@@ -2064,8 +1974,8 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-Initialize & (String, $<$3D Objects$>$) & - & IllegalArgument Exception\\
-Display & String & - & llegalArgument Exception \\
+Initialize & (String, \textlangle3D Objects\textrangle) & - & -\\
+Display & String & - & -\\
 
 \hline
 \end{tabular}
@@ -2114,50 +2024,35 @@ None
 \subsection{Module}
 
 MapBox\\
-Third party library Mapbox
+
+\subsection{External Module Documentation}
+
+This module is provided by a 3rd party library (Mapbox).
+The API documentation can be found in the \href[]{https://docs.mapbox.com/unity/maps/guides/}{Maps SDK for Unity} and \href[]{https://docs.mapbox.com/mapbox-unity-sdk/api/unity/Mapbox.Unity.html}{Mapbox Unity API Reference}.
 
 \subsection{Uses}
 
-None
+Hardware-Hiding Module
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
 
-None
+Please refer to the external module documentation section.
 
 \subsubsection{Exported Access Programs}
 
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-Map & - & - & IllegalArgument Exception\\
-Display & - & - & - \\
-ChangeStyle & String & - & IllegalArgument Exception\\
-Pan & ($\mathbb{R}$, $\mathbb{R}$) & -\\
-Zoom &  $\mathbb{N}$ & -\\
-
-\hline
-\end{tabular}
-\end{center}
+Please refer to the external module documentation section.
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
 
-\begin{itemize}
-\item MapStyle: String
-\item MapCenter: ($\mathbb{R}$, $\mathbb{R}$)
-\item Zoom: $\mathbb{N}$
-\end{itemize}
+Please refer to the external module documentation section.
 
 \subsubsection{Environment Variables}
 
-\begin{itemize}
-\item APIKey: String
-\end{itemize}
+Please refer to the external module documentation section.
 
 \subsubsection{Assumptions}
 
@@ -2165,48 +2060,15 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent Map():
-\begin{itemize}
-\item transition: Check APIKey and initialize the map
-\item output: none
-\item exception: $exc := APIKey expires \Rightarrow IllegalArgument Exception$
-\end{itemize}
-
-\noindent Display():
-\begin{itemize}
-\item transition: Displays a map with default state variables
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent ChangeStyle(style):
-\begin{itemize}
-\item transition: $MapStyle := style$
-\item output: none
-\item exception: $exc := style \notin MAPSTYLES \Rightarrow IllegalArgument Exception$
-\end{itemize}
-
-\noindent Pan((long, lat)):
-\begin{itemize}
-\item transition: $MapCenter := (long, lat)$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent Zoom(scale):
-\begin{itemize}
-\item transition: $Zoom := scale$
-\item output: none
-\item exception: none
-\end{itemize}
+Please refer to the external module documentation section.
 
 \subsubsection{Local Functions}
 
-None
+Please refer to the external module documentation section.
 
 \subsubsection{Local Constants}
 
-MAPSTYLES = a sequences of map styles with type String
+Please refer to the external module documentation section.
  
 \newpage
 
