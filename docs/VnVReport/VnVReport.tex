@@ -40,6 +40,8 @@ Mar 6 & 1.0 & Add non-functional requirements evaluation\\
 Mar 6 & 1.0 & Load test, Usability test, unit test results\\
 Mar 6 & 1.0 & Add Automated test, non-dynamic test result and changes due to testing\\
 Apr 2 & 1.1 & Resolve team 11 feedback\\
+Apr 3 & 1.1 & Resolve TA feedback about functional and non functional tests\\
+Apr 4 & 1.1 & Changes to match work done and current results\\
 \bottomrule
 \end{tabularx}
 
@@ -50,34 +52,21 @@ Apr 2 & 1.1 & Resolve team 11 feedback\\
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l} 
   \toprule		
-  \textbf{symbol} & \textbf{description}\\
+  \textbf{Symbol} & \textbf{Description}\\
   \midrule 
   APK & Android Application Package\\
-  \midrule 
   AR & Augmented reality\\
-  \midrule 
   Azure & A cloud computing platform run by Microsoft\\
-  \midrule 
   CI & Continuous integration\\
-  \midrule 
   JHE & John Hodgins Engineering Building\\
-  \midrule 
   JMeter & Load testing tool for analyzing and measuring the performance\\
-  \midrule 
   NUnit & An open-source unit testing framework for the .NET Framework and Mono\\
-  \midrule 
   OpenCover & An open source code coverage tool\\
-  \midrule 
   SRS & Software Requirements Specification\\
-  \midrule
   TA & Teaching Assistant\\
-  \midrule 
   UI & User Interface\\
-  \midrule 
   UTF & Unity Test Framework\\
-  \midrule 
   VnV & Verification and Validation\\
-  \midrule 
   XML & Extensible Markup Language\\
   \bottomrule
 \end{tabular}\\
@@ -160,7 +149,7 @@ This section covers all tests related to functional requirements about the accou
 
 \item \textbf{FRT-UA2}
 
-\textbf{Name:} Unsuccessful Account Creation
+\textbf{Name:} Unsuccessful Account Creation With Existing Email
 
 \textbf{Initial State:} The user does not have an account and is not logged in to the application
 
@@ -197,7 +186,7 @@ This section covers all tests related to functional requirements about the accou
 
 \item \textbf{FRT-UA4}
 
-\textbf{Name:} Unsuccessful Account Login
+\textbf{Name:} Unsuccessful Account Login With Wrong Password
 
 \textbf{Initial State:} The user has an account and is not logged in to the application
 
@@ -296,7 +285,7 @@ This section covers all tests related to functional requirements about the accou
 \begin{itemize}
 \item Email: qtest@gmail.com (this is an existing test account)
 \item password: qtesting
-\item newProgram: Computer Science
+\item program: Software Engineering
 \end{itemize}
 
 \textbf{Input:} New Profile:
@@ -320,7 +309,7 @@ This section covers all tests related to functional requirements about interacti
 
 \textbf{Initial State:} The user is logged in with the following account:
 \begin{itemize}
-\item Semail: FRT-SN1@test.com
+\item Femail: FRT-SN1@test.com
 \item password: testing
 \end{itemize}
 
@@ -329,9 +318,9 @@ This section covers all tests related to functional requirements about interacti
 \item Temail: FRT-SN1-F@test.com
 \end{itemize}
 					
-\textbf{Expected Output:} A Request is sent to the target user
+\textbf{Expected Output:} A Friend request is sent to the target user and available to be accepted or rejected by the target user in the request list
 
-\textbf{Actual Output:} A Request is sent to the target user
+\textbf{Actual Output:} A Friend request is sent to the target user and available to be accepted or rejected by the target user in the request list
 
 \textbf{Results:} Pass
 
@@ -339,9 +328,9 @@ This section covers all tests related to functional requirements about interacti
 
 \textbf{Name:} Friend Request Acceptance
 
-\textbf{Initial State:} A friend request was sent from an account (Semail) to the target account (Temail):
+\textbf{Initial State:} A friend request was sent from an account (Femail) to the target account (Temail):
 \begin{itemize}
-\item Semail: FRT-SN1@test.com
+\item Femail: FRT-SN1@test.com
 \item Temail: FRT-SN1-F@test.com
 \end{itemize}
 
@@ -357,9 +346,9 @@ This section covers all tests related to functional requirements about interacti
 
 \textbf{Name:} Successful Friend Rejection
 
-\textbf{Initial State:} A friend request was sent from an account (Semail) to the target account (Temail):
+\textbf{Initial State:} A friend request was sent from an account (Femail) to the target account (Temail):
 \begin{itemize}
-\item Semail: FRT-SN1@test.com
+\item Femail: FRT-SN1@test.com
 \item Temail: FRT-SN1-F@test.com
 \end{itemize}
 
@@ -450,31 +439,31 @@ This section covers all tests related to functional requirements about lectures 
 \begin{enumerate}
 \item \textbf{FRT-LE1}
 
-\textbf{Name:} Save Event
+\textbf{Name:} Bookmark Event
 
 \textbf{Initial State:} A sample event:
 \begin{itemize}
 \item Name: EXPO
 \end{itemize}
 
-\textbf{Input:} On the event page, user clicks on the save button on the pop-up window with details of the sample event
+\textbf{Input:} On the event page, user clicks on the bookmark button on the pop-up window with details of the sample event
 					
-\textbf{Expected Output:} The event is saved to the user's event list
+\textbf{Expected Output:} The event is bookmarked to the user's event list
 
-\textbf{Actual Output:} The event EXPO is saved to the user's event list
+\textbf{Actual Output:} The event EXPO is bookmarked to the user's event list
 
 \textbf{Results:} Pass
 
 \item \textbf{FRT-LE2}
 
-\textbf{Name:} Unsave Event
+\textbf{Name:} Unbookmark Event
 
-\textbf{Initial State:} A sample event that is already been saved:
+\textbf{Initial State:} A sample event that is already been bookmarked:
 \begin{itemize}
 \item Name: EXPO
 \end{itemize}
 
-\textbf{Input:} On the event page, user clicks on the unsave button on the pop-up window with details of the sample event
+\textbf{Input:} On the event page, user clicks on the unbookmark button on the pop-up window with details of the sample event
 					
 \textbf{Expected Output:} The event is removed from the user's event list
 
@@ -484,31 +473,31 @@ This section covers all tests related to functional requirements about lectures 
 
 \item \textbf{FRT-LE3}
 
-\textbf{Name:} Save Lecture
+\textbf{Name:} Bookmark Lecture
 
 \textbf{Initial State:} A sample lecture:
 \begin{itemize}
 \item Code: SFWRENG 4G06
 \end{itemize}
 
-\textbf{Input:} On the lecture page, user clicks on the save button on the pop-up window with details of the sample lecture
+\textbf{Input:} On the lecture page, user clicks on the bookmark button on the pop-up window with details of the sample lecture
 					
-\textbf{Expected Output:} The lecture is saved to the user's lecture list
+\textbf{Expected Output:} The lecture is bookmarked to the user's lecture list
 
-\textbf{Actual Output:} The lecture SFWRENG 4G06 is saved to the user's lecture list
+\textbf{Actual Output:} The lecture SFWRENG 4G06 is bookmarked to the user's lecture list
 
 \textbf{Results:} Pass
 
 \item \textbf{FRT-LE4}
 
-\textbf{Name:} Unsave Lecture
+\textbf{Name:} Unbookmark Lecture
 
-\textbf{Initial State:} A sample lecture that is already been saved:
+\textbf{Initial State:} A sample lecture that is already been bookmarked:
 \begin{itemize}
 \item Code: SFWRENG 4G06
 \end{itemize}
 
-\textbf{Input:} On the lecture page, user clicks on the unsave button on the pop-up window with details of the sample lecture
+\textbf{Input:} On the lecture page, user clicks on the unbookmark button on the pop-up window with details of the sample lecture
 					
 \textbf{Expected Output:} The lecture is removed from the user's lecture list
 
@@ -545,6 +534,44 @@ This section covers all tests related to functional requirements about lectures 
 
 \item \textbf{FRT-LE6}
 
+\textbf{Name:} Administrator Add Event With Existing Name
+
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+Sample event exists:
+\begin{itemize}
+\item name: Test event
+\item description: Sample event for system test
+\item time: 0
+\item duration: 0
+\item location: Online
+\item isPublic: true
+\item organizer: Team 2
+\end{itemize}
+
+\textbf{Input:} New sample event:
+\begin{itemize}
+\item name: Test event
+\item description: New sample event
+\item time: 100
+\item duration: 30
+\item location: TBD
+\item isPublic: false
+\item organizer: TBD
+\end{itemize}
+					
+\textbf{Expcted Output:} The sample event is update to be the same as the input event
+
+\textbf{Actual Output:} The sample event is update to be the same as the input event
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE7}
+
 \textbf{Name:} Administrator Edit Event
 
 \textbf{Initial State:} User is logged in as an administrator
@@ -561,11 +588,11 @@ This section covers all tests related to functional requirements about lectures 
 					
 \textbf{Expected Output:} The test event location is updated to the new one
 
-\textbf{Actual Output:} The test event location is updated toITB AB102
+\textbf{Actual Output:} The test event location is updated to ITB AB102
 
 \textbf{Results:} Pass
 
-\item \textbf{FRT-LE7}
+\item \textbf{FRT-LE8}
 
 \textbf{Name:} Administrator Delete Event
 
@@ -586,7 +613,7 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Results:} Pass
 
-\item \textbf{FRT-LE8}
+\item \textbf{FRT-LE9}
 
 \textbf{Name:} Administrator Add Lecture
 
@@ -608,6 +635,40 @@ This section covers all tests related to functional requirements about lectures 
 \textbf{Expected Output:} The lecture is added to the lecture list
 
 \textbf{Actual Output:} The lecture TEST 1T03 is added to the lecture list
+
+\textbf{Results:} Pass
+
+\item \textbf{FRT-LE10}
+
+\textbf{Name:} Administrator Add Lecture With Existing Code
+
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+A sample lecture exists:
+\begin{itemize}
+\item code: TEST 1T03
+\item name: Test lecture
+\item time: 12:00 - 13:00, Mon
+\item location: Online
+\item instructor: NA
+\end{itemize}
+
+\textbf{Input:} New sample lecture:
+\begin{itemize}
+\item code: TEST 1T03
+\item name: New test lecture
+\item time: 12:00 - 13:00, Wed
+\item location: TBD
+\item instructor: TBD
+\end{itemize}
+					
+\textbf{Expected Output:} The sample lecture is update to be the same as the input lecture
+
+\textbf{Actual Output:} The sample lecture is update to be the same as the input lecture
 
 \textbf{Results:} Pass
 
@@ -708,10 +769,11 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Name:} Lecture Filter by Code
 
-\textbf{Initial State:} Some software engineering lecture exists:
+\textbf{Initial State:} Some software engineering lectures exist in the system with the following course codes (other attributes of lecture do not affect the test and can be empty):
 \begin{itemize}
 \item SFWRENG 4G06
 \item SFWRENG 4E03
+\item COMPSCI 4TB3
 \end{itemize}
 
 \textbf{Input:} Filter:
@@ -719,9 +781,9 @@ This section covers all tests related to functional requirements about lectures 
 \item FilterString: SFWRENG
 \end{itemize}
 					
-\textbf{Expected Output:} All lectures which do not contain the FilterString in the code are removed from the list
+\textbf{Expected Output:} All lectures which do not contain the FilterString in the code are removed from the list (COMPSCI 4TB3 in this case)
 
-\textbf{Actual Output:} All lectures which do not contain the SFWRENG in the code are removed from the list
+\textbf{Actual Output:} All lectures which do not contain the SFWRENG in the code are removed from the list (COMPSCI 4TB3 in this case)
 
 \textbf{Results:} Pass
 
@@ -729,10 +791,11 @@ This section covers all tests related to functional requirements about lectures 
 
 \textbf{Name:} Event Filter by Name
 
-\textbf{Initial State:} Some job fair event exists:
+\textbf{Initial State:} Some events exist in the system with following names (other attributes of event do not affect the test and can be empty):
 \begin{itemize}
 \item Job Fair: March 4
 \item Job Fair: March 10
+\item Rev 0 Demo
 \end{itemize}
 
 \textbf{Input:} Filter:
@@ -740,9 +803,9 @@ This section covers all tests related to functional requirements about lectures 
 \item FilterString: Job Fair
 \end{itemize}
 					
-\textbf{Expected Output:} All events which do not contain the FilterString in the name are removed from the list
+\textbf{Expected Output:} All events which do not contain the FilterString in the name are removed from the list (Rev 0 Demo in this case)
 
-\textbf{Actual Output:} All events which do not contain the Job Fair in the name are removed from the list
+\textbf{Actual Output:} All events which do not contain the Job Fair in the name are removed from the list (Rev 0 Demo in this case)
 
 \textbf{Results:} Pass
 \end{enumerate}
@@ -962,93 +1025,6 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \item \textbf{NFRT-P3}
 
-\textbf{Name:} Code Walkthrough For User Personal Data
-
-\textbf{Input:} Source code (see details in section \ref{static})
-
-\textbf{Expected Output:} Successfully convinced the participants the following:
-\begin{itemize}
-  \item User's personal information does not appear in the database if the user did not grant permission
-\end{itemize}
-
-\textbf{Actual Output:} Successfully convinced the participants that the user personal information is collected under permission only
-
-\textbf{Result:} Pass
-
-\item \textbf{NFRT-P4}
-
-\textbf{Name:} Code Walkthrough For Data Transmission Encryption
-
-\textbf{Input:} Source code (see details in section \ref{static})
-
-\textbf{Expected Output:} Successfully convinced the participants the following:
-\begin{itemize}
-  \item The product only transmits encrypted data from server to user
-\end{itemize}
-
-\textbf{Actual Output:} Successfully convinced the participants that the data send from/to the server are encrypted
-
-\textbf{Result:} Pass
-
-\item \textbf{NFRT-P5}
-
-\textbf{Name:} Warning when starting AR camera
-
-\textbf{Initial State:} User allows the application to use camera
-					
-\textbf{Input:} User turns on the AR camera
-					
-\textbf{Expected Output:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
-
-\textbf{Actual Output:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
-
-\textbf{Result:} Pass
-
-\item \textbf{NFRT-P6}
-
-\textbf{Name:} Leaving campus warning
-
-\textbf{Initial State:} User opens the map
-					
-\textbf{Input:} User moves out of the campus
-					
-\textbf{Expected Output:} A warning message is displayed telling the user that the map is not available out of campus
-
-\textbf{Actual Output:} A warning message is displayed telling the user that the map is not available out of campus and the user is redirected to the menu page once the warning message is closed
-
-\textbf{Result:} Pass
-
-\item \textbf{NFRT-P7}
-
-\textbf{Name:} Special character warning
-
-\textbf{Initial State:} User starts to register
-					
-\textbf{Input:} User enters nickname with some special character: `; DELETE *'
-					
-\textbf{Expected Output:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
-
-\textbf{Actual Output:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
-
-\textbf{Result:} Pass
-
-\item \textbf{NFRT-P8}
-
-\textbf{Name:} Email format warning
-
-\textbf{Initial State:} User starts to register
-					
-\textbf{Input:} User enters a not email string in the email field:
-`SELECT * FROM TABLE'
-					
-\textbf{Expected Output:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
-
-\textbf{Actual Output:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
-
-\textbf{Result:} Pass
-
-\item \textbf{NFRT-P9}
-
 \textbf{Name:} AR camera accuracy
 
 \textbf{Initial State:} User is near or in a target building (JHE)
@@ -1061,7 +1037,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Result:} Pass
 
-\item \textbf{\textcolor{red}{NFRT-P10}}
+\item \textbf{\textcolor{red}{NFRT-P4}}
 
 \textbf{Name:} Warning when internet connection is lost
 
@@ -1077,7 +1053,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Reason:} Due to a change in the scope of the project, the corresponding requirement is moved out of the scope, therefore this test fails because the feature is not implemented
 
-\item \textbf{NFRT-P11}
+\item \textbf{NFRT-P5}
 
 \textbf{Name:} Rudimentary functions when the server connection is lost
 
@@ -1091,7 +1067,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Result:} Pass
 
-\item \textbf{NFRT-P12}
+\item \textbf{NFRT-P6}
 
 \textbf{Name:} Code inspection for server restart
 
@@ -1099,16 +1075,16 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Input:} Server settings (see details in section \ref{static})
 					
-\textbf{Expected Output:} Successfully convinced the participants the following:
+\textbf{Expected Output:} Successfully demonstrated to the participants the following:
 \begin{itemize}
 \item Server attempts to restart when it crashes
 \end{itemize}
 
-\textbf{Actual Output:} Successfully convinced the participants that the server is set to restart once it goes down
+\textbf{Actual Output:} Successfully demonstrated to the participants that the server is set to restart once it goes down
 
 \textbf{Result:} Pass
 
-\item \textbf{NFRT-P13}
+\item \textbf{NFRT-P7}
 
 \textbf{Name:} AR camera help button
 
@@ -1122,7 +1098,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Result:} Pass
 
-\item \textbf{NFRT-P14}
+\item \textbf{NFRT-P8}
 
 \textbf{Name:} Load testing for server
 
@@ -1136,7 +1112,7 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Result:} Pass
 
-\item \textbf{NFRT-P15}
+\item \textbf{NFRT-P9}
 
 \textbf{Name:} Code inspection for database capacity
 
@@ -1144,16 +1120,16 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Input:} Database documentation (see details in section \ref{static})
 
-\textbf{Expected Output:} Successfully convinced the participants the following:
+\textbf{Expected Output:} Successfully demonstrated to the participants the following:
 \begin{itemize}
 \item The database has enough space to store all the user, lecture and event information
 \end{itemize}
 
-\textbf{Actual Output:} Successfully convinced the participants that the current plan has enough space for expected number of users
+\textbf{Actual Output:} Successfully demonstrated to the participants that the current plan has enough space for expected number of users
 
 \textbf{Result:} Pass
 
-\item \textbf{NFRT-P16}
+\item \textbf{NFRT-P10}
 
 \textbf{Name:} Code walkthrough for adding new building
 
@@ -1161,16 +1137,16 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Input:} Source code (see details in section \ref{static})
 
-\textbf{Expected Output:} Successfully convinced the participants the following:
+\textbf{Expected Output:} Successfully demonstrated to the participants the following:
 \begin{itemize}
 \item A new target building can be added without causing the application running any slower
 \end{itemize}
 
-\textbf{Actual Output:} Successfully convinced the participants that adding a new building is just like adding a new scene and will not affect the speed of the application
+\textbf{Actual Output:} Successfully demonstrated to the participants that adding a new building is just like adding a new scene and will not affect the speed of the application
 
 \textbf{Result:} Pass
 
-\item \textbf{NFRT-P17}
+\item \textbf{NFRT-P11}
 
 \textbf{Name:} Code Peer Evaluation For Longevity
 
@@ -1178,13 +1154,13 @@ This section corresponds to the Performance tests in VnV Plan and Performance re
 
 \textbf{Input:} Source code (see details in section \ref{static})
 
-\textbf{Expected Output:} Successfully convinced the participants the following:
+\textbf{Expected Output:} Successfully demonstrated to the participants the following:
 \begin{itemize} 
   \item The product is built in a robust manner, increasing the likelihood that it can operate for an extended period without major malfunctions.
   \item The application intentionally avoids features that may lead to compatibility issues and strives to develop a project that functions effectively across various versions of operating systems and devices.
 \end{itemize}
 
-\textbf{Actual Output:} Successfully convinced the participants that the application is robust enough to work without major malfunctions for a long time and the finalized product will remain compatible with recent promised operating systems and devices.
+\textbf{Actual Output:} Successfully demonstrated to the participants that the application is robust enough to work without major malfunctions for a long time and the finalized product will remain compatible with recent promised operating systems and devices.
 
 \textbf{Result:} Pass
 \end{enumerate}
@@ -1280,6 +1256,35 @@ This section corresponds to the Operational and Environmental tests in VnV Plan 
 \end{itemize}
 
 \textbf{Result:} Pass
+
+\item \textbf{NFRT-S2}
+
+\textbf{Name:} Special character warning
+
+\textbf{Initial State:} User starts to register
+					
+\textbf{Input:} User enters nickname with some special character: `; DELETE *'
+					
+\textbf{Expected Output:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
+
+\textbf{Actual Output:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
+
+\textbf{Result:} Pass
+
+\item \textbf{NFRT-S3}
+
+\textbf{Name:} Email format warning
+
+\textbf{Initial State:} User starts to register
+					
+\textbf{Input:} User enters a not email string in the email field:
+`SELECT * FROM TABLE'
+					
+\textbf{Expected Output:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
+
+\textbf{Actual Output:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
+
+\textbf{Result:} Pass
 \end{enumerate}
 \subsection{Privacy}
 \begin{enumerate}
@@ -1291,12 +1296,12 @@ This section corresponds to the Operational and Environmental tests in VnV Plan 
 
 \textbf{Input:} Source code (see details in section \ref{static})
 
-\textbf{Expected Output:} Successfully convinced the participants the following:
+\textbf{Expected Output:} Successfully demonstrated to the participants the following:
 \begin{itemize}
 \item The usage of a user's personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario's data protection laws
 \end{itemize}
 
-\textbf{Actual Output:} Convinced the participants that the personal data we collect is handled legitimately
+\textbf{Actual Output:} demonstrated to the participants that the personal data we collect is handled legitimately
 
 \textbf{Result:} Pass
 
@@ -1308,15 +1313,77 @@ This section corresponds to the Operational and Environmental tests in VnV Plan 
 
 \textbf{Input:} Source code (see details in section \ref{static})
 
-\textbf{Expected Output:} Successfully convinced the participants the following:
+\textbf{Expected Output:} Successfully demonstrated to the participants the following:
 \begin{itemize}
 \item Any accounts that are not active for a long time (a semester) will be removed from the system
 \end{itemize}
 
-\textbf{Actual Output:} Convinced the participants that the authentication system and database will clean inactive data periodically
+\textbf{Actual Output:} demonstrated to the participants that the authentication system and database will clean inactive data every semester
+
+\textbf{Result:} Pass
+
+\item \textbf{NFRT-PRV3}
+
+\textbf{Name:} Code Walkthrough For User Personal Data
+
+\textbf{Input:} Source code (see details in section \ref{static})
+
+\textbf{Expected Output:} Successfully demonstrated to the participants the following:
+\begin{itemize}
+  \item User's personal information does not appear in the database if the user did not grant permission
+\end{itemize}
+
+\textbf{Actual Output:} Successfully demonstrated to the participants that the user personal information is collected under permission only
+
+\textbf{Result:} Pass
+
+\item \textbf{NFRT-PRV4}
+
+\textbf{Name:} Code Walkthrough For Data Transmission Encryption
+
+\textbf{Input:} Source code (see details in section \ref{static})
+
+\textbf{Expected Output:} Successfully demonstrated to the participants the following:
+\begin{itemize}
+  \item The product only transmits encrypted data from server to user
+\end{itemize}
+
+\textbf{Actual Output:} Successfully demonstrated to the participants that the data send from/to the server are encrypted
+
+\textbf{Result:} Pass
+
+\item \textbf{NFRT-PRV5}
+
+\textbf{Name:} Leaving campus warning
+
+\textbf{Initial State:} User opens the map
+					
+\textbf{Input:} User moves out of the campus
+					
+\textbf{Expected Output:} A warning message is displayed telling the user that the map is not available out of campus
+
+\textbf{Actual Output:} A warning message is displayed telling the user that the map is not available out of campus and the user is redirected to the menu page once the warning message is closed
 
 \textbf{Result:} Pass
 \end{enumerate}
+
+\subsection{User Safety}
+\begin{enumerate}
+\item \textbf{NFRT-US1}
+
+\textbf{Name:} Warning when starting AR camera
+
+\textbf{Initial State:} User allows the application to use camera
+					
+\textbf{Input:} User turns on the AR camera
+					
+\textbf{Expected Output:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
+
+\textbf{Actual Output:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
+
+\textbf{Result:} Pass
+\end{enumerate}
+
 \subsection{Culture}
 \begin{enumerate}
 \item \textbf{NFRT-CUL1}
@@ -1347,13 +1414,13 @@ This section corresponds to the Operational and Environmental tests in VnV Plan 
 
 \textbf{Input:} Source code (see details in section \ref{static})
 
-\textbf{Expected Output:} Successfully convinced the participants the following:
+\textbf{Expected Output:} Successfully demonstrated to the participants the following:
 \begin{itemize}
 \item The data collected will be handled as per the same legal requirements for the university
 \item The application can abide by the guidelines set by university staff
 \end{itemize}
 
-\textbf{Actual Output:} Successfully convinced the participants the following:
+\textbf{Actual Output:} Successfully demonstrated to the participants the following:
 \begin{itemize}
 \item The data collected will be handled as per the same legal requirements for the university
 \item The application can abide by the guidelines set by university staff
@@ -1438,8 +1505,8 @@ We also observed analytics data from Microsoft Azure concerning the average resp
   \caption{Requests vs. Response Time}
 \end{figure}
 
-There does not appear to be an observable trend. We believe this is because the test was limited by the amount of connections that could be made from one device.
-Given a sufficient testing setup it should be possible to show a trend bewteen the amount of requests and the response time.
+There does not appear to be an observable trend. We suspected this was due to limitations in our testing setup. Upon further investigation we discovered that our Azure app server has a limit of around 2000 connections at the basic tier which is the tier we used.
+We also discovered that JMeter could not create more than 5000 connections per IP. We concluded that a workaround for these limitations would be out of scope. It would both require paying for a higher tier of Azure service and the creation of a custom distributed JMeter testing setup which would be infeasible in our timeframe.
 
 \section{Non dynamic Tests Result}\label{static}
 The weekly meetings mentioned in the VnV Plan, such as the weekly code review and TA feedback sessions, will not be detailed in this section due to their frequency and the fact that many of the conclusions drawn in these meetings have already been integrated and addressed in other sections, particularly non-requirements. However, their meeting minutes are accessible on our GitHub repository for those interested in further details.
@@ -1459,7 +1526,7 @@ Code Inspection for user data &
 Database Walkthrough & 
 \begin{itemize}
 \item Capacity: Pass, the free plan has a storage of 1GB data, which is enough for our users at this stage
-\item Clean: Pass, Firebase Authentication support some clould functions to clean inactive users
+\item Clean: Pass, Firebase Authentication support some cloud functions to clean inactive users
 \end{itemize}& NFRT-P15, NFRT-PRV2\\
 \hline
 Server \& Data Transmission Walkthrough & 
@@ -1574,7 +1641,7 @@ This section contains tests related to the module: Event in module hierarchy.
 \item organizer: PLACEHOLDER
 \item duration: DEFAULT\_DURATION
 \item time: DEFAULT\_TIME
-\item isPulbic: false
+\item isPublic: false
 \item location: PLACEHOLDER
 \end{itemize}
 
@@ -1595,7 +1662,7 @@ This section contains tests related to the module: Event in module hierarchy.
 \item organizer: Team 2
 \item duration: 30
 \item time: 1708922625
-\item isPulbic: true
+\item isPublic: true
 \item location: Online
 \end{itemize}
 					
@@ -1867,75 +1934,75 @@ Call next page method first
 \end{enumerate}
 
 \subsection{Authentication}
-This section contains tests related to the module: Authentication in module hierarchy. \textcolor{red}{Due to the time constraint, we will finish unit tests for this module in Revision 1 following the same pattern}
+This section contains tests related to the module: Authentication in module hierarchy. 
 \begin{enumerate}
 \item \textbf{FRT-M5-1}
 
 \textbf{Name:} Get current user email
 
-\textbf{Initial State:} Current user email: `unitTest@test.com'
+\textbf{Initial State:} Current logged in user email: `unitTest@test.com'
 					
-\textbf{Input:} NA
+\textbf{Input:} The user navigates to the User Profile Page.
 					
-\textbf{Expected Output:} The email in the initial state
+\textbf{Expected Output:} The current user email (unitTest@test.com) is returned in the email section of the profile.
 
-\textbf{Actual Output:} \textcolor{red}{TBD}
+\textbf{Actual Output:} The current user email (unitTest@test.com) is returned correctly in the profile.
 
-\textbf{Result:} \textcolor{red}{TBD}
+\textbf{Result:} Pass
 
 \item \textbf{FRT-M5-2}
 
 \textbf{Name:} Is email verified
 
-\textbf{Initial State:} Current user is email verified: true
+\textbf{Initial State:} Current logged in user is email verified: true
 					
-\textbf{Input:} NA
+\textbf{Input:} The user navigates to the User Profile Page.
 					
-\textbf{Expected Output:} The boolean value in initial state 
+\textbf{Expected Output:} The verify email button is no longer visible.
 
-\textbf{Actual Output:} \textcolor{red}{TBD}
+\textbf{Actual Output:} The verify email button is no longer visible.
 
-\textbf{Result:} \textcolor{red}{TBD}
+\textbf{Result:} Pass
 
 \item \textbf{FRT-M5-3}
 
 \textbf{Name:} Verify email
 
-\textbf{Initial State:} Current user email: `unitTest@test.com'
+\textbf{Initial State:} Current logged in user email: `unitTest@test.com'
 					
-\textbf{Input:} Call verify email method
+\textbf{Input:} Verify email button is pressed.
 					
 \textbf{Expected Output:} An email is sent to the email address to verify the email
 
-\textbf{Actual Output:} \textcolor{red}{TBD}
+\textbf{Actual Output:} unitTest@test.com recieves the email verification email, which allows them to click on a link that will verify their email.
 
-\textbf{Result:} \textcolor{red}{TBD}
+\textbf{Result:} Pass
 \end{enumerate}
 
 \subsection{Database}
-This section contains tests related to the module: Database in module hierarchy. \textcolor{red}{Due to the time constraint, we will finish unit tests for this module in Revision 1 following the same pattern}
+This section contains tests related to the module: Database in module hierarchy. 
 \begin{enumerate}
 \item \textbf{FRT-M6-1}
 
-\textbf{Name:} Get value
+\textbf{Name:} Retrieve Values From Database
 
-\textbf{Initial State:} NA
+\textbf{Initial State:} Logged in with student account. 
 					
-\textbf{Input:} A valid path to a test node: `/events/public/EXPO/name'
+\textbf{Input:} Retrieve the data under `/events/public/EXPO/name'
 					
-\textbf{Expected Output:} The corresponding value of the node: EXPO
+\textbf{Expected Output:} The name of the event `EXPO' is returned.
 
-\textbf{Actual Output:} \textcolor{red}{TBD}
+\textbf{Actual Output:} The name of the event `EXPO' is returned.
 
-\textbf{Result:} \textcolor{red}{TBD}
+\textbf{Result:} Pass
 
 \item \textbf{FRT-M6-2}
 
-\textbf{Name:} Set value
+\textbf{Name:} Set Value to Database
 
-\textbf{Initial State:} NA
+\textbf{Initial State:} Logged in with admin account. 
 					
-\textbf{Input:} A valid path to a test node and a new value: 
+\textbf{Input:} Set the data under the following entry: 
 \begin{itemize}
 \item path: `/events/public/EXPO/description'
 \item value: `EXPO, yes!'
@@ -1943,23 +2010,23 @@ This section contains tests related to the module: Database in module hierarchy.
 
 \textbf{Expected Output:} The corresponding value changes to the new value
 
-\textbf{Actual Output:} \textcolor{red}{TBD}
+\textbf{Actual Output:} The database is updated to the new value.
 
-\textbf{Result:} \textcolor{red}{TBD}
+\textbf{Result:} Pass
 
 \item \textbf{FRT-M6-3}
 
-\textbf{Name:} Delete data
+\textbf{Name:} Delete Data From Database
 
-\textbf{Initial State:} NA
+\textbf{Initial State:} Logged in with Admin account.
 					
-\textbf{Input:} A valid path to a test node : `/events/public/EXPO'
+\textbf{Input:} Delete the entry at: `/events/public/EXPO'
 
-\textbf{Expected Output:} The corresponding event is removed
+\textbf{Expected Output:} The corresponding event is removed from database.
 
-\textbf{Actual Output:} \textcolor{red}{TBD}
+\textbf{Actual Output:} The event is removed from database.
 
-\textbf{Result:} \textcolor{red}{TBD}
+\textbf{Result:} Pass
 \end{enumerate}
 
 \section{Changes Due to Testing}
@@ -1971,27 +2038,43 @@ During the weekly meeting, our supervisor, Dr. Yuan, emphasized the necessity of
 \subsection{Changes due to usability test result}
 The only test fails is the ``Common periods of usage'' rating question. It has come to light that survey participants express a preference for utilizing the application after school so that they won't miss any events happen in the evening. This observation is directly linked to maintenance requirement MS-M1. The team will change that major update time in that requirement to be summer break or weekend midnight to affect fewer users.\\
 The absence of instructions for the AR camera has been repeatedly highlighted in the feedback. Consequently, the team will resolve this issue by adding instructions when user clicks on the help button. \\
-Participants have noted that saved lectures and events are not readily accessible, as they are currently hidden within the settings. In response to this feedback, the team will create a link to the saved lectures and events page directly from the list pages. \\
+Participants have noted that bookmarked lectures and events are not readily accessible, as they are currently hidden within the settings. In response to this feedback, the team will create a link to the bookmarked lectures and events page directly from the list pages. \\
 Each of the aforementioned changes will be documented as a separate issue in the GitHub repo for future discussion.\\
+We changed all the inconsistant naming regarding `pin' to `bookmark', making the icon and naming consistant and easier to understand intuitively.
 \subsection{Changes due to load test result}
 The load test in section \ref{load} shows that NFRT-P16 passes without any issues -- with fewer than 1000 users connecting to the application, the server handles the load effectively, as indicated by the nearly negligible response time observed in the figure. However, it is crucial to note that upon scaling up to accommodate approximately 40,000 concurrent requests after Revision 1, the server begins to reject connections and getting a significant increase in response time.Therefore, this is a good warning for the team regarding the need to scale the server infrastructure adequately to support a larger user base.
 \subsection{Changes due to failing tests}
-NFRT-P10 fails due to a change of the scope. The team will update SRS and VnV Plan so that internet connection lost warning is no longer a requirement.\\
+NFRT-P10 fails due to a change of the scope. The team will update SRS and VnV Plan so that internet connection lost warning is no longer a requirement.
+\subsection{Changes due to user enumeration vulnerability}
+
+User enumeration occurs when a malicious actor utilizes brute-force techniques to guess or confirm valid users within the system. In our application, this vulnerability can occur during the login process, where attackers can determine the validity of an email by analyzing error messages. 
+Therefore, the team proposes implementing a more generic error message during login attempts (FRT-UA4). Additionally, a new test should be added to verify unsuccessful login attempts using an email not registered in the system.
+
+On the other hand, the password recovery page effectively prevents this type of attack by only checking for email format without revealing whether the email exists in the system. 
+
+Moreover, there are concerns regarding attackers exploiting server response times to detect user existence but that does not seem to be a problem with our application as Firebase's real-time database responds to valid and invalid login attempts with indistinguishable time differences.
+
+Considering the project's scope and potential visibility (most of our customers will be students and department staff), enumeration attacks can be identified quickly. 
+With majority of users having McMaster email and non-McMaster emails having guest privilages, this mitigates possible user enumeration attacks significantly.
+In addition, the email verification process will allow Campus Connections team to easily identify suspicious activity.
+With the aforementioned measures, the application sufficiently safeguards against such attacks.
 
 \section{Automated Testing}
-The tests are run from local machine as there were difficulties in implementing GitHub Action for it.
-When attempting to setup the automated tests, there were issues due to how Vuforia was not a package that could be imported automatically.
+The majority of tests are run from local machine due to Unity and unity package size and behavior.
+When attempting to setup the automated tests, there were issues due to how Vuforia was not a package that could be imported automatically due to how they host their library.
+Communication with the database occurs asynchonously, which cause problems when testing automatically using CI/CD. 
 This caused problems as the program failed to build automatically. The package was too big to be included in the repository, and Large File Storage had limits.
-Due to the above reason, automated tests could not be performed through GitHub Actions, they could be run on local.
-Parts of the below documentation is based on what was planned, and what is planned for phase 2 of the development.
+This also resulted in many tests being done locally.\\
+
+These results are visible from the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/actions/workflows/unit-tests.yml}{GitHub Actions}, where all automated testing results are visible.
 
 \subsection{Testing Instruments}
 
 The tests were performed using Unity Testing Framework, NUnit made for Unity.
-The test files are located in multiple files with the respective names of the modules they are testing under Assets/Editor.
+The test files are located in multiple files with the respective names of the modules under \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/tree/main/test/CampusConnectionsTest/Assets/Editor}{test/CampusConnectionsTest/Assets/Editor}.
+This was to separate the code from the packages that could not be loaded automatically.
 OpenCover was planned for coverage testing and will produce a report into XML file.
 These results are visible after the automated tests are completed.
-The CI with GitHub Actions will be completed in phase 2.
 
 \subsection{Linters}
 
@@ -2030,6 +2113,20 @@ The testing files are located in \href{https://github.com/beatlepie/4G06Capstone
 \section*{Appendix}
 \subsection{Symbolic Parameters}
 Check the Symbolic Parameter Table in \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan} for more details.
+
+The following table only contains symbols that appear only in the report
+\begin{table}[H]
+\caption{\bf Symbolic Parameter Table}
+\begin{tabular}{|p{0.4\linewidth} | p{0.3\linewidth}| p{0.3\linewidth} |}
+\hline
+\multicolumn{1}{|l}{\bfseries Symbolic Parameter} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Value}\\
+\hline
+Femail & The friend email, an email that exists in the application database, usually used with target email to test user communication & Value depends on the test it belongs to\\
+\hline
+Temail & The target email, an email that exists in the application database, usually used with friend email to test user communication & Value depends on the test it belongs to\\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{Reflection}
 The information in this section will be used to evaluate the team members on the

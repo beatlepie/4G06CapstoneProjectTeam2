@@ -3,6 +3,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{float}
+\usepackage[normalem]{ulem}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -43,6 +44,8 @@ Feb 25 & 1.1 & Revision 1: Resolve TA Feedback: add TA review in the plan and fi
 Feb 27 & 1.1 & Revision 1: Resolve TA Feedback for functional requirements: make functional tests more specific and add/remove tests according to Revision 1 requirements\\
 Mar 2 & 1.1 & Revision 1: Resolve TA Feedback for non-functional requirements: add usability survey content to non-functional tests\\
 Mar 3 & 1.1 & Revision 1: Add unit tests according to the design documentation; Add new non-dynamic tests to the table\\
+Apr 3 & 1.1 & Revision 1: Changes related to VnV Report feedback\\
+Apr 4 & 1.1 & Revision 1: Changes to match current tests and values \\
 \bottomrule
 \end{tabularx}
 
@@ -120,7 +123,7 @@ The software we test is a social media application which also uses Augmented Rea
 
      \item  Allowing the users to view and filter lectures and events 
      
-     \item Allowing the user to customize their schedule -- pin and unpin events or lectures based on their interest.
+     \item Allowing the user to customize their schedule -- bookmark and unbookmark events or lectures based on their interest.
 
      \item  Identifying major campus buildings through the user's location and camera view, and using the information to display relevant lectures and events.
 
@@ -395,7 +398,7 @@ This section includes all test cases related to user accounts. This will include
 
 \item{\textbf{FRT-UA2}}
 
-\textbf{Name:} Unsuccessful Account Creation
+\textbf{Name:} Unsuccessful Account Creation With Existing Email
 
 \textbf{Control:} Manual
 					
@@ -440,7 +443,7 @@ This section includes all test cases related to user accounts. This will include
 
 \item{\textbf{FRT-UA4}}
 
-\textbf{Name:} Unsuccessful Account Login
+\textbf{Name:} Unsuccessful Account Login With Wrong Password
 
 \textbf{Control:} Manual
 					
@@ -561,7 +564,7 @@ This section includes all test cases related to user accounts. This will include
 \begin{itemize}
 \item Email: qtest@gmail.com (this is an existing test account)
 \item password: qtesting
-\item newProgram: Computer Science
+\item program: Software Engineering
 \end{itemize}
 
 \textbf{Input:} New Profile:
@@ -866,6 +869,48 @@ This section includes all test cases related to events and lectures happening on
 
 \item{\textbf{FRT-LE6}}
 
+\textbf{Name:} Administrator Add Event With Existing Name
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+An event with following information exists:
+\begin{itemize}
+\item name: Test event
+\item description: Sample event for system test
+\item time: 0
+\item duration: 0
+\item location: Online
+\item isPublic: true
+\item organizer: Team 2
+\end{itemize}
+
+\textbf{Input:} New sample event:
+\begin{itemize}
+\item name: Test event
+\item description: New Description
+\item time: 100
+\item duration: 30
+\item location: NA
+\item isPublic: false
+\item organizer: NA
+\end{itemize}
+					
+\textbf{Output:} The sample event information is changed to the one in the input
+
+\textbf{Test Case Derivation:} Administrators know the event name should be unique and it is unlikely that they give a different event the same name, so this happens most likely when they want to update an event (for instance monthly updated club event)
+					
+\textbf{How test will be performed:} The tester will log in as an administrator and add the sample event. Then the tester will verify the event is still in the list with all information updated
+
+\textbf{Related Requirement(s):} FR-4-3
+
+\item{\textbf{FRT-LE7}}
+
 \textbf{Name:} Administrator Edit Event
 
 \textbf{Control:} Manual
@@ -890,7 +935,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-3
 
-\item{\textbf{FRT-LE7}}
+\item{\textbf{FRT-LE8}}
 
 \textbf{Name:} Administrator Delete Event
 
@@ -915,7 +960,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-3
 
-\item{\textbf{FRT-LE8}}
+\item{\textbf{FRT-LE9}}
 
 \textbf{Name:} Administrator Add Lecture
 
@@ -944,7 +989,45 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-4
 
-\item{\textbf{FRT-LE9}}
+\item{\textbf{FRT-LE10}}
+
+\textbf{Name:} Administrator Add Lecture With Existing Code
+
+\textbf{Control:} Manual
+					
+\textbf{Initial State:} User is logged in as an administrator
+\begin{itemize}
+\item email: campusconnections@gmail.com
+\item password: testing
+\end{itemize}
+
+A lecture with following information exists:
+\begin{itemize}
+\item code: TEST 1T03
+\item name: Test lecture
+\item time: 12:00 - 13:00, Mon
+\item location: Online
+\item instructor: NA
+\end{itemize}
+
+\textbf{Input:} New sample lecture:
+\begin{itemize}
+\item code: TEST 1T03
+\item name: New Test lecture
+\item time: 12:00 - 13:00, Wed
+\item location: TBD
+\item instructor: TBD
+\end{itemize}
+					
+\textbf{Output:} The sample lecture information is changed to the one in the input
+
+\textbf{Test Case Derivation:} Administrators know that lecture code should be unique and it is very unlikely that they give a different lecture the same code, so this happens most likely when they want to update a lecture (for instance in a new semester the lecture has a new schedule)
+					
+\textbf{How test will be performed:} The tester will log in as an administrator and add the sample lecture. Then the tester will verify the lecture is still in the list with all information updated
+
+\textbf{Related Requirement(s):} FR-4-4
+
+\item{\textbf{FRT-LE11}}
 
 \textbf{Name:} Administrator Edit Lecture
 
@@ -970,7 +1053,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-4
 
-\item{\textbf{FRT-LE10}}
+\item{\textbf{FRT-LE12}}
 
 \textbf{Name:} Administrator Delete Lecture
 
@@ -995,7 +1078,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-4
 
-\item{\textbf{FRT-LE11}}
+\item{\textbf{FRT-LE13}}
 
 \textbf{Name:} Event Information
 
@@ -1022,7 +1105,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-5
 
-\item{\textbf{FRT-LE12}}
+\item{\textbf{FRT-LE14}}
 
 \textbf{Name:} Lecture Information
 
@@ -1049,7 +1132,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-6
 
-\item{\textbf{FRT-LE13}}
+\item{\textbf{FRT-LE15}}
 
 \textbf{Name:} Lecture Filter by code
 
@@ -1074,7 +1157,7 @@ This section includes all test cases related to events and lectures happening on
 
 \textbf{Related Requirement(s):} FR-4-7
 
-\item{\textbf{FRT-LE14}}
+\item{\textbf{FRT-LE16}}
 
 \textbf{Name:} Event Filter by Name
 
@@ -1300,7 +1383,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 					
 \textbf{Input/Condition:} GitHub web page
 					
-\textbf{Output/Result:} Convinced the participants that the main features are explained in the GitHub repo
+\textbf{Output/Result:} Directed the participants that the main features are explained in the GitHub repo
 
 \textbf{How test will be performed:} The tester will use a guest GitHub account and navigate to the GitHub page and verify there exists explanation of application features
 
@@ -1360,105 +1443,6 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \item{\textbf{NFRT-P3}}
 
-\textbf{Name:} Code Walkthrough For User Personal Data
-
-\textbf{Type:} Non-functional, Static, Manual
-
-\textbf{Input/Condition:} Source code
-
-\textbf{Output/Result:} Successfully convinced the participants the following:
-\begin{itemize}
-  \item User's personal information does not appear in the database if the user did not grant permission
-\end{itemize}
-
-\textbf{How test will be performed:} A code walkthough will be held by the developers to show that database storing is only possible when the user grants permission
-
-\textbf{Related Requirement(s):} P-SC1
-
-\item{\textbf{NFRT-P4}}
-
-\textbf{Name:} Code Walkthrough For Data Transmission Encryption
-
-\textbf{Type:} Non-functional, Static, Manual
-
-\textbf{Input/Condition:} Source code
-
-\textbf{Output/Result:} Successfully convinced the participants the following:
-\begin{itemize}
-  \item The product only transmits encrypted data from server to user
-\end{itemize}
-
-\textbf{How test will be performed:}  A code walkthough will be held by the developers to show that the application transmit encrypted data only
-
-\textbf{Related Requirement(s):} P-SC2
-
-\item{\textbf{NFRT-P5}}
-
-\textbf{Name:} Warning when starting AR camera
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} User allows the application to use camera
-					
-\textbf{Input/Condition:} User turns on the AR camera
-					
-\textbf{Output/Result:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
-
-\textbf{How test will be performed:} The testers will open the AR camera on one device and visually inspect if the message is shown
-
-\textbf{Related Requirement(s):} P-SC3
-
-\item{\textbf{NFRT-P6}}
-
-\textbf{Name:} Leaving campus warning
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} User opens the map
-					
-\textbf{Input/Condition:} User moves out of the campus
-					
-\textbf{Output/Result:} A warning message is displayed telling the user that the map is not available out of campus
-
-\textbf{How test will be performed:} The tester will open the map and walk out of campus and visually inspect if the warning message appears
-
-\textbf{Related Requirement(s):} P-SC4
-
-\item{\textbf{NFRT-P7}}
-
-\textbf{Name:} Special character warning
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} User starts to register
-					
-\textbf{Input/Condition:} User enters nickname with some special character: `; DELETE *'
-					
-\textbf{Output/Result:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
-
-\textbf{How test will be performed:} The tester will start to register and enter the nickname above and visually inspect if the warning message appears
-
-\textbf{Related Requirement(s):} P-SC5
-
-\item{\textbf{NFRT-P8}}
-
-\textbf{Name:} Email format warning
-
-\textbf{Type:} Non-functional, Dynamic, Manual
-					
-\textbf{Initial State:} User starts to register
-					
-\textbf{Input/Condition:} User enters a not email string in the email field:
-`SELECT * FROM TABLE'
-					
-\textbf{Output/Result:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
-
-\textbf{How test will be performed:} The tester will start to register and enters a email `SELECT * FROM TABLE' and visually inspect if the warning message appears
-
-\textbf{Related Requirement(s):} P-SC6
-
-\item{\textbf{NFRT-P9}}
-
 \textbf{Name:} AR camera accuracy
 
 \textbf{Type:} Non-functional, Dynamic, Manual
@@ -1473,7 +1457,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-PA1
 
-\item{\textbf{NFRT-P10}}
+\item{\textbf{NFRT-P4}}
 
 \textbf{Name:} Warning when internet connection is lost
 
@@ -1489,7 +1473,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-RF1
 
-\item{\textbf{NFRT-P11}}
+\item{\textbf{NFRT-P5}}
 
 \textbf{Name:} Rudimentary functions when the server connection is lost
 
@@ -1505,7 +1489,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-RF2
 
-\item{\textbf{NFRT-P12}}
+\item{\textbf{NFRT-P6}}
 
 \textbf{Name:} Code inspection for server restart
 
@@ -1513,7 +1497,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 					
 \textbf{Input/Condition:} Server settings
 					
-\textbf{Output/Result:} Successfully convinced the stakeholders and users the following:
+\textbf{Output/Result:} Successfully demonstrate to the stakeholders and users the following:
 \begin{itemize}
 \item Server attempts to restart when it crashes
 \end{itemize}
@@ -1522,7 +1506,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-RF3
 
-\item{\textbf{NFRT-P13}}
+\item{\textbf{NFRT-P7}}
 
 \textbf{Name:} AR camera help button
 
@@ -1538,7 +1522,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-RF4
 
-\item{\textbf{NFRT-P14}}
+\item{\textbf{NFRT-P8}}
 
 \textbf{Name:} Load testing for server
 
@@ -1554,7 +1538,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-SE1
 
-\item{\textbf{NFRT-P15}}
+\item{\textbf{NFRT-P9}}
 
 \textbf{Name:} Code inspection for database capacity
 
@@ -1562,7 +1546,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Input/Condition:} Database documentation
 
-\textbf{Output/Result:} Successfully convinced the participants the following:
+\textbf{Output/Result:} Successfully demonstrate to the participants the following:
 \begin{itemize}
 \item The database has enough space to store all the user, lecture and event information
 \end{itemize}
@@ -1571,7 +1555,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Related Requirement(s):} P-SE2
 
-\item{\textbf{NFRT-P16}}
+\item{\textbf{NFRT-P10}}
 
 \textbf{Name:} Code walkthrough for adding new building
 
@@ -1579,16 +1563,16 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:} Successfully convinced the participants the following:
+\textbf{Output/Result:} Successfully demonstrate to the participants the following:
 \begin{itemize}
 \item A new target building can be added without causing the application running any slower
 \end{itemize}
 
-\textbf{How test will be performed:} A code walkthrough will be held with the superior's attendance to show that an extra target building will not affect the performance of the application
+\textbf{How test will be performed:} An example target building will be added with the superior's attendance to show that an extra target building will not affect the performance of the application
 
 \textbf{Related Requirement(s):} P-SE3
 
-\item{\textbf{NFRT-P17}}
+\item{\textbf{NFRT-P11}}
 
 \textbf{Name:} Code Peer Evaluation For Longevity
 
@@ -1596,7 +1580,7 @@ SURVEY\_SAMPLE\_SIZE users where they will give feedback to different elements o
 
 \textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:} Successfully convinced the participants the following:
+\textbf{Output/Result:} Successfully demonstrate to the participants the following:
 \begin{itemize} 
   \item The product is able to operate without major malfunctions in release build for at least 1 year
   \item The finalized product will remain compatible with the promised operating systems and devices for at least 3 years
@@ -1712,6 +1696,39 @@ The testers will then download and install the product onto the phone from the G
 \end{enumerate}
 
 \textbf{Related Requirement(s):} S-A1, S-A2, S-A3
+
+\item{\textbf{NFRT-S2}}
+
+\textbf{Name:} Special character warning
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User starts to register
+					
+\textbf{Input/Condition:} User enters nickname with some special character: `; DELETE *' (See all SPECIAL\_CHAR in the appendix)
+					
+\textbf{Output/Result:} A warning message is displayed telling the user that the special characters are not allowed and stops the user from registering
+
+\textbf{How test will be performed:} The tester will start to register and enter the nickname above and visually inspect if the warning message appears
+
+\textbf{Related Requirement(s):} P-SC5
+
+\item{\textbf{NFRT-S3}}
+
+\textbf{Name:} Email format warning
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User starts to register
+					
+\textbf{Input/Condition:} User enters a not email string in the email field:
+`SELECT * FROM TABLE'
+					
+\textbf{Output/Result:} A warning message is displayed telling the user that the input is not an email address and stops the user from registering
+
+\textbf{How test will be performed:} The tester will start to register and enters a email `SELECT * FROM TABLE' and visually inspect if the warning message appears
+
+\textbf{Related Requirement(s):} P-SC6
 \end{enumerate}
 
 \subsubsection{Privacy}
@@ -1724,12 +1741,12 @@ The testers will then download and install the product onto the phone from the G
 
 \textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:} Successfully convinced the participants the following:
+\textbf{Output/Result:} Successfully demonstrate to the participants the following:
 \begin{itemize}
 \item The usage of a user's personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario's data protection laws
 \end{itemize}
 
-\textbf{How test will be performed:} A code inspection will be held with supervisor's attendance to show the usage of personal data is legitimate
+\textbf{How test will be performed:} A code inspection will be held with supervisor's attendance to show the usage of personal data is legitimate. User consent form will outline the methods used in the application to secure the data.
 
 \textbf{Related Requirement(s):} S-P1
 
@@ -1741,7 +1758,7 @@ The testers will then download and install the product onto the phone from the G
 
 \textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:} Successfully convinced the participants the following:
+\textbf{Output/Result:} Successfully demonstrate to the participants the following:
 \begin{itemize}
 \item Any accounts that are not active for a long time (a semester) will be removed from the system
 \end{itemize}
@@ -1749,6 +1766,75 @@ The testers will then download and install the product onto the phone from the G
 \textbf{How test will be performed:} A code inspection will be held with supervisor's attendance to show the system is set to clean inactive users periodically
 
 \textbf{Related Requirement(s):} S-P2
+
+\item{\textbf{NFRT-PVC3}}
+
+\textbf{Name:} Code Walkthrough For User Personal Data
+
+\textbf{Type:} Non-functional, Static, Manual
+
+\textbf{Input/Condition:} Source code
+
+\textbf{Output/Result:} Successfully demonstrate to the participants the following:
+\begin{itemize}
+  \item User's personal information does not appear in the database if the user did not grant permission
+\end{itemize}
+
+\textbf{How test will be performed:} An application usage walkthough will be held by the developers to show that database storing is only possible when the user grants permission
+
+\textbf{Related Requirement(s):} P-SC1
+
+\item{\textbf{NFRT-PVC4}}
+
+\textbf{Name:} Code Walkthrough For Data Transmission Encryption
+
+\textbf{Type:} Non-functional, Static, Manual
+
+\textbf{Input/Condition:} Source code
+
+\textbf{Output/Result:} Successfully demonstrate to the participants the following:
+\begin{itemize}
+  \item The product only transmits encrypted data from server to user
+\end{itemize}
+
+\textbf{How test will be performed:}  A code walkthough and packet sniffing will be used by the developers to show that the application transmit encrypted data only
+
+\textbf{Related Requirement(s):} P-SC2
+
+\item{\textbf{NFRT-PVC5}}
+
+\textbf{Name:} Leaving campus warning
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User opens the map
+					
+\textbf{Input/Condition:} User moves out of the campus
+					
+\textbf{Output/Result:} A warning message is displayed telling the user that the map is not available out of campus
+
+\textbf{How test will be performed:} The tester will open the map and walk out of campus and visually inspect if the warning message appears
+
+\textbf{Related Requirement(s):} P-SC4
+\end{enumerate}
+
+\subsubsection{User Safety}
+\begin{enumerate}
+\item{\textbf{NFRT-US1}}
+
+\textbf{Name:} Warning when starting AR camera
+
+\textbf{Type:} Non-functional, Dynamic, Manual
+					
+\textbf{Initial State:} User allows the application to use camera
+					
+\textbf{Input/Condition:} User turns on the AR camera
+					
+\textbf{Output/Result:} A warning telling the user to be aware of their surroundings is displayed upon start-up of the camera
+
+\textbf{How test will be performed:} The testers will open the AR camera on one device and visually inspect if the message is shown
+
+\textbf{Related Requirement(s):} P-SC3
 \end{enumerate}
 
 \subsubsection{Cultural}
@@ -1786,13 +1872,13 @@ elements of the interface. All of the survey takers are McMaster students
 
 \textbf{Input/Condition:} Source code
 
-\textbf{Output/Result:} Successfully convinced the participants the following:
+\textbf{Output/Result:} Successfully demonstrate to the participants the following:
 \begin{itemize}
 \item The data collected will be handled as per the same legal requirements for the university
 \item The application can abide by the guidelines set by university staff
 \end{itemize}
 
-\textbf{How test will be performed:} A code walkthrough will be held with the supervisor's attendance to show that the project fulfils the compliance requirements
+\textbf{How test will be performed:} A code walkthrough will be held with the supervisor's attendance to show that the project fulfils the compliance requirements. The terms of service will outline these details correctly.
 
 \textbf{Related Requirement(s):} COM-SC1, COM-SC2
 \end{enumerate}
@@ -1830,9 +1916,8 @@ elements of the interface. All of the survey takers are McMaster students
 	\end{longtable}
 
 	\newpage
-
 	\begin{longtable}{|l|cccccccccccc|}
-		\caption{Traceability Between Functional Test Cases and Functional Requirements, FR-3-6 to FR-6}                                                                                                                                                                                                  \\
+		\caption{Functional Test Case and Requirement Traceability Cont.}                                                                                                                                                                                                  \\
 		\hline
 		\textbf{Test IDs}   & \multicolumn{12}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                                 \\
 		\hline
@@ -1847,13 +1932,15 @@ elements of the interface. All of the survey takers are McMaster students
 		\textbf{FRT-LE5} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
 		\textbf{FRT-LE6} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
 		\textbf{FRT-LE7} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
-		\textbf{FRT-LE8} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE8} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
 		\textbf{FRT-LE9} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
 		\textbf{FRT-LE10} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
-		\textbf{FRT-LE11} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ &~\\
-		\textbf{FRT-LE12} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ &~\\
-		\textbf{FRT-LE13} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ &~\\
-		\textbf{FRT-LE14} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ &~\\
+		\textbf{FRT-LE11} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE12} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE13} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE14} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE15} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ &~\\
+		\textbf{FRT-LE16} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ &~\\
 		\textbf{FRT-AR1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ &~\\
 		\textbf{FRT-AR2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ &~\\
 		\textbf{FRT-AR3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X &~\\
@@ -1891,17 +1978,17 @@ elements of the interface. All of the survey takers are McMaster students
 		\hline
 		\textbf{NFRT-P1} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~\\
 		\textbf{NFRT-P2} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ \\
-		\textbf{NFRT-P3} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P4} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P5} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P6} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P7} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P8} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P9} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ & ~ & ~ \\
-		\textbf{NFRT-P10} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ & ~ & ~ \\
-		\textbf{NFRT-P11} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X & ~ & ~ \\
-		\textbf{NFRT-P12} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & X & ~ \\
-		\textbf{NFRT-P13} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & X \\
+		\textbf{NFRT-\sout{P3} \textcolor{red}{PVC3}} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-\sout{P4} \textcolor{red}{PVC4}} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-\sout{P5} \textcolor{red}{US1}} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-\sout{P6} \textcolor{red}{PVC5}} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-\sout{P7} \textcolor{red}{S2}} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-\sout{P8} \textcolor{red}{S3}} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P3} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ & ~ & ~ \\
+		\textbf{NFRT-P4} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~ & ~ & ~ \\
+		\textbf{NFRT-P5} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X & ~ & ~ \\
+		\textbf{NFRT-P6} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & X & ~ \\
+		\textbf{NFRT-P7} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ & ~ & X \\
 		\hline
 	\end{longtable}
 
@@ -1914,10 +2001,10 @@ elements of the interface. All of the survey takers are McMaster students
 		\hline
 		~                   & \textbf{P-SE1} & \textbf{P-SE2} & \textbf{P-SE3} & \textbf{P-L1} & \textbf{P-L2} & \textbf{OE-EPE1} & \textbf{OE-P1} & \textbf{MS-M1} & \textbf{MS-S1} & \textbf{MS-S2} & \textbf{MS-A1}  \\
 		\hline
-		\textbf{NFRT-P14} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
-		\textbf{NFRT-P15} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
-		\textbf{NFRT-P16} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
-		\textbf{NFRT-P17} & ~                                                         & ~             & ~             & X             & X             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-P8} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-P9} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-P10} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~ &~\\
+		\textbf{NFRT-P11} & ~                                                         & ~             & ~             & X             & X             & ~             & ~             & ~             & ~             & ~ &~\\
 		\textbf{NFRT-OE1} & ~                                                         & ~             & ~             & ~             & ~             & X             & X             & ~             & ~             & ~ &~\\
 		\textbf{NFRT-MS1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~ &~\\
 		\textbf{NFRT-MS2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             &X  &~\\
@@ -2430,11 +2517,11 @@ This section will contain all unit tests for the module ``Database''.  This modu
 \begin{enumerate}
 \item{FRT-M6-1}
 
-\textbf{Name:} Get value
+\textbf{Name:} Retrieve Values From Database
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\textbf{Initial State:} NA
+\textbf{Initial State:} Logged in with student account.
 					
 \textbf{Input:} A valid path to a test node: `/events/public/EXPO/name'
 					
@@ -2446,11 +2533,11 @@ This section will contain all unit tests for the module ``Database''.  This modu
 
 \item{FRT-M6-2}
 
-\textbf{Name:} Set value
+\textbf{Name:} Set Value to Database
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\textbf{Initial State:} NA
+\textbf{Initial State:} Logged in with admin accunt.
 					
 \textbf{Input:} A valid path to a test node and a new value: 
 \begin{itemize}
@@ -2466,11 +2553,11 @@ This section will contain all unit tests for the module ``Database''.  This modu
 
 \item{FRT-M6-3}
 
-\textbf{Name:} Delete data
+\textbf{Name:} Delete Data From Database
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\textbf{Initial State:} NA
+\textbf{Initial State:} Logged in with admin account
 					
 \textbf{Input:} A valid path to a test node : `/events/public/EXPO'
 
@@ -2526,15 +2613,15 @@ This section summaries all the nondynamic test the team will conduct in section 
 \hline
 \multicolumn{1}{|l}{\bfseries Test Method} & \multicolumn{1}{|l|}{\bfseries Description} & \multicolumn{1}{l|}{\bfseries Related Requirement(s)}\\
 \hline
-Code Inspection for user data & It will be held when the implementation is done with the attendance of the supervisor. It will convince people that the data collection is totally legitimate and happens only with the user's permission & P-SC1, S-P1, COM-L1 \\
+Code Inspection for user data & It will be held when the implementation is done with the attendance of the supervisor. It will demonstrate to users that the data collection is handled as outlined the the terms of service and happens only with the user's permission & P-SC1, S-P1, COM-L1 \\
 \hline
-Database Walkthrough & A code walkthrough focusing on database connection and its storage. It will be held when the database implementation is done and convince people that the database is capable of storing all user data and will clean unused data periodically & P-SE2, S-P2\\
+Database Walkthrough & A code walkthrough focusing on database connection and its storage. It will be held when the database implementation is done and demonstrate to users that the database is capable of storing all user data and will clean unused data periodically & P-SE2, S-P2\\
 \hline
-Server \& Data Transmission Walkthrough & A code walkthrough focusing on the server structure. It will be held when the server implementation is done and convince people that the server encrypts data before transmitting and is robust against unexpected crash & P-SC2, P-RF3 \\
+Server \& Data Transmission Walkthrough & A code walkthrough focusing on the server structure. It will be held when the server implementation is done and demonstrate to users that the server encrypts data before transmitting and is robust against unexpected crash & P-SC2, P-RF3 \\
 \hline
-Longevity Peer Evaluation & A peer evaluation session to convince people that the produce can operate for a long time. It will be held when the implementation is done by another developers' team. Though it does not 100\% fulfill the requirements, it builds some confidence & P-L1, P-L2\\
+Longevity Peer Evaluation & A peer evaluation session to demonstrate to users that the application can operate for a long time. It will be held when the implementation is done by another developers' team. Though it does not 100\% fulfill the requirements, it builds some confidence & P-L1, P-L2\\
 \hline
-Code Walkthrough with Primary Reviewers & A code walkthrough focusing on Unity scripts and AR implementation. It will be held after Revision 0 is done and convince our primary reviewers that the a new target building can be added easily with our AR feature & P-SE3\\
+Code Walkthrough with Primary Reviewers & A code walkthrough focusing on Unity scripts and AR implementation. It will be held after Revision 0 is done and demonstrate to our primary reviewers that the a new target building can be added easily with our AR feature & P-SE3\\
 \hline
 \end{tabular}
 \end{table}
@@ -2574,7 +2661,7 @@ Their values are defined in this section for easy maintenance.
 \hline
 INITIAL\_USER\_STATE & The default user state with all default user information & All entries empty except email, nickname and password \\
 \hline
-DEFAULT\_AVATAR & The default virtual avatar & An unisex virtual avatar with default settings \\
+DEFAULT\_AVATAR & The default virtual avatar & An unisex avatar with default settings \\
 \hline
 MIN\_SCORE & The passing grade for a category in the survey & 3.5/5\\
 \hline
@@ -2584,17 +2671,19 @@ SURVEY\_SAMPLE\_SIZE & Sample size of the usability survey & 5\\
 \hline
 SCREEN\_VIEWPORTS & List of all popular mobile screen sizes & 360X740, 390X844, 820X1180\\
 \hline
-RECOGNITION\_TIME & Max time the system takes for image recognition & 3 second\\
+RECOGNITION\_TIME & Max time the system takes to recognize image & 3 second\\
 \hline
 LOCATION\_UPDATE\_TIME & Max time the system takes for location to update & 10 second\\
 \hline
-AR\_ACCURACY & The success rate of AR camera target recognition & 80\%\\
+AR\_ACCURACY & AR camera target recognition success rate & 80\%\\
 \hline
 PLACEHOLDER & Default value of attributes of type string for data structures in unit testing & NA\\
 \hline
 DEFAULT\_TIME & Default unix time for events & 1708922625\\
 \hline
 DEFAULT\_DURATION & Default duration (in minutes) for events & 30\\
+\hline
+SPECIAL\_CHAR & Suspicious characters that can be used for SQL injection & \textbackslash $\vert$ ! \# \$ \% \& / ( ) = ?  @ £ § € \{ \} . - ; ' ,  \textlangle \textrangle \\
 \hline
 \end{tabular}
 \end{table}
@@ -2611,14 +2700,14 @@ The survey will be composed of following three session and take about 30 minutes
 \item Direct from menu page to lecture page
 \item Search for a lecture the tester asked for
 \item Check the location of the lecture
-\item Pin and then unpin the lecture
+\item Bookmark and then unbookmark the lecture
 \end{enumerate}
 \item Event
 \begin{enumerate}
 \item Direct from map page to event page
 \item Search for an event the tester asked for
 \item Check the location of the event
-\item Pin and then unpin the event
+\item Bookmark and then unbookmark the event
 \end{enumerate}
 \item Activity Management
 \begin{enumerate}
@@ -2640,7 +2729,7 @@ The survey will be composed of following three session and take about 30 minutes
 \item Direct from map page to user profile page
 \item Check the program and level of the user
 \item Edit any part of the profiles
-\item Check the lectures and events that are pinned
+\item Check the lectures and events that are bookmarked
 \end{enumerate}
 \item Friend and Chat
 \begin{enumerate}
@@ -2665,7 +2754,9 @@ The survey will be composed of following three session and take about 30 minutes
 	\item \textbf{Appealing Colour Scheme:} The colour scheme chosen for the interface is similar to McMaster official application.
 	\item \textbf{No Technical or Software-specific Language:} The product does not use technical/software-specific language unless necessary.
 	\item \textbf{Common periods of usage:} You will be using the application mostly during school time (from 8:30 AM to 6:30 PM).
-	\item \textbf{Cultural Friendliness:} The application does not have any words or symbols that are offensive to you.
+	\item \textbf{Cultural Friendliness:} The application does not have any words or symbols that are offensive to you.\\\\
+	\item \textbf{Customer Satisfaction:} This application will be useful for my daily life and I'd like to recommend it to my friends.
+	\item \textbf{Loading Speed:} This application loads/updates what I need in a reasonable time.
 \end{enumerate}
 \subsubsection{Open-ended Questions}
 \textbf{In this section we invite participants to provide their thoughts on the pros and cons of the project. They should feel free to share any feedback or insights.}

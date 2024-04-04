@@ -48,6 +48,7 @@ Jan 7th & Zihao Du, Matthew Miller & Revision 1: Update FMEA\\
 & Michael Kim, Waseef Nayeem & \\
 Jan 8th & Zihao Du & Revision 1: Resolve TA feedback and peer review issues\\
 Mar 5th & Zihao Du & Revision 1: Change FMEA table SR due to change of the scope in requirement documents\\
+Apr 3 & Zihao Du & Revision 1: New requirements should be added in security section, not performance\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -229,22 +230,22 @@ The following requirements in bold are the new requirements added to our SRS doc
         \item \textbf{Rationale:} The user should get a notification telling them that the AR camera may have a bad performance in some cases, and they should be able to report that to the developer if they want the problem to be solved.
         \item \textbf{Fit Criterion:} The product should show the user a list of possible reasons that the camera does not work and the contact information of maintainers once they have trouble using the AR camera and click the help button.
     \end{itemize}
-    \item[NFR-P-SC3.] \textbf{The product shall display a message upon map startup warning the user to be aware of their surroundings.}
+    \item[NFR-S-US1.] \textbf{The product shall display a message upon map startup warning the user to be aware of their surroundings.}
     \begin{itemize}
         \item \textbf{Rationale:} The game-play of real-time location map may lead to distracted walking, therefore we need to warn the user for their safety.
         \item \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon map startup.
     \end{itemize}
-    \item[NFR-P-SC4.] \textbf{The product shall hide user's location if the user leaves campus.}
+    \item[NFR-S-P5.] \textbf{The product shall hide user's location if the user leaves campus.}
     \begin{itemize}
         \item \textbf{Rationale:} Users may stay connected and share their location even when they leave the campus. To prevent personal information leakage, we need to hide that information and disconnect the user.
         \item \textbf{Fit Criterion:} A user's information shall not be shared once he or she leaves campus.
     \end{itemize}
-    \item[NFR-P-SC5.] \textbf{The product shall prevent the user from entering special characters in all text input fields.}
+    \item[NFR-S-A4.] \textbf{The product shall prevent the user from entering special characters in all text input fields.}
     \begin{itemize}
         \item \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.
         \item \textbf{Fit Criterion:} Any text input with special characters will give the user an error.
     \end{itemize}
-    \item[NFR-P-SC6.] \textbf{The product shall validate the email format when creating an account.}
+    \item[NFR-S-A5.] \textbf{The product shall validate the email format when creating an account.}
     \begin{itemize}
         \item \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.
         \item \textbf{Fit Criterion:} An input in the email field that's not in the format of an email will give the user an error when creating a new account.
