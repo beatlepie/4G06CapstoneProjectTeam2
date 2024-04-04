@@ -70,10 +70,10 @@ See SRS Documentation at \href{https://github.com/beatlepie/4G06CapstoneProjectT
   \toprule		
   \textbf{symbol} & \textbf{description}\\
   \midrule 
-  AR & Augmented Reality\\
-  MG & Module Guide \\
   MIS & Module Interface Specification \\
+  MG & Module Guide \\
   SRS & Software Requirement Specification\\
+  AR & Augmented Reality\\
   \bottomrule
 \end{tabular}\\
 
@@ -676,7 +676,7 @@ All the sate variables of User is accessible directly so there is no getters in 
 \item exception: none
 \end{itemize}
 
-\noindent UnpinEvent(targetEvent):
+\noindent UnpinLecture(targetEvent):
 \begin{itemize}
 \item transition: $User.RemoveEvent(targetEvent)$ 
 \item output: none
@@ -2226,15 +2226,15 @@ MAPSTYLES = a sequences of map styles with type String
  
 \newpage
 
-\section{MIS of Map Interface} \label{mMapInterface}
+\section{MIS of Real-time Map} \label{mRealTimeMap}
 
 \subsection{Module}
 
-Map Interface
+Real-time Map
 
 \subsection{Uses}
 
-Map Module, Server Module, Database Module
+Map Module, Server Module
 
 \subsection{Syntax}
 
@@ -2251,7 +2251,7 @@ None
 \hline
 HandleInputBuilding & - & - & - \\
 DisplayAvatar & Uri, ($\mathbb{R}$, $\mathbb{R}$) & - & -\\
-DisplayUserHeatMap & - & -\\
+ConnectToServer & - & -\\
 DisplayEventHeatMap & - & -\\
 
 \hline
@@ -2275,7 +2275,7 @@ DisplayEventHeatMap & - & -\\
 
 \subsubsection{Assumptions}
 
-None
+ConnectToServer() is called when the module is loaded.
 
 \subsubsection{Access Routine Semantics}
 
