@@ -1,7 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
+/// <summary>
+/// Data class for the locations of building pins.
+/// </summary>
 public static class BuildingLocation
 {
     public static readonly Dictionary<string, string> Name

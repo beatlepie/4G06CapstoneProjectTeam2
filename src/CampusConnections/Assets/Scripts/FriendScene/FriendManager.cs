@@ -10,6 +10,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// Controls the behaviour and interactions in the FriendScene including listing and viewing friends,
+/// accepting, creating and sending friend requests.
+/// Author: Zihao Du
+/// Date: 2023-12-11
+/// </summary>
 public class FriendManager : MonoBehaviour
 {
     [Header("Chat")] private List<User> _friends;
@@ -44,6 +50,11 @@ public class FriendManager : MonoBehaviour
         CreateRequestList();
     }
 
+    /// <summary>
+    /// Coroutine function that asynchronously queries the database for the current user's friend list.
+    /// Must be provided with a handler for processing the received data.
+    /// </summary>
+    /// <param name="onCallBack">Handler for processing the received friend data.</param>
     private IEnumerator GetFriends(Action<List<User>> onCallBack)
     {
         var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
@@ -66,6 +77,11 @@ public class FriendManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Coroutine function that asynchronously queries the database for the current user's friend requests.
+    /// Must be provided with a handler for processing the received data.
+    /// </summary>
+    /// <param name="onCallBack">Handler for processing the received friend request data.</param>
     private IEnumerator GetInvitations(Action<List<User>> onCallBack)
     {
         var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
@@ -89,6 +105,9 @@ public class FriendManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Helper function for visually updating the friend list when it changes.
+    /// </summary>
     private void RefreshFriendList()
     {
         // Update transforms of all friend templates once friends changes (accept/ignore)
@@ -104,6 +123,9 @@ public class FriendManager : MonoBehaviour
                 new Vector2(800, FriendEntryHeight * _friends.Count);
     }
 
+    /// <summary>
+    /// Handles the data obtained from GetFriends() and constructs the friend list from the received data.
+    /// </summary>
     private void CreateFriendList()
     {
         StartCoroutine(GetFriends(data =>
@@ -127,7 +149,7 @@ public class FriendManager : MonoBehaviour
                     new Vector2(800, FriendEntryHeight * _friends.Count);
         }));
     }
-
+    
     public void OnFriendDeleteClick()
     {
         var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
@@ -136,7 +158,7 @@ public class FriendManager : MonoBehaviour
                                 "</color> from the list?";
         _deleteTarget = template;
     }
-
+    
     public void OnFriendDeleteConfirm()
     {
         var targetEmail = _deleteTarget.transform.Find("Email").GetComponent<TMP_Text>().text;
@@ -154,7 +176,7 @@ public class FriendManager : MonoBehaviour
         DatabaseConnector.Instance.Root.Child("users/" + targetEmailWithoutDot + "/friends/" + userEmailWithoutDot)
             .SetValueAsync(null);
     }
-
+    
     public void OnFriendViewClick()
     {
         var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
@@ -164,7 +186,7 @@ public class FriendManager : MonoBehaviour
         SettingsManager.State = 0;
         SceneManager.LoadScene("SettingsScene");
     }
-
+    
     public void OnFriendChatClick()
     {
         var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
@@ -179,6 +201,9 @@ public class FriendManager : MonoBehaviour
         SceneManager.LoadScene("ChatScene");
     }
 
+    /// <summary>
+    /// Helper function for visually updating the friend request list when updated.
+    /// </summary>
     private void RefreshRequestList()
     {
         // Update transforms of all request templates once requests changes (accept/ignore)
@@ -194,6 +219,9 @@ public class FriendManager : MonoBehaviour
                 new Vector2(800, RequestEntryHeight * _requesters.Count);
     }
 
+    /// <summary>
+    /// Handles the data obtained from GetInvitations() and constructs the request list from the received data.
+    /// </summary>
     private void CreateRequestList()
     {
         StartCoroutine(GetInvitations(data =>
@@ -216,13 +244,16 @@ public class FriendManager : MonoBehaviour
                     new Vector2(800, RequestEntryHeight * _requesters.Count);
         }));
     }
-
+    
     public void AddFriendHelpMsg()
     {
         StartCoroutine(CheckUserByEmail());
         notification.SetActive(true);
     }
-
+    
+    /// <summary>
+    /// Updates client notification messages by monitoring the state of asynchronous requests made to the database.
+    /// </summary>
     private IEnumerator CheckUserByEmail()
     {
         var email = GameObject.Find("InputEmail").GetComponent<TMP_InputField>().text;
@@ -260,7 +291,7 @@ public class FriendManager : MonoBehaviour
             }
         }
     }
-
+    
     public void OnRequestAcceptClick()
     {
         var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;

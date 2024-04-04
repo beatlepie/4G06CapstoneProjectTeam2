@@ -1,5 +1,8 @@
-﻿using UnityEngine;
-
+﻿/// <summary>
+/// A data helper class that wraps and serializes user location packets.
+/// Author: Waseef Nayeem
+/// Date: 2024-03-15
+/// </summary>
 [System.Serializable]
 public class RemoteUserLocation
 {

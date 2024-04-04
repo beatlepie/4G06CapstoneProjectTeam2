@@ -8,6 +8,12 @@ using Mapbox.Unity.Map;
 using Mapbox.Utils;
 using UnityEngine;
 
+/// <summary>
+/// Controller class for managing remote user pins on the map. Receives locations from the server and displays
+/// them as pins on the map.
+/// Author: Waseef Nayeem
+/// Date: 2024-03-15
+/// </summary>
 public class RemoteUserPinController : MonoBehaviour
 {
     [SerializeField] private AbstractMap map;
@@ -27,6 +33,7 @@ public class RemoteUserPinController : MonoBehaviour
     private bool _sendLocationEnabled;
 
     private float _elapsed;
+    private const float Period = 1f;
 
     private ILocationProvider _locationProvider;
 
@@ -35,6 +42,7 @@ public class RemoteUserPinController : MonoBehaviour
 
     private void Start()
     {
+        // Geofence for restricting pins to the confines of McMaster Campus
         _geoFence = new Rect
         {
             x = 43.25810845308126f,
@@ -65,12 +73,14 @@ public class RemoteUserPinController : MonoBehaviour
     {
         _elapsed += Time.deltaTime;
 
+        // Receive updated locations from queue
         while (_pinUpdates.Count > 0)
         {
             var p = _pinUpdates.Dequeue();
             _remoteLocations[p.Item1] = p.Item2;
         }
 
+        // Update pin object locations
         foreach (var loc in _remoteLocations)
             if (_remotePins.TryGetValue(loc.Key, out var pin))
             {
@@ -89,6 +99,7 @@ public class RemoteUserPinController : MonoBehaviour
                 }
             }
 
+        // Clear inactive pins
         foreach (var email in _lastUpdated.Keys)
             if (_remoteLocations.ContainsKey(email) && _remotePins.ContainsKey(email))
             {
@@ -101,22 +112,32 @@ public class RemoteUserPinController : MonoBehaviour
                 }
             }
 
-        if (_elapsed >= 1f)
+        // Send the local user's current location once per time period
+        if (_elapsed >= Period)
         {
-            _elapsed %= 1f;
+            _elapsed %= Period;
             SendLocation();
         }
     }
 
+    /// <summary>
+    /// Handler function that is called when a location is received.
+    /// </summary>
+    /// <remarks>
+    /// Incoming locations must be added to queue.
+    /// This is because the UI cannot be updated from inside an event handler.
+    /// </remarks>
+    /// <param name="loc">Location object received from remote user.</param>
     private void OnReceivedListener(RemoteUserLocation loc)
     {
+        // Only keep friend locations
         if (_friendEmails.Contains(loc.Email))
         {
             _pinUpdates.Enqueue(new Tuple<string, Vector2d>(loc.Email, new Vector2d(loc.Latitude, loc.Longitude)));
             _lastUpdated[loc.Email] = DateTime.Now;
         }
     }
-
+    
     private async void SendLocation()
     {
         if (!_isInitialized || !_sendLocationEnabled) return;
@@ -128,6 +149,10 @@ public class RemoteUserPinController : MonoBehaviour
         await locationService.SendAsync(packet);
     }
 
+    /// <summary>
+    /// Helper coroutine function for getting the user's list of friends.
+    /// This is to enforce the privacy requirement that only allows friend locations to be displayed.
+    /// </summary>
     private IEnumerator GetFriendsList()
     {
         var emailWithoutDot = Utilities.RemoveDot(_email);

@@ -1,6 +1,10 @@
 using UnityEngine;
 using Mapbox.Utils;
 
+/// <summary>
+/// Controller class for the building pin prefab. Keeps track of the location and name of the building.
+/// Controls the animation of the building pin.
+/// </summary>
 public class TargetBuilding : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 50f;
@@ -9,13 +13,15 @@ public class TargetBuilding : MonoBehaviour
 
     public Vector2d buildingCoords;
     public string buildingName;
-
-    // Update is called once per frame
+    
     private void Update()
     {
         FloatAndSpin();
     }
 
+    /// <summary>
+    /// Animate the building pin to float up and down and rotate about the Y axis.
+    /// </summary>
     private void FloatAndSpin()
     {
         Transform rotatedTransform;

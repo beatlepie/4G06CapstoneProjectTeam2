@@ -11,7 +11,7 @@ using Database;
 using UnityEngine.Serialization;
 
 /// <summary>
-/// This class controls the event list view, including pagniation view and search filter.
+/// This class controls the event list view, including pagination view and search filter.
 /// Author: Zihao Du
 /// Date: 2024-02-20
 /// </summary>

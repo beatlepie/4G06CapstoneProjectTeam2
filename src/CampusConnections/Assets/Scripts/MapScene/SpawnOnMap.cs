@@ -5,6 +5,11 @@ using Mapbox.Unity.Utilities;
 using System.Collections.Generic;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// Controller class that manages displaying and updating the location of building pins on the map.
+/// Author: Waseef Nayeem
+/// Date: 20203-11-22
+/// </summary>
 public class SpawnOnMap : MonoBehaviour
 {
     [FormerlySerializedAs("_map")] [SerializeField] private AbstractMap map;

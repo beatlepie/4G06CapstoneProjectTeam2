@@ -1,3 +1,8 @@
+/// <summary>
+/// Data record class for Lecture objects. Provides a local data type for Lecture objects retrieved from the DB.
+/// Author: Zihao Du
+/// Date: 2023-11-19
+/// </summary>
 public class Lecture
 {
     public string Code;

@@ -1,8 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 
+/// <summary>
+/// Generic class that provides pagination functionality for large requests made to the DB.
+/// Author: Zihao Du
+/// Date: 2024-02-25
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class Pagination<T>
 {
     public readonly List<T> EntryList;
@@ -24,6 +29,10 @@ public class Pagination<T>
         CurrentPage = 1;
     }
 
+    /// <summary>
+    /// Applies a filter to the list of entries.
+    /// </summary>
+    /// <returns>Filtered list of entries.</returns>
     public List<T> FilterEntries()
     {
         if ((FilterBy != null) & (FilterString != null))

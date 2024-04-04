@@ -1,5 +1,8 @@
-using System;
-
+/// <summary>
+/// Data record class for Event objects. Provides a local data type for Event objects retrieved from the DB.
+/// Author: Zihao Du
+/// Date: 2024-02-20
+/// </summary>
 public class Event
 {
     public string Name;

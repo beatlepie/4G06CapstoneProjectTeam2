@@ -41,7 +41,7 @@ public class SignalRService : MonoBehaviour
     /// <summary>
     /// Handles receiving messages from the server.
     /// </summary>
-    /// <param name="msg">Message that is received.</param>
+    /// <param name="msg">Message that was received.</param>
     private void Receive(Message msg)
     {
         NewMessageReceived.Invoke(msg);

@@ -1,6 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class controls an object pool of remote user pin prefabs.
+/// Author: Waseef Nayeem
+/// Date: 2024-03-15
+/// </summary>
 public class PinObjectPool : MonoBehaviour
 {
     public static PinObjectPool SharedInstance;

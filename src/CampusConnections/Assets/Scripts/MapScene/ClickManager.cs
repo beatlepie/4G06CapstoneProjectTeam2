@@ -8,6 +8,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// Class for handling user interactions on the map scene.
+/// THis includes handling popup interface clicks and navigating back to the menu.
+/// Authors: Zihao Du, Waseef Nayeem
+/// Date: 2023-11-19
+/// </summary>
 public class ClickManager : MonoBehaviour
 {
     [SerializeField] private GameObject targetActions;

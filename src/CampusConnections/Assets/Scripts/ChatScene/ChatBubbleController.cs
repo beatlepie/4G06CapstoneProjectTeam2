@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,7 +18,7 @@ public class ChatBubbleController : MonoBehaviour
     [SerializeField] private GameObject timeObj;
     private TMP_Text _timestamp;
 
-    // For link to event and lecture
+    // For linking to events and lectures
     [SerializeField] private Button msgBubble;
     [SerializeField] public string linkColor;
     private string _targetType;

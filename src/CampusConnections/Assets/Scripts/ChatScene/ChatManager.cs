@@ -76,7 +76,7 @@ public class ChatManager : MonoBehaviour
     /// Incoming messages must be added to queue.
     /// This is because the UI cannot be updated from inside an event handler.
     /// </remarks>
-    /// <param name="msg">Message object receive from remote user.</param>
+    /// <param name="msg">Message object received from remote user.</param>
     private void OnReceivedListener(Message msg)
     {
         var value = msg.Content.Trim();
