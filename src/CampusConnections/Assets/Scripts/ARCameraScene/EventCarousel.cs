@@ -55,6 +55,7 @@ public class EventCarousel : MonoBehaviour
         var filteredEvents = FilterLecturesByRoom(_allEvents, roomNumLowerRange, roomNumUpperRange);
         for (var i = 0; i < filteredEvents.Count; i++)
         {
+            // randomly choose from 3 background images
             var spriteResourceKey = $"tex_demo_banner_{(i + 2) % 3:D2}";
             var text = filteredEvents[i];
             // Assign random background image and an event whose room number is in range to event carousel data class

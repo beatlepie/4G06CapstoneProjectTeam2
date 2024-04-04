@@ -29,6 +29,7 @@ public class LectureManager : MonoBehaviour
     private List<Transform> _lectureEntryTransformList;
     public TMP_Text pgNum;
     private const int PageCount = 10;
+    private const int HeaderHeight = 690;
     [FormerlySerializedAs("BookmarkButton")] public GameObject bookmarkButton;
 
     [Header("Detail View")] public static List<string> MyLectures;
@@ -121,6 +122,7 @@ public class LectureManager : MonoBehaviour
     public void DisplayLectureList()
     {
         var titleRectTransform = _tableTitleTemplate.GetComponent<RectTransform>();
+        // 1.2 comes from Figma Design, the entries take 5/6 of the screen width
         titleRectTransform.sizeDelta = new Vector2((float)(Screen.width / 1.2), titleRectTransform.sizeDelta.y);
         for (var i = (_lectures.CurrentPage - 1) * PageCount;
              i < Math.Min(_lectures.CurrentPage * PageCount, _lectures.FilteredList.Count);
@@ -134,10 +136,11 @@ public class LectureManager : MonoBehaviour
 
     private void CreateLectureEntryTransform(Lecture lectureEntry, Transform container, List<Transform> transformList)
     { 
-        float templateHeight = (Screen.height - 690) / (float) PageCount;
+        float templateHeight = (Screen.height - HeaderHeight) / (float) PageCount;
         var entryTransform = Instantiate(_entryTemplate, container);
         var entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
+        // 1.2 comes from Figma Design, the entries take 5/6 of the screen width
         entryRectTransform.sizeDelta = new Vector2((float)(Screen.width / 1.2), templateHeight);
         entryTransform.gameObject.SetActive(true);
 

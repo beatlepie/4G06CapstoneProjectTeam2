@@ -47,6 +47,7 @@ public class LectureCarousel : MonoBehaviour
             var filteredLectures = FilterLecturesByRoom(_allLectures, roomNumLowerRange, roomNumUpperRange);
             for (var i = 0; i < filteredLectures.Count; i++)
             {
+                // randomly choose from 3 background images
                 var spriteResourceKey = $"tex_demo_banner_{i % 3:D2}";
                 var text = filteredLectures[i];
                 var item = new LectureCarouselData(spriteResourceKey, filteredLectures[i],

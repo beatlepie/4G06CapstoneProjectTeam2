@@ -28,6 +28,7 @@ public class EventManager : MonoBehaviour
     private List<Transform> _eventEntryTransformList;
     public TMP_Text pgNum;
     private const int PageCount = 10;
+    private const int HeaderHeight = 690;
     [FormerlySerializedAs("EditButton")] [SerializeField] private Image editButton;
     [FormerlySerializedAs("BookmarkButton")] public GameObject bookmarkButton;
 
@@ -139,6 +140,7 @@ public class EventManager : MonoBehaviour
     public void DisplayEventList()
     {
         var titleRectTransform = _tableTitleTemplate.GetComponent<RectTransform>();
+        // 1.2 comes from Figma Design, the entries take 5/6 of the screen width
         titleRectTransform.sizeDelta = new Vector2((float)(Screen.width / 1.2), titleRectTransform.sizeDelta.y);
         for (var i = (_events.CurrentPage - 1) * PageCount;
              i < Math.Min(_events.CurrentPage * PageCount, _events.FilteredList.Count);
@@ -152,10 +154,11 @@ public class EventManager : MonoBehaviour
 
     private void CreateEventEntryTransform(Event eventEntry, Transform container, List<Transform> transformList)
     { 
-        var templateHeight = (Screen.height - 690) / (float) PageCount;
+        var templateHeight = (Screen.height - HeaderHeight) / (float) PageCount;
         var entryTransform = Instantiate(_entryTemplate, container);
         var entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
+        // 1.2 comes from Figma Design, the entries take 5/6 of the screen width
         entryRectTransform.sizeDelta = new Vector2((float)(Screen.width / 1.2), templateHeight);
         entryTransform.gameObject.SetActive(true);
 
