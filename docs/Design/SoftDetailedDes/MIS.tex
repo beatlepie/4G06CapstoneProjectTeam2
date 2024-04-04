@@ -2245,14 +2245,15 @@ None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{4cm} p{3cm} p{3cm} p{4cm}}
+\begin{tabular}{p{4cm} p{4cm} p{3cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
+StartConnection & String, String & - & - \\
+SendLocation & RemoteUserLocation & - & - \\
+ReceiveLocation & RemoteUserLocation & - & - \\
+DisplayUserLocations & - & - & - \\
 HandleInputBuilding & - & - & - \\
-DisplayAvatar & Uri, ($\mathbb{R}$, $\mathbb{R}$) & - & -\\
-ConnectToServer & - & -\\
-DisplayEventHeatMap & - & -\\
 
 \hline
 \end{tabular}
@@ -2264,20 +2265,52 @@ DisplayEventHeatMap & - & -\\
 
 \begin{itemize}
 \item building: list of BuildingLocation
-%\item userMarkers: list of GameObject
+\item usrLoc: UserLocation
+\item rmtUsrLoc: set of UserLocation
 \end{itemize}
 
 \subsubsection{Environment Variables}
 \begin{itemize}
 \item camera: Camera
+\item locationServer: Server
+\item gps: GPS
 \end{itemize}
-  
 
 \subsubsection{Assumptions}
 
-ConnectToServer() is called when the module is loaded.
+StartConnection() is called first when the module is loaded.\\
+The user's mobile device automatically provides the gps Environment Variable.\\
+The $gps$ Environment Variable automatically updates $usrLoc$.
 
 \subsubsection{Access Routine Semantics}
+
+\noindent StartConnection($a$, $e$):
+\begin{itemize}
+\item transition: Opens a connection with $locationServer$ with address $a$ and endpoint $e$.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent SendLocation($l$):
+\begin{itemize}
+\item transition: Sends local user location $l$, obtained from the $gps$, to $locationServer$.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent ReceiveLocation($l$):
+\begin{itemize}
+\item transition: $rmtUsrLoc := rmtUsrLoc \cup \{l\}$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DisplayUserLocations():
+\begin{itemize}
+\item transition: Renders $usrLoc$ and $rmtUsrLoc$ on the map as visual elements.
+\item output: none
+\item exception: none
+\end{itemize}
 
 \noindent HandleInputBuilding():
 \begin{itemize}
@@ -2286,30 +2319,11 @@ ConnectToServer() is called when the module is loaded.
 \item exception: none
 \end{itemize}
 
-\noindent DisplayAvatar(photoUri, (long, lat)):
-\begin{itemize}
-\item transition: Displays the corresponding avatar on the map at (long, lat)
-\item output: none
-\item exception: none
-\end{itemize}
+\subsubsection{Local Types}
 
-\noindent DisplayUserHeatMap():
-\begin{itemize}
-\item transition: Retrieves collected user location data from the database and plot them on the map
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent DisplayEventHeatMap():
-\begin{itemize}
-\item transition: Retrieves collected event location data from the database and plot them on the map
-\item output: none
-\item exception: none
-\end{itemize}
+UserLocation = tuple of (latitude: float, longitude: float, email: string)
 
 \subsubsection{Local Functions}
-
-None
 
 \newpage
 
