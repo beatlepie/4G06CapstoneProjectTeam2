@@ -9,6 +9,11 @@ using Database;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manager that handles the behavior of the login page.
+/// Author: Zihao Du, Michael Kim
+/// Date: 2023-12-23
+/// </summary>
 public class AuthManager : MonoBehaviour
 {
     //Firebase variables
@@ -31,34 +36,50 @@ public class AuthManager : MonoBehaviour
 
     public TMP_Text notificationText;
 
-    //Function for the login button
-    public void LoginButton()
+    /// <summary>
+    /// Function handling login button clicked event.
+    /// </summary>
+    public void OnLoginButtonClick()
     {
         //Call the login coroutine passing the email and password
         StartCoroutine(Login(emailLoginField.text, passwordLoginField.text));
     }
 
-    //Function for the register button
-    public void RegisterButton()
+    /// <summary>
+    /// Function handling the register button clicked event.
+    /// </summary>
+    public void OnRegisterButtonClick()
     {
         //Call the register coroutine passing the email, password, and username
         StartCoroutine(Register(emailRegisterField.text, passwordRegisterField.text, usernameRegisterField.text));
     }
 
-    public void ForgetPasswordButton()
+    /// <summary>
+    /// Function handling the forgot password button clicked event.
+    /// </summary>
+    public void OnForgetPasswordButtonClick()
     {
         forgetEmailField.text = "";
     }
 
-    public void ForgetPasswordSubmitButton()
+    /// <summary>
+    /// FUnction handling the forgot password submit button clicked event.
+    /// </summary>
+    public void OnForgetPasswordSubmitButtonClick()
     {
         StartCoroutine(ForgetPassword(forgetEmailField.text));
     }
 
-    private IEnumerator Login(string email, string password)
+    /// <summary>
+    /// Handles the communication with the database for login of the user and the possible errors from it.
+    /// </summary>
+    /// <param name="_email">Email of the user trying to login.</param>
+    /// <param name="_password">Password of the user trying to login.</param>
+    /// <returns>The login state of the user.</returns>
+    private IEnumerator Login(string _email, string _password)
     {
         //Call the Firebase auth signin function passing the email and password
-        var loginTask = AuthConnector.Instance.Auth.SignInWithEmailAndPasswordAsync(email, password);
+        var loginTask = AuthConnector.Instance.Auth.SignInWithEmailAndPasswordAsync(_email, _password);
         //Wait until the task completes
         yield return new WaitUntil(() => loginTask.IsCompleted);
 
@@ -68,28 +89,7 @@ public class AuthManager : MonoBehaviour
             Debug.LogWarning($"Failed to register task with {loginTask.Exception}");
             if (loginTask.Exception.GetBaseException() is FirebaseException firebaseEx)
             {
-                var errorCode = (AuthError)firebaseEx.ErrorCode;
-
                 var message = "Wrong Password or Account does not exist!";
-                switch (errorCode)
-                {
-                    case AuthError.MissingEmail:
-                        message = "Missing Email";
-                        break;
-                    case AuthError.MissingPassword:
-                        message = "Missing Password";
-                        break;
-                    case AuthError.WrongPassword:
-                        message = "Wrong Password";
-                        break;
-                    case AuthError.InvalidEmail:
-                        message = "Invalid Email";
-                        break;
-                    case AuthError.UserNotFound:
-                        message = "Account does not exist";
-                        break;
-                }
-
                 notificationText.text = message;
             }
 
@@ -209,7 +209,7 @@ public class AuthManager : MonoBehaviour
                     {
                         //Username is now set
                         //Now return to login screen
-                        UIManager.Instance.LoginScreen();
+                        UIManager.Instance.OnBackButtonClick();
                         var user = new User(_user.Email)
                         {
                             NickName = _user.DisplayName
@@ -233,9 +233,15 @@ public class AuthManager : MonoBehaviour
         }
     }
 
-    private IEnumerator ForgetPassword(string email)
+
+    /// <summary>
+    /// Sends the forgot password email to the user's email.
+    /// </summary>
+    /// <param name="_email">The email of the user who forgot their email.</param>
+    /// <returns>The state of send forgot password email task.</returns>
+    private IEnumerator ForgetPassword(string _email)
     {
-        var resetPwdTask = AuthConnector.Instance.Auth.SendPasswordResetEmailAsync(email);
+        var resetPwdTask = AuthConnector.Instance.Auth.SendPasswordResetEmailAsync(_email);
         yield return new WaitUntil(() => resetPwdTask.IsCompleted);
         if (resetPwdTask.IsFaulted)
         {
@@ -256,12 +262,18 @@ public class AuthManager : MonoBehaviour
         }
     }
 
-    public void AgreeToConsent()
+    /// <summary>
+    /// Function handling the the agree to consent button clicked event for the terms of use page.
+    /// </summary>
+    public void OnAgreeToConsentButtonClick()
     {
         consentAgreement.isOn = true;
     }
 
-    public void DisagreeToConsent()
+    /// <summary>
+    /// Function handling the disagree to consent button clicked event for the terms of use page.
+    /// </summary>
+    public void OnDisagreeToConsentButtonClick()
     {
         consentAgreement.isOn = false;
     }

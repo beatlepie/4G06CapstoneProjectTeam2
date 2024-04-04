@@ -12,6 +12,12 @@ using UnityEngine.Networking;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// Manager class for User Profile page that handles all interactions on the page.
+/// Interactions include navigation to other scenes, opening list views of bookmarked items, changing user data.
+/// Author: Michael Kim
+/// Date: 2024-02-05
+/// </summary>
 public class SettingsManager : MonoBehaviour
 {
     // These are used to open the profile page for other users
@@ -132,10 +138,15 @@ public class SettingsManager : MonoBehaviour
         Favorites();
     }
 
+    /// <summary>
+    /// Load user data from database with the current user permissions
+    /// </summary>
     private void Favorites()
     {
         //NO lectures are visible for guest accounts
         if (AuthConnector.Instance.Perms != PermissionLevel.Guest)
+        {
+            // Load the target user bookmarked lectures if they are not guest
             StartCoroutine(GetPinnedLectures(data =>
             {
                 var entryHeight = -200;
@@ -152,6 +163,8 @@ public class SettingsManager : MonoBehaviour
                     entryTransform.Find("Location").GetComponent<TMP_Text>().text = data[i + 2];
                 }
             }));
+        }
+        // Load the target user events
         StartCoroutine(GetPinnedEvents(data =>
         {
             var entryHeight = -200;
@@ -181,6 +194,7 @@ public class SettingsManager : MonoBehaviour
         var dbRoot = DatabaseConnector.Instance.Root;
         var userData = dbRoot.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
         yield return new WaitUntil(() => userData.IsCompleted);
+        // If the user data is null, it will default to displayig nothing
         if (userData != null)
         {
             var pinnedLectures = new List<string>();
@@ -195,7 +209,7 @@ public class SettingsManager : MonoBehaviour
                 pinnedLectures.Add(lecture.Result.Child("instructor").Value.ToString());
                 pinnedLectures.Add(lecture.Result.Child("location").Value.ToString());
             }
-
+            // Run pinned lectures with the data loaded from the database
             onCallBack.Invoke(pinnedLectures);
         }
     }
@@ -212,6 +226,7 @@ public class SettingsManager : MonoBehaviour
         var dbRoot = DatabaseConnector.Instance.Root;
         var userData = dbRoot.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
         yield return new WaitUntil(() => userData.IsCompleted);
+        // If the user data is null, it will default to displaying nothing
         if (userData != null)
         {
             var pinnedEvents = new List<string>();
@@ -263,23 +278,22 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
-            // TODO: make this better?
             // Handles case where no data was retrieved
             userData.Add("Email Placeholder");
             userData.Add("Level Placeholder");
             userData.Add("Username Placeholder");
             userData.Add("Program Placeholder");
         }
-
+        // Run the function to load the data on to display
         onCallBack.Invoke(userData);
     }
 
     /// <summary>
-    /// Retrieves and sets the image
+    /// Retrieves and sets the image to display on screen.
     /// </summary>
     /// <param name="url">url of the photo we want to retrieve.</param>
-    /// <param name="success"></param>
-    /// <returns>Action on whether the image was retrieved or not</returns>
+    /// <param name="success">Action triggered when the image was not retrieved correctly.</param>
+    /// <returns>Action on whether the image was retrieved or not.</returns>
     private IEnumerator GetImage(string url, Action<bool> success = null)
     {
         // GET image from web
@@ -314,9 +328,8 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     private void UpdateDBData()
     {
-        // TODO: implement safety feature!
-        var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
-
+        string emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
+        // Updates the values to database asyncronously
         var dbRoot = DatabaseConnector.Instance.Root;
         dbRoot.Child("users").Child(emailWithoutDot).Child("level").SetValueAsync(newLevel.text);
         dbRoot.Child("users").Child(emailWithoutDot).Child("nickName").SetValueAsync(newUsername.text);
@@ -327,7 +340,7 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// Function handling the change password button click on display canvas.
     /// </summary>
-    public void ChangePassword()
+    public void OnChangePasswordButtonClick()
     {
         passwordCanvas.SetActive(true);
         displayCanvas.SetActive(false);
@@ -338,7 +351,7 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// Function handling the Save button click on password canvas.
     /// </summary>
-    public void SaveNewPassword()
+    public void OnSaveNewPasswordButtonClick()
     {
         var user = AuthConnector.Instance.CurrentUser;
 
@@ -389,7 +402,7 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// Function handling the return button click on display canvas.
     /// </summary>
-    public void Return()
+    public void OnReturnButtonClick()
     {
         SceneManager.LoadScene("MenuScene");
     }
@@ -397,7 +410,7 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// Function handling the edit button click on display canvas.
     /// </summary>
-    public void Edit()
+    public void OnEditButtonClick()
     {
         // All settings values should have the original values
         userIDEdit.text = userIDDisplay.text;
@@ -410,9 +423,9 @@ public class SettingsManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Function handling the cancel button click on edit canvas.
+    /// Function handling the cancel button or back button click on edit canvas.
     /// </summary>
-    public void Cancel()
+    public void OnCancelButtonClick()
     {
         if (State == 0)
         {
@@ -436,7 +449,7 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// Function handling the save button click on edit canvas.
     /// </summary>
-    public void Save()
+    public void OnSaveButtonClick()
     {
         UpdateDBData();
 
@@ -459,7 +472,11 @@ public class SettingsManager : MonoBehaviour
         editCanvas.SetActive(false);
     }
 
-    public void PinnedLecture()
+    /// <summary>
+    /// Function used to display bookmarked lecture.
+    /// Handles the button click for Bookedmarked Lectures.
+    /// </summary>
+    public void OnBookmarkedLecturesButtonClick()
     {
         displayCanvas.SetActive(false);
         editCanvas.SetActive(false);
@@ -468,7 +485,11 @@ public class SettingsManager : MonoBehaviour
         passwordCanvas.SetActive(false);
     }
 
-    public void PinnedEvent()
+    /// <summary>
+    /// Function used to display bookmarked events.
+    /// Handles the button click event for Bookmarked Events.
+    /// </summary>
+    public void OnBookmarkedEventsButtonClick()
     {
         displayCanvas.SetActive(false);
         editCanvas.SetActive(false);
@@ -477,8 +498,12 @@ public class SettingsManager : MonoBehaviour
         passwordCanvas.SetActive(false);
     }
 
-    public void OnEmailVerificationClick()
+    /// <summary>
+    /// Function to handle email verification button click event.
+    /// </summary>
+    public void OnEmailVerificationButtonClick()
     {
+        // Unity cannot attach IEnumerators to buttons, it must be done this way.
         StartCoroutine(SendEmailVerification());
     }
 
@@ -499,7 +524,7 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// This function exists to link DeleteAccountConfirmed to the button click on unity.
     /// </summary>
-    public void DeleteAccount()
+    public void OnDeleteAccountButtonClick()
     {
         StartCoroutine(DeleteAccountConfirmed());
     }
@@ -526,7 +551,7 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// This function will handle jumping to the respective list with the item searched when the bookmarked item is clicked!
     /// </summary>
-    public void OnEntryClick()
+    public void OnEntryButtonClick()
     {
         // if pinned lecture screen is true, then redirect entry clicked to lecture scene
         if (pinnedLectureCanvas.activeSelf)
