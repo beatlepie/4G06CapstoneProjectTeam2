@@ -3,6 +3,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// This class includes some helper function for ARCameraScene
+/// Author: Zihao Du
+/// Date: 2024-02-20
+/// </summary>
 public class ARCameraInfo : MonoBehaviour
 {
     public TMP_Text notificationText;

@@ -4,6 +4,11 @@ using UnityEngine.SceneManagement;
 using Auth;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// This class includes help functions to direct to different pages
+/// Author: Zihao Du
+/// Date: 2023-12-11
+/// </summary>
 public class MenuManager : MonoBehaviour
 {
     [FormerlySerializedAs("LecturesButton")] [SerializeField] private GameObject lecturesButton;

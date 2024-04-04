@@ -1,5 +1,10 @@
 ﻿using System;
 
+/// <summary>
+/// This class specifies what information a lecture cell contains
+/// Author: Zihao Du
+/// Date: 2024-02-20
+/// </summary>
 public class LectureCarouselData
 {
     public string SpriteResourceKey { get; }

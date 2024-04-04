@@ -10,6 +10,11 @@ using Auth;
 using Database;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// This class controls the event list view, including pagniation view and search filter.
+/// Author: Zihao Du
+/// Date: 2024-02-20
+/// </summary>
 public class EventManager : MonoBehaviour
 {
     [Header("List View")] public static string DefaultSearchString;
@@ -44,8 +49,7 @@ public class EventManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("lecture manager script running");
-        //after db stuff
+        // Init
         pgNum.text = "1";
         _entryContainer = transform.Find("eventEntryContainer");
         _tableTitleTemplate = _entryContainer.Find("TableTitle");
@@ -53,10 +57,9 @@ public class EventManager : MonoBehaviour
 
         _entryTemplate.gameObject.SetActive(false);
         bookmarkButton.SetActive(false);
-        //This may cause issues! leaving this from merge conflict!
         _eventEntryTransformList = new List<Transform>();
 
-        // If they are not admin, do not show edit button!
+        // If they are not admin, do not show edit button
         if (AuthConnector.Instance.Perms != PermissionLevel.Admin)
         {
             editButton.gameObject.SetActive(false);
@@ -64,14 +67,19 @@ public class EventManager : MonoBehaviour
         }
 
         GetEventData();
-        GetPinnedData();
+        GetBookmarkedData();
         if ((DefaultSearchOption != null) & (DefaultSearchString != null))
         {
             searchString.text = DefaultSearchString;
+            // Filter by name, if not specified search option
+            // There is a lookup table for dropdown table in LectureScene.unity, 2 - location, 1 - organizer, 0 - name
             filterDropdown.value = DefaultSearchOption == "location" ? 2 : 0;
         }
     }
 
+    /// <summary>
+    /// Get and store a list of all events from database
+    /// </summary>
     public void GetEventData()
     {
         StartCoroutine(GetEvents());
@@ -89,7 +97,7 @@ public class EventManager : MonoBehaviour
             var snapshot = publicEventData.Result;
             foreach (var e in snapshot.Children) eventList.Add(Utilities.FormalizeDBEventData(e));
         }
-
+        // Privacy Requirement: Private events need user or admin permission
         if (AuthConnector.Instance.Perms != PermissionLevel.Guest)
         {
             var privateEventData = DatabaseConnector.Instance.Root.Child("events/private").OrderByKey().StartAt("-")
@@ -106,25 +114,28 @@ public class EventManager : MonoBehaviour
         DisplayEventList();
     }
 
-    private void GetPinnedData()
+    private void GetBookmarkedData()
     {
-        StartCoroutine(GetPinnedEvents((data) => MyEvents = data));
+        StartCoroutine(GetBookmarkedEvents((data) => MyEvents = data));
     }
 
-    private IEnumerator GetPinnedEvents(Action<List<string>> onCallBack)
+    private IEnumerator GetBookmarkedEvents(Action<List<string>> onCallBack)
     {
         var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
         var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
         yield return new WaitUntil(() => userData.IsCompleted);
         if (userData != null)
         {
-            var pinnedLectures = new List<string>();
+            var bookmarkedLectures = new List<string>();
             var snapshot = userData.Result;
-            foreach (var x in snapshot.Children) pinnedLectures.Add(x.Key);
-            onCallBack.Invoke(pinnedLectures);
+            foreach (var x in snapshot.Children) bookmarkedLectures.Add(x.Key);
+            onCallBack.Invoke(bookmarkedLectures);
         }
     }
 
+    /// <summary>
+    /// Render a list of events, indices from (current page - 1) * PageCount to (current page) * PageCount
+    /// </summary>
     public void DisplayEventList()
     {
         var titleRectTransform = _tableTitleTemplate.GetComponent<RectTransform>();
@@ -140,8 +151,7 @@ public class EventManager : MonoBehaviour
     }
 
     private void CreateEventEntryTransform(Event eventEntry, Transform container, List<Transform> transformList)
-    {
-        // The arbitrary number comes from marron header + filter + table title + footer height 
+    { 
         var templateHeight = (Screen.height - 690) / (float) PageCount;
         var entryTransform = Instantiate(_entryTemplate, container);
         var entryRectTransform = entryTransform.GetComponent<RectTransform>();
@@ -149,18 +159,20 @@ public class EventManager : MonoBehaviour
         entryRectTransform.sizeDelta = new Vector2((float)(Screen.width / 1.2), templateHeight);
         entryTransform.gameObject.SetActive(true);
 
-        //entryTransform.Find("nameText").GetComponent<TMP_Text>().text = lectureEntry.name;
         entryTransform.Find("nameText").GetComponent<TMP_Text>().text = eventEntry.Name;
         entryTransform.Find("organizerText").GetComponent<TMP_Text>().text = eventEntry.Organizer;
         entryTransform.Find("locText").GetComponent<TMP_Text>().text = eventEntry.Location;
-        entryTransform.Find("entryBG").gameObject.SetActive(true); //always original bg
+        entryTransform.Find("entryBG").gameObject.SetActive(true);
         transformList.Add(entryTransform);
     }
 
+    /// <summary>
+    /// Destroy the rendered lists
+    /// </summary>
     public void Clearing()
     {
         foreach (var entryTransform in _eventEntryTransformList) Destroy(entryTransform.gameObject);
-        _eventEntryTransformList.Clear(); //even after destroying size isn't 0 so we have to clear
+        _eventEntryTransformList.Clear();
     }
 
     public void NextPage()
@@ -187,6 +199,10 @@ public class EventManager : MonoBehaviour
         pgNum.text = _events.CurrentPage.ToString();
     }
 
+    /// <summary>
+    /// Apply values from dropdown to event list
+    /// Use filter method from Pagniation class
+    /// </summary>
     public void OnFilter()
     {
         switch (filterDropdown.value)
@@ -232,6 +248,9 @@ public class EventManager : MonoBehaviour
         SceneManager.LoadScene("MenuScene");
     }
 
+    /// <summary>
+    /// Add a new event with input information
+    /// </summary>
     public void WriteNewEvent()
     {
         var startTime = DateTime.Parse(eventTimeEdit.text).ToLocalTime();
@@ -247,6 +266,9 @@ public class EventManager : MonoBehaviour
         DisplayEventList();
     }
 
+    /// <summary>
+    /// Delete target event
+    /// </summary>
     public void DeleteEvent()
     {
         var prefix = eventIsPublicView.isOn ? "events/public/" : "events/private/";

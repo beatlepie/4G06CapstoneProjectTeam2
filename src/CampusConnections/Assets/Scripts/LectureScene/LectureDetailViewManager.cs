@@ -5,6 +5,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// This class controls the lecture detail view (the pop up window), including read and edit views and bookmark/unbookmark methods.
+/// Author: Zihao Du
+/// Date: 2024-01-29
+/// </summary>
 public class LectureDetailViewManager : MonoBehaviour
 {
     [FormerlySerializedAs("ViewPanel")] [Header("DetailView")] [SerializeField]
@@ -14,10 +19,10 @@ public class LectureDetailViewManager : MonoBehaviour
     [FormerlySerializedAs("DeleteIcon")] [SerializeField] private GameObject deleteIcon;
     [FormerlySerializedAs("EditIcon")] [SerializeField] private GameObject editIcon;
     private Lecture _target;
-    private bool _pinned;
+    private bool _bookmarked;
     private List<string> _myLectureCodes;
-    [FormerlySerializedAs("PinIcon")] [SerializeField] private GameObject pinIcon;
-    [FormerlySerializedAs("UnpinIcon")] [SerializeField] private GameObject unpinIcon;
+    [SerializeField] private GameObject bookmarkIcon;
+    [SerializeField] private GameObject unbookmarkIcon;
     [SerializeField] private TMP_Text viewCode;
     [SerializeField] private TMP_Text viewName;
     [SerializeField] private TMP_Text viewInstructor;
@@ -43,9 +48,9 @@ public class LectureDetailViewManager : MonoBehaviour
     private void OnEnable()
     {
         _target = LectureManager.CurrentLecture;
-        _pinned = _myLectureCodes.Contains(_target.Code);
-        pinIcon.SetActive(!_pinned);
-        unpinIcon.SetActive(_pinned);
+        _bookmarked = _myLectureCodes.Contains(_target.Code);
+        bookmarkIcon.SetActive(!_bookmarked);
+        unbookmarkIcon.SetActive(_bookmarked);
         UpdateView();
     }
 
@@ -75,21 +80,27 @@ public class LectureDetailViewManager : MonoBehaviour
         DatabaseConnector.Instance.Root.Child("lectures/" + _target.Code).SetRawJsonValueAsync(targetJson);
     }
 
-    public void Pin()
+    /// <summary>
+    /// Bookmark the lecture, add that to the database under the user
+    /// </summary>
+    public void Bookmark()
     {
         _myLectureCodes.Add(_target.Code);
-        pinIcon.SetActive(false);
-        unpinIcon.SetActive(true);
+        bookmarkIcon.SetActive(false);
+        unbookmarkIcon.SetActive(true);
         var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
         DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + _target.Code)
             .SetValueAsync("True");
     }
 
-    public void Unpin()
+    /// <summary>
+    /// Unbookmark the lecture, remove that to the database under the user
+    /// </summary>
+    public void Unbookmark()
     {
         _myLectureCodes.Remove(_target.Code);
-        pinIcon.SetActive(true);
-        unpinIcon.SetActive(false);
+        bookmarkIcon.SetActive(true);
+        unbookmarkIcon.SetActive(false);
         var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
         DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + _target.Code)
             .SetValueAsync(null);

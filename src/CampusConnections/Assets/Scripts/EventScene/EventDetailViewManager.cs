@@ -7,6 +7,11 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class controls the event detail view (the pop up window), including read and edit views and bookmark/unbookmark methods.
+/// Author: Zihao Du
+/// Date: 2024-02-20
+/// </summary>
 public class EventDetailViewManager : MonoBehaviour
 {
     [FormerlySerializedAs("ViewPanel")] [Header("DetailView")] [SerializeField]
@@ -14,10 +19,10 @@ public class EventDetailViewManager : MonoBehaviour
 
     [FormerlySerializedAs("EditPanel")] [SerializeField] private GameObject editPanel;
     private Event _target;
-    private bool _pinned;
+    private bool _bookmarked;
     private List<string> _myEventNames;
-    [FormerlySerializedAs("PinIcon")] [SerializeField] private GameObject pinIcon;
-    [FormerlySerializedAs("UnpinIcon")] [SerializeField] private GameObject unpinIcon;
+    [SerializeField] private GameObject bookmarkIcon;
+    [SerializeField] private GameObject unbookmarkIcon;
     [FormerlySerializedAs("DeleteIcon")] [SerializeField] private GameObject deleteIcon;
     [FormerlySerializedAs("EditIcon")] [SerializeField] private GameObject editIcon;
 
@@ -51,9 +56,9 @@ public class EventDetailViewManager : MonoBehaviour
     private void OnEnable()
     {
         _target = EventManager.CurrentEvent;
-        _pinned = _myEventNames.Contains(_target.Name);
-        pinIcon.SetActive(!_pinned);
-        unpinIcon.SetActive(_pinned);
+        _bookmarked = _myEventNames.Contains(_target.Name);
+        bookmarkIcon.SetActive(!_bookmarked);
+        unbookmarkIcon.SetActive(_bookmarked);
         UpdateView();
     }
 
@@ -63,6 +68,7 @@ public class EventDetailViewManager : MonoBehaviour
         viewDescription.text = _target.Description;
         viewOrganizer.text = _target.Organizer;
         viewLocation.text = _target.Location;
+        // To unix time
         viewTime.text = DateTimeOffset.FromUnixTimeSeconds(_target.Time).ToLocalTime().ToString("MM/dd/yyyy HH:mm");
         viewDuration.text = _target.Duration.ToString();
         viewIsPublic.isOn = _target.IsPublic;
@@ -70,6 +76,7 @@ public class EventDetailViewManager : MonoBehaviour
         editDescription.text = _target.Description;
         editOrganizer.text = _target.Organizer;
         editLocation.text = _target.Location;
+        // To unix time
         editTime.text = DateTimeOffset.FromUnixTimeSeconds(_target.Time).ToLocalTime().ToString("MM/dd/yyyy HH:mm");
         editDuration.text = _target.Duration.ToString();
         editIsPublic.isOn = _target.IsPublic;
@@ -81,6 +88,7 @@ public class EventDetailViewManager : MonoBehaviour
         _target.Description = editDescription.text;
         _target.Organizer = editOrganizer.text;
         _target.Location = editLocation.text;
+        // Convert time to unix time
         var dto = new DateTimeOffset(DateTime.Parse(editTime.text).ToUniversalTime());
         _target.Time = dto.ToUnixTimeSeconds();
         _target.Duration = int.Parse(editDuration.text);
@@ -91,21 +99,27 @@ public class EventDetailViewManager : MonoBehaviour
         DatabaseConnector.Instance.Root.Child(prefix + _target.Name).SetRawJsonValueAsync(targetJson);
     }
 
-    public void Pin()
+    /// <summary>
+    /// Bookmark the event, add that to the database under the user
+    /// </summary>
+    public void Bookmark()
     {
         _myEventNames.Add(_target.Name);
-        pinIcon.SetActive(false);
-        unpinIcon.SetActive(true);
+        bookmarkIcon.SetActive(false);
+        unbookmarkIcon.SetActive(true);
         var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
         DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + _target.Name)
             .SetValueAsync("True");
     }
 
-    public void Unpin()
+    /// <summary>
+    /// Unbookmark the event, remove that to the database under the user
+    /// </summary>
+    public void Unbookmark()
     {
         _myEventNames.Remove(_target.Name);
-        pinIcon.SetActive(true);
-        unpinIcon.SetActive(false);
+        bookmarkIcon.SetActive(true);
+        unbookmarkIcon.SetActive(false);
         var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
         DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + _target.Name)
             .SetValueAsync(null);

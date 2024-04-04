@@ -10,6 +10,11 @@ using UnityEngine.SceneManagement;
 using Auth;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// This class controls the lecture list view, including pagniation view and search filter.
+/// Author: Zihao Du
+/// Date: 2024-01-29
+/// </summary>
 public class LectureManager : MonoBehaviour
 {
     [Header("List View")] public static string DefaultSearchString;
@@ -27,7 +32,7 @@ public class LectureManager : MonoBehaviour
     [FormerlySerializedAs("BookmarkButton")] public GameObject bookmarkButton;
 
     [Header("Detail View")] public static List<string> MyLectures;
-    public static Lecture CurrentLecture; //The one we want to see details
+    public static Lecture CurrentLecture; //The one we want to see details, used in detail view class
 
     [Header("Detail View View")] [SerializeField]
     private TMP_Text lecCodeView;
@@ -40,8 +45,7 @@ public class LectureManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("lecture manager script running");
-        //after db stuff
+        // Init
         pgNum.text = "1";
         _entryContainer = transform.Find("lectureEntryContainer");
         _tableTitleTemplate = _entryContainer.Find("TableTitle");
@@ -49,6 +53,7 @@ public class LectureManager : MonoBehaviour
         _lectureEntryTransformList = new List<Transform>();
         _entryTemplate.gameObject.SetActive(false);
         bookmarkButton.SetActive(false);
+        // If the permission level is not admin, hide editing options
         if (AuthConnector.Instance.Perms != PermissionLevel.Admin)
         {
             newLectureIcon.SetActive(false);
@@ -56,14 +61,19 @@ public class LectureManager : MonoBehaviour
         }
 
         GetLectureData();
-        GetPinnedData();
+        GetBookmarkedData();
         if ((DefaultSearchOption != null) & (DefaultSearchString != null))
         {
             searchString.text = DefaultSearchString;
+            // Filter by code, if not specified search option
+            // There is a lookup table for dropdown table in LectureScene.unity, 2 - location, 1 - instructor, 0 - code
             filterDropdown.value = DefaultSearchOption == "location" ? 2 : 0;
         }
     }
 
+    /// <summary>
+    /// Get and store a list of all lectures from database
+    /// </summary>
     public void GetLectureData()
     {
         StartCoroutine(GetLectures());
@@ -71,7 +81,6 @@ public class LectureManager : MonoBehaviour
 
     private IEnumerator GetLectures()
     {
-        //from merge conflict!
         _lectureEntryTransformList = new List<Transform>();
         var lectureList = new List<Lecture>();
         var lectureData = DatabaseConnector.Instance.Root.Child("lectures").OrderByKey().StartAt("-").GetValueAsync();
@@ -87,25 +96,28 @@ public class LectureManager : MonoBehaviour
         DisplayLectureList();
     }
 
-    private void GetPinnedData()
+    private void GetBookmarkedData()
     {
-        StartCoroutine(GetPinnedLectures((data) => MyLectures = data));
+        StartCoroutine(GetBookmarkedLectures((data) => MyLectures = data));
     }
 
-    private IEnumerator GetPinnedLectures(Action<List<string>> onCallBack)
+    private IEnumerator GetBookmarkedLectures(Action<List<string>> onCallBack)
     {
         var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
         var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
         yield return new WaitUntil(() => userData.IsCompleted);
         if (userData != null)
         {
-            var pinnedLectures = new List<string>();
+            var bookmarkedLectures = new List<string>();
             var snapshot = userData.Result;
-            foreach (var x in snapshot.Children) pinnedLectures.Add(x.Key);
-            onCallBack.Invoke(pinnedLectures);
+            foreach (var x in snapshot.Children) bookmarkedLectures.Add(x.Key);
+            onCallBack.Invoke(bookmarkedLectures);
         }
     }
 
+    /// <summary>
+    /// Render a list of lectures, indices from (current page - 1) * PageCount to (current page) * PageCount
+    /// </summary>
     public void DisplayLectureList()
     {
         var titleRectTransform = _tableTitleTemplate.GetComponent<RectTransform>();
@@ -121,8 +133,7 @@ public class LectureManager : MonoBehaviour
     }
 
     private void CreateLectureEntryTransform(Lecture lectureEntry, Transform container, List<Transform> transformList)
-    {
-        // The arbitrary number comes from marron header + filter + table title + footer height 
+    { 
         float templateHeight = (Screen.height - 690) / (float) PageCount;
         var entryTransform = Instantiate(_entryTemplate, container);
         var entryRectTransform = entryTransform.GetComponent<RectTransform>();
@@ -130,21 +141,20 @@ public class LectureManager : MonoBehaviour
         entryRectTransform.sizeDelta = new Vector2((float)(Screen.width / 1.2), templateHeight);
         entryTransform.gameObject.SetActive(true);
 
-        //entryTransform.Find("nameText").GetComponent<TMP_Text>().text = lectureEntry.name;
         entryTransform.Find("codeText").GetComponent<TMP_Text>().text = lectureEntry.Code;
         entryTransform.Find("instrucText").GetComponent<TMP_Text>().text = lectureEntry.Instructor;
         entryTransform.Find("locText").GetComponent<TMP_Text>().text = lectureEntry.Location;
-        //entryTransform.Find("timeText").GetComponent<TMP_Text>().text = lectureEntry.time;
-
-        //entryTransform.Find("entryBG").gameObject.SetActive(ind % 2 == 1);  //alternate bg
-        entryTransform.Find("entryBG").gameObject.SetActive(true); //always original bg
+        entryTransform.Find("entryBG").gameObject.SetActive(true);
         transformList.Add(entryTransform);
     }
 
+    /// <summary>
+    /// Destroy the rendered lists
+    /// </summary>
     public void Clearing()
     {
         foreach (var entryTransform in _lectureEntryTransformList) Destroy(entryTransform.gameObject);
-        _lectureEntryTransformList.Clear(); //even after destroying size isn't 0 so we have to clear
+        _lectureEntryTransformList.Clear();
     }
 
     public void NextPage()
@@ -171,6 +181,10 @@ public class LectureManager : MonoBehaviour
         pgNum.text = _lectures.CurrentPage.ToString();
     }
 
+    /// <summary>
+    /// Apply values from dropdown to lecture list
+    /// Use filter method from Pagniation class
+    /// </summary>
     public void OnFilter()
     {
         switch (filterDropdown.value)
@@ -216,6 +230,9 @@ public class LectureManager : MonoBehaviour
         SceneManager.LoadScene("MenuScene");
     }
 
+    /// <summary>
+    /// Add a new lecture with input information
+    /// </summary>
     public void WriteNewLec()
     {
         var lec = new Lecture(lecCodeEdit.text, lecInstructorEdit.text, lecLocationEdit.text, lecNameEdit.text,
@@ -228,6 +245,9 @@ public class LectureManager : MonoBehaviour
         DisplayLectureList();
     }
 
+    /// <summary>
+    /// Delete the target user
+    /// </summary>
     public void DeleteLec()
     {
         DatabaseConnector.Instance.Root.Child("lectures/" + lecCodeView.text).SetValueAsync(null);

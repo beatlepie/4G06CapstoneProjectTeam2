@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class assigns LectureCarouselData value to Unity prefab view
+/// Author: Zihao Du
+/// Date: 2024-02-20
+/// </summary>
 public class LectureCarouselCell : CarouselCell<LectureCarouselData, LectureCarouselCell>
 {
     [FormerlySerializedAs("_image")] [SerializeField] private Image image;

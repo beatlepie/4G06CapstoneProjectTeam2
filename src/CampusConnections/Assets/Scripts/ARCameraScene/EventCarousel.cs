@@ -5,6 +5,11 @@ using UnityEngine;
 using Database;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// This class assigns actual value to EventCarouselView.
+/// Author: Zihao Du
+/// Date: 2024-02-20
+/// </summary>
 public class EventCarousel : MonoBehaviour
 {
     [FormerlySerializedAs("_carouselView")] [SerializeField] private EventCarouselView carouselView;
@@ -52,6 +57,7 @@ public class EventCarousel : MonoBehaviour
         {
             var spriteResourceKey = $"tex_demo_banner_{(i + 2) % 3:D2}";
             var text = filteredEvents[i];
+            // Assign random background image and an event whose room number is in range to event carousel data class
             var item = new EventCarouselData(spriteResourceKey, filteredEvents[i], () => Debug.Log($"Clicked: {text}"));
             items.Add(item);
         }
@@ -59,9 +65,12 @@ public class EventCarousel : MonoBehaviour
         carouselView.Setup(items.ToArray());
     }
 
+    /// <summary>
+    /// Filter a list of events by room number in location
+    /// Room number means the number section in room name, e.g. 103 is the room number in JHE A103
+    /// </summary>
     private static List<Event> FilterLecturesByRoom(List<Event> allEvents, string lowerBound, string upperBound)
     {
-        // E.g. room JHE 103 - JHE 124
         // Find the 3 digit room number, check if the part before room number(e.g. JHE A vs JHE ) is the same and compare room number as a integer
         var regex = new Regex(@"\d+");
         var roomNumU = regex.Match(upperBound).Value;
