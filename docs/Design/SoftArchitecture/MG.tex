@@ -48,6 +48,8 @@
 \midrule
 Jan 11 & 1.0 & Add Section Timeline and Reflection\\
 Jan 15 & 1.0 & Revision 0\\
+Apr 4 & 1.1 & Revision 1: Change some names of modules due to design change\\
+Apr 4 & 1.1 & Revision 1: Update most of modules' type to Abstract Object since they are scenes in Unity and behave like singletons\\
 \bottomrule
 \end{tabularx}
 
@@ -73,7 +75,7 @@ This section records information for easy reference.
   OS & Operating System \\
   R & Requirement\\
   SC & Scientific Computing \\
-  \progname & Explanation of program name\\
+  \progname & AR social media application for McMaster students \\
   SQL & Structured Query Language\\
   SRS & Software Requirements Specification\\
   UC & Unlikely Change \\
@@ -215,8 +217,8 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mUser}:] User Module
 \item [\refstepcounter{mnum} \mthemnum \label{mLec}:] Lecture Module
 \item [\refstepcounter{mnum} \mthemnum \label{mEvent}:] Event Module
-\item [\refstepcounter{mnum} \mthemnum \label{mAccount}:] Account Module
-\item [\refstepcounter{mnum} \mthemnum \label{mPermission}:] Permission Module
+\item [\refstepcounter{mnum} \mthemnum \label{mDBConnector}:] DBConnector Module
+\item [\refstepcounter{mnum} \mthemnum \label{mAuthConnector}:] AuthConnector Module
 \item [\refstepcounter{mnum} \mthemnum \label{mUP}:] User Profile Module
 \item [\refstepcounter{mnum} \mthemnum \label{mUL}:] User Login Module
 \item [\refstepcounter{mnum} \mthemnum \label{mFM}:] Friend Manager Module
@@ -228,6 +230,7 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mPF}:] Pagination and Filter Module
 \item [\refstepcounter{mnum} \mthemnum \label{mLL}:] Lecture List Manager Module
 \item [\refstepcounter{mnum} \mthemnum \label{mEL}:] Event List Manager Module
+\item [\refstepcounter{mnum} \mthemnum \label{mNoti}:] Notification Module
 \end{description}
 
 
@@ -256,8 +259,9 @@ actually be implemented.
 & Event Detail View Module\\
 & Lecture List Manager Module\\
 & Event List Manager Module\\
-& Account Module\\
-& Permission Module\\
+& DBConnector Module\\
+& AuthConnector Module\\
+& Notification Module\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision Module}
@@ -314,7 +318,7 @@ to be implemented.
 \item[Secrets:]How AR User Interface elements are created and displayed.
 \item[Services:]Creates 3D AR elements when notified by the AR Camera of a new valid target. Handles user input relating to AR UI elements.
 \item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Data Type
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsubsection{Real-time Map Module (\mref{mRealTimeMap})}
@@ -349,18 +353,18 @@ to be implemented.
   \item[Type of Module:] Abstract Data Type
 \end{description}
 
-\subsubsection{Account Module (\mref{mAccount})}
+\subsubsection{DBConnector Module (\mref{mDBConnector})}
 \begin{description}
-  \item[Secrets:]How user information is stored and used among modules.
-  \item[Services:]Provides functionalities to get and mutate state variables of the User representing current user.
+  \item[Secrets:]How users get access to the database data.
+  \item[Services:]Provides database root for users to connect to.
   \item[Implemented By:] CampusConnections
   \item[Type of Module:] Abstract Object
 \end{description}
 
-\subsubsection{Permission Module (\mref{mPermission})}
+\subsubsection{AuthConnector Module (\mref{mAuthConnector})}
 \begin{description}
-  \item[Secrets:]How current user authentication information is stored and used among modules.
-  \item[Services:]Provides functionalities to get current user permission information and methods inherited from Authentication Module.
+  \item[Secrets:]How current users get access to authentication information.
+  \item[Services:]Provides current user information (e.g. if the email is verified) from authentication system for users
   \item[Implemented By:] CampusConnections
   \item[Type of Module:] Abstract Object
 \end{description}
@@ -368,9 +372,9 @@ to be implemented.
 \subsubsection{User Profile Module (\mref{mUP})}
 \begin{description}
   \item[Secrets:]How to display user profile and edit profile handlers
-  \item[Services:]Allows users to view and edit their own data, and allows them to view other user profile to limited degree.
+  \item[Services:]Allows users to view and edit (only for themselves) a user's profile.
   \item[Implemented By:] CampusConnections
-  \item[Type of Module:] Library
+  \item[Type of Module:] Abstract Object
 \end{description}
 
 \subsubsection{User Login Module (\mref{mUL})}
@@ -378,7 +382,7 @@ to be implemented.
   \item[Secrets:]The layout of account login/creation handlers and input fields
   \item[Services:]Allows users to enter account information to login to the system or create an account. Provide functionality to reset password as well.
   \item[Implemented By:] CampusConnections
-  \item[Type of Module:] Library
+  \item[Type of Module:] Abstract Object
 \end{description}
 
 \subsubsection{Friend Manager Module (\mref{mFM})}
@@ -410,7 +414,7 @@ to be implemented.
 \item[Secrets:]How to inherit (\mref{mADV}) with activity type Event.
 \item[Services:]All services inherited from (\mref{mADV}) with activity type Event
 \item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Data Type
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsubsection{Lecture Detail View Module (\mref{mLDV})}
@@ -418,7 +422,7 @@ to be implemented.
 \item[Secrets:]How to inherit (\mref{mADV}) with activity type lecture.
 \item[Services:]All services inherited from (\mref{mADV}) with activity type Event
 \item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Data Type
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsubsection{Lecture List Manager Module (\mref{mLL})}
@@ -426,7 +430,7 @@ to be implemented.
 \item[Secrets:]Implementation details of how lectures are displayed as a list with services inherited from (\mref{mPF}).
 \item[Services:]Displays a sequence of lectures as a list with pagination and filtering functionalities inherited from (\mref{mPF}).
 \item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Data Type
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsubsection{Event List Manager Module (\mref{mEL})}
@@ -434,13 +438,21 @@ to be implemented.
 \item[Secrets:]Implementation details of how events are displayed as a list with services inherited from (\mref{mPF}).
 \item[Services:]Displays a sequence of events as a list with pagination and filtering functionalities inherited from (\mref{mPF}).
 \item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Data Type
+\item[Type of Module:] Abstract Object
+\end{description}
+
+\subsubsection{Notification Module (\mref{mNoti})}
+\begin{description}
+\item[Secrets:] How users get a notification.
+\item[Services:]Displays a pop up window showing corresponding notification messages.
+\item[Implemented By:] CampusConnections
+\item[Type of Module:] Abstract Object
 \end{description}
 
 \subsection{Software Decision Module}
 \subsubsection{Database Module (\mref{mDB})}
 \begin{description}
-\item[Secrets:]Data structures of stored data and how database connection is established.
+\item[Secrets:]Database settings including structures of stored data, connection settings.
 \item[Services:]Provides CURD operations to database tables.
 \item[Implemented By:] Firebase
 \item[Type of Module:] Library
@@ -448,7 +460,7 @@ to be implemented.
 
 \subsubsection{Server Module (\mref{mServer})}
 \begin{description}
-\item[Secrets:]How data is sent to and received from clients.
+\item[Secrets:]How real-time data is sent to and received from clients.
 \item[Services:]Provides real-time communication endpoints for chatting and location sharing.
 \item[Implemented By:] Microsoft
 \item[Type of Module:] Library
@@ -464,7 +476,7 @@ to be implemented.
 
 \subsubsection{AR Camera Module (\mref{mARCamera})}
 \begin{description}
-\item[Secrets:]How AR targets are detected.
+\item[Secrets:]How AR targets are recognized.
 \item[Services:]Detects valid AR targets in the device's camera view and notifies the AR Interface module of the newly detected target.
 \item[Implemented By:] Vuforia
 \item[Type of Module:] Library
@@ -481,9 +493,9 @@ to be implemented.
 \subsubsection{Activity Detail View Module (\mref{mADV})}
 \begin{description}
   \item[Secrets:]How details of activities are displayed and changed.
-  \item[Services:]Provides functionality for users and administrators to view, pin, unpin; edit, and delete activities respectively.
+  \item[Services:]Provides functionality for users and administrators to view, bookmakr, unbookmark; edit, and delete activities respectively.
   \item[Implemented By:] CampusConnections
-  \item[Type of Module:] Abstract Data Type
+  \item[Type of Module:] Generic Module
 \end{description}
 
 \subsubsection{Pagination and Filter Module (\mref{mPF})}
@@ -491,7 +503,7 @@ to be implemented.
   \item[Secrets:]Algorithm used for paginating and filter activities.
   \item[Services:]Displays activities as a paginated list which can be filtered by certain keyword.
   \item[Implemented By:] CampusConnections
-  \item[Type of Module:] Abstract Data Type
+  \item[Type of Module:] Generic Module
 \end{description}
 
 \section{Traceability Matrix} \label{SecTM}
@@ -508,20 +520,20 @@ requirements and between the modules and the anticipated changes.
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
 FR1-1 & \mref{mUL}\\
-FR2-1 & \mref{mPermission}, \mref{mDB}, \mref{mUL}\\
-FR2-2 & \mref{mPermission}, \mref{mUP}, \mref{mDB}\\
-FR2-3 & \mref{mPermission}, \mref{mUL}\\
-FR2-4 & \mref{mPermission}, \mref{mUL}\\
-FR2-5 & \mref{mPermission}, \mref{mUL}\\
+FR2-1 & \mref{mAuthConnector}, \mref{mDB}, \mref{mUL}\\
+FR2-2 & \mref{mAuthConnector}, \mref{mUP}, \mref{mDB}\\
+FR2-3 & \mref{mAuthConnector}, \mref{mUL}\\
+FR2-4 & \mref{mAuthConnector}, \mref{mUL}\\
+FR2-5 & \mref{mAuthConnector}, \mref{mUL}\\
 FR2-6 & \mref{mUser}, \mref{mUP}, \mref{mDB}\\
-FR2-7 & \mref{mPermission}, \mref{mUP}\\
+FR2-7 & \mref{mAuthConnector}, \mref{mUP}\\
 FR2-8 & \mref{mUser}, \mref{mUP}, \mref{mDB}\\
-FR3-1 & \mref{mFM}, \mref{mAccount}\\
-FR3-2 & \mref{mFM}, \mref{mAccount}\\
+FR3-1 & \mref{mFM}, \mref{mDBConnector}\\
+FR3-2 & \mref{mFM}, \mref{mDBConnector}\\
 FR3-3 & \mref{mFC}, \mref{mServer}\\
 FR3-4 & \mref{mFC}, \mref{mServer}, \mref{mEvent}\\
 FR3-5 & \mref{mFC}, \mref{mServer}, \mref{mMap}\\
-FR3-6 & \mref{mFR}, \mref{mAccount}\\
+FR3-6 & \mref{mFR}, \mref{mDBConnector}\\
 FR4-1 & \mref{mUP}, \mref{mDB}, \mref{mEvent}, \mref{mEDV}, \mref{mADV}\\
 FR4-2 & \mref{mUP}, \mref{mDB}, \mref{mLec}, \mref{mLDV}, \mref{mADV}\\
 FR4-3 & \mref{mEvent}, \mref{mEDV}, \mref{mADV}, \mref{mDB}, \mref{mAuth}\\
