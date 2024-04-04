@@ -2,6 +2,11 @@
 using Firebase.Auth;
 using UnityEngine;
 
+/// <summary>
+/// This class includes a current user state singleton, all classes should use this proxy class instead of connecting to the authentication system directly
+/// Author: Michael Kim
+/// Date: 2024-03-01
+/// </summary>
 namespace Auth
 {
     public class AuthConnector : MonoBehaviour

@@ -4,11 +4,19 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Firebase.Database;
 
+/// <summary>
+/// This class includes all utility functions
+/// Author: Zihao Du
+/// Date: 2024-12-20
+/// </summary>
 public static class Utilities
 {
+    /// <summary>
+    /// Replace the last . in email with _ since firebase index cannot contain dot
+    /// The reason why we only replace last . is because almost all of the user email will end with @mcmaster.ca
+    /// </summary>
     public static string RemoveDot(string email)
     {
-        // Replace last . in email with _ since firebase index cannot contain dot
         var indexOfDot = email.LastIndexOf('.');
         var emailWithOutDot = indexOfDot == -1
             ? email
@@ -16,6 +24,9 @@ public static class Utilities
         return emailWithOutDot;
     }
 
+    /// <summary>
+    /// Replace the last _ in email with . once retreived from the db
+    /// </summary>
     public static string AddDot(string emailWithoutDot)
     {
         // Change back email from removeDot method
@@ -26,12 +37,18 @@ public static class Utilities
         return email;
     }
 
+    /// <summary>
+    /// Return true if the target string contains any of the special characters: \|!#$%&/()=?»«@£§€{}.-;'<>_,
+    /// </summary>
     public static bool ContainSpecialChar(string target)
     {
         const string specialChar = @"\|!#$%&/()=?»«@£§€{}.-;'<>_,";
         return specialChar.Any(target.Contains);
     }
 
+    /// <summary>
+    /// Convert a firebase database DataSnapshot containing user information to a User object
+    /// </summary>
     public static User FormalizeDBUserData(DataSnapshot user)
     {
         var result = new User("InvalidUser");
@@ -71,6 +88,9 @@ public static class Utilities
         return result;
     }
 
+    /// <summary>
+    /// Convert a firebase database DataSnapshot containing event information to an Event object
+    /// </summary>
     public static Event FormalizeDBEventData(DataSnapshot e)
     {
         var result = new Event("InvalidEvent");
@@ -103,6 +123,9 @@ public static class Utilities
         return result;
     }
 
+    /// <summary>
+    /// Convert a firebase database DataSnapshot containing lecture information to a Lecture object
+    /// </summary>
     public static Lecture FormalizeDBLectureData(DataSnapshot e)
     {
         var result = new Lecture("InvalidLecture");
@@ -129,6 +152,9 @@ public static class Utilities
         return result;
     }
 
+    /// <summary>
+    /// If the message contains a [event](.+) or [lecture](.+) pattern, return a list of the contents in square and round brackets
+    /// </summary>
     public static List<string> GetActivityPattern(string message)
     {
         // Return two strings: first one is the type, second one is the ID (lecture's code, event's name)
@@ -145,6 +171,9 @@ public static class Utilities
         return new List<string> { "null", "" };
     }
 
+    /// <summary>
+    /// If the message contains a [event](.+) or [lecture](.+) pattern, the apply hex color to the message
+    /// </summary>
     public static string PolishChatMessage(string message, string hex)
     {
         var pattern = GetActivityPattern(message);
