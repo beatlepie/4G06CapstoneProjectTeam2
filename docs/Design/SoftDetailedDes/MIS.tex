@@ -1513,34 +1513,6 @@ None
 \item exception: $exc := targetLec \notin lecList \Rightarrow IllegalArgument Exception$
 \end{itemize}
 
-\noindent nextPage():
-\begin{itemize}
-\item transition: $pageNum * PAGECOUNT < lecList.legnth \Rightarrow pageNum := pageNum + 1$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent prevPage():
-\begin{itemize}
-\item transition: $pageNum > 1 \Rightarrow pageNum := pageNum - 1$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent firstPage():
-\begin{itemize}
-\item transition: $pageNum := 1$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent lastPage():
-\begin{itemize}
-\item transition: $pageNum := int(lecList/PAGECOUNT) + 1$
-\item output: none
-\item exception: none
-\end{itemize}
-
 \noindent AddLecture(newLec):
 \begin{itemize}
 \item transition: $lecList := PagniationandFilter.Add(lecList, newLec)$
@@ -1630,34 +1602,6 @@ None
 \item transition: Switch to Event Detail view with targetEvent
 \item output: none
 \item exception: $exc := targetEvent \notin eventList \Rightarrow IllegalArgument Exception$
-\end{itemize}
-
-\noindent nextPage():
-\begin{itemize}
-\item transition: $pageNum * PAGECOUNT < eventList.legnth \Rightarrow pageNum := pageNum + 1$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent prevPage():
-\begin{itemize}
-\item transition: $pageNum > 1 \Rightarrow pageNum := pageNum - 1$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent firstPage():
-\begin{itemize}
-\item transition: $pageNum := 1$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent lastPage():
-\begin{itemize}
-\item transition: $pageNum := int(eventList/PAGECOUNT) + 1$
-\item output: none
-\item exception: none
 \end{itemize}
 
 \noindent AddEvent(newEvent):
