@@ -1505,8 +1505,8 @@ We also observed analytics data from Microsoft Azure concerning the average resp
   \caption{Requests vs. Response Time}
 \end{figure}
 
-There does not appear to be an observable trend. We believe this is because the test was limited by the amount of connections that could be made from one device.
-Given a sufficient testing setup it should be possible to show a trend bewteen the amount of requests and the response time.
+There does not appear to be an observable trend. We suspected this was due to limitations in our testing setup. Upon further investigation we discovered that our Azure app server has a limit of around 2000 connections at the basic tier which is the tier we used.
+We also discovered that JMeter could not create more than 5000 connections per IP. We concluded that a workaround for these limitations would be out of scope. It would both require paying for a higher tier of Azure service and the creation of a custom distributed JMeter testing setup which would be infeasible in our timeframe.
 
 \section{Non dynamic Tests Result}\label{static}
 The weekly meetings mentioned in the VnV Plan, such as the weekly code review and TA feedback sessions, will not be detailed in this section due to their frequency and the fact that many of the conclusions drawn in these meetings have already been integrated and addressed in other sections, particularly non-requirements. However, their meeting minutes are accessible on our GitHub repository for those interested in further details.
@@ -1526,7 +1526,7 @@ Code Inspection for user data &
 Database Walkthrough & 
 \begin{itemize}
 \item Capacity: Pass, the free plan has a storage of 1GB data, which is enough for our users at this stage
-\item Clean: Pass, Firebase Authentication support some clould functions to clean inactive users
+\item Clean: Pass, Firebase Authentication support some cloud functions to clean inactive users
 \end{itemize}& NFRT-P15, NFRT-PRV2\\
 \hline
 Server \& Data Transmission Walkthrough & 
