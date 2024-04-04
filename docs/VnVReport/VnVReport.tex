@@ -2040,6 +2040,7 @@ The only test fails is the ``Common periods of usage'' rating question. It has c
 The absence of instructions for the AR camera has been repeatedly highlighted in the feedback. Consequently, the team will resolve this issue by adding instructions when user clicks on the help button. \\
 Participants have noted that bookmarked lectures and events are not readily accessible, as they are currently hidden within the settings. In response to this feedback, the team will create a link to the bookmarked lectures and events page directly from the list pages. \\
 Each of the aforementioned changes will be documented as a separate issue in the GitHub repo for future discussion.\\
+We changed all the inconsistant naming regarding `pin' to `bookmark', making the icon and naming consistant and easier to understand intuitively.
 \subsection{Changes due to load test result}
 The load test in section \ref{load} shows that NFRT-P16 passes without any issues -- with fewer than 1000 users connecting to the application, the server handles the load effectively, as indicated by the nearly negligible response time observed in the figure. However, it is crucial to note that upon scaling up to accommodate approximately 40,000 concurrent requests after Revision 1, the server begins to reject connections and getting a significant increase in response time.Therefore, this is a good warning for the team regarding the need to scale the server infrastructure adequately to support a larger user base.
 \subsection{Changes due to failing tests}
