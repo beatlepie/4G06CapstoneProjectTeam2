@@ -41,6 +41,7 @@ Mar 6 & 1.0 & Load test, Usability test, unit test results\\
 Mar 6 & 1.0 & Add Automated test, non-dynamic test result and changes due to testing\\
 Apr 2 & 1.1 & Resolve team 11 feedback\\
 Apr 3 & 1.1 & Resolve TA feedback about functional and non functional tests\\
+Apr 4 & 1.1 & Changes to match work done and current results\\
 \bottomrule
 \end{tabularx}
 
@@ -2062,15 +2063,17 @@ The majority of tests are run from local machine due to Unity and unity package 
 When attempting to setup the automated tests, there were issues due to how Vuforia was not a package that could be imported automatically due to how they host their library.
 Communication with the database occurs asynchonously, which cause problems when testing automatically using CI/CD. 
 This caused problems as the program failed to build automatically. The package was too big to be included in the repository, and Large File Storage had limits.
-This also resulted in many tests being done locally.
+This also resulted in many tests being done locally.\\
+
+These results are visible from the \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/actions/workflows/unit-tests.yml}{GitHub Actions}, where all automated testing results are visible.
 
 \subsection{Testing Instruments}
 
 The tests were performed using Unity Testing Framework, NUnit made for Unity.
-The test files are located in multiple files with the respective names of the modules they are testing under Assets/Editor.
+The test files are located in multiple files with the respective names of the modules under \href{https://github.com/beatlepie/4G06CapstoneProjectTeam2/tree/main/test/CampusConnectionsTest/Assets/Editor}{test/CampusConnectionsTest/Assets/Editor}.
+This was to separate the code from the packages that could not be loaded automatically.
 OpenCover was planned for coverage testing and will produce a report into XML file.
 These results are visible after the automated tests are completed.
-The CI with GitHub Actions will be completed in phase 2.
 
 \subsection{Linters}
 

@@ -45,6 +45,7 @@ Feb 27 & 1.1 & Revision 1: Resolve TA Feedback for functional requirements: make
 Mar 2 & 1.1 & Revision 1: Resolve TA Feedback for non-functional requirements: add usability survey content to non-functional tests\\
 Mar 3 & 1.1 & Revision 1: Add unit tests according to the design documentation; Add new non-dynamic tests to the table\\
 Apr 3 & 1.1 & Revision 1: Changes related to VnV Report feedback\\
+Apr 4 & 1.1 & Revision 1: Changes to match current tests and values \\
 \bottomrule
 \end{tabularx}
 
@@ -2516,11 +2517,11 @@ This section will contain all unit tests for the module ``Database''.  This modu
 \begin{enumerate}
 \item{FRT-M6-1}
 
-\textbf{Name:} Get value
+\textbf{Name:} Retrieve Values From Database
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\textbf{Initial State:} NA
+\textbf{Initial State:} Logged in with student account.
 					
 \textbf{Input:} A valid path to a test node: `/events/public/EXPO/name'
 					
@@ -2532,11 +2533,11 @@ This section will contain all unit tests for the module ``Database''.  This modu
 
 \item{FRT-M6-2}
 
-\textbf{Name:} Set value
+\textbf{Name:} Set Value to Database
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\textbf{Initial State:} NA
+\textbf{Initial State:} Logged in with admin accunt.
 					
 \textbf{Input:} A valid path to a test node and a new value: 
 \begin{itemize}
@@ -2552,11 +2553,11 @@ This section will contain all unit tests for the module ``Database''.  This modu
 
 \item{FRT-M6-3}
 
-\textbf{Name:} Delete data
+\textbf{Name:} Delete Data From Database
 
 \textbf{Type:} Functional, Dynamic, Automatic, Unit
 					
-\textbf{Initial State:} NA
+\textbf{Initial State:} Logged in with admin account
 					
 \textbf{Input:} A valid path to a test node : `/events/public/EXPO'
 
@@ -2754,7 +2755,6 @@ The survey will be composed of following three session and take about 30 minutes
 	\item \textbf{No Technical or Software-specific Language:} The product does not use technical/software-specific language unless necessary.
 	\item \textbf{Common periods of usage:} You will be using the application mostly during school time (from 8:30 AM to 6:30 PM).
 	\item \textbf{Cultural Friendliness:} The application does not have any words or symbols that are offensive to you.\\\\
-\textcolor{red}{\textbf{If given more time, the following questions will be added when conducting a new usability survey}}
 	\item \textbf{Customer Satisfaction:} This application will be useful for my daily life and I'd like to recommend it to my friends.
 	\item \textbf{Loading Speed:} This application loads/updates what I need in a reasonable time.
 \end{enumerate}
