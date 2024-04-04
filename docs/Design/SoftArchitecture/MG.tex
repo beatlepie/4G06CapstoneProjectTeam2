@@ -211,7 +211,7 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mARCamera}:] AR Camera Module
 \item [\refstepcounter{mnum} \mthemnum \label{mARInterface}:] AR Interface Module
 \item [\refstepcounter{mnum} \mthemnum \label{mMap}:] Mapbox Module
-\item [\refstepcounter{mnum} \mthemnum \label{mMapInterface}:] MapInterface Module
+\item [\refstepcounter{mnum} \mthemnum \label{mRealTimeMap}:] RealTimeMap Module
 \item [\refstepcounter{mnum} \mthemnum \label{mUser}:] User Module
 \item [\refstepcounter{mnum} \mthemnum \label{mLec}:] Lecture Module
 \item [\refstepcounter{mnum} \mthemnum \label{mEvent}:] Event Module
@@ -317,12 +317,12 @@ to be implemented.
 \item[Type of Module:] Abstract Data Type
 \end{description}
 
-\subsubsection{Map Interface Module (\mref{mMapInterface})}
+\subsubsection{Real-time Map Module (\mref{mRealTimeMap})}
 \begin{description}
 \item[Secrets:]How users, events and buildings are organized and displayed on the virtual map provided by the MapBox Module.
-\item[Services:]Displays points of interest such as buildings or events. Handles user interaction with points of interest. Displays user's avatar at their current location.
+\item[Services:]Displays points of interest such as buildings or events. Handles user interaction with points of interest. Displays user's avatar at their current location. Displays nearby friend locations on the map.
 \item[Implemented By:] CampusConnections
-\item[Type of Module:] Abstract Data Type
+\item[Type of Module:] Abstract Module
 \end{description}
 
 \subsubsection{User Module (\mref{mUser})}
@@ -532,9 +532,9 @@ FR4-7 & \mref{mEvent}, \mref{mEL}, \mref{mPF}\\
 FR4-8 & \mref{mLec}, \mref{mLL}, \mref{mPF}\\
 FR5-1 & \mref{mARCamera}\\
 FR5-2 & \mref{mARInterface}\\
-FR6-1 & \mref{mMap}, \mref{mMapInterface}, \mref{mDB}\\
-FR6-2 & \mref{mMap}, \mref{mMapInterface}, \mref{mDB}\\
-FR6-3 & \mref{mMap}, \mref{mMapInterface}, \mref{mServer}\\
+FR6-1 & \mref{mMap}, \mref{mRealTimeMap}, \mref{mDB}\\
+FR6-2 & \mref{mMap}, \mref{mRealTimeMap}, \mref{mDB}\\
+FR6-3 & \mref{mMap}, \mref{mRealTimeMap}, \mref{mServer}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Functional Requirements and Modules}
@@ -547,24 +547,24 @@ FR6-3 & \mref{mMap}, \mref{mMapInterface}, \mref{mServer}\\
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-LF-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
-LF-A2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
-LF-S1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
-LF-S2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
-UH-EOU1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
+LF-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
+LF-A2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
+LF-S1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
+LF-S2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
+UH-EOU1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
 UH-L1 & NA since it is a learning requirement related to document only\\
-UH-UP1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
-UH-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
+UH-UP1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
+UH-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
 P-SL1 & \mref{mARCamera}, \mref{mARInterface}\\
 P-SL2 & \mref{mServer}, \mref{mMap}\\
 P-SC1 & \mref{mDB}, \mref{mServer}\\
 P-SC2 & \mref{mServer}\\
-P-SC3 & \mref{mMapInterface}\\
-P-SC4 & \mref{mServer}, \mref{mMapInterface}\\
+P-SC3 & \mref{mRealTimeMap}\\
+P-SC4 & \mref{mServer}, \mref{mRealTimeMap}\\
 P-SC5 & \mref{mAuth}, \mref{mUP}, \mref{mDB}\\
 P-SC6 & \mref{mAuth}, \mref{mDB}\\
 P-PA1 & \mref{mARCamera}\\
-P-RF1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mMapInterface}\\
+P-RF1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
 P-RF2 & \mref{mDB}, \mref{mServer}, \mref{mAuth}\\
 P-RF3 & \mref{mServer}\\
 P-RF4 & \mref{mARInterface}\\
@@ -594,7 +594,7 @@ S-A2 & \mref{mAuth}, \mref{mUser}\\
 S-A3 & \mref{mAuth}, \mref{mUser}\\
 S-P1 & \mref{mDB}, \mref{mServer}, \mref{mUser}, \mref{mEvent}, \mref{mLec}\\
 S-P2 & \mref{mDB}, \mref{mAuth}\\
-CUL-C1 & \mref{mARInterface}, \mref{mMapInterface}, \mref{mUP}, \mref{mUL}, \mref{mFM}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}\\
+CUL-C1 & \mref{mARInterface}, \mref{mRealTimeMap}, \mref{mUP}, \mref{mUL}, \mref{mFM}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}\\
 COM-L1 & \mref{mDB}, \mref{mUser}, \mref{mEvent}, \mref{mLec}\\
 \bottomrule
 \end{tabular}
@@ -615,8 +615,8 @@ COM-L1 & \mref{mDB}, \mref{mUser}, \mref{mEvent}, \mref{mLec}\\
 \acref{acServerData} & \mref{mServer}\\
 \acref{acListUI} & \mref{mLL}, \mref{mEL}\\
 \acref{acDetailViewUI} & \mref{mADV}, \mref{mLDV}, \mref{mEDV}\\
-\acref{acMapInteract} & \mref{mMapInterface}, \mref{mMap}\\
-\acref{acMapLayout} & \mref{mMapInterface}\\
+\acref{acMapInteract} & \mref{mRealTimeMap}, \mref{mMap}\\
+\acref{acMapLayout} & \mref{mRealTimeMap}\\
 \acref{acUserUI} & \mref{mUP}\\
 \acref{acLoginUI} & \mref{mUL}\\
 \acref{acFriendUI} & \mref{mFM}, \mref{mFR}, \mref{mFC}\\
@@ -671,7 +671,7 @@ ARCamera &Waseef Nayeem, Zihao Du & Feb 2, 2024\\
 ARInterface & Waseef Nayeem, Zihao Du & Feb 2, 2024\\
 Server & Waseef Nayeem & Jan 15, 2024\\
 Mapbox & Waseef Nayeem & Jan 15, 2024\\
-MapInterface & Waseef Nayeem & Jan 17, 2024\\
+RealTimeMap & Waseef Nayeem & Jan 17, 2024\\
 Chat & Waseef Nayeem, Zihao Du & Jan 15, 2024\\
 Lecture List Manager & Abhiram Neelamraju & Jan 15, 2024\\
 Lecture & Abhiram Neelamraju & Jan 15, 2024\\
