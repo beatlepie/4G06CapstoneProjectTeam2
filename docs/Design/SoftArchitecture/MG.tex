@@ -520,33 +520,31 @@ requirements and between the modules and the anticipated changes.
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
 FR1-1 & \mref{mUL}\\
-FR2-1 & \mref{mAuthConnector}, \mref{mDB}, \mref{mUL}\\
-FR2-2 & \mref{mAuthConnector}, \mref{mUP}, \mref{mDB}\\
-FR2-3 & \mref{mAuthConnector}, \mref{mUL}\\
-FR2-4 & \mref{mAuthConnector}, \mref{mUL}\\
-FR2-5 & \mref{mAuthConnector}, \mref{mUL}\\
-FR2-6 & \mref{mUser}, \mref{mUP}, \mref{mDB}\\
+FR2-1 & \mref{mAuthConnector}, \mref{mDBConnector}, \mref{mUL}, \mref{mNoti}\\
+FR2-2 & \mref{mAuthConnector}, \mref{mUP}, \mref{mDBConnector}, \mref{mNoti}\\
+FR2-3 & \mref{mAuthConnector}, \mref{mUL}, \mref{mNoti}\\
+FR2-4 & \mref{mAuthConnector}, \mref{mUL}, \mref{mNoti}\\
+FR2-5 & \mref{mAuthConnector}, \mref{mUP}\\
+FR2-6 & \mref{mUser}, \mref{mUP}, \mref{mDBConnector}, \mref{mNoti}\\
 FR2-7 & \mref{mAuthConnector}, \mref{mUP}\\
-FR2-8 & \mref{mUser}, \mref{mUP}, \mref{mDB}\\
-FR3-1 & \mref{mFM}, \mref{mDBConnector}\\
-FR3-2 & \mref{mFM}, \mref{mDBConnector}\\
+FR2-8 & \mref{mUser}, \mref{mUP}, \mref{mDBConnector}\\
+FR3-1 & \mref{mFM}, \mref{mDBConnector}, \mref{mNoti}\\
+FR3-2 & \mref{mFM}, \mref{mDBConnector}, \mref{mNoti}\\
 FR3-3 & \mref{mFC}, \mref{mServer}\\
-FR3-4 & \mref{mFC}, \mref{mServer}, \mref{mEvent}\\
-FR3-5 & \mref{mFC}, \mref{mServer}, \mref{mMap}\\
+FR3-4 & \mref{mFC}, \mref{mServer}\\
+FR3-5 & \mref{mFC}, \mref{mServer}\\
 FR3-6 & \mref{mFR}, \mref{mDBConnector}\\
 FR4-1 & \mref{mUP}, \mref{mDB}, \mref{mEvent}, \mref{mEDV}, \mref{mADV}\\
 FR4-2 & \mref{mUP}, \mref{mDB}, \mref{mLec}, \mref{mLDV}, \mref{mADV}\\
-FR4-3 & \mref{mEvent}, \mref{mEDV}, \mref{mADV}, \mref{mDB}, \mref{mAuth}\\
-FR4-4 & \mref{mLec}, \mref{mLDV}, \mref{mADV}, \mref{mDB}, \mref{mAuth}\\
+FR4-3 & \mref{mEvent}, \mref{mEDV}, \mref{mADV}, \mref{mDBConnector}, \mref{mAuthConnector}\\
+FR4-4 & \mref{mLec}, \mref{mLDV}, \mref{mADV}, \mref{mDBConnector}, \mref{mAuthConnector}\\
 FR4-5 & \mref{mEvent}\\
 FR4-6 & \mref{mLec}\\
 FR4-7 & \mref{mEvent}, \mref{mEL}, \mref{mPF}\\
 FR4-8 & \mref{mLec}, \mref{mLL}, \mref{mPF}\\
 FR5-1 & \mref{mARCamera}\\
-FR5-2 & \mref{mARInterface}\\
-FR6-1 & \mref{mMap}, \mref{mRealTimeMap}, \mref{mDB}\\
-FR6-2 & \mref{mMap}, \mref{mRealTimeMap}, \mref{mDB}\\
-FR6-3 & \mref{mMap}, \mref{mRealTimeMap}, \mref{mServer}\\
+FR5-2 & \mref{mARInterface}, \mref{mEvent}, \mref{mLec}\\
+FR6-1 & \mref{mMap}, \mref{mRealTimeMap}, \mref{mServer}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Functional Requirements and Modules}
@@ -559,30 +557,30 @@ FR6-3 & \mref{mMap}, \mref{mRealTimeMap}, \mref{mServer}\\
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-LF-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
-LF-A2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
-LF-S1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
-LF-S2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
-UH-EOU1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
+LF-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}, \mref{mNoti}\\
+LF-A2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}, \mref{mNoti}\\
+LF-S1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}, \mref{mNoti}\\
+LF-S2 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}, \mref{mNoti}\\
+UH-EOU1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}, \mref{mNoti}\\
 UH-L1 & NA since it is a learning requirement related to document only\\
-UH-UP1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
-UH-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
+UH-UP1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}, \mref{mNoti}\\
+UH-A1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}, \mref{mNoti}\\
 P-SL1 & \mref{mARCamera}, \mref{mARInterface}\\
-P-SL2 & \mref{mServer}, \mref{mMap}\\
-P-SC1 & \mref{mDB}, \mref{mServer}\\
-P-SC2 & \mref{mServer}\\
-P-SC3 & \mref{mRealTimeMap}\\
-P-SC4 & \mref{mServer}, \mref{mRealTimeMap}\\
-P-SC5 & \mref{mAuth}, \mref{mUP}, \mref{mDB}\\
-P-SC6 & \mref{mAuth}, \mref{mDB}\\
+P-SL2 & \mref{mServer}, \mref{mRealTimeMap}\\
+% P-SC1 & \mref{mDBConnector}, \mref{mServer}\\
+% P-SC2 & \mref{mServer}\\
+% P-SC3 & \mref{mRealTimeMap}\\
+% P-SC4 & \mref{mServer}, \mref{mRealTimeMap}\\
+% P-SC5 & \mref{mAuth}, \mref{mUP}, \mref{mDB}\\
+% P-SC6 & \mref{mAuth}, \mref{mDB}\\
 P-PA1 & \mref{mARCamera}\\
-P-RF1 & \mref{mARInterface} \mref{mFM}, \mref{mUP}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mUL}, \mref{mRealTimeMap}\\
-P-RF2 & \mref{mDB}, \mref{mServer}, \mref{mAuth}\\
+P-RF1 & \mref{mNoti}\\
+P-RF2 & \mref{mDBConnector}, \mref{mServer}, \mref{mAuthConnector}\\
 P-RF3 & \mref{mServer}\\
-P-RF4 & \mref{mARInterface}\\
+P-RF4 & \mref{mARInterface}, \mref{mNoti}\\
 P-SE1 & \mref{mServer}\\
 P-SE2 & \mref{mDB}, \mref{mAuth}\\
-P-SE3 & \mref{mDB}, \mref{mServer}, \mref{mAuth}\\
+P-SE3 & \mref{mARInterface}\\
 P-L1 & All modules (requirement related to coding style)\\
 P-L2 & All modules (requirement related to coding style)\\
 OE-EPE1 & NA since it is a device related requirement\\
@@ -601,13 +599,20 @@ OE-P1 & NA since it is a productization requirement\\
 \midrule
 MS-M1 & NA since it is a requirement for maintainers\\
 MS-S1 & NA since it is a requirement for maintainers\\
-S-A1 & \mref{mAuth}, \mref{mUser}\\
-S-A2 & \mref{mAuth}, \mref{mUser}\\
-S-A3 & \mref{mAuth}, \mref{mUser}\\
-S-P1 & \mref{mDB}, \mref{mServer}, \mref{mUser}, \mref{mEvent}, \mref{mLec}\\
+MS-A1 & NA since it is a device related requirement\\
+S-A1 & \mref{mDB}, \mref{mAuth}, \mref{mUser}\\
+S-A2 & \mref{mDB}, \mref{mAuth}, \mref{mUser}\\
+S-A3 & \mref{mDB}, \mref{mAuth}, \mref{mUser}\\
+S-A4 & \mref{mUL}, \mref{mNoti}\\
+S-P1 & \mref{mDB}\\
 S-P2 & \mref{mDB}, \mref{mAuth}\\
-CUL-C1 & \mref{mARInterface}, \mref{mRealTimeMap}, \mref{mUP}, \mref{mUL}, \mref{mFM}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}\\
+S-P3 & \mref{mRealTimeMap}\\
+S-P4 & \mref{mServer}\\
+S-P5 & \mref{mRealTimeMap}\\
+S-US1 & \mref{mRealTimeMap}, \mref{mNoti}\\
+CUL-C1 & \mref{mARInterface}, \mref{mRealTimeMap}, \mref{mUP}, \mref{mUL}, \mref{mFM}, \mref{mLDV}, \mref{mEDV}, \mref{mLL}, \mref{mEL}, \mref{mNoti}\\
 COM-L1 & \mref{mDB}, \mref{mUser}, \mref{mEvent}, \mref{mLec}\\
+COM-SC1 & \mref{mDB}, \mref{mUser}, \mref{mEvent}, \mref{mLec}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Non-Functional Requirements and Modules Cont.}
