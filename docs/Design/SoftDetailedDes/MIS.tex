@@ -251,8 +251,6 @@ User
 
 \subsection{Uses}
 
-Lecture Module, Event Module
-
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -264,19 +262,7 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-User & String, String, Uri, String, $\mathbb{R}$, $<$User$>$, $<$User$>$, $<$Lecture$>$, $<$Event$>$ & User & -\\
-SetNickName & String & - & -\\
-SetPhotoUri & Uri & - & -\\
-SetProgram & String & - & -\\
-SetLevel & $\mathbb{R}$ & - & -\\
-AddFriend & User & - & -\\
-RemoveFriend & User & - & IndexOutofBound Exception\\
-AddRequester & User & - & -\\
-RemoveRequester & User & - & IndexOutofBound Exception\\
-AddLecture & Lecture & - & -\\
-RemoveLecture & Lecture & - & IndexOutofBound Exception\\
-AddEvent & Event & - & -\\
-RemoveEvent & Event & - & IndexOutofBound Exception\\
+User & String & User & -\\
 \hline
 \end{tabular}
 \end{center}
@@ -295,6 +281,7 @@ RemoveEvent & Event & - & IndexOutofBound Exception\\
 \item requesters: $<$User$>$, List of friend requester
 \item lectures: $<$Lecture$>$, Pinned lecture
 \item events: $<$Event$>$, Pinned event
+\item perms: $\mathbb{R}$, the permission level of the user
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -307,96 +294,13 @@ Strings passed as input are of valid format, all the state variables of the obje
 
 \subsubsection{Access Routine Semantics}
 
-\noindent User(email, nickName, photoUri, program, level, friends, requesters, lectures,events):
+\noindent User(email):
 \begin{itemize}
-\item transition: $email, nickName, photoUri, program, level, friends, requesters, lectures, events := \\ email, nickName, photoUri, program, level, friends, requesters, lectures, events$
+\item transition: $email := email \land \exists email \in `mcmaster.ca' \rightarrow perms := 1$
 \item output: $out := self$
 \item exception: none
 \end{itemize}
 
-\noindent SetNickName(newName):
-\begin{itemize}
-\item transition: $nickName := newName$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent SetPhotot(newUri):
-\begin{itemize}
-\item transition: $photoUri := newUri$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent SetProgram(newProgram):
-\begin{itemize}
-\item transition: $program := newProgram$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent SetLevel(newLevel):
-\begin{itemize}
-\item transition: $level := newLevel$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent AddFriend(newFriend):
-\begin{itemize}
-\item transition: $friends := friends + \{newFriend\}$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent RemoveFriend(targetFriend):
-\begin{itemize}
-\item transition: $friends := friends - \{targetFriend\}$
-\item output: none
-\item exception: $exc := targetFriend \notin friends \Rightarrow IndexOutofBound Exception$
-\end{itemize}
-
-\noindent AddRequester(newRequester):
-\begin{itemize}
-\item transition: $requesters := requesters + \{newRequester\}$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent RemoveRequester(targetRequester):
-\begin{itemize}
-\item transition: $requesters := requesters - \{targetRequester\}$
-\item output: none
-\item exception: $exc := targetRequester \notin requesters \Rightarrow IndexOutofBound Exception$
-\end{itemize}
-
-\noindent AddLecture(newLec):
-\begin{itemize}
-\item transition: $lectures := lectures + \{newLec\}$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent RemoveLecture(targetLecture):
-\begin{itemize}
-\item transition: $lectures := lectures - \{targetLecture\}$
-\item output: none
-\item exception: $exc := targetLecture \notin lectures \Rightarrow IndexOutofBound Exception$
-\end{itemize}
-
-\noindent AddEvent(newEvent):
-\begin{itemize}
-\item transition: $events := events + \{newEvent\}$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent RemoveEvent(targetEvent):
-\begin{itemize}
-\item transition: $events := events - \{targetEvent\}$
-\item output: none
-\item exception: $exc := targetEvent \notin events \Rightarrow IndexOutofBound Exception$
-\end{itemize}
 \subsubsection{Local Functions}
 
 None
@@ -425,10 +329,7 @@ None
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 Lecture & String, String, String, String, String & Lecture & -\\
-SetName & String & - & -\\
-SetInstructor & String & - & -\\
-SetTime & String & - & -\\
-SetLocation & String & - & -\\
+Lecture & String & Lecture & -
 \hline
 \end{tabular}
 \end{center}
@@ -443,11 +344,10 @@ SetLocation & String & - & -\\
 \item instructor: String, Lecture instructor
 \item time: String, Lecture time
 \item location: String, Lecture location
+\item placeholder: String, `NA', for missing information
 \end{itemize}
 
 \subsubsection{Environment Variables}
-
-None
 
 \subsubsection{Assumptions}
 
@@ -462,33 +362,13 @@ Strings passed as input are of valid format, all the state variables of the obje
 \item exception: none
 \end{itemize}
 
-\noindent SetName(newName):
+\noindent Lecture(lecCode):
 \begin{itemize}
-\item transition: $name := newName$
-\item output: none
+\item transition: $code, name, instructor, time, location := \\ lecCode, placeholder, placeholder, placeholder, placeholder$
+\item output: $out := self$
 \item exception: none
 \end{itemize}
 
-\noindent SetInstructor(newInstructor):
-\begin{itemize}
-\item transition: $instructor := newInstructor$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent SetTime(newTime):
-\begin{itemize}
-\item transition: $time := newTime$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent SetLocation(newLocation):
-\begin{itemize}
-\item transition: $location := newLocation$
-\item output: none
-\item exception: none
-\end{itemize}
 \subsubsection{Local Functions}
 
 None
@@ -517,12 +397,7 @@ None
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 Event & String, String, String,DateTime, $\mathbb{R}$, String, $\mathbb{B}$ & Event & -\\
-SetDescription & String & - & -\\
-SetOrganizer & String & - & -\\
-SetStartTime & DateTime & - & -\\
-SetDuration & $\mathbb{R}$ & - & -\\
-SetLocation & String & - & -\\
-SetPublic & $\mathbb{B}$ & - & -\\
+Event & String
 \hline
 \end{tabular}
 \end{center}
@@ -538,7 +413,10 @@ SetPublic & $\mathbb{B}$ & - & -\\
 \item startTime: DateTime, Event start date and time
 \item duration: $\mathbb{R}$, Event duration (in minutes)
 \item location: String,Event location (room and building)
-\item public : $\mathbb{B}$, is event public
+\item isPublic : $\mathbb{B}$, is event public
+\item defaultTime: $\mathbb{R}$, the starting time of the event if unspecified at creation
+\item defaultDuration: $\mathbb{R}$, the duration of the event if unspecified at creation
+\item placeholder: String, `NA' value for any unspecified fields
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -553,52 +431,18 @@ Strings passed as input are of valid format, all the state variables of the obje
 
 \noindent Event(name, description, organizer, startTime, duration, location, public):
 \begin{itemize}
-\item transition: $name, description, organizer, startTime, duration, location, public := \\ name, description, organizer, startTime, duration, location, public$
+\item transition: $name, description, organizer, startTime, duration, location, isPublic := \\ name, description, organizer, startTime, duration, location, public$
 \item output: $out := self$
 \item exception: none
 \end{itemize}
 
-\noindent SetDescription(newDescription):
+\noindent Event(name):
 \begin{itemize}
-\item transition: $description := newDescription$
-\item output: none
+\item transition: $name, description, organizer, startTime, duration, location, isPublic := \\ name, placeholder, placeholder, defaultTime, defaultDuration, placeholder, false$
+\item output: $out := self$
 \item exception: none
 \end{itemize}
 
-\noindent SetOrganizer(newOrganizer):
-\begin{itemize}
-\item transition: $organizer := newOrganizer$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent SetStartTime(newTime):
-\begin{itemize}
-\item transition: $startTime := newTime$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent SetDuration(newDuration):
-\begin{itemize}
-\item transition: $duration := newDuration$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent SetLocation(newLocation):
-\begin{itemize}
-\item transition: $location := newLocation$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent SetPublic(newPublicity):
-\begin{itemize}
-\item transition: $public := newPublicity$
-\item output: none
-\item exception: none
-\end{itemize}
 \subsubsection{Local Functions}
 
 None
@@ -609,11 +453,11 @@ None
 
 \subsection{Module}
 
-Account
+DatabaseConnector
 
 \subsection{Uses}
 
-Database Module, User Module, Authentication Module
+Authentication Module
 
 \subsection{Syntax}
 
@@ -626,17 +470,7 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-UpdateNickName & String & - & -\\
-UpdateProgram & String & - & -\\
-UpdateLevel & $\mathbb{N}$ & - & -\\
-AddFriend & User & - & -\\
-DeleteFriend & User & - & IndexOutofBound Exception\\
-AddRequest & User & - & -\\
-DeleteRequest & User & - & IndexOutofBound Exception\\
-PinLecture & Lecture & - & -\\
-UnPinLecture & Lecture & - & IndexOutofBound Exception\\
-PinEvent & Event & - & -\\
-UnPinEvent & Event & - & IndexOutofBound Exception\\
+InitFirebase & - & - & -
 \hline
 \end{tabular}
 \end{center}
@@ -646,8 +480,8 @@ UnPinEvent & Event & - & IndexOutofBound Exception\\
 \subsubsection{State Variables}
 
 \begin{itemize}
-\item User: User
-User of the account
+\item Instance: self, reference for other classes to use
+\item Root: DatabaseReference, connection to the Firebase Database
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -660,86 +494,16 @@ All the sate variables of User is accessible directly so there is no getters in 
 
 \subsubsection{Access Routine Semantics}
 
-\noindent UpdateNickName(newName):
+\noindent InitFirebase():
 \begin{itemize}
-\item transition: $User.SetNickName(newName)$
+\item transition: $Firebase.CheckAndFixDependenciesAsync \rightarrow Root := Firebase.DefaultInstance.RootReference$
 \item output: none
 \item exception: none
-\end{itemize}
-
-\noindent UpdateProgram(newProgram):
-\begin{itemize}
-\item transition: $User.SetProgram(newProgram)$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent UpdateLevel(newLevel):
-\begin{itemize}
-\item transition: $User.SetLevel(newLevel)$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent AddFriend(newFriend):
-\begin{itemize}
-\item transition: $User.AddFriend(newFriend)$ 
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent DeleteFriend(targetFriend):
-\begin{itemize}
-\item transition: $User.RemoveFriend(targetFriend)$ 
-\item output: none
-\item exception: $exc := targetFriend \notin User.friends \Rightarrow IndexOutofBound Exception$
-\end{itemize}
-
-\noindent AddRequest(newFriend):
-\begin{itemize}
-\item transition: $User.AddRequester(newFriend)$ 
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent DeleteRequest(targetFriend):
-\begin{itemize}
-\item transition: $User.RemoveRequester(targetFriend)$ 
-\item output: none
-\item exception: $exc := targetFriend \notin User.friendRequests \Rightarrow IndexOutofBound Exception$
-\end{itemize}
-
-\noindent PinLecture(newLec):
-\begin{itemize}
-\item transition: $User.AddLecture(newLec)$ 
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent UnpinLecture(targetLec):
-\begin{itemize}
-\item transition: $User.RemoveLecture(targetLec)$ 
-\item output: none
-\item exception: $exc := targetLec \notin User.lectures \Rightarrow IndexOutofBound Exception$
-\end{itemize}
-
-\noindent PinEvent(newEvent):
-\begin{itemize}
-\item transition: $User.AddEvent(newEvent)$ 
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent UnpinLecture(targetEvent):
-\begin{itemize}
-\item transition: $User.RemoveEvent(targetEvent)$ 
-\item output: none
-\item exception: $exc := targetEvent \notin User.events \Rightarrow IndexOutofBound Exception$
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-None
+Unity default awake function.
 
 \newpage
 
@@ -1135,11 +899,11 @@ Please refer to the external module documentation section.
 
 \subsection{Module}
 
-Permission
+AuthConnector
 
 \subsection{Uses}
 
-Authentication Module
+DatabaseConnector
 
 \subsection{Syntax}
 
@@ -1154,8 +918,7 @@ None
 	\hline
 	\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 	\hline
-	isAdmin & - & Boolean & - \\
-	ChangePermission & User & - & InvalidPermissionException \\
+	InitAuth & - & - & - \\
 	\hline
 	\end{tabular}
 \end{center}
@@ -1165,7 +928,11 @@ None
 \subsubsection{State Variables}
 
 \begin{itemize}
-\item User: FirebaseUser
+\item Instance: self, this specific instance of AuthConnector
+\item Auth: FirebaseAuth, reference to the Firebase Authentication service
+\item CurrentUser: FirebaseUser, the person who is logged in
+\item IsEmailVerified: Bool, true if the person has their email verified
+\item Perms: PermissionLevel, the permissions of this user account
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -1178,21 +945,16 @@ The user is logged in already.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent isAdmin():
+\noindent InitAuth():
 \begin{itemize}
-\item transition: $(Auth.CurrentUser.valid = true) \rightarrow User = Auth.CurrentUser$ 
-\item output: $(Auth.CurrentUser.admin = true \rightarrow true) \lor (Auth.CurrentUser.admin = false \rightarrow false)$
-\item exception: $(Auth.CurrentUser.valid = false) \rightarrow TokenExpiredException$
+\item transition: $Auth := FirebaseAuth.DefaultInstance \land CurrentUser := Auth.CurrentUser$ 
+\item output: None
+\item exception: None
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-\noindent RefreshToken(user):
-\begin{itemize}
-\item transition: $\exists <\_email, \_password> \in FirebaseAuth \Rightarrow Login$
-\item output: $User = AuthResult.CurrentUser$
-\item exception: $exc:= \lnot(\exists <\_email, \_password> \in FirebaseAuth) \Rightarrow AuthFailedException$
-\end{itemize}
+Unity default awake function.
 
 \subsubsection{Local Constants}
 
@@ -1200,15 +962,15 @@ None
 
 \newpage
 
-\section{MIS of User Profile Module} \label{mUP}
+\section{MIS of User Profile ADT Module} \label{mUP}
 
 \subsection{Module}
 
-User Profile
+SettingsManager
 
 \subsection{Uses}
 
-Authentication Module, Database Module, User Module
+Authentication Module, Database Module
 
 \subsection{Syntax}
 
@@ -1225,8 +987,9 @@ None
 \subsubsection{State Variables}
 
 \begin{itemize}
-\item User: FirebaseUser
-\item CurrentUser: Boolean
+\item queryEmail: String, the user email we are querying
+\item CurrentUser: Boolean, whether the query email is the current user or not
+\item state: $\mathbb{B}$, changes what kind of behavior some buttons should have
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -1244,24 +1007,170 @@ The user exists and the current user is logged in already.
 	\hline
 	\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 	\hline
-	UpdateDisplay & String & Scene & - \\
+	Start & - & - & - \\
+	Favorites & - & - & - \\
+	GetPinnedLectures & Action<List<String>> & - & - \\
+	GetPinnedEvents & Action<List<String>> & - & - \\
+	GetDBData & Action<List<String>> & - & - \\
+	GetImage & String, Action<List<String>> & - & - \\
+	UpdateDBdata & - & - & - \\
+	OnChangePasswordClick & - & - & - \\
+	OnSaveNewPasswordClick & - & - & - \\
+	OnReturnClick& - & - & - \\
+	OnEditClick& - & - & - \\
+	OnCancelClick& - & - & - \\
+	OnSaveClick& - & - & - \\
+	GetPinnedEvent& - & - & - \\
+	OnEmailVerificationClick& - & - & - \\
+	SendEmailVerification& - & - & - \\
+	OnDeleteAccountClick& - & - & - \\
+	OnDeleteAccountConfirmedClick& - & - & - \\
+	OnEntryClick& - & - & - \\
 	\hline
 	\end{tabular}
 \end{center}
 
-\subsubsection{Local Functions}
+\subsubsection{Access Routine Semantics}
 
-\noindent UpdateDisplay(Message):
+\noindent Start():
 \begin{itemize}
-\item transition: $StatusMessage = Message$ 
-\item output: Scene
-\item exception: $(Auth.LoginResult = false) \rightarrow InvalidLoginException$
+\item transition: $state = 0 \rightarrow default display \lor state = 1 \rightarrow lecture display \lor state = 2 \rightarrow event display$
+\item output: None
+\item exception: None
 \end{itemize}
 
-\noindent GetUserData(user):
+\noindent OnChangePasswordClick():
 \begin{itemize}
-\item transition: $\exists \_email \in Database \Rightarrow Database.UserData$
+\item transition: None
+\item output: Update Display
+\item exception: None
+\end{itemize}
+
+\noindent OnSavePasswordClick():
+\begin{itemize}
+\item transition: $Button clicked \rightarrow Update Display \land AuthConnector.Instance.CurrentUser.UpdataPasswordAsync(User Input)$
+\item output: None
+\item exception: None
+\end{itemize}
+
+\noindent OnReturnClick():
+\begin{itemize}
+\item transition: None
+\item output: Update Display
+\item exception: None
+\end{itemize}
+
+\noindent OnEditClick():
+\begin{itemize}
+\item transition: $Button clicked \rightarrow Update Display \land Populate Field$
+\item output: None
+\item exception: None
+\end{itemize}
+
+\noindent OnCancelClick():
+\begin{itemize}
+\item transition: $Button clicked \rightarrow (state = 0 \rightarrow Update Display) \lor (state = 1 \rightarrow Load Lecture Scene) \lor (state = 2 \rightarrow Load Event Scene)$
+\item output: None
+\item exception: None
+\end{itemize}
+
+\noindent OnSaveClick():
+\begin{itemize}
+\item transition: $Button clicked \rightarrow Update Display \land UpdateDBdata \land GetImage \land GetDBdata$
+\item output: None
+\item exception: None
+\end{itemize}
+
+\noindent OnBookmarkedLectureClick():
+\begin{itemize}
+\item transition: None
+\item output: Update Display
+\item exception: None
+\end{itemize}
+
+\noindent OnBookmarkedEventClick():
+\begin{itemize}
+\item transition: None
+\item output: Update Display
+\item exception: None
+\end{itemize}
+
+\noindent OnEmailVerificationClick():
+\begin{itemize}
+\item transition: $Button clicked \rightarrow SendEmailVerification$
+\item output: None
+\item exception: None
+\end{itemize}
+
+\noindent OnDeleteAccountClick():
+\begin{itemize}
+\item transition: $Button clicked \rightarrow DeleteAccountConfirmed$
+\item output: None
+\item exception: None
+\end{itemize}
+
+\noindent OnDeleteAccountConfirmedClick():
+\begin{itemize}
+\item transition: $Button clicked \rightarrow AuthConnector.Instance.Auth.CurrentUser.DeleteAsync()$
+\item output: Update Display
+\item exception: None
+\end{itemize}
+
+\noindent OnEntryClick():
+\begin{itemize}
+\item transition: $Button clicked \rightarrow (Lecture \rightarrow Lecture Scene) \lor (Event \rightarrow Event Scene)$
+\item output: Update Display
+\item exception: None
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent Favorites():
+\begin{itemize}
+\item transition: $getPinnedLectures \land getPinnedEvents \rightarrow update data$
 \item output: $User = UserData$
+\item exception: None
+\end{itemize}
+
+\noindent getPinnedLectures():
+\begin{itemize}
+\item transition: None
+\item output: $onCallBack = DatabaseConnector(queryUser.Lectures)$
+\item exception: None
+\end{itemize}
+
+\noindent GetPinnedEvents():
+\begin{itemize}
+\item transition: None
+\item output: $onCallBack = DatabaseConnector(queryUser.Events)$
+\item exception: None
+\end{itemize}
+
+\noindent GetDBdata():
+\begin{itemize}
+\item transition: None
+\item output: $onCallBack = DatabaseConnector(queryUser.profile)$
+\item exception: None
+\end{itemize}
+
+\noindent GetImage():
+\begin{itemize}
+\item transition: None
+\item output: $onCallBack = DatabaseConnector(queryUser.image)$
+\item exception: None
+\end{itemize}
+
+\noindent UpdateDBdata():
+\begin{itemize}
+\item transition: $DatabaseConnector.SetValueAsync(User Input)$
+\item output: None
+\item exception: None
+\end{itemize}
+
+\noindent SendEmailVerification():
+\begin{itemize}
+\item transition: $AuthConnector.Instance.CurrentUser.SendEmailVerificationAsync() \rightarrow notification.text = ``Email verification sent!'' \lor notification.text = ``Email verification failed!'' \land Update Display$
+\item output: None
 \item exception: None
 \end{itemize}
 
@@ -1269,7 +1178,7 @@ The user exists and the current user is logged in already.
 
 \begin{itemize}
 	\item Placeholder: set of Strings
-	\item Scene: Unity Scene that contains the default UI page
+	\item Scenes (Display): Unity Scene that contains the default UI page
 \end{itemize}
 
 \newpage
@@ -1278,7 +1187,7 @@ The user exists and the current user is logged in already.
 
 \subsection{Module}
 
-User Login
+AuthManager
 
 \subsection{Uses}
 
@@ -1297,7 +1206,15 @@ None
 	\hline
 	\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 	\hline
-	UpdateDisplay & String & Scene & - \\
+	OnLoginButtonClick & - & - & InvalidLoginException \\
+	OnRegisterButtonClick & - & - & - \\
+	OnForgetPasswordButtonClick& - & - & - \\
+	OnForgetPasswordSubmitButtonClick& - & - & - \\
+	Login& String,String & - & InvalidLoginException \\
+	Register& String, String, String & - & InvalidRegisterException \\
+	ForgetPassword& String & - & - \\
+	OnAgreeToConsentButtonClick& - & - & - \\
+	OnDisagreeToConsentButtonClick& - & - & - \\
 	\hline
 	\end{tabular}
 \end{center}
@@ -1316,15 +1233,42 @@ None
 
 \subsubsection{Assumptions}
 
-The user is logged in already.
-
+None
 \subsubsection{Access Routine Semantics}
 
-\noindent UpdateDisplay(Message):
+\noindent OnLoginButtonClick():
 \begin{itemize}
-\item transition: $StatusMessage = Message$ 
-\item output: Scene
-\item exception: $(Auth.LoginResult = false) \rightarrow InvalidLoginException$
+\item transition: $Login$ 
+\item output: Update Display
+\item exception: None
+\end{itemize}
+
+\noindent OnRegisterButtonClick():
+\begin{itemize}
+	\item transition: $Register$ 
+	\item output: Update Display
+	\item exception: None
+\end{itemize}
+
+\noindent OnForgotPasswordButtonClick():
+\begin{itemize}
+	\item transition: $forgetEmailField.text := ``''$ 
+	\item output: Update Display
+	\item exception: None
+\end{itemize}
+
+\noindent OnAgreeToConsentButtonClick():
+\begin{itemize}
+	\item transition: None
+	\item output: Update Display
+	\item exception: None
+\end{itemize}
+
+\noindent OnDisagreeToConsentButtonClick():
+\begin{itemize}
+	\item transition: None
+	\item output: Update Display
+	\item exception: None
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -1332,8 +1276,22 @@ The user is logged in already.
 \noindent Login(\_email, \_password):
 \begin{itemize}
 \item transition: $\exists <\_email, \_password> \in Authentication \rightarrow User = Auth.LoginResult$ 
-\item output: true if the credential is correct, false otherwise
+\item output: Update Display 
 \item exception: $(Auth.LoginResult = false) \rightarrow InvalidLoginException$
+\end{itemize}
+
+\noindent Register(\_email, \_password, \_username):
+\begin{itemize}
+\item transition: $\exists <\_email, \_password> \notin Authentication \rightarrow AuthConnector.Instance.Auth.CreateUserWithEmailAndPasswordAsync(\_email,\_password,\_username)$ 
+\item output: Update Display
+\item exception: $(Auth.RegisterResult = false) \rightarrow InvalidRegisterException$
+\end{itemize}
+
+\noindent ForgotPassword(\_email):
+\begin{itemize}
+\item transition: $\exists <\_email> \in Authentication \rightarrow AuthConnector.Instance.Auth.SendPasswordResetEmailAsync()$ 
+\item output: Update Display
+\item exception: None
 \end{itemize}
 
 \subsubsection{Local Constants}
