@@ -83,16 +83,22 @@ public class Pagination<T>
 
     public int NextPage()
     {
-        if (CurrentPage == MaxPage) return -1;
-        CurrentPage = CurrentPage + 1;
-        return CurrentPage;
+        if (currentPage == maxPage)
+        {
+            return currentPage;
+        }
+        currentPage = currentPage + 1;
+        return currentPage;
     }
 
     public int PrevPage()
     {
-        if (CurrentPage <= 1) return -1;
-        CurrentPage = CurrentPage - 1;
-        return CurrentPage;
+        if (currentPage <= 1)
+        {
+            return currentPage;
+        }
+        currentPage = currentPage - 1;
+        return currentPage;
     }
 
     public int LastPage()
