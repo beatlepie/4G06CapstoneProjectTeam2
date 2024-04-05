@@ -1,5 +1,7 @@
 # Automated tests
 
-The folders and files for this folder are as follows:
+The folder contains the automated tests for Campus Connections.
 
-Describe ...
+Unit tests are located under CampusConnectionsTest/Assets/Editor/*.cs files.
+
+This test project copies over the code from Campus Connections source code and runs the automated test separately due to GitHub Actions being unable to properly import large local packages.
