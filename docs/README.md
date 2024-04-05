@@ -40,4 +40,3 @@ The documents are as follows:
 - [Verification and Validation Report](VnVReport/)
 - [Project Management & Team Contribution](projMngmnt)
 - [Reflection](Reflection/)
-- [User Guide](UserGuide/)
