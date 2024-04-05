@@ -79,7 +79,7 @@ public class Pagination<T>
     {
         if (currentPage == maxPage)
         {
-            return -1;
+            return currentPage;
         }
         currentPage = currentPage + 1;
         return currentPage;
@@ -89,7 +89,7 @@ public class Pagination<T>
     {
         if (currentPage <= 1)
         {
-            return -1;
+            return currentPage;
         }
         currentPage = currentPage - 1;
         return currentPage;

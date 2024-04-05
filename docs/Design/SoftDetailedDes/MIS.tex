@@ -55,7 +55,8 @@ urlcolor=cyan          % color of external links
 \midrule
 Jan 15 & 1.0 & Add introduction and module decomposition\\
 Jan 17 & 1.0 & Revision 0\\
-Apr 4  & 1.1 & Revision 1: Updated MIS to be consisted with design changes, implemented feedback, added new modules\\
+Apr 4  & 1.1 & Revision 1: Resolve TA feedback; Updated MIS to be consisted with design changes, implemented feedback, added new modules\\
+
 \bottomrule
 \end{tabularx}
 
@@ -864,17 +865,18 @@ HEIGHT = 150 px
 
 \subsection{Module}
 
-ActivityDetailView
+ActivityDetailView(T)
 
 \subsection{Uses}
 
-Database Module, Permission Module
+DBConnector Module,  AuthConnector Module
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-
-None
+none
+\subsubsection{Exported Type}
+ActivityDetailView = ?
 
 \subsubsection{Exported Access Programs}
 \begin{center}
@@ -882,12 +884,13 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-ViewActivities & - & - & - \\
-AddActivity & Activity & - & InvalidPermission Exception \\
-EditActivity & Activity, Activity & - & IndexOutofBound Exception, InvalidPermission Exception \\
-DeleteActivity & Activity & - & IndexOutofBound Exception, InvalidPermission Exception \\
-PinActivity & Activity & - & - \\
-UnpinActivity & Activity & - & IndexOutofBound Exception \\
+new ActivityDetailView & T & - & - \\
+ViewActivity & - & T & -\\ 
+AddActivity & T & - & - \\
+EditActivity & T, T & - & - \\
+DeleteActivity & T & - & - \\
+BookmarkActivity & T, String & - & - \\
+UnbookmarkActivity & T, String & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -897,24 +900,32 @@ UnpinActivity & Activity & - & IndexOutofBound Exception \\
 \subsubsection{State Variables}
 
 \begin{itemize}
-  \item activities: set of Activity
-  \item pinnedActivities: set of Activity
+  \item activity: set of T
+  \item bookmarkedActivities: set of T
+  \item bookmarked: $\mathbb{B}$
 \end{itemize}
 
 \subsubsection{Environment Variables}
 
-None
+none
 
 \subsubsection{Assumptions}
 
-The singleton module Permission is accessible from this module.
+none
 
 \subsubsection{Access Routine Semantics}
 
+\noindent new ActivityDetailView(clickedEntry):
+\begin{itemize}
+\item transition: $activity, bookmarkedActivities, bookmarked:= clickedEntry,\\ Bookmarked(AuthConnector.CurrentUser.Email), activity \in bookmarkedActivities$
+\item output: $out := self$
+\item exception: none
+\end{itemize}
+
 \noindent ViewActivities():
 \begin{itemize}
-\item transition: Display activities
-\item output: none
+\item transition: none
+\item output: $out := activity$
 \item exception: none
 \end{itemize}
 
@@ -922,42 +933,45 @@ The singleton module Permission is accessible from this module.
 \begin{itemize}
 \item transition: $activities := activities + \{newActivity\}$
 \item output: none
-\item exception: $exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
+\item exception: none
 \end{itemize}
 
 \noindent EditActivity(targetActivity, editedActivity):
 \begin{itemize}
 \item transition: $activities := activities - \{targetActivity\} + \{editedActivity\}$
 \item output: none
-\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\ 
-                  exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
+\item exception: none
 \end{itemize}
 
 \noindent DeleteActivity(targetActivity):
 \begin{itemize}
 \item transition: $activities := activities - \{targetActivity\}$
 \item output: none
-\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\
-                  exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
+\item exception: none
 \end{itemize}
 
-\noindent PinActivity(newActivity):
+\noindent BookmarkActivity(newActivity, targetID):
 \begin{itemize}
-\item transition: $pinnedActivities := pinnedActivities + \{newActivity\}$
+\item transition: $bookmarkedActivities, bookmarked := bookmarkedActivities + \{newActivity\},\\activity \in bookmarkedActivities;\\DBConnector.Root.Child(AuthConnector.CurrentUser.Email).Child(T).Child(targetID).\\.setAsycValue(newActivity.ToJSON())$
 \item output: none
 \item exception: none
 \end{itemize}
 
-\noindent UnpinActivity(targetActivity):
+\noindent UnbookmarkActivity(targetActivity, targetID):
 \begin{itemize}
-\item transition: $pinnedActivities := pinnedActivities - \{targetActivity\}$
+\item transition: $bookmarkedActivities, bookmarked := bookmarkedActivities - \{targetActivity\}, \\activity \in bookmarkedActivities;\\DBConnector.Root.Child(AuthConnector.CurrentUser.Email).Child(T).\\Child(targetID).setValueAsyc(null)$
 \item output: none
 \item exception: $exc := targetActivity \notin pinnedActivities \Rightarrow IndexOutofBound Exception$
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-None
+\noindent Bookmarked(\_email):
+\begin{itemize}
+\item transition: none
+\item output: $out := <new \ T(data)> | data \in DBConnector.Root.Child(_email).Child(T)$
+\item exception: none
+\end{itemize}
 
 \subsubsection{Local Constants}
 
@@ -969,104 +983,14 @@ None
 
 \subsection{Module}
 
-LectureDetailView\\
-Inherit Activity Detail View Module (Activity Detail View $<$Lecture$>$)
+LectureDetailView (ActivityDetailView$<$Lecture$>$)
+
 \subsection{Uses}
 
-Activity Detail View Module, Lecture Module
+DBConnector Module,  AuthConnector Module, Lecture Module
 
 \subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-None
-
-\subsubsection{Exported Access Programs}
-\begin{center}
-\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-ViewActivities & - & - & - \\
-AddActivity & Lecture & - & InvalidPermission Exception \\
-EditActivity & Lecture, Lecture & - & IndexOutofBound Exception, InvalidPermission Exception \\
-DeleteActivity & Lecture & - & IndexOutofBound Exception, InvalidPermission Exception \\
-PinActivity & Lecture & - & - \\
-UnpinActivity & Lecture & - & IndexOutofBound Exception \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-\begin{itemize}
-  \item activities: set of Lecture
-  \item pinnedActivities: set of Lecture
-\end{itemize}
-
-\subsubsection{Environment Variables}
-
-None
-
-\subsubsection{Assumptions}
-
-The singleton module Permission is accessible from this module.
-
-\subsubsection{Access Routine Semantics}
-
-\noindent ViewActivities():
-\begin{itemize}
-\item transition: Display lectures
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent AddActivity(newActivity):
-\begin{itemize}
-\item transition: $activities := activities + \{newActivity\}$
-\item output: none
-\item exception: $exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
-\end{itemize}
-
-\noindent EditActivity(targetActivity, editedActivity):
-\begin{itemize}
-\item transition: $activities := activities - \{targetActivity\} + \{editedActivity\}$
-\item output: none
-\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\ 
-                  exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
-\end{itemize}
-
-\noindent DeleteActivity(targetActivity):
-\begin{itemize}
-\item transition: $activities := activities - \{targetActivity\}$
-\item output: none
-\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\
-                  exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
-\end{itemize}
-
-\noindent PinActivity(newActivity):
-\begin{itemize}
-\item transition: $pinnedActivities := pinnedActivities + \{newActivity\}$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent UnpinActivity(targetActivity):
-\begin{itemize}
-\item transition: $pinnedActivities := pinnedActivities - \{targetActivity\}$
-\item output: none
-\item exception: $exc := targetActivity \notin pinnedActivities \Rightarrow IndexOutofBound Exception$
-\end{itemize}
-
-\subsubsection{Local Functions}
-
-None
-
-\subsubsection{Local Constants}
-
-None
+\textbf{The rest of the sections of the module is the same as ActivityDetailView}
 
 \newpage
 
@@ -1074,104 +998,13 @@ None
 
 \subsection{Module}
 
-EventDetailView\\
-Inherit Activity Detail View Module (Activity Detail View $<$Event$>$)
+EventDetailView (Activity Detail View $<$Event$>$)
 \subsection{Uses}
 
 Activity Detail View Module, Event Module
 
 \subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-None
-
-\subsubsection{Exported Access Programs}
-\begin{center}
-\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-ViewActivities & - & - & - \\
-AddActivity & Event & - & InvalidPermission Exception \\
-EditActivity & Event, Event & - & IndexOutofBound Exception, InvalidPermission Exception \\
-DeleteActivity & Event & - & IndexOutofBound Exception, InvalidPermission Exception \\
-PinActivity & Event & - & - \\
-UnpinActivity & Event & - & IndexOutofBound Exception \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-\begin{itemize}
-  \item activities: set of Event
-  \item pinnedActivities: set of Event
-\end{itemize}
-
-\subsubsection{Environment Variables}
-
-None
-
-\subsubsection{Assumptions}
-
-The singleton module Permission is accessible from this module.
-
-\subsubsection{Access Routine Semantics}
-
-\noindent ViewActivities():
-\begin{itemize}
-\item transition: Display events
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent AddActivity(newActivity):
-\begin{itemize}
-\item transition: $activities := activities + \{newActivity\}$
-\item output: none
-\item exception: $exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
-\end{itemize}
-
-\noindent EditActivity(targetActivity, editedActivity):
-\begin{itemize}
-\item transition: $activities := activities - \{targetActivity\} + \{editedActivity\}$
-\item output: none
-\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\ 
-                  exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
-\end{itemize}
-
-\noindent DeleteActivity(targetActivity):
-\begin{itemize}
-\item transition: $activities := activities - \{targetActivity\}$
-\item output: none
-\item exception: $exc := targetActivity \notin activities \Rightarrow IndexOutofBound Exception,\\
-                  exc := \neg Permission.isAdmin \Rightarrow InvalidPermission Exception$
-\end{itemize}
-
-\noindent PinActivity(newActivity):
-\begin{itemize}
-\item transition: $pinnedActivities := pinnedActivities + \{newActivity\}$
-\item output: none
-\item exception: none
-\end{itemize}
-
-\noindent UnpinActivity(targetActivity):
-\begin{itemize}
-\item transition: $pinnedActivities := pinnedActivities - \{targetActivity\}$
-\item output: none
-\item exception: $exc := targetActivity \notin pinnedActivities \Rightarrow IndexOutofBound Exception$
-\end{itemize}
-
-\subsubsection{Local Functions}
-
-None
-
-\subsubsection{Local Constants}
-
-None
+\textbf{The rest of the sections of the module is the same as ActivityDetailView}
 
 \newpage
 
@@ -1447,7 +1280,7 @@ Lecture List Manager
 
 \subsection{Uses}
 
-Lecture Module, Pagination and Filter Module
+Lecture Module, PaginationNFilter$<$Lecture$>$ Module, DBConnector Module,\\ ActivityDetailView$<$Lecture$>$
 
 \subsection{Syntax}
 
@@ -1460,15 +1293,16 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-LectureList & - & - & -\\
-Display & - & - & - \\
-OnClickLecture & Lecture & - & IllegalArgument Exception\\ 
+init & - & - & -\\
+Display & $<$Lecture$>$ & - & - \\
+OnClickLecture & Lecture & - & -\\ 
 nextPage & - & - &  -\\
 prevPage & - & - &  -\\
 firstPage & - & - &  -\\
 lastPage & - & - &  -\\
-filter & String & - & -\\
 AddLecture & Lecture & - & - \\
+DeleteLecture & Lecture & - & - \\
+FilterLecture & String, String & $<$Lecture$>$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1478,9 +1312,8 @@ AddLecture & Lecture & - & - \\
 \subsubsection{State Variables}
 
 \begin{itemize}
-\item lecList: $<$Lecture$>$, displayed lectures
-\item pageNum: $\mathbb{N}$, current page
-\item keyword: String, filter keyword
+\item lecList: PaginationNFilter$<$Lecture$>$, displayed lectures
+\item lecDetailView: ActivitDetailView$<$Lecture$>$, details of the lecture the user clicks on
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -1489,44 +1322,91 @@ None
 
 \subsubsection{Assumptions}
 
-None
+LectureListManager.init() is called before any other access program.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent LectureList():
+\noindent init():
 \begin{itemize}
-\item transition: $lecList, pageNum, keyword := $all lectures in the database, 1, null
+\item transition: $lecList := new PaginationNFilter<Lecture>(allLecture(), `code', `') $
 \item output: none
 \item exception: none
 \end{itemize}
 
 \noindent Display():
 \begin{itemize}
-\item transition: Display a list of lecture displayedLecs, where $displayedLecs := \\lecList.filter(keyword)[(pageNum-1) * PAGECOUNT, pageNum * PAGECOUNT]$
-\item output: none
+\item transition: Display lecture entries of the list in the current page on the screen
+\item output: $out := currentPage*PageCount < lecList.filteredList.length \Rightarrow \\lecList.filteredList[(currentPage-1)*PageCount, (currentPage)*pageCount]\\ |\ lecList.filteredList[(currentPage - 1)*PageCount:]$
 \item exception: none
 \end{itemize}
 
 \noindent OnClickLecture(targetLec):
 \begin{itemize}
-\item transition: Switch to Lecture Detail view with targetLec
+\item transition: $lecDetailView := new\ ActivityDetailView<Lecture>(targetLec)$
 \item output: none
-\item exception: $exc := targetLec \notin lecList \Rightarrow IllegalArgument Exception$
+\item exception: none
+\end{itemize}
+
+\noindent nextPage():
+\begin{itemize}
+\item transition: $lecList.nextPage()$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent prevPage():
+\begin{itemize}
+\item transition: $lecList.prevPage()$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent firstPage():
+\begin{itemize}
+\item transition: $lecList.firstPage$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent lastPage():
+\begin{itemize}
+\item transition: $lecList.lastPage$
+\item output: none
+\item exception: none
 \end{itemize}
 
 \noindent AddLecture(newLec):
 \begin{itemize}
-\item transition: $lecList := PagniationandFilter.Add(lecList, newLec)$
+\item transition: $lecList.Add(newLec);\\DBConnector.Root.Child(Lecture).Child(newLec.code).setAsyncValue(newLec.ToJSON())$
 \item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DeleteLecture(targetLec):
+\begin{itemize}
+\item transition: $lecList.Remove(newLec);\\DBConnector.Root.Child(Lecture).Child(newLec.code).setAsyncValue(null))$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent FilterLecture(filterBy, filterString):
+\begin{itemize}
+\item transition: $lecList.filterBy, lecList.filterString := filterBy, filterString;\\lecList.filter(); Display()$
+\item output: $out := lecList.filteredlist$
 \item exception: none
 \end{itemize}
 \subsubsection{Local Functions}
 
-None
+\noindent AllLectures():
+\begin{itemize}
+\item transition: none
+\item output: A list of lectures retrieved from the DBConnector.Root
+\item exception: none
+\end{itemize}
 
 \subsubsection{Local Constants}
 
-PAGECOUNT = 10
+None
 
 \newpage
 
@@ -1538,7 +1418,7 @@ Event List Manager
 
 \subsection{Uses}
 
-Event Module, Pagination and Filter Module
+Event Module, PaginationNFilter$<$Event$>$ Module, DBConnector Module,\\ ActivityDetailView$<$Event$>$
 
 \subsection{Syntax}
 
@@ -1551,15 +1431,16 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-EventList & - & - & -\\
-Display & - & - & - \\
-OnClickEvent & Lecture & - & IllegalArgument Exception\\ 
+init & - & - & -\\
+Display & $<$Event$>$ & - & - \\
+OnClickEvent & Event & - & -\\ 
 nextPage & - & - &  -\\
 prevPage & - & - &  -\\
 firstPage & - & - &  -\\
 lastPage & - & - &  -\\
-filter & String & - & -\\
 AddEvent & Event & - & - \\
+DeleteEvent & Event & - & - \\
+FilterEvent & String, String & $<$Event$>$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1569,9 +1450,8 @@ AddEvent & Event & - & - \\
 \subsubsection{State Variables}
 
 \begin{itemize}
-\item eventList: $<$Event$>$, displayed events
-\item pageNum: $\mathbb{N}$, current page
-\item keyword: String, filter keyword
+\item eventList: PaginationNFilter$<$Event$>$, displayed events
+\item eventDetailView: ActivitDetailView$<$Event$>$, details of the event the user clicks on
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -1580,44 +1460,91 @@ None
 
 \subsubsection{Assumptions}
 
-None
+EventListManager.init() is called before any other access program.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent EventList():
+\noindent init():
 \begin{itemize}
-\item transition: $eventList, pageNum, keyword := $all events in the database, 1, null
+\item transition: $eventList := new PaginationNFilter<Event>(allEvent(), `name', `') $
 \item output: none
 \item exception: none
 \end{itemize}
 
 \noindent Display():
 \begin{itemize}
-\item transition: Display a list of event displayedEvents, where $displayedEvents := \\eventList.filter(keyword)[(pageNum-1) * PAGECOUNT, pageNum * PAGECOUNT]$
-\item output: none
+\item transition: Display event entries of the list in the current page on the screen
+\item output: $out := currentPage*PageCount < eventList.filteredList.length \Rightarrow \\eventList.filteredList[(currentPage-1)*PageCount, (currentPage)*pageCount]\\ |\ eventList.filteredList[(currentPage - 1)*PageCount:]$
 \item exception: none
 \end{itemize}
 
 \noindent OnClickEvent(targetEvent):
 \begin{itemize}
-\item transition: Switch to Event Detail view with targetEvent
+\item transition: $eventDetailView := new\ ActivityDetailView<Event>(targetEvent)$
 \item output: none
-\item exception: $exc := targetEvent \notin eventList \Rightarrow IllegalArgument Exception$
+\item exception: none
+\end{itemize}
+
+\noindent nextPage():
+\begin{itemize}
+\item transition: $eventList.nextPage()$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent prevPage():
+\begin{itemize}
+\item transition: $eventList.prevPage()$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent firstPage():
+\begin{itemize}
+\item transition: $eventList.firstPage$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent lastPage():
+\begin{itemize}
+\item transition: $eventList.lastPage$
+\item output: none
+\item exception: none
 \end{itemize}
 
 \noindent AddEvent(newEvent):
 \begin{itemize}
-\item transition: $eventList := PagniationandFilter.Add(eventList, newEvent)$
+\item transition: $eventList.Add(newEvent);\\DBConnector.Root.Child(Event).Child(newEvent.name).setAsyncValue(newEvent.ToJSON())$
 \item output: none
+\item exception: none
+\end{itemize}
+
+\noindent DeleteEvent(targetEvent):
+\begin{itemize}
+\item transition: $lecList.Remove(newEvent);\\DBConnector.Root.Child(Event).Child(newEvent.name).setAsyncValue(null))$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent FilterEvent(filterBy, filterString):
+\begin{itemize}
+\item transition: $eventList.filterBy, lecList.filterString := filterBy, filterString;\\eventList.filter(); Display()$
+\item output: $out := eventList.filteredlist$
 \item exception: none
 \end{itemize}
 \subsubsection{Local Functions}
 
-None
+\noindent AllEvents():
+\begin{itemize}
+\item transition: none
+\item output: A list of events retrieved from the DBConnector.Root
+\item exception: none
+\end{itemize}
 
 \subsubsection{Local Constants}
 
-PAGECOUNT = 10
+None
 
 \newpage
 
@@ -1625,31 +1552,32 @@ PAGECOUNT = 10
 
 \subsection{Module}
 
-Pagination and Filter
+PaginationNFilter(T)
 
 \subsection{Uses}
 
-Database Module, Permission Module
+None
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-None
-
+none
+\subsubsection{Exported Type}
+PaginationNFilter = ?
 \subsubsection{Exported Access Programs}
 \begin{center}
 \begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-Initialize & - & - & -\\
-Display & - & - & - \\
+new PagniationNFilter & $<$T$>$, String, String & - & -\\
 nextPage & - & - &  -\\
 prevPage & - & - &  -\\
 firstPage & - & - &  -\\
 lastPage & - & - &  -\\
-filter & String & - & -\\
-Add & $<$T$>$, Activity & - & - \\
+filter & - & $<$T$>$ & -\\
+Add & T & - & - \\
+Remove & T & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1660,8 +1588,11 @@ Add & $<$T$>$, Activity & - & - \\
 
 \begin{itemize}
 \item list: $<$T$>$, displayed entries
-\item pageNum: $\mathbb{N}$, current page
-\item keyword: String, filter keyword
+\item filteredList: $<$T$>$, filtered entries
+\item currentPage: $\mathbb{N}$, current page
+\item maxPage: $\mathbb{N}$, max page
+\item filterBy: String, filter option
+\item filterString: String, filter string
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -1670,66 +1601,77 @@ None
 
 \subsubsection{Assumptions}
 
-Activity is a generic type $<$T$>$ and it can be instantiated with type Lecture and Event.\\
-The singleton module Permission is accessible from this module.
+T has an attribute that can be compared.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent Initialize():
+\noindent new PaginationNFilter(entries,  filterBy, filterString):
 \begin{itemize}
-\item transition: $list, pageNum, keyword := $all type T entries in the database, 1, null
-\item output: none
+\item transition: $list, currentPage, filterBy, filterString := entries, 1, filterBy, filterString;\\filter()$
+\item output: $out := self$
 \item exception: none
 \end{itemize}
 
-\noindent Display():
+\noindent filter():
 \begin{itemize}
-\item transition: Display a list of event T, where $T := \\list.filter(keyword)[(pageNum-1) * PAGECOUNT, pageNum * PAGECOUNT]$
-\item output: none
+\item transition: $filteredList, maxPage, currentPage := < entry >\ |\ entry \in list\ \land\ entry[filterBy].contains(filterString),UpdateMax(filteredList), 1$
+\item output: $out := filterList$
 \item exception: none
 \end{itemize}
 
 \noindent nextPage():
 \begin{itemize}
-\item transition: $pageNum * PAGECOUNT < list.legnth \Rightarrow pageNum := pageNum + 1$
-\item output: none
+\item transition: $currentPage < maxPage \Rightarrow currentPage := currentPage + 1 $
+\item output: $out := currentPage$
 \item exception: none
 \end{itemize}
 
 \noindent prevPage():
 \begin{itemize}
-\item transition: $pageNum > 1 \Rightarrow pageNum := pageNum - 1$
-\item output: none
+\item transition: $currentPage > 1 \Rightarrow currentPage := currentPage - 1 $
+\item output: $out := currentPage$
 \item exception: none
 \end{itemize}
 
 \noindent firstPage():
 \begin{itemize}
-\item transition: $pageNum := 1$
-\item output: none
+\item transition: $currentPage := 1$
+\item output: $out := currentPage$
 \item exception: none
 \end{itemize}
 
 \noindent lastPage():
 \begin{itemize}
-\item transition: $pageNum := int(list/PAGECOUNT) + 1$
-\item output: none
+\item transition: $currentPage := maxPage$
+\item output: $out := currentPage$
 \item exception: none
 \end{itemize}
 
 \noindent Add(list, T):
 \begin{itemize}
-\item transition: none
-\item output: $out := Permission.isAdmin \Rightarrow list := list + \{T\}$ and update database
+\item transition: $list := list + \{T\}; filter()$
+\item output: none
+\item exception: none
+\end{itemize}
+
+\noindent Remove(list, T):
+\begin{itemize}
+\item transition: $list := list - \{T\}; filter()$
+\item output: none
 \item exception: none
 \end{itemize}
 \subsubsection{Local Functions}
 
-None
+\noindent UpdateMaxPage(entries):
+\begin{itemize}
+\item transition: none
+\item output: $out := entries.length = 0 \Rightarrow 1\ |\ entries.length \mod PageCount\\ \Rightarrow entries.length/PageCount\ |\ \lceil entries.length/PageCount \rceil$
+\item exception: none
+\end{itemize}
 
 \subsubsection{Local Constants}
 
-PAGECOUNT: number of entries shown in one page
+PageCount: 10
 
 \newpage
 
