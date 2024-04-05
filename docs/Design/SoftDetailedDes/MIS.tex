@@ -957,7 +957,7 @@ ActivityDetailView = ?
 new ActivityDetailView & T & - & - \\
 ViewActivity & - & T & -\\ 
 AddActivity & T & - & - \\
-EditActivity & T, T & - & - \\
+EditActivity & String, T & - & - \\
 DeleteActivity & T & - & - \\
 BookmarkActivity & T, String & - & - \\
 UnbookmarkActivity & T, String & - & - \\
@@ -981,7 +981,7 @@ none
 
 \subsubsection{Assumptions}
 
-none
+All T has an attribute ID, which stands for the identity of the element.
 
 \subsubsection{Access Routine Semantics}
 
@@ -1006,9 +1006,9 @@ none
 \item exception: none
 \end{itemize}
 
-\noindent EditActivity(targetActivity, editedActivity):
+\noindent EditActivity(targetID, editedActivity):
 \begin{itemize}
-\item transition: $activities := activities - \{targetActivity\} + \{editedActivity\}$
+\item transition: $\forall activity in activities\ |\ activity := activity.ID = targetID \Rightarrow editedActivity\ |\ activity$
 \item output: none
 \item exception: none
 \end{itemize}
