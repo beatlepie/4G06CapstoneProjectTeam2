@@ -158,12 +158,12 @@ The following table is taken directly from the Module Guide document for this pr
 
 \multirow{7}{0.3\textwidth}{Behaviour-Hiding}
 & AR Interface Module\\
-& Map Interface Module\\
+& RealTimeMap Module\\
 & User Module\\
 & Lecture Module\\
 & Event Module\\
-& Account Module\\
-& Permission Module\\
+& DBConnector Module\\
+& AuthConnector Module\\
 & User Profile Module\\
 & User Login Module\\
 & Friend Manager Module\\ 
@@ -173,6 +173,7 @@ The following table is taken directly from the Module Guide document for this pr
 & Event Detail View Module\\
 & Lecture List Manager Module\\
 & Event List Manager Module\\
+& Notification Module\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision}
@@ -1672,6 +1673,74 @@ T has an attribute that can be compared.
 \subsubsection{Local Constants}
 
 PageCount: 10
+
+\newpage
+
+\section{MIS of Notification Module} \label{mNoti}
+
+\subsection{Module}
+
+Notification
+
+\subsection{Uses}
+
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+none
+
+\subsubsection{Exported Access Programs}
+\begin{center}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{4cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+new Notification & String & - & -\\
+close & - & - &  -\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+\item message: String, notification message
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent new Notification(message):
+\begin{itemize}
+\item transition: $message := message;$Display the message on the screen
+\item output: $out := self$
+\item exception: none
+\end{itemize}
+
+\noindent close():
+\begin{itemize}
+\item transition: Hide the message
+\item output: none
+\item exception: none
+\end{itemize}
+\subsubsection{Local Functions}
+
+None
+
+\subsubsection{Local Constants}
+
+None
 
 \newpage
 
