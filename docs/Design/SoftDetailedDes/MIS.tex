@@ -95,6 +95,11 @@ Complementary documents include the System Requirement Specifications (SRS)
 and Module Guide. (MG)  The full documentation and implementation can be
 found at \url{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/SRS-Volere/SRS.pdf} and \url{https://github.com/beatlepie/4G06CapstoneProjectTeam2/blob/main/docs/Design/SoftArchitecture/MG.pdf}
 
+\section{Note about Exceptions}
+Exceptions have been omitted from several access routines due to the error handling systems provided by Unity.
+During development, it was discovered that Unity hides errors and gracefully handles exceptions making it redundant to use custom exception handling.
+We decided to omit the exception that were thrown by the underlying Unity classes as we felt that was not abstract and was not appropriate for an MIS. 
+
 \section{Notation}
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
@@ -128,6 +133,7 @@ user & User & see MIS of User Module \\
 scene & Scene & a user interface created in Unity \\
 database reference & DatabaseReference & reference to the root location of a database \\
 server connection & Connection & A WebSocket-based connection to the backend server \\
+game object & GameObjecy & Data type used by the Unity engine to represent 3D Objects \\
 
 
 \bottomrule
@@ -192,6 +198,50 @@ The following table is taken directly from the Module Guide document for this pr
 \end{table}
 
 \newpage
+
+\section{MIS of Hardware-Hiding Module} \label{mHH}
+
+\subsection{Module}
+
+Hardware
+
+This module is dependent on the physical device used and is implemented by the operating system of the device.
+
+\subsection{Uses}
+
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+Implemented by OS.
+
+\subsubsection{Exported Access Programs}
+
+Implemented by OS.
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+Implemented by OS.
+
+\subsubsection{Environment Variables}
+
+Implemented by OS.
+
+\subsubsection{Assumptions}
+
+Assume the device has a working Camera, GPS and Network card and all neccessary firmware and drivers to run the application.
+
+\subsubsection{Access Routine Semantics}
+
+Implemented by OS.
+
+\subsubsection{Local Functions}
+
+Implemented by OS.
 
 \section{MIS of User Module} \label{mUser}
 
@@ -701,7 +751,7 @@ FriendManager
 
 \subsection{Uses}
 
-Account Module, Chat Module, Unity Transform Type
+DBConnector, AuthConnector, Notification
 
 \subsection{Syntax}
 
@@ -714,11 +764,12 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-DisplayFriendList & - & $<$Tranform$>$ & - \\
-onClickDeleteFriend & User & - & IndexOutofBound Exception\\
-onClickViewFriend & User & - & IndexOutofBound Exception\\
-onClickMessageFriend & User & 2D seq of pixels & IndexOutofBound Exception\\
-onClickSendRequest & User & $\mathbb{B}$ & -\\
+Init & - & - & - \\
+DisplayFriendList & - & \textlangle GameObject\textrangle & - \\
+DeleteFriend & String & - & - \\
+ViewFriend & String & - & - \\
+StartChat & String & - & - \\
+SendRequest & String & - & -\\
 \hline
 \end{tabular}
 \end{center}
@@ -727,56 +778,65 @@ onClickSendRequest & User & $\mathbb{B}$ & -\\
 
 \subsubsection{State Variables}
 
-None
+\begin{itemize}
+\item email: String
+\item friends: List\textless User\textgreater
+\end{itemize}
 
 \subsubsection{Environment Variables}
 
-None
-
 \subsubsection{Assumptions}
 
-Assume the singleton Account is accessible from this module.
+Assume Init() is called first when this module is loaded.
 
 \subsubsection{Access Routine Semantics}
+
+\noindent Init():
+\begin{itemize}
+\item transition: $email :=$ AuthConnector.CurrentUser.Email
+\item output: none
+\item exception: none
+\end{itemize}
 
 \noindent DisplayFriendList():
 \begin{itemize}
 \item transition: none
-\item output: $out := friendContainer\ where\ (\forall x : \mathbb{Z} | 0 \leq x \leq Account.friends.length:\\ friendsContainer[i].position, friendsContainer[i].content =\\ (0, i*HEIGHT), Account.friends[i])$,
+\item output: $out := friendsContainer\ where\ (\forall i : \mathbb{Z} | 0 \leq i \leq friends.length:\\ friendsContainer[i].position, friendsContainer[i].content =\\ (0, i*HEIGHT), friends[i])$,
 \item exception: none
 \end{itemize}
 
-\noindent onClickDeleteFriend(targetUser):
+\noindent DeleteFriend($friendEmail$):
 \begin{itemize}
-\item transition: Account.DeleteFriend(targetUser)
+\item transition: DBConnector.SetValue("users/$email$/friends/$friendEmail$", $null$)
 \item output: none
-\item exception: $exc := targetUser.email \notin Account.User.friends \Rightarrow IndexOutofBound Exception$
+\item exception: none
 \end{itemize}
 
-\noindent onClickViewFriend(targetUser):
+\noindent ViewFriend($friendEmail$):
 \begin{itemize}
-\item transition: Switch scene to user profile where User = targetUser
+\item transition: Load user profile page of User $u$ where $u.Email \equiv friendEmail$ 
 \item output: none
-\item exception: $exc := targetUser.email \notin Account.User.friends \Rightarrow IndexOutofBound Exception$
+\item exception: none
 \end{itemize}
 
-\noindent onClickMessageFriend(targetUser):
+\noindent StartChat($friendEmail$):
 \begin{itemize}
-\item transition: Call Chat Module to establish a connection
-\item output: UI of friend chat between Account.User and targetUser
-\item exception: $exc := targetUser.email \notin Account.User.friends \Rightarrow IndexOutofBound Exception$
+\item transition: Load chat scene with User $u$ where $u.Email \equiv friendEmail$
+\item output: none
+\item exception: none
 \end{itemize}
 
-\noindent onClickSendRequest(targetUser):
+\noindent SendRequest($friendEmail$):
 \begin{itemize}
-\item transition: targetUser.AddRequest(Account1.User.email) if the current user has not send a request yet
-\item output: $Account1.User.email \notin targetUser.friendRequest$
+\item transition: DBConnector.AddRequest($friendEmail$, $email$) if the current user has not send a request yet
+\item output: none
 \item exception: none
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-None
+GetFriends \\
+GetFriends() $\equiv$ $friends :=$ DBConnector.GetValue("users/$email$/friends")
 
 \subsubsection{Local Constants}
 HEIGHT = 300 px
@@ -791,7 +851,7 @@ FriendRequest
 
 \subsection{Uses}
 
-Account Module, Unity Transform Type
+DBConnector, AuthConnector, Notification
 
 \subsection{Syntax}
 
@@ -804,9 +864,10 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-DisplayRequestList & - & $<$Transform$>$ & -\\
-onClickAcceptRequest & User & - & IllegalArgument Exception \\
-onClickIgnoreRequest & User & - & IllegalArgument Exception\\
+Init() & - & - & - \\
+DisplayRequestList & - & \textlangle GameObject\textrangle & -\\
+AcceptRequest & String & - & - \\
+IgnoreRequest & String & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -815,7 +876,10 @@ onClickIgnoreRequest & User & - & IllegalArgument Exception\\
 
 \subsubsection{State Variables}
 
-None
+\begin{itemize}
+	\item email: String
+	\item friendRequests: List\textless String\textgreater
+\end{itemize}
 
 \subsubsection{Environment Variables}
 
@@ -823,39 +887,44 @@ None
 
 \subsubsection{Assumptions}
 
-Assume the singleton Account is accessible from this module.
+Assume Init() is called first when this module is loaded.
 
 \subsubsection{Access Routine Semantics}
-\noindent DisplayRequestList():
+\noindent Init():
 \begin{itemize}
-\item transition: none
-\item output: $out := requestContainer\ where\ (\forall x : \mathbb{Z} | 0 \leq x \leq Account.friendRequests.length:\\ requestContainer[i].position, requestContainer[i].content =\\(0, i*HEIGHT), Account.friendRequests[i])$,
+\item transition: $email :=$ AuthConnector.CurrentUser.Email
+\item output: none
 \item exception: none
 \end{itemize}
 
-\noindent onClickAcceptRequest(targetUser):
+\noindent DisplayRequestList():
 \begin{itemize}
-\item transition: targetUser.friends := targetUser.friends + {Account.User.email}\\Account.User.AddFriend(targetUser)\\$Account.User.DeleteRequest(targetUser)$
-\item output: none
-\item exception: $exc := targetUser \notin Account.User.friendRequests \Rightarrow\\ IllegalArgument Exception$
+\item transition: none
+\item output: $out := requestContainer\ where\ (\forall i : \mathbb{Z} | 0 \leq i \leq friendRequests.length:\\ requestContainer[i].position, requestContainer[i].content =\\(0, i*HEIGHT), friendRequests[i])$,
+\item exception: none
 \end{itemize}
 
-\noindent onClickIgnoreRequest(targetUser):
+\noindent AcceptRequest($targetEmail$):
 \begin{itemize}
-\item transition: $Account.User.DeleteRequest(targetUser)$
+\item transition: DBConnector.SetValue("users/$email$/friends/$targetEmail$", $true$)
 \item output: none
-\item exception: $exc := targetUser \notin Account.User.friendRequests \Rightarrow\\ IllegalArgument Exception$
+\item exception: none
+\end{itemize}
+
+\noindent IgnoreRequest($targetEmail$):
+\begin{itemize}
+\item transition: DBConnector.SetValue("users/$email$/invitations/$targetEmail$", $null$)
+\item output: none
+\item exception: none
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-\noindent UpdateBadge(): String\\
-It returns the content of friend request badge given the request number
-\begin{itemize}
-\item transition: none
-\item output: $out := requestNum = 0 \Rightarrow empty string \\ 0 < requestNum < 100 \Rightarrow requestNum\\ 100 \leq requestNum \Rightarrow 99+$
-\item exception: none
-\end{itemize}
+\noindent UpdateBadge: () \textrightarrow \space String \\
+UpdateBadge $\equiv requestNum = 0 \Rightarrow empty string \\ 0 < requestNum < 100 \Rightarrow requestNum\\ 100 \leq requestNum \Rightarrow 99+$\\
+
+\noindent GetFriendRequests \\
+GetFriendRequests() $\equiv$ $friendRequests :=$ DBConnector.GetValue("users/$email$/invitations")
 
 \subsubsection{Local Constants}
 HEIGHT = 150 px
@@ -1979,10 +2048,6 @@ The AudioPlayer is provided as an environment variable by the Unity engine
 \item exception: none
 \end{itemize}
 
-\subsubsection{Local Types}
-
-GameObject := Data type used by the Unity engine to represent 3D AR Objects
-
 \subsubsection{Local Functions}
 
 None
@@ -2050,7 +2115,7 @@ Real-time Map
 
 \subsection{Uses}
 
-Map Module, Server Module
+Map Module, Server Module, Notification
 
 \subsection{Syntax}
 
@@ -2070,6 +2135,7 @@ SendLocation & RemoteUserLocation & - & - \\
 ReceiveLocation & RemoteUserLocation & - & - \\
 DisplayUserLocations & - & - & - \\
 HandleInputBuilding & - & - & - \\
+DisplayWarningNotification & - & - & - \\
 
 \hline
 \end{tabular}
