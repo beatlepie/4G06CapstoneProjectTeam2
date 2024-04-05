@@ -1,4 +1,11 @@
-# CampusConnections
+<div align="center" >
+  <img src="public/icons/icon-384x384.png" width="192px" height="192px" alt="Logo for CampusConnections" />
+  <br />
+  <h1>CampusConnections</h1>
+  <p>AR Campus Companion app for McMaster Students</p>
+  <p>McMaster University Undergraduate Software Engineering Capstone</p>
+</div>
+<br/>
 
 Developer Names: Firas Elayan, Abhiram Neelamraju, Zihao Du, Matthew Miller, Michael Kim, Waseef Nayeem
 
