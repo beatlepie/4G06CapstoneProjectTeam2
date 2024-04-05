@@ -1,92 +1,96 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Firebase.Database;
 using UnityEngine;
 using Database;
+using UnityEngine.Serialization;
 
+/// <summary>
+/// This class assigns actual value to EventCarouselView.
+/// Author: Zihao Du
+/// Date: 2024-02-20
+/// </summary>
 public class EventCarousel : MonoBehaviour
 {
-    [SerializeField] private EventCarouselView _carouselView;
-    public List<Event> allEvents;
-    [SerializeField] private string _RoomNumUpperRange;
-    [SerializeField] private string _RoomNumLowerRange;
+    [FormerlySerializedAs("_carouselView")] [SerializeField] private EventCarouselView carouselView;
+    private List<Event> _allEvents;
+    [FormerlySerializedAs("_RoomNumUpperRange")] [SerializeField] private string roomNumUpperRange;
+    [FormerlySerializedAs("_RoomNumLowerRange")] [SerializeField] private string roomNumLowerRange;
 
-    void Start()
+    private void Start()
     {
         Setup();
     }
 
     private void Setup()
     {
-        allEvents = new List<Event>();
-        StartCoroutine(GetLectures()); 
+        _allEvents = new List<Event>();
+        StartCoroutine(GetEvents());
     }
 
     private void Cleanup()
     {
-        _carouselView.Cleanup();
+        carouselView.Cleanup();
     }
 
-    IEnumerator GetLectures()
-    {                
-        var publicEventData = DatabaseConnector.Instance.Root.Child("events/public").GetValueAsync();
-        yield return new WaitUntil(predicate: () => publicEventData.IsCompleted);
-        if(publicEventData != null)
-        {
-            DataSnapshot snapshot = publicEventData.Result;
-            foreach (var e in snapshot.Children)
-            {
-               allEvents.Add(Utilities.FormalizeDBEventData(e));
-            }
-        }
-        var privateEventData = DatabaseConnector.Instance.Root.Child("events/private").GetValueAsync();
-        yield return new WaitUntil(predicate: () => privateEventData.IsCompleted);
-        if(privateEventData != null)
-        {
-            DataSnapshot snapshot = privateEventData.Result;
-            foreach (var e in snapshot.Children)
-            {
-               allEvents.Add(Utilities.FormalizeDBEventData(e));
-            }
-        }
-            List<EventCarouselData> items = new List<EventCarouselData>();
-            List<Event> filteredEvents = FilterLecturesbyRoom(allEvents, _RoomNumLowerRange, _RoomNumUpperRange);
-            for(int i = 0; i < filteredEvents.Count; i++)
-            {
-                var spriteResourceKey = $"tex_demo_banner_{((i+2)%3):D2}";
-                var text = filteredEvents[i];
-                EventCarouselData item =  new EventCarouselData(spriteResourceKey, filteredEvents[i], () => Debug.Log($"Clicked: {text}"));
-                items.Add(item);        
-            }
-            _carouselView.Setup(items.ToArray());
-    }
-
-    public static List<Event> FilterLecturesbyRoom(List<Event> allEvents, string LowerBound, string UpperBound)
+    /// <summary>
+    /// Get a list of events from db
+    /// </summary>
+    private IEnumerator GetEvents()
     {
-        // E.g. room JHE 103 - JHE 124
-        // Find the 3 digit room number, check if the part before room number(e.g. JHE A vs JHE ) is the same and compare room number as a integer
-        Regex regex = new Regex(@"\d+");
-        string roomNumU = regex.Match(UpperBound).Value;
-        string roomNumL = regex.Match(LowerBound).Value;
-        // Assume upperbound and lowerbound have the same prefix
-        string prefix = UpperBound.Split(roomNumU)[0];
-        List<Event> filteredEvents = new List<Event>();
-        foreach (Event e in allEvents)
+        var publicEventData = DatabaseConnector.Instance.Root.Child("events/public").GetValueAsync();
+        yield return new WaitUntil(() => publicEventData.IsCompleted);
+        if (publicEventData != null)
         {
-            string targetRoomNum = regex.Match(e.location).Value;
-            if(string.IsNullOrWhiteSpace(targetRoomNum))
-            {
-                continue;
-            }
-            string targetPrefix = e.location.Split(targetRoomNum)[0];
-            if (int.Parse(targetRoomNum) >= int.Parse(roomNumL) & int.Parse(targetRoomNum) <= int.Parse(roomNumU) & prefix == targetPrefix)
-            {
-                filteredEvents.Add(e);
-            }
+            var snapshot = publicEventData.Result;
+            foreach (var e in snapshot.Children) _allEvents.Add(Utilities.FormalizeDBEventData(e));
         }
+
+        var privateEventData = DatabaseConnector.Instance.Root.Child("events/private").GetValueAsync();
+        yield return new WaitUntil(() => privateEventData.IsCompleted);
+        if (privateEventData != null)
+        {
+            var snapshot = privateEventData.Result;
+            foreach (var e in snapshot.Children) _allEvents.Add(Utilities.FormalizeDBEventData(e));
+        }
+
+        var items = new List<EventCarouselData>();
+        var filteredEvents = FilterLecturesByRoom(_allEvents, roomNumLowerRange, roomNumUpperRange);
+        for (var i = 0; i < filteredEvents.Count; i++)
+        {
+            // randomly choose from 3 background images
+            var spriteResourceKey = $"tex_demo_banner_{(i + 2) % 3:D2}";
+            var text = filteredEvents[i];
+            // Assign random background image and an event whose room number is in range to event carousel data class
+            var item = new EventCarouselData(spriteResourceKey, filteredEvents[i], () => Debug.Log($"Clicked: {text}"));
+            items.Add(item);
+        }
+
+        carouselView.Setup(items.ToArray());
+    }
+
+    /// <summary>
+    /// Filter a list of events by room number in location
+    /// Room number means the number section in room name, e.g. 103 is the room number in JHE A103
+    /// </summary>
+    private static List<Event> FilterLecturesByRoom(List<Event> allEvents, string lowerBound, string upperBound)
+    {
+        // Find the 3 digit room number, check if the part before room number(e.g. JHE A vs JHE ) is the same and compare room number as a integer
+        var regex = new Regex(@"\d+");
+        var roomNumU = regex.Match(upperBound).Value;
+        var roomNumL = regex.Match(lowerBound).Value;
+        // Assume upperbound and lower bound have the same prefix
+        var prefix = upperBound.Split(roomNumU)[0];
+        var filteredEvents = new List<Event>();
+        foreach (var e in allEvents)
+        {
+            var targetRoomNum = regex.Match(e.Location).Value;
+            if (string.IsNullOrWhiteSpace(targetRoomNum)) continue;
+            var targetPrefix = e.Location.Split(targetRoomNum)[0];
+            if ((int.Parse(targetRoomNum) >= int.Parse(roomNumL)) & (int.Parse(targetRoomNum) <= int.Parse(roomNumU)) &
+                (prefix == targetPrefix)) filteredEvents.Add(e);
+        }
+
         return filteredEvents;
     }
 }
-

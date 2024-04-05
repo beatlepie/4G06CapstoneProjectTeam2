@@ -1,117 +1,139 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Database;
 using Auth;
-using Firebase.Database;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class controls the event detail view (the pop up window), including read and edit views and bookmark/unbookmark methods.
+/// Author: Zihao Du
+/// Date: 2024-02-20
+/// </summary>
 public class EventDetailViewManager : MonoBehaviour
 {
-    [Header("DetailView")]
-    [SerializeField] GameObject ViewPanel;
-    [SerializeField] GameObject EditPanel;
-    private Event target;
-    private bool pinned;
-    private List<string> myEventNames;
-    [SerializeField] GameObject PinIcon;
-    [SerializeField] GameObject UnpinIcon;
-    [SerializeField] GameObject DeleteIcon;
-    [SerializeField] GameObject EditIcon;
+    [FormerlySerializedAs("ViewPanel")] [Header("DetailView")] [SerializeField]
+    private GameObject viewPanel;
 
-    [Header("ViewPanel")]
-    [SerializeField] TMP_Text viewName;
-    [SerializeField] TMP_Text viewDescription;
-    [SerializeField] TMP_Text viewOrganizer;
-    [SerializeField] TMP_Text viewLocation;
-    [SerializeField] TMP_Text viewTime;
-    [SerializeField] TMP_Text viewDuration;
-    [SerializeField] Toggle viewIsPublic;
+    [FormerlySerializedAs("EditPanel")] [SerializeField] private GameObject editPanel;
+    private Event _target;
+    private bool _bookmarked;
+    private List<string> _myEventNames;
+    [SerializeField] private GameObject bookmarkIcon;
+    [SerializeField] private GameObject unbookmarkIcon;
+    [FormerlySerializedAs("DeleteIcon")] [SerializeField] private GameObject deleteIcon;
+    [FormerlySerializedAs("EditIcon")] [SerializeField] private GameObject editIcon;
 
-    [Header("EditPanel")]
-    [SerializeField] TMP_InputField editName;
-    [SerializeField] TMP_InputField editDesciprtion;
-    [SerializeField] TMP_InputField editOrganizer;
-    [SerializeField] TMP_InputField editLocation;
-    [SerializeField] TMP_InputField editTime;
-    [SerializeField] TMP_InputField editDuration;
-    [SerializeField] Toggle editIsPublic;
+    [Header("ViewPanel")] [SerializeField] private TMP_Text viewName;
+    [SerializeField] private TMP_Text viewDescription;
+    [SerializeField] private TMP_Text viewOrganizer;
+    [SerializeField] private TMP_Text viewLocation;
+    [SerializeField] private TMP_Text viewTime;
+    [SerializeField] private TMP_Text viewDuration;
+    [SerializeField] private Toggle viewIsPublic;
 
-    void Awake()
+    [Header("EditPanel")] [SerializeField] private TMP_InputField editName;
+    [FormerlySerializedAs("editDesciprtion")] [SerializeField] private TMP_InputField editDescription;
+    [SerializeField] private TMP_InputField editOrganizer;
+    [SerializeField] private TMP_InputField editLocation;
+    [SerializeField] private TMP_InputField editTime;
+    [SerializeField] private TMP_InputField editDuration;
+    [SerializeField] private Toggle editIsPublic;
+
+    private void Awake()
     {
-        if(AuthConnector.Instance.Perms != PermissonLevel.Admin)
+        if (AuthConnector.Instance.Perms != PermissionLevel.Admin)
         {
-            DeleteIcon.SetActive(false);
-            EditIcon.SetActive(false);
+            deleteIcon.SetActive(false);
+            editIcon.SetActive(false);
         }
-        myEventNames = EventManager.myEvents;
+
+        _myEventNames = EventManager.MyEvents;
     }
-    void OnEnable()
+
+    private void OnEnable()
     {
-        target = EventManager.currentEvent;
-        pinned = myEventNames.Contains(target.name);
-        PinIcon.SetActive(!pinned);
-        UnpinIcon.SetActive(pinned);
+        _target = EventManager.CurrentEvent;
+        _bookmarked = _myEventNames.Contains(_target.Name);
+        bookmarkIcon.SetActive(!_bookmarked);
+        unbookmarkIcon.SetActive(_bookmarked);
         UpdateView();
     }
 
-    void UpdateView()
+    /// <summary>
+    /// Update the view and edit panel information
+    /// </summary>
+    private void UpdateView()
     {
-        viewName.text = target.name;
-        viewDescription.text = target.description;
-        viewOrganizer.text = target.organizer;
-        viewLocation.text = target.location;
-        viewTime.text = DateTimeOffset.FromUnixTimeSeconds(target.time).ToLocalTime().ToString("MM/dd/yyyy HH:mm");
-        viewDuration.text = target.duration.ToString();
-        viewIsPublic.isOn = target.isPublic;
-        editName.text = target.name;
-        editDesciprtion.text = target.description;
-        editOrganizer.text = target.organizer;
-        editLocation.text = target.location;
-        editTime.text = DateTimeOffset.FromUnixTimeSeconds(target.time).ToLocalTime().ToString("MM/dd/yyyy HH:mm");
-        editDuration.text = target.duration.ToString();
-        editIsPublic.isOn = target.isPublic;
+        viewName.text = _target.Name;
+        viewDescription.text = _target.Description;
+        viewOrganizer.text = _target.Organizer;
+        viewLocation.text = _target.Location;
+        // To unix time
+        viewTime.text = DateTimeOffset.FromUnixTimeSeconds(_target.Time).ToLocalTime().ToString("MM/dd/yyyy HH:mm");
+        viewDuration.text = _target.Duration.ToString();
+        viewIsPublic.isOn = _target.IsPublic;
+        editName.text = _target.Name;
+        editDescription.text = _target.Description;
+        editOrganizer.text = _target.Organizer;
+        editLocation.text = _target.Location;
+        // To unix time
+        editTime.text = DateTimeOffset.FromUnixTimeSeconds(_target.Time).ToLocalTime().ToString("MM/dd/yyyy HH:mm");
+        editDuration.text = _target.Duration.ToString();
+        editIsPublic.isOn = _target.IsPublic;
     }
 
+    /// <summary>
+    /// Once the user changes edit panel content and hits save button, update the state
+    /// </summary>
     public void SaveChanges()
     {
-        target.name = editName.text;
-        target.description = editDesciprtion.text;
-        target.organizer = editOrganizer.text;
-        target.location = editLocation.text;
-        DateTimeOffset dto = new DateTimeOffset(DateTime.Parse(editTime.text).ToUniversalTime());
-        target.time = dto.ToUnixTimeSeconds();
-        target.duration = int.Parse(editDuration.text);
-        target.isPublic = editIsPublic.isOn;
+        _target.Name = editName.text;
+        _target.Description = editDescription.text;
+        _target.Organizer = editOrganizer.text;
+        _target.Location = editLocation.text;
+        // Convert time to unix time
+        var dto = new DateTimeOffset(DateTime.Parse(editTime.text).ToUniversalTime());
+        _target.Time = dto.ToUnixTimeSeconds();
+        _target.Duration = int.Parse(editDuration.text);
+        _target.IsPublic = editIsPublic.isOn;
         UpdateView();
-        string targetJson = JsonUtility.ToJson(target);
-        string prefix = target.isPublic ? "events/public/" : "events/private/";
-        DatabaseConnector.Instance.Root.Child(prefix + target.name).SetRawJsonValueAsync(targetJson);
+        var targetJson = JsonUtility.ToJson(_target);
+        var prefix = _target.IsPublic ? "events/public/" : "events/private/";
+        DatabaseConnector.Instance.Root.Child(prefix + _target.Name).SetRawJsonValueAsync(targetJson);
     }
 
-    public void Pin()
+    /// <summary>
+    /// Bookmark the event, add that to the database under the user
+    /// </summary>
+    public void Bookmark()
     {
-        myEventNames.Add(target.name);
-        PinIcon.SetActive(false);
-        UnpinIcon.SetActive(true);
-        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + target.name).SetValueAsync("True");
+        _myEventNames.Add(_target.Name);
+        bookmarkIcon.SetActive(false);
+        unbookmarkIcon.SetActive(true);
+        var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + _target.Name)
+            .SetValueAsync("True");
     }
 
-    public void Unpin()
+    /// <summary>
+    /// Unbookmark the event, remove that to the database under the user
+    /// </summary>
+    public void Unbookmark()
     {
-        myEventNames.Remove(target.name);
-        PinIcon.SetActive(true);
-        UnpinIcon.SetActive(false);
-        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + target.name).SetValueAsync(null);
+        _myEventNames.Remove(_target.Name);
+        bookmarkIcon.SetActive(true);
+        unbookmarkIcon.SetActive(false);
+        var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events/" + _target.Name)
+            .SetValueAsync(null);
     }
 
     public void DetailViewClose()
     {
-        ViewPanel.SetActive(true);
-        EditPanel.SetActive(false);
+        viewPanel.SetActive(true);
+        editPanel.SetActive(false);
     }
 }

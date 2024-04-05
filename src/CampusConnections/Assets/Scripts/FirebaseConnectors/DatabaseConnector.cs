@@ -3,6 +3,11 @@ using Firebase;
 using Firebase.Database;
 using UnityEngine;
 
+/// <summary>
+/// This class includes a database singleton, all classes should use this proxy class instead of connecting to the database directly
+/// Author: Michael Kim
+/// Date: 2024-03-01
+/// </summary>
 namespace Database
 {
     public class DatabaseConnector : MonoBehaviour
@@ -18,19 +23,22 @@ namespace Database
                 Destroy(this);
                 return;
             }
-        
+
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        
+            DontDestroyOnLoad(gameObject);
+
             InitFirebase();
         }
 
+        /// <summary>
+        /// Initializes root to default instance of firebase Database and call auth connector to intialize
+        /// </summary>
         private void InitFirebase()
         {
             Debug.Log("[DatabaseConnector] Initializing Firebase Connection...");
-        
+
             DependencyStatus status;
-        
+
             FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
             {
                 status = task.Result;
@@ -46,5 +54,5 @@ namespace Database
                 }
             });
         }
-    }   
+    }
 }

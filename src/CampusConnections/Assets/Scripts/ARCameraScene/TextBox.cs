@@ -1,39 +1,47 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Game object template for AR elements
+/// Can add sound effect and a carousel view besides plain text
+/// Author: Zihao Du
+/// Date: 2024-02-04
+/// </summary>
 public class TextBox : MonoBehaviour
 {
     public TextMeshPro tmp;
     public GameObject surface;
-    private AudioSource clickSound;
+    private AudioSource _clickSound;
     [SerializeField] private string textBoxName;
     [SerializeField] private GameObject carousel;
-    void Start()
+
+    private void Start()
     {
-        clickSound = GetComponent<AudioSource>();
+        _clickSound = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        var newScale = new Vector3((float) Math.Ceiling(tmp.preferredWidth), (float) Math.Ceiling(tmp.preferredHeight), surface.transform.localScale.z);
+        var newScale = new Vector3((float)Math.Ceiling(tmp.preferredWidth), (float)Math.Ceiling(tmp.preferredHeight),
+            surface.transform.localScale.z);
         surface.transform.localScale = newScale;
-        if(Input.GetMouseButtonDown(0))
+        // on click event
+        if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
-                if(hit.collider.name == textBoxName) {   
-                    clickSound.Play();
-                    if(carousel != null)
+            if (Camera.main != null)
+            {
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out var hit, Mathf.Infinity))
+                    if (hit.collider.name == textBoxName)
                     {
-                        GameObject.Find(textBoxName).SetActive(false);
-                        carousel.SetActive(true);
+                        _clickSound.Play();
+                        if (carousel != null)
+                        {
+                            GameObject.Find(textBoxName).SetActive(false);
+                            carousel.SetActive(true);
+                        }
                     }
-                }
             }
         }
     }

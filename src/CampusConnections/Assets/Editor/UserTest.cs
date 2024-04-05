@@ -21,34 +21,34 @@ public class UserTest
     public void UserTestDefault()
     {
         User x = new User(guestEmail);
-        Assert.AreEqual(x.email, guestEmail);
-        Assert.AreEqual(x.nickName, "");
-        Assert.AreEqual(x.photoUri, null);
-        Assert.AreEqual(x.program, "");
-        Assert.AreEqual(x.level, 0);
+        Assert.AreEqual(x.Email, guestEmail);
+        Assert.AreEqual(x.NickName, "");
+        Assert.AreEqual(x.PhotoUri, null);
+        Assert.AreEqual(x.Program, "");
+        Assert.AreEqual(x.Level, 0);
     }
 
     [Test]
     public void UserTestGetterAndSetter()
     {
         User x = new User(guestEmail);
-        x.nickName = nickName;
-        x.photoUri = photoUri;
-        x.program = program;
-        x.level = level;
-        x.friends = friends;
-        x.lectures = lectures;
-        x.events = events;
-        x.friendInvitation = friendInvitation;
-        Assert.AreEqual(x.email, guestEmail);
-        Assert.AreEqual(x.nickName, nickName);
-        Assert.AreEqual(x.photoUri, photoUri);
-        Assert.AreEqual(x.program, program);
-        Assert.AreEqual(x.level, level);
-        Assert.AreEqual(x.friends, friends);
-        Assert.AreEqual(x.friendInvitation, friendInvitation);
-        Assert.AreEqual(x.lectures, lectures);
-        Assert.AreEqual(x.events, events);
+        x.NickName = nickName;
+        x.PhotoUri = photoUri;
+        x.Program = program;
+        x.Level = level;
+        x.Friends = friends;
+        x.Lectures = lectures;
+        x.Events = events;
+        x.FriendInvitation = friendInvitation;
+        Assert.AreEqual(x.Email, guestEmail);
+        Assert.AreEqual(x.NickName, nickName);
+        Assert.AreEqual(x.PhotoUri, photoUri);
+        Assert.AreEqual(x.Program, program);
+        Assert.AreEqual(x.Level, level);
+        Assert.AreEqual(x.Friends, friends);
+        Assert.AreEqual(x.FriendInvitation, friendInvitation);
+        Assert.AreEqual(x.Lectures, lectures);
+        Assert.AreEqual(x.Events, events);
     }
 
     [Test]
@@ -56,7 +56,7 @@ public class UserTest
     {
         User guest = new User(guestEmail);
         User student = new User(studentEmail);
-        Assert.AreEqual(guest.perms, 0);
-        Assert.AreEqual(student.perms, 1);
+        Assert.AreEqual(guest.Perms, 0);
+        Assert.AreEqual(student.Perms, 1);
     }
 }

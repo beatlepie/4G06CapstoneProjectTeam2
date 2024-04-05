@@ -961,18 +961,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1686675fc52e4c6da26d2cd3ea79921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &213093202 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3723422320775299182, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1992893593}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &230263168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,9 +1457,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff93a564304eb1149b76703fc2b89c5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carouselView: {fileID: 1813567080}
-  _RoomNumUpperRange: JHE 113
-  _RoomNumLowerRange: JHE 101
+  carouselView: {fileID: 1813567080}
+  roomNumUpperRange: JHE 113
+  roomNumLowerRange: JHE 101
 --- !u!114 &420678465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1589,9 +1577,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff93a564304eb1149b76703fc2b89c5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carouselView: {fileID: 230263170}
-  _RoomNumUpperRange: JHE 144
-  _RoomNumLowerRange: JHE 122
+  carouselView: {fileID: 230263170}
+  roomNumUpperRange: JHE 144
+  roomNumLowerRange: JHE 122
 --- !u!114 &432903784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2041,9 +2029,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff93a564304eb1149b76703fc2b89c5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carouselView: {fileID: 9122565}
-  _RoomNumUpperRange: JHE 400
-  _RoomNumLowerRange: JHE 200
+  carouselView: {fileID: 9122565}
+  roomNumUpperRange: JHE 400
+  roomNumLowerRange: JHE 200
 --- !u!114 &519065486 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1646785095909631436, guid: 274b80402a2a7854992d8a6dcbb61838,
@@ -2700,9 +2688,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df14ba789327bc41a4b2cfaf315b128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carouselView: {fileID: 1520770032}
-  _RoomNumUpperRange: JHE 400
-  _RoomNumLowerRange: JHE 200
+  carouselView: {fileID: 1520770032}
+  roomNumUpperRange: JHE 400
+  roomNumLowerRange: JHE 200
 --- !u!114 &654148700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4009,7 +3997,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1890017232}
           m_TargetAssemblyTypeName: ARCameraInfo, Assembly-CSharp
-          m_MethodName: helpbutton
+          m_MethodName: HelpButton
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4169,9 +4157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df14ba789327bc41a4b2cfaf315b128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carouselView: {fileID: 1058112168}
-  _RoomNumUpperRange: JHE 113
-  _RoomNumLowerRange: JHE 101
+  carouselView: {fileID: 1058112168}
+  roomNumUpperRange: JHE 113
+  roomNumLowerRange: JHE 101
 --- !u!114 &1254445316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4941,12 +4929,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1562727637 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5932855092638418531, guid: 9aa15f2dced0df5498b7613d5fa12a7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1992893593}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1585960046 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3109007030457462261, guid: 274b80402a2a7854992d8a6dcbb61838,
@@ -5024,9 +5006,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df14ba789327bc41a4b2cfaf315b128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carouselView: {fileID: 1773271912}
-  _RoomNumUpperRange: JHE 144
-  _RoomNumLowerRange: JHE 122
+  carouselView: {fileID: 1773271912}
+  roomNumUpperRange: JHE 144
+  roomNumLowerRange: JHE 122
 --- !u!114 &1614412554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5621,7 +5603,7 @@ GameObject:
   - component: {fileID: 1890017233}
   - component: {fileID: 1890017232}
   m_Layer: 0
-  m_Name: RetrieveData
+  m_Name: ARHelperFunc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5636,11 +5618,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1890017231}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f0b6736a2460d04d810a9c69bfee315, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d787696b8a79af47b1995e374d14506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notificationText: {fileID: 213093202}
-  Notification: {fileID: 1562727637}
 --- !u!4 &1890017233
 Transform:
   m_ObjectHideFlags: 0

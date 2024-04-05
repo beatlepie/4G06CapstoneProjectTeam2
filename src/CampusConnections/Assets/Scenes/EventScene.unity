@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731713, g: 0.13414736, b: 0.12107852, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2321,7 +2321,7 @@ GameObject:
   - component: {fileID: 182104823}
   - component: {fileID: 182104822}
   m_Layer: 5
-  m_Name: Pin
+  m_Name: Bookmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2373,7 +2373,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 712922257}
         m_TargetAssemblyTypeName: EventDetailViewManager, Assembly-CSharp
-        m_MethodName: Pin
+        m_MethodName: Bookmark
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5316,7 +5316,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: clearing
+        m_MethodName: Clearing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7812,7 +7812,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: nextPage
+        m_MethodName: NextPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7824,7 +7824,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: clearing
+        m_MethodName: Clearing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8302,12 +8302,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a7469c4a61199b4dabe549ab13e4d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ViewPanel: {fileID: 1613581085}
-  EditPanel: {fileID: 860076521}
-  PinIcon: {fileID: 182104821}
-  UnpinIcon: {fileID: 945685991}
-  DeleteIcon: {fileID: 106295725}
-  EditIcon: {fileID: 21585065}
+  viewPanel: {fileID: 1613581085}
+  editPanel: {fileID: 860076521}
+  bookmarkIcon: {fileID: 0}
+  unbookmarkIcon: {fileID: 0}
+  deleteIcon: {fileID: 106295725}
+  editIcon: {fileID: 21585065}
   viewName: {fileID: 1991584889}
   viewDescription: {fileID: 1553730200}
   viewOrganizer: {fileID: 618572608}
@@ -8316,7 +8316,7 @@ MonoBehaviour:
   viewDuration: {fileID: 1467675882}
   viewIsPublic: {fileID: 1715945806}
   editName: {fileID: 688659737}
-  editDesciprtion: {fileID: 715194015}
+  editDescription: {fileID: 715194015}
   editOrganizer: {fileID: 925271300}
   editLocation: {fileID: 1551009812}
   editTime: {fileID: 1816198914}
@@ -10979,7 +10979,7 @@ GameObject:
   - component: {fileID: 945685994}
   - component: {fileID: 945685993}
   m_Layer: 5
-  m_Name: Unpin
+  m_Name: Unbookmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11050,7 +11050,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 712922257}
         m_TargetAssemblyTypeName: EventDetailViewManager, Assembly-CSharp
-        m_MethodName: Unpin
+        m_MethodName: Unbookmark
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12787,7 +12787,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: clearing
+        m_MethodName: Clearing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13295,7 +13295,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: clearing
+        m_MethodName: Clearing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13307,7 +13307,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: onFilter
+        m_MethodName: OnFilter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13882,12 +13882,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92e85c79ee01f5c4990a39ac7d255660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FilterDropdown: {fileID: 1062378920}
-  SearchString: {fileID: 1950408905}
+  filterDropdown: {fileID: 1062378920}
+  searchString: {fileID: 1950408905}
   pgNum: {fileID: 1665623887}
-  maxPages: 1
-  EditButton: {fileID: 1217125510}
-  BookmarkButton: {fileID: 1912112053}
+  editButton: {fileID: 1217125510}
+  bookmarkButton: {fileID: 1912112053}
   eventNameView: {fileID: 1991584889}
   eventIsPublicView: {fileID: 1715945806}
   eventNameEdit: {fileID: 1601142325}
@@ -15884,7 +15883,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: clearing
+        m_MethodName: Clearing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19181,7 +19180,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: prevPage
+        m_MethodName: PrevPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19193,7 +19192,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1229541694}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: clearing
+        m_MethodName: Clearing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -1,35 +1,44 @@
 ﻿using FancyCarouselView.Runtime.Scripts;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class assigns LectureCarouselData value to Unity prefab view
+/// Author: Zihao Du
+/// Date: 2024-02-20
+/// </summary>
 public class LectureCarouselCell : CarouselCell<LectureCarouselData, LectureCarouselCell>
 {
-    [SerializeField] private Image _image;
-    [SerializeField] private TMP_Text _code;
-    [SerializeField] private TMP_Text _name;
-    [SerializeField] private TMP_Text _location;
-    [SerializeField] private TMP_Text _instructor;
-    [SerializeField] private Button _button;
+    [FormerlySerializedAs("_image")] [SerializeField] private Image image;
+    [FormerlySerializedAs("_code")] [SerializeField] private TMP_Text code;
+    [FormerlySerializedAs("_name")] [SerializeField] private TMP_Text lectureName;
+    [FormerlySerializedAs("_location")] [SerializeField] private TMP_Text location;
+    [FormerlySerializedAs("_instructor")] [SerializeField] private TMP_Text instructor;
+    [FormerlySerializedAs("_button")] [SerializeField] private Button button;
 
     private LectureCarouselData _data;
 
     protected override void Refresh(LectureCarouselData data)
     {
         _data = data;
-        _image.sprite = Resources.Load<Sprite>("Carousel_Background/" + data.SpriteResourceKey);
-        _code.text = data.Lecture.code;
-        _name.text = data.Lecture.name;
-        _location.text = data.Lecture.location;
-        _instructor.text = data.Lecture.instructor;
+        image.sprite = Resources.Load<Sprite>("Carousel_Background/" + data.SpriteResourceKey);
+        code.text = data.Lecture.Code;
+        lectureName.text = data.Lecture.Name;
+        location.text = data.Lecture.Location;
+        instructor.text = data.Lecture.Instructor;
     }
 
+    /// <summary>
+    /// Override the carouselview refresh to display lecture related content
+    /// </summary>
     protected override void OnVisibilityChanged(bool visibility)
     {
         if (visibility)
-            _button.onClick.AddListener(OnClick);
+            button.onClick.AddListener(OnClick);
         else
-            _button.onClick.RemoveListener(OnClick);
+            button.onClick.RemoveListener(OnClick);
     }
 
     private void OnClick()

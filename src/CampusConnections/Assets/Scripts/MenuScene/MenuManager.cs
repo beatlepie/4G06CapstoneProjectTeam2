@@ -2,32 +2,39 @@ using Database;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Auth;
+using UnityEngine.Serialization;
 
+/// <summary>
+/// This class includes help functions to direct to different pages
+/// Author: Zihao Du
+/// Date: 2023-12-11
+/// </summary>
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] GameObject LecturesButton;
-    [SerializeField] GameObject ARButton;
+    [FormerlySerializedAs("LecturesButton")] [SerializeField] private GameObject lecturesButton;
+    [FormerlySerializedAs("ARButton")] [SerializeField] private GameObject arButton;
 
     private void Awake()
     {
-        if(AuthConnector.Instance.Perms == PermissonLevel.Guest)
+        if (AuthConnector.Instance.Perms == PermissionLevel.Guest)
         {
-            LecturesButton.SetActive(false);
-            ARButton.SetActive(false);
+            lecturesButton.SetActive(false);
+            arButton.SetActive(false);
         }
     }
+
     public void Lectures()
     {
         SceneManager.LoadScene("LectureScene");
-        LectureManager.defaultSearchOption = null;
-        LectureManager.defaultSearchString = null;
+        LectureManager.DefaultSearchOption = null;
+        LectureManager.DefaultSearchString = null;
     }
 
     public void Events()
     {
         SceneManager.LoadScene("EventScene");
-        EventManager.defaultSearchOption = null;
-        EventManager.defaultSearchString = null;
+        EventManager.DefaultSearchOption = null;
+        EventManager.DefaultSearchString = null;
     }
 
     public void Map()
@@ -48,8 +55,8 @@ public class MenuManager : MonoBehaviour
     public void Settings()
     {
         SceneManager.LoadScene("SettingsScene");
-        SettingsManager.currentUser = true;
-        SettingsManager.state = 0;
+        SettingsManager.CurrentUser = true;
+        SettingsManager.State = 0;
     }
 
     public void Quit()

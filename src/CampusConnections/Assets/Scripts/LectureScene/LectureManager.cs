@@ -8,216 +8,237 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using Auth;
+using UnityEngine.Serialization;
 
+/// <summary>
+/// This class controls the lecture list view, including pagniation view and search filter.
+/// Author: Zihao Du
+/// Date: 2024-01-29
+/// </summary>
 public class LectureManager : MonoBehaviour
 {
-    [Header("List View")]
-    public static string defaultSearchString;
-    public static string defaultSearchOption;
-    [SerializeField] TMP_Dropdown FilterDropdown;
-    [SerializeField] public TMP_InputField SearchString;
-    [SerializeField] GameObject NewLectureIcon;
-    private Transform tabeltitleTemplate;
-    private Transform entryContainer;
-    private Transform entryTemplate;
-    private Pagination<Lecture> lectures;
-    private List<Transform> lectureEntryTransformList;
+    [Header("List View")] public static string DefaultSearchString;
+    public static string DefaultSearchOption;
+    [FormerlySerializedAs("FilterDropdown")] [SerializeField] private TMP_Dropdown filterDropdown;
+    [FormerlySerializedAs("SearchString")] [SerializeField] public TMP_InputField searchString;
+    [FormerlySerializedAs("NewLectureIcon")] [SerializeField] private GameObject newLectureIcon;
+    private Transform _tableTitleTemplate;
+    private Transform _entryContainer;
+    private Transform _entryTemplate;
+    private Pagination<Lecture> _lectures;
+    private List<Transform> _lectureEntryTransformList;
     public TMP_Text pgNum;
-    public const int PAGECOUNT = 10;
-    public GameObject BookmarkButton;
+    // Following numbers come from Figma design
+    private const int PageCount = 10;
+    private const int HeaderHeight = 690;
+    [FormerlySerializedAs("BookmarkButton")] public GameObject bookmarkButton;
 
-    [Header("Detail View")]
-    public static List<string> myLectures;
-    public static Lecture currentLecture; //The one we want to see details
-    [Header("Detail View View")]
-    [SerializeField] TMP_Text lecCodeView;
+    [Header("Detail View")] public static List<string> MyLectures;
+    public static Lecture CurrentLecture; //The one we want to see details, used in detail view class
 
-    [Header("Edit Page")]
-    [SerializeField] TMP_InputField lecCodeEdit;
-    [SerializeField] TMP_InputField lecNameEdit;
-    [SerializeField] TMP_InputField lecInstructorEdit;
-    [SerializeField] TMP_InputField lecLocationEdit;
-    [SerializeField] TMP_InputField lecTimesEdit;
-    
+    [Header("Detail View View")] [SerializeField]
+    private TMP_Text lecCodeView;
+
+    [Header("Edit Page")] [SerializeField] private TMP_InputField lecCodeEdit;
+    [SerializeField] private TMP_InputField lecNameEdit;
+    [SerializeField] private TMP_InputField lecInstructorEdit;
+    [SerializeField] private TMP_InputField lecLocationEdit;
+    [SerializeField] private TMP_InputField lecTimesEdit;
+
     private void Awake()
     {
-        UnityEngine.Debug.Log("lecture manager script running");
-        //after db stuff
+        // Init
         pgNum.text = "1";
-        entryContainer = transform.Find("lectureEntryContainer");
-        tabeltitleTemplate = entryContainer.Find("TableTitle");
-        entryTemplate = entryContainer.Find("lectureEntryTemplate");
-        lectureEntryTransformList = new List<Transform>();
-        entryTemplate.gameObject.SetActive(false);
-        BookmarkButton.SetActive(false);
-        if(AuthConnector.Instance.Perms != PermissonLevel.Admin)
+        _entryContainer = transform.Find("lectureEntryContainer");
+        _tableTitleTemplate = _entryContainer.Find("TableTitle");
+        _entryTemplate = _entryContainer.Find("lectureEntryTemplate");
+        _lectureEntryTransformList = new List<Transform>();
+        _entryTemplate.gameObject.SetActive(false);
+        bookmarkButton.SetActive(false);
+        // If the permission level is not admin, hide editing options
+        if (AuthConnector.Instance.Perms != PermissionLevel.Admin)
         {
-            NewLectureIcon.SetActive(false);
-            BookmarkButton.SetActive(true);
+            newLectureIcon.SetActive(false);
+            bookmarkButton.SetActive(true);
         }
+
         GetLectureData();
-        GetPinnedData();
-        if (defaultSearchOption != null & defaultSearchString != null)
+        GetBookmarkedData();
+        if ((DefaultSearchOption != null) & (DefaultSearchString != null))
         {
-            SearchString.text = defaultSearchString;
-            FilterDropdown.value = defaultSearchOption == "location" ? 2 : 0;
+            searchString.text = DefaultSearchString;
+            // Filter by code, if not specified search option
+            // There is a lookup table for dropdown table in LectureScene.unity, 2 - location, 1 - instructor, 0 - code
+            filterDropdown.value = DefaultSearchOption == "location" ? 2 : 0;
         }
     }
 
+    /// <summary>
+    /// Get and store a list of all lectures from database
+    /// </summary>
     public void GetLectureData()
     {
         StartCoroutine(GetLectures());
     }
 
-    IEnumerator GetLectures()
+    /// <summary>
+    /// Async call to retrieve lecture data from db
+    /// </summary>
+    private IEnumerator GetLectures()
     {
-        //from merge conflict!
-        lectureEntryTransformList = new List<Transform>();
-        List<Lecture> lectureList = new List<Lecture>();
+        _lectureEntryTransformList = new List<Transform>();
+        var lectureList = new List<Lecture>();
         var lectureData = DatabaseConnector.Instance.Root.Child("lectures").OrderByKey().StartAt("-").GetValueAsync();
 
-        yield return new WaitUntil(predicate: () => lectureData.IsCompleted);
+        yield return new WaitUntil(() => lectureData.IsCompleted);
         if (lectureData != null)
         {
-            DataSnapshot snapshot = lectureData.Result;
-            foreach (var x in snapshot.Children)
-            {
-                lectureList.Add(Utilities.FormalizeDBLectureData(x));
-            }
+            var snapshot = lectureData.Result;
+            foreach (var x in snapshot.Children) lectureList.Add(Utilities.FormalizeDBLectureData(x));
         }
-        lectures = new Pagination<Lecture>(lectureList, defaultSearchOption, defaultSearchString, PAGECOUNT);
+
+        _lectures = new Pagination<Lecture>(lectureList, DefaultSearchOption, DefaultSearchString);
         DisplayLectureList();
     }
 
-    public void GetPinnedData()
+    /// <summary>
+    /// Retrieve bookmarked lecture data and store it to the state
+    /// </summary>
+    private void GetBookmarkedData()
     {
-        StartCoroutine(GetPinnedLectures((data) => myLectures = data));
+        StartCoroutine(GetBookmarkedLectures((data) => MyLectures = data));
     }
 
-    IEnumerator GetPinnedLectures(Action<List<string>> onCallBack)
+    /// <summary>
+    /// Get and store a list of bookmarked lectures from database
+    /// </summary>
+    private IEnumerator GetBookmarkedLectures(Action<List<string>> onCallBack)
     {
-        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);                
+        var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
         var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures").GetValueAsync();
-        yield return new WaitUntil(predicate: () => userData.IsCompleted);
-        if(userData != null)
+        yield return new WaitUntil(() => userData.IsCompleted);
+        if (userData != null)
         {
-            List<string> pinnedLectures = new List<string>();
-            DataSnapshot snapshot = userData.Result;
-            foreach (var x in snapshot.Children)
-            {
-                pinnedLectures.Add(x.Key.ToString());
-            }
-            onCallBack.Invoke(pinnedLectures);
+            var bookmarkedOnes = new List<string>();
+            var snapshot = userData.Result;
+            foreach (var x in snapshot.Children) bookmarkedOnes.Add(x.Key);
+            onCallBack.Invoke(bookmarkedOnes);
         }
     }
 
+    /// <summary>
+    /// Render a list of lectures, indices from (current page - 1) * PageCount to (current page) * PageCount
+    /// </summary>
     public void DisplayLectureList()
     {
-        RectTransform titleRectTransform = tabeltitleTemplate.GetComponent<RectTransform>();
-        titleRectTransform.sizeDelta = new Vector2((float)(Screen.width/1.2), titleRectTransform.sizeDelta.y);
-        for (int i = ((lectures.currentPage - 1) * PAGECOUNT); i < Math.Min((lectures.currentPage) * PAGECOUNT, lectures.filteredList.Count); i++)
-        {
-            if (lectures.filteredList[i] != null)
+        var titleRectTransform = _tableTitleTemplate.GetComponent<RectTransform>();
+        // 1.2 comes from Figma Design, the entries take 5/6 of the screen width
+        titleRectTransform.sizeDelta = new Vector2((float)(Screen.width / 1.2), titleRectTransform.sizeDelta.y);
+        for (var i = (_lectures.CurrentPage - 1) * PageCount;
+             i < Math.Min(_lectures.CurrentPage * PageCount, _lectures.FilteredList.Count);
+             i++)
+            if (_lectures.FilteredList[i] != null)
             {
-                Lecture lectureEntry = lectures.filteredList[i];
-                CreateLectureEntryTransform(lectureEntry, entryContainer, lectureEntryTransformList);
+                var lectureEntry = _lectures.FilteredList[i];
+                CreateLectureEntryTransform(lectureEntry, _entryContainer, _lectureEntryTransformList);
             }
-        }
     }
 
+    /// <summary>
+    /// Create a lecture entry in the list view given a template and its corresponding lecture information
+    /// </summary>
     private void CreateLectureEntryTransform(Lecture lectureEntry, Transform container, List<Transform> transformList)
-    {
-        // The arbitray number comes from marron header + filter + table title + footer height 
-        float templateHeight = (Screen.height-690)/PAGECOUNT;
-        Transform entryTransform = Instantiate(entryTemplate, container);
-        RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+    { 
+        float templateHeight = (Screen.height - HeaderHeight) / (float) PageCount;
+        var entryTransform = Instantiate(_entryTemplate, container);
+        var entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
-        entryRectTransform.sizeDelta = new Vector2((float)(Screen.width/1.2), templateHeight);
+        // 1.2 comes from Figma Design, the entries take 5/6 of the screen width
+        entryRectTransform.sizeDelta = new Vector2((float)(Screen.width / 1.2), templateHeight);
         entryTransform.gameObject.SetActive(true);
 
-        int ind = transformList.Count + 1; //count for each entry starting at 1
-
-        //entryTransform.Find("nameText").GetComponent<TMP_Text>().text = lectureEntry.name;
-        entryTransform.Find("codeText").GetComponent<TMP_Text>().text = lectureEntry.code;
-        entryTransform.Find("instrucText").GetComponent<TMP_Text>().text = lectureEntry.instructor;
-        entryTransform.Find("locText").GetComponent<TMP_Text>().text = lectureEntry.location;
-        //entryTransform.Find("timeText").GetComponent<TMP_Text>().text = lectureEntry.time;
-
-        //entryTransform.Find("entryBG").gameObject.SetActive(ind % 2 == 1);  //alternate bg
-        entryTransform.Find("entryBG").gameObject.SetActive(true);  //always original bg
+        entryTransform.Find("codeText").GetComponent<TMP_Text>().text = lectureEntry.Code;
+        entryTransform.Find("instrucText").GetComponent<TMP_Text>().text = lectureEntry.Instructor;
+        entryTransform.Find("locText").GetComponent<TMP_Text>().text = lectureEntry.Location;
+        entryTransform.Find("entryBG").gameObject.SetActive(true);
         transformList.Add(entryTransform);
     }
 
-    public void clearing()
+    /// <summary>
+    /// Destroy the rendered lists
+    /// </summary>
+    public void Clearing()
     {
-        foreach (Transform entryTransform in lectureEntryTransformList)
+        foreach (var entryTransform in _lectureEntryTransformList) Destroy(entryTransform.gameObject);
+        _lectureEntryTransformList.Clear();
+    }
+
+    public void NextPage()
+    {
+        _lectures.NextPage();
+        pgNum.text = _lectures.CurrentPage.ToString();
+    }
+
+    public void PrevPage()
+    {
+        _lectures.PrevPage();
+        pgNum.text = _lectures.CurrentPage.ToString();
+    }
+
+    public void LastPage()
+    {
+        _lectures.LastPage();
+        pgNum.text = _lectures.CurrentPage.ToString();
+    }
+
+    public void FirstPage()
+    {
+        _lectures.FirstPage();
+        pgNum.text = _lectures.CurrentPage.ToString();
+    }
+
+    /// <summary>
+    /// Apply values from dropdown to lecture list
+    /// Use filter method from Pagniation class
+    /// </summary>
+    public void OnFilter()
+    {
+        switch (filterDropdown.value)
         {
-            Destroy(entryTransform.gameObject);
-        }
-        lectureEntryTransformList.Clear();  //even after destroying size isnt 0 so we have to clear
-    }
-
-    public void nextPage()
-    {
-        lectures.nextPage();
-        pgNum.text = lectures.currentPage.ToString();
-    }
-
-    public void prevPage()
-    {
-        lectures.prevPage();
-        pgNum.text = lectures.currentPage.ToString();
-    }
-
-    public void lastPage()
-    {
-        lectures.lastPage();
-        pgNum.text = lectures.currentPage.ToString();
-    }
-
-    public void firstPage()
-    {
-        lectures.firstPage();
-        pgNum.text = lectures.currentPage.ToString();
-    }
-
-    public void onFilter()
-    {
-        switch (FilterDropdown.value)
-        {
-            case(0):
-            // Code
-                lectures.filterBy = "code";
-                lectures.filterString = SearchString.text;
-                var filteredLec = lectures.filterEntries();
+            case 0:
+                // Code
+                _lectures.FilterBy = "code";
+                _lectures.FilterString = searchString.text;
+                var filteredLec = _lectures.FilterEntries();
                 break;
-            case(1):
-            // Instructor
-                lectures.filterBy = "instructor";
-                lectures.filterString = SearchString.text;
-                lectures.filterEntries();
+            case 1:
+                // Instructor
+                _lectures.FilterBy = "instructor";
+                _lectures.FilterString = searchString.text;
+                _lectures.FilterEntries();
                 break;
-            case(2):
-            // Location
-                lectures.filterBy = "location";
-                lectures.filterString = SearchString.text;
-                lectures.filterEntries();
+            case 2:
+                // Location
+                _lectures.FilterBy = "location";
+                _lectures.FilterString = searchString.text;
+                _lectures.FilterEntries();
                 break;
             default:
-                lectures.filterBy = null;
-                lectures.filterString = null;
-                lectures.filterEntries();
+                _lectures.FilterBy = null;
+                _lectures.FilterString = null;
+                _lectures.FilterEntries();
                 break;
         }
+
         DisplayLectureList();
     }
 
     public void OnEntryClick()
     {
-        GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
-        string code = template.transform.Find("codeText").GetComponent<TMP_Text>().text;
-        Lecture target = lectures.entryList.Find(lecture => lecture.code == code);
-        currentLecture = target;
+        var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+        var code = template.transform.Find("codeText").GetComponent<TMP_Text>().text;
+        var target = _lectures.EntryList.Find(lecture => lecture.Code == code);
+        CurrentLecture = target;
     }
 
     public void ExitLecturePage()
@@ -225,24 +246,31 @@ public class LectureManager : MonoBehaviour
         SceneManager.LoadScene("MenuScene");
     }
 
+    /// <summary>
+    /// Add a new lecture with input information
+    /// </summary>
     public void WriteNewLec()
     {
-        Lecture lec = new Lecture(lecCodeEdit.text, lecInstructorEdit.text, lecLocationEdit.text, lecNameEdit.text, lecTimesEdit.text);
-        string lecJson = JsonUtility.ToJson(lec);
+        var lec = new Lecture(lecCodeEdit.text, lecInstructorEdit.text, lecLocationEdit.text, lecNameEdit.text,
+            lecTimesEdit.text);
+        var lecJson = JsonUtility.ToJson(lec);
         DatabaseConnector.Instance.Root.Child("lectures/" + lecCodeEdit.text).SetRawJsonValueAsync(lecJson);
         // Add new lecture to the rendered list, clear the filter and render the first page
-        lectures.addNewEntry(lec);
-        clearing();
+        _lectures.AddNewEntry(lec);
+        Clearing();
         DisplayLectureList();
     }
 
+    /// <summary>
+    /// Delete the target user
+    /// </summary>
     public void DeleteLec()
     {
         DatabaseConnector.Instance.Root.Child("lectures/" + lecCodeView.text).SetValueAsync(null);
         // Delete this lecture from the rendered list, clear the filter and render the first page
-        var target = lectures.entryList.Find(lec => lec.code == lecCodeView.text);
-        lectures.removeEntry(target);
-        clearing();
+        var target = _lectures.EntryList.Find(lec => lec.Code == lecCodeView.text);
+        _lectures.RemoveEntry(target);
+        Clearing();
         DisplayLectureList();
     }
 
@@ -251,8 +279,8 @@ public class LectureManager : MonoBehaviour
     /// </summary>
     public void GoToBookmark()
     {
-        SettingsManager.currentUser = true;
-        SettingsManager.state = 1;
+        SettingsManager.CurrentUser = true;
+        SettingsManager.State = 1;
         SceneManager.LoadScene("SettingsScene");
     }
 }

@@ -29,12 +29,12 @@ public class PaginationTest
         pizzaList.Add(p1);
         pizzaList.Add(p2);
         Pagination<Pizza> p = new Pagination<Pizza>(pizzaList, null, null, pageCount);
-        Assert.AreEqual(p.entryList.Count, 2);
-        Assert.AreEqual(p.filteredList.Count, 2);
-        Assert.AreEqual(p.maxPage, 1);
-        Assert.AreEqual(p.currentPage, 1);
-        Assert.AreEqual(p.filterBy, null);
-        Assert.AreEqual(p.filterString, null);
+        Assert.AreEqual(p.EntryList.Count, 2);
+        Assert.AreEqual(p.FilteredList.Count, 2);
+        Assert.AreEqual(p.MaxPage, 1);
+        Assert.AreEqual(p.CurrentPage, 1);
+        Assert.AreEqual(p.FilterBy, null);
+        Assert.AreEqual(p.FilterString, null);
     }
 
     [Test]
@@ -45,14 +45,14 @@ public class PaginationTest
         pizzaList.Add(p2);
         pizzaList.Add(p3);
         Pagination<Pizza> p = new Pagination<Pizza>(pizzaList, "size", "medium", pageCount);
-        Assert.AreEqual(p.entryList.Count, 3);
-        Assert.AreEqual(p.filteredList.Count, 2);
-        Assert.IsTrue(p.entryList.Contains(p2));
-        Assert.IsFalse(p.filteredList.Contains(p2));
-        Assert.AreEqual(p.maxPage, 1);
-        Assert.AreEqual(p.currentPage, 1);
-        Assert.AreEqual(p.filterBy, "size");
-        Assert.AreEqual(p.filterString, "medium");
+        Assert.AreEqual(p.EntryList.Count, 3);
+        Assert.AreEqual(p.FilteredList.Count, 2);
+        Assert.IsTrue(p.EntryList.Contains(p2));
+        Assert.IsFalse(p.FilteredList.Contains(p2));
+        Assert.AreEqual(p.MaxPage, 1);
+        Assert.AreEqual(p.CurrentPage, 1);
+        Assert.AreEqual(p.FilterBy, "size");
+        Assert.AreEqual(p.FilterString, "medium");
     }
 
     [Test]
@@ -63,11 +63,11 @@ public class PaginationTest
         pizzaList.Add(p2);
         pizzaList.Add(p3);
         Pagination<Pizza> p = new Pagination<Pizza>(pizzaList, null, null, pageCount);
-        Assert.AreEqual(p.entryList.Count, 3);
-        p.addNewEntry(p4);
-        Assert.IsTrue(p.entryList.Contains(p4));
-        Assert.AreEqual(p.entryList.Count, 4);
-        Assert.AreEqual(p.maxPage, 2);
+        Assert.AreEqual(p.EntryList.Count, 3);
+        p.AddNewEntry(p4);
+        Assert.IsTrue(p.EntryList.Contains(p4));
+        Assert.AreEqual(p.EntryList.Count, 4);
+        Assert.AreEqual(p.MaxPage, 2);
     }
 
     [Test]
@@ -78,11 +78,11 @@ public class PaginationTest
         pizzaList.Add(p2);
         pizzaList.Add(p3);
         Pagination<Pizza> p = new Pagination<Pizza>(pizzaList, null, null, pageCount);
-        Assert.AreEqual(p.entryList.Count, 3);
-        p.removeEntry(p3);
-        Assert.IsFalse(p.entryList.Contains(p3));
-        Assert.AreEqual(p.entryList.Count, 2);
-        Assert.AreEqual(p.maxPage, 1);
+        Assert.AreEqual(p.EntryList.Count, 3);
+        p.RemoveEntry(p3);
+        Assert.IsFalse(p.EntryList.Contains(p3));
+        Assert.AreEqual(p.EntryList.Count, 2);
+        Assert.AreEqual(p.MaxPage, 1);
     }
 
     [Test]
@@ -93,15 +93,15 @@ public class PaginationTest
         pizzaList.Add(p2);
         pizzaList.Add(p3);
         Pagination<Pizza> p = new Pagination<Pizza>(pizzaList, null, null, pageCount);
-        Assert.AreEqual(p.currentPage, 1);
-        p.nextPage();
-        Assert.AreEqual(p.currentPage, 2);
-        p.nextPage();
-        Assert.AreEqual(p.currentPage, 2);
-        p.prevPage();
-        Assert.AreEqual(p.currentPage, 1);
-        p.prevPage();
-        Assert.AreEqual(p.currentPage, 1);
+        Assert.AreEqual(p.CurrentPage, 1);
+        p.NextPage();
+        Assert.AreEqual(p.CurrentPage, 2);
+        p.NextPage();
+        Assert.AreEqual(p.CurrentPage, 2);
+        p.PrevPage();
+        Assert.AreEqual(p.CurrentPage, 1);
+        p.PrevPage();
+        Assert.AreEqual(p.CurrentPage, 1);
     }
 
     [Test]
@@ -112,10 +112,10 @@ public class PaginationTest
         pizzaList.Add(p2);
         pizzaList.Add(p3);
         Pagination<Pizza> p = new Pagination<Pizza>(pizzaList, null, null, pageCount);
-        Assert.AreEqual(p.currentPage, 1);
-        p.lastPage();
-        Assert.AreEqual(p.currentPage, 2);
-        p.firstPage();
-        Assert.AreEqual(p.currentPage, 1);
+        Assert.AreEqual(p.CurrentPage, 1);
+        p.LastPage();
+        Assert.AreEqual(p.CurrentPage, 2);
+        p.FirstPage();
+        Assert.AreEqual(p.CurrentPage, 1);
     }
 }

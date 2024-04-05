@@ -1,7 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class controls an object pool of remote user pin prefabs.
+/// Author: Waseef Nayeem
+/// Date: 2024-03-15
+/// </summary>
 public class PinObjectPool : MonoBehaviour
 {
     public static PinObjectPool SharedInstance;
@@ -10,32 +14,28 @@ public class PinObjectPool : MonoBehaviour
     public GameObject parentObj;
     public int amountToPool;
 
-    void Awake()
+    private void Awake()
     {
         SharedInstance = this;
     }
 
-    void Start()
+    private void Start()
     {
         pooledObjects = new List<GameObject>();
         GameObject tmp;
-        for(int i = 0; i < amountToPool; i++)
+        for (var i = 0; i < amountToPool; i++)
         {
             tmp = Instantiate(objectToPool, parentObj.transform);
             tmp.SetActive(false);
             pooledObjects.Add(tmp);
         }
     }
-    
+
     public GameObject GetPooledObject()
     {
-        for(int i = 0; i < amountToPool; i++)
-        {
-            if(!pooledObjects[i].activeInHierarchy)
-            {
+        for (var i = 0; i < amountToPool; i++)
+            if (!pooledObjects[i].activeInHierarchy)
                 return pooledObjects[i];
-            }
-        }
         return null;
     }
 }

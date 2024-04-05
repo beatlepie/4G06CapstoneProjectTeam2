@@ -1,9 +1,12 @@
 ﻿using Database;
-using Firebase;
 using Firebase.Auth;
-using Firebase.Database;
 using UnityEngine;
 
+/// <summary>
+/// This class includes a current user state singleton, all classes should use this proxy class instead of connecting to the authentication system directly
+/// Author: Michael Kim
+/// Date: 2024-03-01
+/// </summary>
 namespace Auth
 {
     public class AuthConnector : MonoBehaviour
@@ -12,9 +15,9 @@ namespace Auth
         public FirebaseAuth Auth { get; private set; }
 
         public FirebaseUser CurrentUser { get; private set; }
-        public bool IsEmailVerified {get; set; }
+        public bool IsEmailVerified { get; set; }
 
-        public PermissonLevel Perms { get; set; }
+        public PermissionLevel Perms { get; set; }
 
         /// <summary>
         /// Unity function that is called when application is started.
@@ -29,7 +32,7 @@ namespace Auth
             }
 
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
         }
 
         /// <summary>

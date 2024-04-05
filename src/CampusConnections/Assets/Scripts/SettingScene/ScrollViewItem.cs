@@ -4,24 +4,16 @@ using UnityEngine;
 
 public class ScrollViewItem : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject item;
+    [SerializeField] private GameObject item;
 
-    [SerializeField]
-    private List<string> favorite;
+    [SerializeField] private List<string> favorite;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        foreach(string item in favorite)
+        foreach (var s in favorite)
         {
-
+            // TODO: Is this supposed to be empty?
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

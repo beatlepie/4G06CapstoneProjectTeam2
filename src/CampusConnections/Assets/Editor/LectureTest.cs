@@ -16,21 +16,21 @@ public class LectureTest
     public void LectureTestDefault()
     {
         Lecture l = new Lecture(code);
-        Assert.AreEqual(l.code, code);
-        Assert.AreEqual(l.name, Lecture.placeholder);
-        Assert.AreEqual(l.instructor, Lecture.placeholder);
-        Assert.AreEqual(l.location, Lecture.placeholder);
-        Assert.AreEqual(l.time, Lecture.placeholder);
+        Assert.AreEqual(l.Code, code);
+        Assert.AreEqual(l.Name, Lecture.Placeholder);
+        Assert.AreEqual(l.Instructor, Lecture.Placeholder);
+        Assert.AreEqual(l.Location, Lecture.Placeholder);
+        Assert.AreEqual(l.Time, Lecture.Placeholder);
     }
 
     [Test]
     public void LectureTestGetterAndSetter()
     {
         Lecture l = new Lecture(code, instructor, location, name, time);
-        Assert.AreEqual(l.code, code);
-        Assert.AreEqual(l.name, name);
-        Assert.AreEqual(l.instructor, instructor);
-        Assert.AreEqual(l.location, location);
-        Assert.AreEqual(l.time, time);
+        Assert.AreEqual(l.Code, code);
+        Assert.AreEqual(l.Name, name);
+        Assert.AreEqual(l.Instructor, instructor);
+        Assert.AreEqual(l.Location, location);
+        Assert.AreEqual(l.Time, time);
     }
 }
