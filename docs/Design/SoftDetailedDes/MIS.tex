@@ -126,6 +126,7 @@ date and time & DateTime & provides a specific date and time \\
 user & User & see MIS of User Module \\
 scene & Scene & a user interface created in Unity \\
 database reference & DatabaseReference & reference to the root location of a database \\
+server connection & Connection & A WebSocket-based connection to the backend server \\
 
 
 \bottomrule
@@ -1903,7 +1904,7 @@ AR Interface
 
 \subsection{Uses}
 
-AR Camera
+AR Camera, Notification
 
 \subsection{Syntax}
 
@@ -1914,12 +1915,13 @@ None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{3cm} p{5cm} p{2cm} p{3cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-Initialize & (String, \textlangle3D Objects\textrangle) & - & -\\
+Initialize & (String, \textless GameObject\textgreater) & - & -\\
 Display & String & - & -\\
+OnTargetClick & - & - & - \\
 
 \hline
 \end{tabular}
@@ -1930,16 +1932,18 @@ Display & String & - & -\\
 \subsubsection{State Variables}
 
 \begin{itemize}
-\item dictionary: Dictionary$<$String, $<$3D Objects$>$$>$, the dictionary of target name and corresponding AR objects
+\item dictionary: Dictionary$<$String, $<$GameObject$>$$>$, the dictionary of target name and corresponding AR objects
 \end{itemize}
 
 \subsubsection{Environment Variables}
 
-None
+\begin{itemize}
+\item audio: AudioPlayer
+\end{itemize}
 
 \subsubsection{Assumptions}
 
-None
+The AudioPlayer is provided as an environment variable by the Unity engine
 
 \subsubsection{Access Routine Semantics}
 
@@ -1947,15 +1951,26 @@ None
 \begin{itemize}
 \item transition: $dictionary[target] := objects$
 \item output: none
-\item exception: $target \notin dictionary.keys \Rightarrow IllegalArgument Exception$
+\item exception: none
 \end{itemize}
 
 \noindent Display(target):
 \begin{itemize}
 \item transition: Displays $dictionary[target]$ objects in Unity scene
 \item output: none
-\item exception: $target \notin dictionary.keys \Rightarrow IllegalArgument Exception$
+\item exception: none
 \end{itemize}
+
+\noindent OnTargetClick():
+\begin{itemize}
+\item transition: $audio$.PlaySound(); Play a sound clip when an AR Target is clicked or tapped.
+\item output: none
+\item exception: none
+\end{itemize}
+
+\subsubsection{Local Types}
+
+GameObject := Data type used by the Unity engine to represent 3D AR Objects
 
 \subsubsection{Local Functions}
 
@@ -1967,7 +1982,7 @@ None
 
 \subsection{Module}
 
-MapBox\\
+MapBox \\
 
 \subsection{External Module Documentation}
 
@@ -2054,14 +2069,14 @@ HandleInputBuilding & - & - & - \\
 \subsubsection{State Variables}
 
 \begin{itemize}
-\item building: list of BuildingLocation
+\item connection: Connection
+\item buildings: List\textless\textlangle $\mathbb{R}$, $\mathbb{R}$\textrangle\textgreater 
 \item usrLoc: UserLocation
 \item rmtUsrLoc: set of UserLocation
 \end{itemize}
 
 \subsubsection{Environment Variables}
 \begin{itemize}
-\item camera: Camera
 \item locationServer: Server
 \item gps: GPS
 \end{itemize}
@@ -2070,20 +2085,20 @@ HandleInputBuilding & - & - & - \\
 
 StartConnection() is called first when the module is loaded.\\
 The user's mobile device automatically provides the gps Environment Variable.\\
-The $gps$ Environment Variable automatically updates $usrLoc$.
+The $gps$ automatically updates $usrLoc$.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent StartConnection($a$, $e$):
+\noindent StartConnection($url$, $end$):
 \begin{itemize}
-\item transition: Opens a connection with $locationServer$ with address $a$ and endpoint $e$.
+\item transition: $connection := $ new Connection($locationServer$, $url$, $end$)
 \item output: none
 \item exception: none
 \end{itemize}
 
 \noindent SendLocation($l$):
 \begin{itemize}
-\item transition: Sends local user location $l$, obtained from the $gps$, to $locationServer$.
+\item transition: $l := gps$.GetLocation(), $locationServer$.SendLocation($l$)
 \item output: none
 \item exception: none
 \end{itemize}
@@ -2104,14 +2119,14 @@ The $gps$ Environment Variable automatically updates $usrLoc$.
 
 \noindent HandleInputBuilding():
 \begin{itemize}
-\item transition: Opens user interface when a building marker is tapped
+\item transition: Displays an interface when building $b \in building$ is tapped/clicked.
 \item output: none
 \item exception: none
 \end{itemize}
 
 \subsubsection{Local Types}
 
-UserLocation = tuple of (latitude: float, longitude: float, email: string)
+UserLocation = tuple of (latitude: $\mathbb{R}$, longitude: $\mathbb{R}$, email: String)
 
 \subsubsection{Local Functions}
 
@@ -2141,8 +2156,8 @@ None
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 StartConnection & String, String & - & - \\
-SendMessage & User, String & - & - \\
-ReceiveMessage & User, String & - & - \\
+SendMessage & String & - & - \\
+ReceiveMessage & String & - & - \\
 
 \hline
 \end{tabular}
@@ -2153,37 +2168,39 @@ ReceiveMessage & User, String & - & - \\
 \subsubsection{State Variables}
 
 \begin{itemize}
-\item connection: HubConnection
-\item onMessageReceived: Action
+\item connection: Connection
+\item messages: List\textless String\textgreater
 \end{itemize}
 
 \subsubsection{Environment Variables}
 
-None
+\begin{itemize}
+\item chatServer: Server
+\end{itemize}
 
 \subsubsection{Assumptions}
 
-None
+The handler parameter in StartConnection is always set to "ReceiveMessage".
 
 \subsubsection{Access Routine Semantics}
 
-\noindent StartConnection(url, handler):
+\noindent StartConnection($url$, $handler$):
 \begin{itemize}
-\item transition: Creates a new HubConnection and stores it in connection. Connects the given handler to the server endpoint.
+\item transition: $connection := $ new Connection($chatServer$, $url$, $handler$)
 \item output: none
 \item exception: none
 \end{itemize}
 
-\noindent SendMessage(recipient, message):
+\noindent SendMessage($m$):
 \begin{itemize}
-\item transition: Sends a message to the recipient through the server hub connection.
+\item transition: $chatServer$.SendMessage($m$)
 \item output: none
 \item exception: none
 \end{itemize}
 
-\noindent ReceiveMessage(sender, message):
+\noindent ReceiveMessage($m$):
 \begin{itemize}
-\item transition: Receives a message from the server hub connection. The sender's id is received as well.
+\item transition: $messages := messages$.Append($m$)
 \item output: none
 \item exception: none
 \end{itemize}
