@@ -2,235 +2,261 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using Firebase.Database;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Auth;
 using Database;
+using UnityEngine.Serialization;
 
+/// <summary>
+/// This class controls the event list view, including pagination view and search filter.
+/// Author: Zihao Du
+/// Date: 2024-02-20
+/// </summary>
 public class EventManager : MonoBehaviour
 {
-    [Header("List View")]
-    public static string defaultSearchString;
-    public static string defaultSearchOption;
-    [SerializeField] TMP_Dropdown FilterDropdown;
-    [SerializeField] TMP_InputField SearchString;
-    private Transform tabeltitleTemplate;
-    private Transform entryContainer;
-    private Transform entryTemplate;
-    private Pagination<Event> events;
-    private List<Transform> eventEntryTransformList;
+    [Header("List View")] public static string DefaultSearchString;
+    public static string DefaultSearchOption;
+    [FormerlySerializedAs("FilterDropdown")] [SerializeField] private TMP_Dropdown filterDropdown;
+    [FormerlySerializedAs("SearchString")] [SerializeField] private TMP_InputField searchString;
+    private Transform _tableTitleTemplate;
+    private Transform _entryContainer;
+    private Transform _entryTemplate;
+    private Pagination<Event> _events;
+    private List<Transform> _eventEntryTransformList;
     public TMP_Text pgNum;
-    public const int PAGECOUNT = 10;
-    [SerializeField] Image EditButton;
-    public GameObject BookmarkButton;
+    // Following numbers come from Figma design
+    private const int PageCount = 10;
+    private const int HeaderHeight = 690;
+    [FormerlySerializedAs("EditButton")] [SerializeField] private Image editButton;
+    [FormerlySerializedAs("BookmarkButton")] public GameObject bookmarkButton;
 
-    [Header("Detail View")]
-    public static List<string> myEvents;
-    public static Event currentEvent; //The one we want to see details
-    [Header("Detail View View")]
-    [SerializeField] TMP_Text eventNameView;
-    [SerializeField] Toggle eventIsPublicView;
+    [Header("Detail View")] public static List<string> MyEvents;
+    public static Event CurrentEvent; //The one we want to see details
 
-    [Header("Edit Page")]
-    [SerializeField] TMP_InputField eventNameEdit;
-    [SerializeField] TMP_InputField eventDescriptionEdit;
-    [SerializeField] TMP_InputField eventOrganizerEdit;
-    [SerializeField] TMP_InputField eventLocationEdit;
-    [SerializeField] TMP_InputField eventTimeEdit;
-    [SerializeField] TMP_InputField eventDurationEdit;
-    [SerializeField] Toggle eventIsPublicEdit;
+    [Header("Detail View View")] [SerializeField]
+    private TMP_Text eventNameView;
+
+    [SerializeField] private Toggle eventIsPublicView;
+
+    [Header("Edit Page")] [SerializeField] private TMP_InputField eventNameEdit;
+    [SerializeField] private TMP_InputField eventDescriptionEdit;
+    [SerializeField] private TMP_InputField eventOrganizerEdit;
+    [SerializeField] private TMP_InputField eventLocationEdit;
+    [SerializeField] private TMP_InputField eventTimeEdit;
+    [SerializeField] private TMP_InputField eventDurationEdit;
+    [SerializeField] private Toggle eventIsPublicEdit;
+
     private void Awake()
     {
-        UnityEngine.Debug.Log("lecture manager script running");
-        //after db stuff
+        // Init
         pgNum.text = "1";
-        entryContainer = transform.Find("eventEntryContainer");
-        tabeltitleTemplate = entryContainer.Find("TableTitle");
-        entryTemplate = entryContainer.Find("eventEntryTemplate");
+        _entryContainer = transform.Find("eventEntryContainer");
+        _tableTitleTemplate = _entryContainer.Find("TableTitle");
+        _entryTemplate = _entryContainer.Find("eventEntryTemplate");
 
-        entryTemplate.gameObject.SetActive(false);
-        BookmarkButton.SetActive(false);
-        //This may cause issues! leaving this from merge conflict!
-        eventEntryTransformList = new List<Transform>();
+        _entryTemplate.gameObject.SetActive(false);
+        bookmarkButton.SetActive(false);
+        _eventEntryTransformList = new List<Transform>();
 
-        // If they are not admin, do not show edit button!
-        if (AuthConnector.Instance.Perms != PermissonLevel.Admin)
+        // If they are not admin, do not show edit button
+        if (AuthConnector.Instance.Perms != PermissionLevel.Admin)
         {
-            EditButton.gameObject.SetActive(false);
-            BookmarkButton.SetActive(true);
-        }        
+            editButton.gameObject.SetActive(false);
+            bookmarkButton.SetActive(true);
+        }
+
         GetEventData();
-        GetPinnedData();
-        if (defaultSearchOption != null & defaultSearchString != null)
+        GetBookmarkedData();
+        if ((DefaultSearchOption != null) & (DefaultSearchString != null))
         {
-            SearchString.text = defaultSearchString;
-            FilterDropdown.value = defaultSearchOption == "location" ? 2 : 0;
+            searchString.text = DefaultSearchString;
+            // Filter by name, if not specified search option
+            // There is a lookup table for dropdown table in LectureScene.unity, 2 - location, 1 - organizer, 0 - name
+            filterDropdown.value = DefaultSearchOption == "location" ? 2 : 0;
         }
     }
 
+    /// <summary>
+    /// Get and store a list of all events from database
+    /// </summary>
     public void GetEventData()
     {
         StartCoroutine(GetEvents());
     }
 
-    IEnumerator GetEvents()
+    /// <summary>
+    /// Async call to retrieve event data from db
+    /// </summary>
+    private IEnumerator GetEvents()
     {
-        eventEntryTransformList = new List<Transform>();
-        var publicEventData = DatabaseConnector.Instance.Root.Child("events/public").OrderByKey().StartAt("-").GetValueAsync();
-        List<Event> eventList = new List<Event>();
-        yield return new WaitUntil(predicate: () => publicEventData.IsCompleted);
+        _eventEntryTransformList = new List<Transform>();
+        var publicEventData = DatabaseConnector.Instance.Root.Child("events/public").OrderByKey().StartAt("-")
+            .GetValueAsync();
+        var eventList = new List<Event>();
+        yield return new WaitUntil(() => publicEventData.IsCompleted);
         if (publicEventData != null)
         {
-            DataSnapshot snapshot = publicEventData.Result;
-            foreach (var e in snapshot.Children)
-            {
-                eventList.Add(Utilities.FormalizeDBEventData(e));    
-            }
+            var snapshot = publicEventData.Result;
+            foreach (var e in snapshot.Children) eventList.Add(Utilities.FormalizeDBEventData(e));
         }
-        if(AuthConnector.Instance.Perms != PermissonLevel.Guest)
+        // Privacy Requirement: Private events need user or admin permission
+        if (AuthConnector.Instance.Perms != PermissionLevel.Guest)
         {
-            var privateEventData = DatabaseConnector.Instance.Root.Child("events/private").OrderByKey().StartAt("-").GetValueAsync();
-            yield return new WaitUntil(predicate: () => privateEventData.IsCompleted);
+            var privateEventData = DatabaseConnector.Instance.Root.Child("events/private").OrderByKey().StartAt("-")
+                .GetValueAsync();
+            yield return new WaitUntil(() => privateEventData.IsCompleted);
             if (privateEventData != null)
             {
-                DataSnapshot snapshot = privateEventData.Result;
-                foreach (var e in snapshot.Children)
-                {
-                    eventList.Add(Utilities.FormalizeDBEventData(e));
-                }
+                var snapshot = privateEventData.Result;
+                foreach (var e in snapshot.Children) eventList.Add(Utilities.FormalizeDBEventData(e));
             }
         }
-        events = new Pagination<Event>(eventList, defaultSearchOption, defaultSearchString, PAGECOUNT);
+
+        _events = new Pagination<Event>(eventList, DefaultSearchOption, DefaultSearchString);
         DisplayEventList();
     }
 
-    public void GetPinnedData()
+    /// <summary>
+    /// Retrieve bookmarked event data and store it to the state
+    /// </summary>
+    private void GetBookmarkedData()
     {
-        StartCoroutine(GetPinnedEvents((data) => myEvents = data));
+        StartCoroutine(GetBookmarkedEvents((data) => MyEvents = data));
     }
 
-    IEnumerator GetPinnedEvents(Action<List<string>> onCallBack)
+    /// <summary>
+    /// Get and store a list of bookmarked events from database
+    /// </summary>
+    private IEnumerator GetBookmarkedEvents(Action<List<string>> onCallBack)
     {
-        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);                
+        var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
         var userData = DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/events").GetValueAsync();
-        yield return new WaitUntil(predicate: () => userData.IsCompleted);
-        if(userData != null)
+        yield return new WaitUntil(() => userData.IsCompleted);
+        if (userData != null)
         {
-            List<string> pinnedLectures = new List<string>();
-            DataSnapshot snapshot = userData.Result;
-            foreach (var x in snapshot.Children)
-            {
-                pinnedLectures.Add(x.Key.ToString());
-            }
-            onCallBack.Invoke(pinnedLectures);
+            var bookmarkedOnes = new List<string>();
+            var snapshot = userData.Result;
+            foreach (var x in snapshot.Children) bookmarkedOnes.Add(x.Key);
+            onCallBack.Invoke(bookmarkedOnes);
         }
     }
 
+    /// <summary>
+    /// Render a list of events, indices from (current page - 1) * PageCount to (current page) * PageCount
+    /// </summary>
     public void DisplayEventList()
     {
-        RectTransform titleRectTransform = tabeltitleTemplate.GetComponent<RectTransform>();
-        titleRectTransform.sizeDelta = new Vector2((float)(Screen.width/1.2), titleRectTransform.sizeDelta.y);
-        for (int i = ((events.currentPage - 1) * PAGECOUNT); i < Math.Min((events.currentPage) * PAGECOUNT, events.filteredList.Count); i++)
-        {
-            if (events.filteredList[i] != null)
+        var titleRectTransform = _tableTitleTemplate.GetComponent<RectTransform>();
+        // 1.2 comes from Figma Design, the entries take 5/6 of the screen width
+        titleRectTransform.sizeDelta = new Vector2((float)(Screen.width / 1.2), titleRectTransform.sizeDelta.y);
+        for (var i = (_events.CurrentPage - 1) * PageCount;
+             i < Math.Min(_events.CurrentPage * PageCount, _events.FilteredList.Count);
+             i++)
+            if (_events.FilteredList[i] != null)
             {
-                Event eventEntry = events.filteredList[i];
-                CreateEventEntryTransform(eventEntry, entryContainer, eventEntryTransformList);
+                var eventEntry = _events.FilteredList[i];
+                CreateEventEntryTransform(eventEntry, _entryContainer, _eventEntryTransformList);
             }
-        }
     }
 
+    /// <summary>
+    /// Create an event entry in the list view given a template and its corresponding event information
+    /// </summary>
     private void CreateEventEntryTransform(Event eventEntry, Transform container, List<Transform> transformList)
-    {
-        // The arbitray number comes from marron header + filter + table title + footer height 
-        float templateHeight = (Screen.height-690)/PAGECOUNT;
-        Transform entryTransform = Instantiate(entryTemplate, container);
-        RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+    { 
+        var templateHeight = (Screen.height - HeaderHeight) / (float) PageCount;
+        var entryTransform = Instantiate(_entryTemplate, container);
+        var entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
-        entryRectTransform.sizeDelta = new Vector2((float)(Screen.width/1.2), templateHeight);
+        // 1.2 comes from Figma Design, the entries take 5/6 of the screen width
+        entryRectTransform.sizeDelta = new Vector2((float)(Screen.width / 1.2), templateHeight);
         entryTransform.gameObject.SetActive(true);
 
-        //entryTransform.Find("nameText").GetComponent<TMP_Text>().text = lectureEntry.name;
-        entryTransform.Find("nameText").GetComponent<TMP_Text>().text = eventEntry.name;
-        entryTransform.Find("organizerText").GetComponent<TMP_Text>().text = eventEntry.organizer;
-        entryTransform.Find("locText").GetComponent<TMP_Text>().text = eventEntry.location;
-        entryTransform.Find("entryBG").gameObject.SetActive(true);  //always original bg
+        entryTransform.Find("nameText").GetComponent<TMP_Text>().text = eventEntry.Name;
+        entryTransform.Find("organizerText").GetComponent<TMP_Text>().text = eventEntry.Organizer;
+        entryTransform.Find("locText").GetComponent<TMP_Text>().text = eventEntry.Location;
+        entryTransform.Find("entryBG").gameObject.SetActive(true);
         transformList.Add(entryTransform);
     }
 
-    public void clearing()
+    /// <summary>
+    /// Destroy the rendered lists
+    /// </summary>
+    public void Clearing()
     {
-        foreach (Transform entryTransform in eventEntryTransformList)
+        foreach (var entryTransform in _eventEntryTransformList) Destroy(entryTransform.gameObject);
+        _eventEntryTransformList.Clear();
+    }
+
+    public void NextPage()
+    {
+        _events.NextPage();
+        pgNum.text = _events.CurrentPage.ToString();
+    }
+
+    public void PrevPage()
+    {
+        _events.PrevPage();
+        pgNum.text = _events.CurrentPage.ToString();
+    }
+
+    public void LastPage()
+    {
+        _events.LastPage();
+        pgNum.text = _events.CurrentPage.ToString();
+    }
+
+    public void FirstPage()
+    {
+        _events.FirstPage();
+        pgNum.text = _events.CurrentPage.ToString();
+    }
+
+    /// <summary>
+    /// Apply values from dropdown to event list
+    /// Use filter method from Pagniation class
+    /// </summary>
+    public void OnFilter()
+    {
+        switch (filterDropdown.value)
         {
-            Destroy(entryTransform.gameObject);
-        }
-        eventEntryTransformList.Clear();  //even after destroying size isnt 0 so we have to clear
-    }
-
-    public void nextPage()
-    {
-        events.nextPage();
-        pgNum.text = events.currentPage.ToString();
-    }
-
-    public void prevPage()
-    {
-        events.prevPage();
-        pgNum.text = events.currentPage.ToString();
-    }
-
-    public void lastPage()
-    {
-        events.lastPage();
-        pgNum.text = events.currentPage.ToString();
-    }
-
-    public void firstPage()
-    {
-        events.firstPage();
-        pgNum.text = events.currentPage.ToString();
-    }
-
-    public void onFilter()
-    {
-        switch (FilterDropdown.value)
-        {
-            case(0):
-            // Name
-                events.filterBy = "name";
-                events.filterString = SearchString.text;
-                events.filterEntries();
+            case 0:
+                // Name
+                _events.FilterBy = "name";
+                _events.FilterString = searchString.text;
+                _events.FilterEntries();
                 break;
-            case(1):
-            // Organizer
-               events.filterBy = "organizer";
-                events.filterString = SearchString.text;
-                events.filterEntries();
+            case 1:
+                // Organizer
+                _events.FilterBy = "organizer";
+                _events.FilterString = searchString.text;
+                _events.FilterEntries();
                 break;
-            case(2):
-            // Location
-                events.filterBy = "location";
-                events.filterString = SearchString.text;
-                events.filterEntries();
+            case 2:
+                // Location
+                _events.FilterBy = "location";
+                _events.FilterString = searchString.text;
+                _events.FilterEntries();
                 break;
             default:
-                events.filterBy = null;
-                events.filterString = null;
-                events.filterEntries();
+                _events.FilterBy = null;
+                _events.FilterString = null;
+                _events.FilterEntries();
                 break;
         }
+
         DisplayEventList();
     }
 
     public void OnEntryClick()
     {
-        GameObject template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
-        string name = template.transform.Find("nameText").GetComponent<TMP_Text>().text;
-        Event target = events.entryList.Find(e => e.name == name);
-        currentEvent = target;
+        var template = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
+        var text = template.transform.Find("nameText").GetComponent<TMP_Text>().text;
+        var target = _events.EntryList.Find(e => e.Name == text);
+        CurrentEvent = target;
     }
 
     public void ExitEventPage()
@@ -238,28 +264,35 @@ public class EventManager : MonoBehaviour
         SceneManager.LoadScene("MenuScene");
     }
 
+    /// <summary>
+    /// Add a new event with input information
+    /// </summary>
     public void WriteNewEvent()
     {
-        DateTime startTime = DateTime.Parse(eventTimeEdit.text).ToLocalTime();
-        DateTimeOffset dto = new DateTimeOffset(startTime);
-        Event e = new Event(eventNameEdit.text, dto.ToUnixTimeSeconds(), int.Parse(eventDurationEdit.text), eventOrganizerEdit.text, eventDescriptionEdit.text, eventLocationEdit.text, eventIsPublicEdit.isOn);
-        string eventJson = JsonUtility.ToJson(e);
-        string prefix = eventIsPublicEdit.isOn ? "events/public/" : "events/private/";
+        var startTime = DateTime.Parse(eventTimeEdit.text).ToLocalTime();
+        var dto = new DateTimeOffset(startTime);
+        var e = new Event(eventNameEdit.text, dto.ToUnixTimeSeconds(), int.Parse(eventDurationEdit.text),
+            eventOrganizerEdit.text, eventDescriptionEdit.text, eventLocationEdit.text, eventIsPublicEdit.isOn);
+        var eventJson = JsonUtility.ToJson(e);
+        var prefix = eventIsPublicEdit.isOn ? "events/public/" : "events/private/";
         DatabaseConnector.Instance.Root.Child(prefix + eventNameEdit.text).SetRawJsonValueAsync(eventJson);
         // Add new event to the rendered list, clear the filter and render the first page
-        events.addNewEntry(e);
-        clearing();
+        _events.AddNewEntry(e);
+        Clearing();
         DisplayEventList();
     }
 
+    /// <summary>
+    /// Delete target event
+    /// </summary>
     public void DeleteEvent()
     {
-        string prefix = eventIsPublicView.isOn ? "events/public/" : "events/private/";
+        var prefix = eventIsPublicView.isOn ? "events/public/" : "events/private/";
         DatabaseConnector.Instance.Root.Child(prefix + eventNameView.text).SetValueAsync(null);
         // Delete this lecture from the rendered list, clear the filter and render the first page
-        var target = events.entryList.Find(e => e.name == eventNameView.text);
-        events.removeEntry(target);
-        clearing();
+        var target = _events.EntryList.Find(e => e.Name == eventNameView.text);
+        _events.RemoveEntry(target);
+        Clearing();
         DisplayEventList();
     }
 
@@ -268,8 +301,8 @@ public class EventManager : MonoBehaviour
     /// </summary>
     public void GoToBookmark()
     {
-        SettingsManager.currentUser = true;
-        SettingsManager.state = 2;
+        SettingsManager.CurrentUser = true;
+        SettingsManager.State = 2;
         SceneManager.LoadScene("SettingsScene");
     }
 }

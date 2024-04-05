@@ -18,25 +18,25 @@ public class EventTest
     public void EventTestDefault()
     {
         Event e = new Event(name);
-        Assert.AreEqual(e.name, name);
-        Assert.AreEqual(e.description, Event.placeholder);
-        Assert.AreEqual(e.organizer, Event.placeholder);
-        Assert.AreEqual(e.location, Event.placeholder);
-        Assert.AreEqual(e.duration, Event.defaultDuration);
-        Assert.AreEqual(e.time, Event.defaultTime);
-        Assert.AreEqual(e.isPublic, false);
+        Assert.AreEqual(e.Name, name);
+        Assert.AreEqual(e.Description, Event.Placeholder);
+        Assert.AreEqual(e.Organizer, Event.Placeholder);
+        Assert.AreEqual(e.Location, Event.Placeholder);
+        Assert.AreEqual(e.Duration, Event.DefaultDuration);
+        Assert.AreEqual(e.Time, Event.DefaultTime);
+        Assert.AreEqual(e.IsPublic, false);
     }
 
     [Test]
     public void EventTestGetterAndSetter()
     {
         Event e = new Event(name, time, duration, organizer, description, location, isPublic);
-        Assert.AreEqual(e.name, name);
-        Assert.AreEqual(e.description, description);
-        Assert.AreEqual(e.organizer, organizer);
-        Assert.AreEqual(e.location, location);
-        Assert.AreEqual(e.duration, duration);
-        Assert.AreEqual(e.time, time);
-        Assert.AreEqual(e.isPublic, isPublic);
+        Assert.AreEqual(e.Name, name);
+        Assert.AreEqual(e.Description, description);
+        Assert.AreEqual(e.Organizer, organizer);
+        Assert.AreEqual(e.Location, location);
+        Assert.AreEqual(e.Duration, duration);
+        Assert.AreEqual(e.Time, time);
+        Assert.AreEqual(e.IsPublic, isPublic);
     }
 }

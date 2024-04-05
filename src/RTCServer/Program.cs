@@ -1,5 +1,7 @@
 using RTCServer.Hubs;
 
+// Entry point for the server web application.
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();

@@ -1,8 +1,12 @@
-using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Controller class that provides the client-side chatting service.
+/// Author: Waseef Nayeem
+/// Date: 2024-02-09
+/// </summary>
 public class SignalRService : MonoBehaviour
 {
     [SerializeField] private string endpointUrl = "";
@@ -16,20 +20,30 @@ public class SignalRService : MonoBehaviour
         await InitAsync();
     }
 
+    /// <summary>
+    /// Starts the connection with the server and registers MessageReceived listener.
+    /// </summary>
     private async Task InitAsync()
     {
         await _connector.InitAsync<Message>(endpointUrl, endpointClientMethodName);
         _connector.OnMessageReceived += Receive;
     }
 
+    /// <summary>
+    /// Sends a message to the server.
+    /// </summary>
+    /// <param name="msg">Message to be sent.</param>
     public async Task SendAsync(Message msg)
     {
         await _connector.SendMessageAsync(msg);
     }
 
+    /// <summary>
+    /// Handles receiving messages from the server.
+    /// </summary>
+    /// <param name="msg">Message that was received.</param>
     private void Receive(Message msg)
     {
-        Debug.Log("Received message " + msg.Content);
         NewMessageReceived.Invoke(msg);
     }
 }

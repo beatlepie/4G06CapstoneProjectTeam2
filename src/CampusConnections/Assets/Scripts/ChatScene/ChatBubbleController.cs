@@ -1,31 +1,30 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controls the behaviour of chat bubble game objects.
+/// Chat bubbles display messages sent by users in the chat scene.
+/// Authors: Waseef Nayeem, Zihao Du
+/// Date: 2024=03-12
+/// </summary>
 public class ChatBubbleController : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject msgObj;
+    [SerializeField] private GameObject msgObj;
     private TMP_Text _message;
-    
-    [SerializeField]
-    private GameObject timeObj;
+
+    [SerializeField] private GameObject timeObj;
     private TMP_Text _timestamp;
 
-    // For link to event and lecture
-    [SerializeField]
-    private Button msgBubble;
-    [SerializeField]
-    public string linkColor;
-    private string targetType;
-    private string targetID;
-    
-    void Awake()
+    // For linking to events and lectures
+    [SerializeField] private Button msgBubble;
+    [SerializeField] public string linkColor;
+    private string _targetType;
+    private string _targetID;
+
+    private void Awake()
     {
         _message = msgObj.GetComponent<TMP_Text>();
         _timestamp = timeObj.GetComponent<TMP_Text>();
@@ -38,12 +37,12 @@ public class ChatBubbleController : MonoBehaviour
 
     public void SetMessage(string msg)
     {
-        List<string> pattern = Utilities.GetActivityPattern(msg);
+        var pattern = Utilities.GetActivityPattern(msg);
         if (pattern[0] != "null")
         {
-            targetType = pattern[0];
-            targetID = pattern[1];
-            string polishedMsg = Utilities.PolishChatMessage(msg, linkColor);
+            _targetType = pattern[0];
+            _targetID = pattern[1];
+            var polishedMsg = Utilities.PolishChatMessage(msg, linkColor);
             _message.SetText(polishedMsg);
         }
         else
@@ -52,19 +51,23 @@ public class ChatBubbleController : MonoBehaviour
         }
     }
 
-    public void clickOnMessage()
+    /// <summary>
+    /// Handler function for clicking on message links.
+    /// Messages can have embedded links to events or lectures.
+    /// </summary>
+    public void ClickOnMessage()
     {
-        if (targetType == "lecture")
+        if (_targetType == "lecture")
         {
             SceneManager.LoadScene("LectureScene");
-            LectureManager.defaultSearchOption = "code";
-            LectureManager.defaultSearchString = targetID;
+            LectureManager.DefaultSearchOption = "code";
+            LectureManager.DefaultSearchString = _targetID;
         }
-        else if (targetType == "event")
+        else if (_targetType == "event")
         {
             SceneManager.LoadScene("EventScene");
-            EventManager.defaultSearchOption = "name";
-            EventManager.defaultSearchString = targetID;
+            EventManager.DefaultSearchOption = "name";
+            EventManager.DefaultSearchString = _targetID;
         }
     }
 }

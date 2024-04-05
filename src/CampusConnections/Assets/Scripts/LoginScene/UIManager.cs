@@ -1,35 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// A manager class for login page which handles all scene changes.
+/// Author: Zihao Du
+/// Date: 2023-12-06
+/// </summary>
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance;
+    public static UIManager Instance;
 
     //Screen object variables
     public GameObject loginUI;
     public GameObject registerUI;
 
+    /// <summary>
+    /// Default unity function left to guarentee that there is only one instance running.
+    /// </summary>
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
-        else if (instance != null)
+        else if (Instance != null)
         {
             Debug.Log("Instance already exists, destroying object!");
             Destroy(this);
         }
     }
 
-    //Functions to change the login screen UI
-    public void LoginScreen() //Back button
+    /// <summary>
+    /// Functions to change the login screen UI, handles Back button behavior.
+    /// </summary>
+    public void OnBackButtonClick() 
     {
         loginUI.SetActive(true);
         registerUI.SetActive(false);
     }
-    public void RegisterScreen() // Regester button
+
+    /// <summary>
+    /// Function to change to register page UI, handles register button behavior.
+    /// </summary>
+    public void OnRegisterButtonClick() 
     {
         loginUI.SetActive(false);
         registerUI.SetActive(true);

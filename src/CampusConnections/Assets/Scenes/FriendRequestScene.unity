@@ -1561,7 +1561,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 57296131}
         m_TargetAssemblyTypeName: FriendManager, Assembly-CSharp
-        m_MethodName: OnRequestAcceptclick
+        m_MethodName: OnRequestAcceptClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2149,7 +2149,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 57296131}
         m_TargetAssemblyTypeName: FriendManager, Assembly-CSharp
-        m_MethodName: OnRequestIgnoreclick
+        m_MethodName: OnRequestIgnoreClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

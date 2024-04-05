@@ -1,100 +1,120 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Database;
 using Auth;
-using Firebase.Database;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
+/// <summary>
+/// This class controls the lecture detail view (the pop up window), including read and edit views and bookmark/unbookmark methods.
+/// Author: Zihao Du
+/// Date: 2024-01-29
+/// </summary>
 public class LectureDetailViewManager : MonoBehaviour
 {
-    [Header("DetailView")]
-    [SerializeField] GameObject ViewPanel;
-    [SerializeField] GameObject EditPanel;
-    [SerializeField] GameObject DeleteIcon;
-    [SerializeField] GameObject EditIcon;
-    private Lecture target;
-    private bool pinned;
-    private List<string> myLectureCodes;
-    [SerializeField] GameObject PinIcon;
-    [SerializeField] GameObject UnpinIcon;
-    [SerializeField] TMP_Text viewCode;
-    [SerializeField] TMP_Text viewName;
-    [SerializeField] TMP_Text viewInstructor;
-    [SerializeField] TMP_Text viewLocation;
-    [SerializeField] TMP_Text viewTimes;
-    [SerializeField] TMP_InputField editCode;
-    [SerializeField] TMP_InputField editName;
-    [SerializeField] TMP_InputField editInstructor;
-    [SerializeField] TMP_InputField editLocation;
-    [SerializeField] TMP_InputField editTimes;
+    [FormerlySerializedAs("ViewPanel")] [Header("DetailView")] [SerializeField]
+    private GameObject viewPanel;
 
-    void Awake()
+    [FormerlySerializedAs("EditPanel")] [SerializeField] private GameObject editPanel;
+    [FormerlySerializedAs("DeleteIcon")] [SerializeField] private GameObject deleteIcon;
+    [FormerlySerializedAs("EditIcon")] [SerializeField] private GameObject editIcon;
+    private Lecture _target;
+    private bool _bookmarked;
+    private List<string> _myLectureCodes;
+    [SerializeField] private GameObject bookmarkIcon;
+    [SerializeField] private GameObject unbookmarkIcon;
+    [SerializeField] private TMP_Text viewCode;
+    [SerializeField] private TMP_Text viewName;
+    [SerializeField] private TMP_Text viewInstructor;
+    [SerializeField] private TMP_Text viewLocation;
+    [SerializeField] private TMP_Text viewTimes;
+    [SerializeField] private TMP_InputField editCode;
+    [SerializeField] private TMP_InputField editName;
+    [SerializeField] private TMP_InputField editInstructor;
+    [SerializeField] private TMP_InputField editLocation;
+    [SerializeField] private TMP_InputField editTimes;
+
+    private void Awake()
     {
-        if(AuthConnector.Instance.Perms != PermissonLevel.Admin)
+        if (AuthConnector.Instance.Perms != PermissionLevel.Admin)
         {
-            DeleteIcon.SetActive(false);
-            EditIcon.SetActive(false);
+            deleteIcon.SetActive(false);
+            editIcon.SetActive(false);
         }
-        myLectureCodes = LectureManager.myLectures;
+
+        _myLectureCodes = LectureManager.MyLectures;
     }
-    void OnEnable()
+
+    private void OnEnable()
     {
-        target = LectureManager.currentLecture;
-        pinned = myLectureCodes.Contains(target.code);
-        PinIcon.SetActive(!pinned);
-        UnpinIcon.SetActive(pinned);
+        _target = LectureManager.CurrentLecture;
+        _bookmarked = _myLectureCodes.Contains(_target.Code);
+        bookmarkIcon.SetActive(!_bookmarked);
+        unbookmarkIcon.SetActive(_bookmarked);
         UpdateView();
     }
 
-    void UpdateView()
+    /// <summary>
+    /// Update the view and edit panel information
+    /// </summary>
+    private void UpdateView()
     {
-        viewCode.text = target.code;
-        viewName.text = target.name;
-        viewInstructor.text = target.instructor;
-        viewLocation.text = target.location;
-        viewTimes.text = target.time;
-        editCode.text = target.code;
-        editName.text = target.name;
-        editInstructor.text = target.instructor;
-        editLocation.text = target.location;
-        editTimes.text = target.time;
+        viewCode.text = _target.Code;
+        viewName.text = _target.Name;
+        viewInstructor.text = _target.Instructor;
+        viewLocation.text = _target.Location;
+        viewTimes.text = _target.Time;
+        editCode.text = _target.Code;
+        editName.text = _target.Name;
+        editInstructor.text = _target.Instructor;
+        editLocation.text = _target.Location;
+        editTimes.text = _target.Time;
     }
 
+    /// <summary>
+    /// Once the user changes edit panel content and hits save button, update the state
+    /// </summary>
     public void SaveChanges()
     {
-        target.code = editCode.text;
-        target.name = editName.text;
-        target.instructor = editInstructor.text;
-        target.location = editLocation.text;
-        target.time = editTimes.text;
+        _target.Code = editCode.text;
+        _target.Name = editName.text;
+        _target.Instructor = editInstructor.text;
+        _target.Location = editLocation.text;
+        _target.Time = editTimes.text;
         UpdateView();
-        string targetJson = JsonUtility.ToJson(target);
-        DatabaseConnector.Instance.Root.Child("lectures/" + target.code).SetRawJsonValueAsync(targetJson);
+        var targetJson = JsonUtility.ToJson(_target);
+        DatabaseConnector.Instance.Root.Child("lectures/" + _target.Code).SetRawJsonValueAsync(targetJson);
     }
 
-    public void Pin()
+    /// <summary>
+    /// Bookmark the lecture, add that to the database under the user
+    /// </summary>
+    public void Bookmark()
     {
-        myLectureCodes.Add(target.code);
-        PinIcon.SetActive(false);
-        UnpinIcon.SetActive(true);
-        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + target.code).SetValueAsync("True");
+        _myLectureCodes.Add(_target.Code);
+        bookmarkIcon.SetActive(false);
+        unbookmarkIcon.SetActive(true);
+        var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + _target.Code)
+            .SetValueAsync("True");
     }
 
-    public void Unpin()
+    /// <summary>
+    /// Unbookmark the lecture, remove that to the database under the user
+    /// </summary>
+    public void Unbookmark()
     {
-        myLectureCodes.Remove(target.code);
-        PinIcon.SetActive(true);
-        UnpinIcon.SetActive(false);
-        string emailWithoutDot = Utilities.removeDot(AuthConnector.Instance.CurrentUser.Email);
-        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + target.code).SetValueAsync(null);
+        _myLectureCodes.Remove(_target.Code);
+        bookmarkIcon.SetActive(true);
+        unbookmarkIcon.SetActive(false);
+        var emailWithoutDot = Utilities.RemoveDot(AuthConnector.Instance.CurrentUser.Email);
+        DatabaseConnector.Instance.Root.Child("users/" + emailWithoutDot + "/lectures/" + _target.Code)
+            .SetValueAsync(null);
     }
 
     public void DetailViewClose()
     {
-        ViewPanel.SetActive(true);
-        EditPanel.SetActive(false);
+        viewPanel.SetActive(true);
+        editPanel.SetActive(false);
     }
 }

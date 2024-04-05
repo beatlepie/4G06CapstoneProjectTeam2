@@ -65,7 +65,8 @@ Mar 25 & Waseef Nayeem & Rev1: Updated rationales and fit criteria of Requiremen
 Mar 25 & Zihao Du & Revision 1: Resolve feedback in section 15-21\\
 Apr 1 & Matthew Miller & Revision 1: Updated stakeholders section and added clarifications of user information\\
 Apr 2 & Zihao Du & Revision 1: Update stakeholders and resolved peer feedback\\
-April 2 & Michael Kim & Revision 1: Updated dates to exact, updated reflection to match TA feedback\\
+Apr 2 & Michael Kim & Revision 1: Updated dates to exact, updated reflection to match TA feedback\\
+Apr 3 & Zihao Du & Revision 1: Move safety-critical requirements to security requirement section\\
 \bottomrule
 \end{tabularx}
 
@@ -912,26 +913,7 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit criterion:} A user’s location must be updated on the map session within LOCATION\_UPDATE\_TIME.\\
 
 \subsection{Safety-Critical Requirements}
-  \textbf{P-SC1:} The application will not collect or share any user’s location or personal data without getting permission from the user.\\
-  \textbf{Rationale:} This gives the user the freedom to choose how their personal data is used by the product.\\
-  \textbf{Fit criterion:} User’s personal information does not appear in the database if the user did not grant permissions.\\\\
-  \textbf{P-SC2:} User data such as messages and location information will be securely encrypted to protect user’s privacy.\\
-  \textbf{Rationale:} This decreases the risk of hackers finding personal information in intercepted messages.\\
-  \textbf{Fit criterion:} An explicit encryption is used so that contents of data packets being transmitted are not readable or decryptable.\\\
-  \textbf{P-SC3:} The product shall display a message upon map startup warning the user to be aware of their surroundings.\\
-  \textbf{Rationale:} The real-time location map may be distracting to users, therefore we need to warn the user for their safety.\\
-  \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon map startup.\\\\
-  \textbf{P-SC4:} The product shall hide user's location if the user leaves campus.\\
-  \textbf{Rationale:} Users may stay connected and share their location even when they leave the campus. To prevent personal information leakage, we need to hide that information and disconnect the user.\\
-  \textbf{Fit Criterion:} A user's information shall not be shared once he or she leaves campus.\\\\
-  \textbf{P-SC5:} The product shall prevent the user from entering special characters in all text input fields.\\
-  \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.\\
-  \textbf{Fit Criterion:} Any text input with special characters will give the user an error.\\\\
-  \textbf{P-SC6:} The product shall validate the email format when creating an account.\\
-  \textbf{Rationale:} The format of the input should be validated to ensure no errors occur and no malicious attacks can be executed.\\
-  \textbf{Fit Criterion:} All emails in the database should have a email format, an input in the email field that's not in the format of an email will give the user an error when creating a new account.\\
-  $(\forall\; email \in DB\;  |\;  email.Match([A-Z0-9+\_.-]+@[A-Z0-9.-]+)$\\\\
-
+ \textbf{N/A}
 \subsection{Precision or Accuracy Requirements}
   \textbf{P-PA1:} The product shall accurately identify building targets scanned by the user.\\
   \textbf{Rationale:} When a user scans a valid building target, the product should display interactive visual elements with information about that building\\
@@ -1029,6 +1011,13 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{S-A3:} User with thrid level access is treated as an administrator.\\
   \textbf{Rationale:} User persona: a staff of engineering faculty. Full access of the system should be given to administrators who works as a maintainer.\\
   \textbf{Fit Criterion:} Administrator will have all the access users have and the power to add, delete and edit official events, lectures and all users profiles.\\\\
+    \textbf{S-A4:} The product shall prevent the user from entering special characters in all text input fields.\\
+  \textbf{Rationale:} When creating accounts, users can perform SQL injection attacks by inputting some SQL statements.\\
+  \textbf{Fit Criterion:} Any text input with special characters will give the user an error.\\\\
+  \textbf{S-A5:} The product shall validate the email format when creating an account.\\
+  \textbf{Rationale:} The format of the input should be validated to ensure no errors occur and no malicious attacks can be executed.\\
+  \textbf{Fit Criterion:} All emails in the database should have a email format, an input in the email field that's not in the format of an email will give the user an error when creating a new account.\\
+  $(\forall\; email \in DB\;  |\;  email.Match([A-Z0-9+\_.-]+@[A-Z0-9.-]+)$\\\\
 
 \subsection{Integrity Requirements}
   \textbf{N/A}\\
@@ -1039,13 +1028,28 @@ The use case diagram depicted below identifies the boundaries between the users 
   \textbf{Fit Criterion:} The usage of a user's personal information by the product abides by the Privacy Act, The Personal Information Protection and Electronic Documents Act, and Canada and Ontario’s data protection laws \cite{Legislative Services} \cite{CFLC}. More specificly, since the application does not match any of the exceptions in Division 1 Protection of Personal Information in Personal Information Protection and Electronic Documents Act, the application must not do the following: 7.1) Collection without knowledge or consent; 7.2) Use without knowledge or consent; 7.3) Disclosure without knowledge or consent\\\\
   \textbf{S-P2:} Accounts that are inactive for a certain period shall be deleted to prevent unnecessary data from being held.\\
   \textbf{Rationale:} It prevents personal information from being stored in the database unintentionally for a long time.\\
-  \textbf{Fit Criterion:} Accounts that are not logged in for a semester will be cleaned from the authentication system and database.
+  \textbf{Fit Criterion:} Accounts that are not logged in for a semester will be cleaned from the authentication system and database.\\\\
+  \textbf{S-P3:} The application will not collect or share any user’s location or personal data without getting permission from the user.\\
+  \textbf{Rationale:} This gives the user the freedom to choose how their personal data is used by the product.\\
+  \textbf{Fit criterion:} User’s personal information does not appear in the database if the user did not grant permissions.\\\\
+  \textbf{S-P4:} User data such as messages and location information will be securely encrypted to protect user’s privacy.\\
+  \textbf{Rationale:} This decreases the risk of hackers finding personal information in intercepted messages.\\
+  \textbf{Fit criterion:} An explicit encryption is used so that contents of data packets being transmitted are not readable or decryptable.\\\\
+  \textbf{S-P5:} The product shall hide user's location if the user leaves campus.\\
+  \textbf{Rationale:} Users may stay connected and share their location even when they leave the campus. To prevent personal information leakage, we need to hide that information and disconnect the user.\\
+  \textbf{Fit Criterion:} A user's information shall not be shared once he or she leaves campus.
+
 
 \subsection{Audit Requirements}
   \textbf{N/A} (This currently does not apply, once the application is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
 
 \subsection{Immunity Requirements}
   \textbf{N/A} (This currently does not apply, once the application is ready to be used in multiple universities and regions, audit requirements will be reconsidered.)\\
+  
+\subsection{User Safety Requirements}
+ \textbf{S-US1:} The product shall display a message upon map startup warning the user to be aware of their surroundings.\\
+  \textbf{Rationale:} The real-time location map may be distracting to users, therefore we need to warn the user for their safety.\\
+  \textbf{Fit Criterion:} A message telling the user to be aware of their surroundings is displayed upon map startup.\\\\
 
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
@@ -1120,12 +1124,6 @@ The use case diagram depicted below identifies the boundaries between the users 
   \multicolumn{1}{|l|}{\textbf{UH-A1}}   &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &       X      &       X      &              &       X      &       X       \\ \hline
   \multicolumn{1}{|l|}{\textbf{P-SL1}}   &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      &       X      &               \\ \hline
   \multicolumn{1}{|l|}{\textbf{P-SL2}}   &              &              &              &              &              &              &              &              &              &              &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
-  \multicolumn{1}{|l|}{\textbf{P-SC1}}   &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &               \\ \hline
-  \multicolumn{1}{|l|}{\textbf{P-SC2}}   &              &              &              &              &              &              &              &              &              &              &       X      &       X      &       X      &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
-  \multicolumn{1}{|l|}{\textbf{P-SC3}}   &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
-  \multicolumn{1}{|l|}{\textbf{P-SC4}}   &              &              &              &              &              &              &              &              &              &              &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
-  \multicolumn{1}{|l|}{\textbf{P-SC5}}   &              &       X      &              &       X      &       X      &              &       X      &       X      &       X      &              &       X      &              &              &              &              &              &       X      &       X      &       X      &       X      &       X      &       X      &              &              &               \\ \hline
-  \multicolumn{1}{|l|}{\textbf{P-SC6}}   &              &       X      &              &       X      &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &               \\ \hline
   \multicolumn{1}{|l|}{\textbf{P-PA1}}   &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X      &       X      &               \\ \hline
   \multicolumn{1}{|l|}{\textbf{\textcolor{red}{P-RF1}}}   &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &               \\ \hline
   \multicolumn{1}{|l|}{\textbf{P-RF2}}   &              &              &              &              &              &              &              &              &              &              &       X      &       X      &       X      &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
@@ -1145,8 +1143,14 @@ The use case diagram depicted below identifies the boundaries between the users 
   \multicolumn{1}{|l|}{\textbf{S-A1}}    &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &              &              &              &              &       X      &              &              &              &              &              &              &       X      &              &              &       X       \\ \hline
   \multicolumn{1}{|l|}{\textbf{S-A2}}    &       X      &       X      &       X      &       X      &       X      &       X      &              &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &              &              &       X      &       X      &       X      &       X      &       X       \\ \hline
   \multicolumn{1}{|l|}{\textbf{S-A3}}    &       X      &       X      &       X      &       X      &       X      &       X      &              &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{S-A4}}   &              &       X      &              &       X      &       X      &              &       X      &       X      &       X      &              &       X      &              &              &              &              &              &       X      &       X      &       X      &       X      &       X      &       X      &              &              &               \\ \hline
+  \multicolumn{1}{|l|}{\textbf{S-A5}}   &              &       X      &              &       X      &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &               \\ \hline
   \multicolumn{1}{|l|}{\textbf{S-P1}}    &              &       X      &              &              &              &       X      &              &       X      &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
   \multicolumn{1}{|l|}{\textbf{S-P2}}    &       X      &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &               \\ \hline
+  \multicolumn{1}{|l|}{\textbf{S-P3}}   &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &               \\ \hline
+  \multicolumn{1}{|l|}{\textbf{S-P4}}   &              &              &              &              &              &              &              &              &              &              &       X      &       X      &       X      &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{S-P5}}   &              &              &              &              &              &              &              &              &              &              &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
+  \multicolumn{1}{|l|}{\textbf{S-US1}}   &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
   \multicolumn{1}{|l|}{\textbf{CUL-C1}}  &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &              &              &       X      &       X      &              &       X      &       X       \\ \hline
   \multicolumn{1}{|l|}{\textbf{COM-L1}}  &              &       X      &              &              &              &       X      &              &       X      &              &              &       X      &              &              &              &              &              &              &              &              &              &              &              &              &              &       X       \\ \hline
   \multicolumn{1}{|l|}{\textbf{COM-SC1}} &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X      &       X       \\ \hline
