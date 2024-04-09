@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<QCARInfo>
+    <TargetSet version="3.4">
+        <AreaTarget version="5.1" bbox="-5.8845 -2.7847 -6.5242 3.8739 1.1867 1.0838" targetId="dd96d9460339480eb87a0ca87f6e572f" name="EXPO" pathAuthoring="dd96d9460339480eb87a0ca87f6e572f_authoring.glb" pathOcclusion="dd96d9460339480eb87a0ca87f6e572f_occlusion.3dt" pathNavMesh="dd96d9460339480eb87a0ca87f6e572f_navmesh.glb" cloudTarget="false" />
+    </TargetSet>
+</QCARInfo>
